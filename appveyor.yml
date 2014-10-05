@@ -47,4 +47,4 @@ before_build:
 
 # scripts to run after build
 after_build:
-  ps: doxygen.exe "C:\projects\n-metadata-extractor\doc\Com.Drew.Doxyfile"
+  ps: ./doc/createdoc.ps1
