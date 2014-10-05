@@ -47,4 +47,4 @@ before_build:
 
 # scripts to run after build
 after_build:
-  ps: ./doc/createdoc.ps1
+  cmd: ./doc/createdoc.bat
