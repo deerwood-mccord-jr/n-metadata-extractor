@@ -48,4 +48,4 @@ before_build:
 
 # scripts to run after build
 after_build:
-  - ps:  $pwd\doxygen\doxygen.exe .\doc\Com.Drew.Doxyfile"
+  - ps: doxygen\doxygen.exe doc\Com.Drew.Doxyfile"
