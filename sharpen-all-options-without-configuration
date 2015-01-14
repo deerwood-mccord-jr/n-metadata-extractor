@@ -3,7 +3,6 @@
 -nativeTypeSystem
 -separateInterfaceConstants
 -maxColumns 240
--configurationClass sharpen.config.MEConfiguration
 
 -typeMapping java.io.StringReader Sharpen.StringReader
 -methodMapping java.lang.Math.signum System.Math.Sign
