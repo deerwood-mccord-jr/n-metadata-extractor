@@ -1,25 +1,24 @@
 /*
- * Copyright 2002-2013 Drew Noakes
- *
- *    Licensed under the Apache License, Version 2.0 (the "License");
- *    you may not use this file except in compliance with the License.
- *    You may obtain a copy of the License at
- *
- *        http://www.apache.org/licenses/LICENSE-2.0
- *
- *    Unless required by applicable law or agreed to in writing, software
- *    distributed under the License is distributed on an "AS IS" BASIS,
- *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    See the License for the specific language governing permissions and
- *    limitations under the License.
- *
- * More information about this project is available at:
- *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
- */
+* Copyright 2002-2013 Drew Noakes
+*
+*    Licensed under the Apache License, Version 2.0 (the "License");
+*    you may not use this file except in compliance with the License.
+*    You may obtain a copy of the License at
+*
+*        http://www.apache.org/licenses/LICENSE-2.0
+*
+*    Unless required by applicable law or agreed to in writing, software
+*    distributed under the License is distributed on an "AS IS" BASIS,
+*    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+*    See the License for the specific language governing permissions and
+*    limitations under the License.
+*
+* More information about this project is available at:
+*
+*    http://drewnoakes.com/code/exif/
+*    http://code.google.com/p/metadata-extractor/
+*/
 using Com.Drew.Metadata;
-using Com.Drew.Metadata.Exif.Makernotes;
 using JetBrains.Annotations;
 using Sharpen;
 
@@ -43,7 +42,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		{
 			switch (tagType)
 			{
-                case CanonMakernoteDirectory.TagCanonSerialNumber:
+				case TagCanonSerialNumber:
 				{
 					return GetSerialNumberDescription();
 				}
@@ -216,7 +215,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		[CanBeNull]
 		public virtual string GetSerialNumberDescription()
 		{
-            int? value = _directory.GetInteger(CanonMakernoteDirectory.TagCanonSerialNumber);
+			int value = _directory.GetInteger(TagCanonSerialNumber);
 			if (value == null)
 			{
 				return null;
@@ -225,187 +224,187 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		}
 
 		/*
-    @Nullable
-    public String getLongExposureNoiseReductionDescription()
-    {
-        Integer value = _directory.getInteger(TAG_CANON_CUSTOM_FUNCTION_LONG_EXPOSURE_NOISE_REDUCTION);
-        if (value==null)
-            return null;
-        switch (value) {
-            case 0:     return "Off";
-            case 1:     return "On";
-            default:    return "Unknown (" + value + ")";
-        }
-    }
-
-    @Nullable
-    public String getShutterAutoExposureLockButtonDescription()
-    {
-        Integer value = _directory.getInteger(TAG_CANON_CUSTOM_FUNCTION_SHUTTER_AUTO_EXPOSURE_LOCK_BUTTONS);
-        if (value==null)
-            return null;
-        switch (value) {
-            case 0:     return "AF/AE lock";
-            case 1:     return "AE lock/AF";
-            case 2:     return "AF/AF lock";
-            case 3:     return "AE+release/AE+AF";
-            default:    return "Unknown (" + value + ")";
-        }
-    }
-
-    @Nullable
-    public String getMirrorLockupDescription()
-    {
-        Integer value = _directory.getInteger(TAG_CANON_CUSTOM_FUNCTION_MIRROR_LOCKUP);
-        if (value==null)
-            return null;
-        switch (value) {
-            case 0:     return "Disabled";
-            case 1:     return "Enabled";
-            default:    return "Unknown (" + value + ")";
-        }
-    }
-
-    @Nullable
-    public String getTvAndAvExposureLevelDescription()
-    {
-        Integer value = _directory.getInteger(TAG_CANON_CUSTOM_FUNCTION_TV_AV_AND_EXPOSURE_LEVEL);
-        if (value==null)
-            return null;
-        switch (value) {
-            case 0:     return "1/2 stop";
-            case 1:     return "1/3 stop";
-            default:    return "Unknown (" + value + ")";
-        }
-    }
-
-    @Nullable
-    public String getAutoFocusAssistLightDescription()
-    {
-        Integer value = _directory.getInteger(TAG_CANON_CUSTOM_FUNCTION_AF_ASSIST_LIGHT);
-        if (value==null)
-            return null;
-        switch (value) {
-            case 0:     return "On (Auto)";
-            case 1:     return "Off";
-            default:    return "Unknown (" + value + ")";
-        }
-    }
-
-    @Nullable
-    public String getShutterSpeedInAvModeDescription()
-    {
-        Integer value = _directory.getInteger(TAG_CANON_CUSTOM_FUNCTION_SHUTTER_SPEED_IN_AV_MODE);
-        if (value==null)
-            return null;
-        switch (value) {
-            case 0:     return "Automatic";
-            case 1:     return "1/200 (fixed)";
-            default:    return "Unknown (" + value + ")";
-        }
-    }
-
-    @Nullable
-    public String getAutoExposureBracketingSequenceAndAutoCancellationDescription()
-    {
-        Integer value = _directory.getInteger(TAG_CANON_CUSTOM_FUNCTION_BRACKETING);
-        if (value==null)
-            return null;
-        switch (value) {
-            case 0:     return "0,-,+ / Enabled";
-            case 1:     return "0,-,+ / Disabled";
-            case 2:     return "-,0,+ / Enabled";
-            case 3:     return "-,0,+ / Disabled";
-            default:    return "Unknown (" + value + ")";
-        }
-    }
-
-    @Nullable
-    public String getShutterCurtainSyncDescription()
-    {
-        Integer value = _directory.getInteger(TAG_CANON_CUSTOM_FUNCTION_SHUTTER_CURTAIN_SYNC);
-        if (value==null)
-            return null;
-        switch (value) {
-            case 0:     return "1st Curtain Sync";
-            case 1:     return "2nd Curtain Sync";
-            default:    return "Unknown (" + value + ")";
-        }
-    }
-
-    @Nullable
-    public String getLensAutoFocusStopButtonDescription()
-    {
-        Integer value = _directory.getInteger(TAG_CANON_CUSTOM_FUNCTION_AF_STOP);
-        if (value==null)
-            return null;
-        switch (value) {
-            case 0:     return "AF stop";
-            case 1:     return "Operate AF";
-            case 2:     return "Lock AE and start timer";
-            default:    return "Unknown (" + value + ")";
-        }
-    }
-
-    @Nullable
-    public String getFillFlashReductionDescription()
-    {
-        Integer value = _directory.getInteger(TAG_CANON_CUSTOM_FUNCTION_FILL_FLASH_REDUCTION);
-        if (value==null)
-            return null;
-        switch (value) {
-            case 0:     return "Enabled";
-            case 1:     return "Disabled";
-            default:    return "Unknown (" + value + ")";
-        }
-    }
-
-    @Nullable
-    public String getMenuButtonReturnPositionDescription()
-    {
-        Integer value = _directory.getInteger(TAG_CANON_CUSTOM_FUNCTION_MENU_BUTTON_RETURN);
-        if (value==null)
-            return null;
-        switch (value) {
-            case 0:     return "Top";
-            case 1:     return "Previous (volatile)";
-            case 2:     return "Previous";
-            default:    return "Unknown (" + value + ")";
-        }
-    }
-
-    @Nullable
-    public String getSetButtonFunctionWhenShootingDescription()
-    {
-        Integer value = _directory.getInteger(TAG_CANON_CUSTOM_FUNCTION_SET_BUTTON_FUNCTION);
-        if (value==null)
-            return null;
-        switch (value) {
-            case 0:     return "Not Assigned";
-            case 1:     return "Change Quality";
-            case 2:     return "Change ISO Speed";
-            case 3:     return "Select Parameters";
-            default:    return "Unknown (" + value + ")";
-        }
-    }
-
-    @Nullable
-    public String getSensorCleaningDescription()
-    {
-        Integer value = _directory.getInteger(TAG_CANON_CUSTOM_FUNCTION_SENSOR_CLEANING);
-        if (value==null)
-            return null;
-        switch (value) {
-            case 0:     return "Disabled";
-            case 1:     return "Enabled";
-            default:    return "Unknown (" + value + ")";
-        }
-    }
-*/
+		@Nullable
+		public String getLongExposureNoiseReductionDescription()
+		{
+		Integer value = _directory.getInteger(TAG_CANON_CUSTOM_FUNCTION_LONG_EXPOSURE_NOISE_REDUCTION);
+		if (value==null)
+		return null;
+		switch (value) {
+		case 0:     return "Off";
+		case 1:     return "On";
+		default:    return "Unknown (" + value + ")";
+		}
+		}
+		
+		@Nullable
+		public String getShutterAutoExposureLockButtonDescription()
+		{
+		Integer value = _directory.getInteger(TAG_CANON_CUSTOM_FUNCTION_SHUTTER_AUTO_EXPOSURE_LOCK_BUTTONS);
+		if (value==null)
+		return null;
+		switch (value) {
+		case 0:     return "AF/AE lock";
+		case 1:     return "AE lock/AF";
+		case 2:     return "AF/AF lock";
+		case 3:     return "AE+release/AE+AF";
+		default:    return "Unknown (" + value + ")";
+		}
+		}
+		
+		@Nullable
+		public String getMirrorLockupDescription()
+		{
+		Integer value = _directory.getInteger(TAG_CANON_CUSTOM_FUNCTION_MIRROR_LOCKUP);
+		if (value==null)
+		return null;
+		switch (value) {
+		case 0:     return "Disabled";
+		case 1:     return "Enabled";
+		default:    return "Unknown (" + value + ")";
+		}
+		}
+		
+		@Nullable
+		public String getTvAndAvExposureLevelDescription()
+		{
+		Integer value = _directory.getInteger(TAG_CANON_CUSTOM_FUNCTION_TV_AV_AND_EXPOSURE_LEVEL);
+		if (value==null)
+		return null;
+		switch (value) {
+		case 0:     return "1/2 stop";
+		case 1:     return "1/3 stop";
+		default:    return "Unknown (" + value + ")";
+		}
+		}
+		
+		@Nullable
+		public String getAutoFocusAssistLightDescription()
+		{
+		Integer value = _directory.getInteger(TAG_CANON_CUSTOM_FUNCTION_AF_ASSIST_LIGHT);
+		if (value==null)
+		return null;
+		switch (value) {
+		case 0:     return "On (Auto)";
+		case 1:     return "Off";
+		default:    return "Unknown (" + value + ")";
+		}
+		}
+		
+		@Nullable
+		public String getShutterSpeedInAvModeDescription()
+		{
+		Integer value = _directory.getInteger(TAG_CANON_CUSTOM_FUNCTION_SHUTTER_SPEED_IN_AV_MODE);
+		if (value==null)
+		return null;
+		switch (value) {
+		case 0:     return "Automatic";
+		case 1:     return "1/200 (fixed)";
+		default:    return "Unknown (" + value + ")";
+		}
+		}
+		
+		@Nullable
+		public String getAutoExposureBracketingSequenceAndAutoCancellationDescription()
+		{
+		Integer value = _directory.getInteger(TAG_CANON_CUSTOM_FUNCTION_BRACKETING);
+		if (value==null)
+		return null;
+		switch (value) {
+		case 0:     return "0,-,+ / Enabled";
+		case 1:     return "0,-,+ / Disabled";
+		case 2:     return "-,0,+ / Enabled";
+		case 3:     return "-,0,+ / Disabled";
+		default:    return "Unknown (" + value + ")";
+		}
+		}
+		
+		@Nullable
+		public String getShutterCurtainSyncDescription()
+		{
+		Integer value = _directory.getInteger(TAG_CANON_CUSTOM_FUNCTION_SHUTTER_CURTAIN_SYNC);
+		if (value==null)
+		return null;
+		switch (value) {
+		case 0:     return "1st Curtain Sync";
+		case 1:     return "2nd Curtain Sync";
+		default:    return "Unknown (" + value + ")";
+		}
+		}
+		
+		@Nullable
+		public String getLensAutoFocusStopButtonDescription()
+		{
+		Integer value = _directory.getInteger(TAG_CANON_CUSTOM_FUNCTION_AF_STOP);
+		if (value==null)
+		return null;
+		switch (value) {
+		case 0:     return "AF stop";
+		case 1:     return "Operate AF";
+		case 2:     return "Lock AE and start timer";
+		default:    return "Unknown (" + value + ")";
+		}
+		}
+		
+		@Nullable
+		public String getFillFlashReductionDescription()
+		{
+		Integer value = _directory.getInteger(TAG_CANON_CUSTOM_FUNCTION_FILL_FLASH_REDUCTION);
+		if (value==null)
+		return null;
+		switch (value) {
+		case 0:     return "Enabled";
+		case 1:     return "Disabled";
+		default:    return "Unknown (" + value + ")";
+		}
+		}
+		
+		@Nullable
+		public String getMenuButtonReturnPositionDescription()
+		{
+		Integer value = _directory.getInteger(TAG_CANON_CUSTOM_FUNCTION_MENU_BUTTON_RETURN);
+		if (value==null)
+		return null;
+		switch (value) {
+		case 0:     return "Top";
+		case 1:     return "Previous (volatile)";
+		case 2:     return "Previous";
+		default:    return "Unknown (" + value + ")";
+		}
+		}
+		
+		@Nullable
+		public String getSetButtonFunctionWhenShootingDescription()
+		{
+		Integer value = _directory.getInteger(TAG_CANON_CUSTOM_FUNCTION_SET_BUTTON_FUNCTION);
+		if (value==null)
+		return null;
+		switch (value) {
+		case 0:     return "Not Assigned";
+		case 1:     return "Change Quality";
+		case 2:     return "Change ISO Speed";
+		case 3:     return "Select Parameters";
+		default:    return "Unknown (" + value + ")";
+		}
+		}
+		
+		@Nullable
+		public String getSensorCleaningDescription()
+		{
+		Integer value = _directory.getInteger(TAG_CANON_CUSTOM_FUNCTION_SENSOR_CLEANING);
+		if (value==null)
+		return null;
+		switch (value) {
+		case 0:     return "Disabled";
+		case 1:     return "Enabled";
+		default:    return "Unknown (" + value + ")";
+		}
+		}
+		*/
 		[CanBeNull]
 		public virtual string GetFlashBiasDescription()
 		{
-			int? value = _directory.GetInteger(CanonMakernoteDirectory.FocalLength.TagFlashBias);
+			int value = _directory.GetInteger(CanonMakernoteDirectory.FocalLength.TagFlashBias);
 			if (value == null)
 			{
 				return null;
@@ -421,13 +420,13 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 			//  0, 0.375, 0.5, 0.626, 1
 			// not
 			//  0, 0.33,  0.5, 0.66,  1
-            return ((isNegative) ? "-" : string.Empty) + (value / 32f).Value.ToString("###########0.0###########") + " EV";
+			return ((isNegative) ? "-" : string.Empty) + (value / 32f).ToString() + " EV";
 		}
 
 		[CanBeNull]
 		public virtual string GetAfPointUsedDescription()
 		{
-			int? value = _directory.GetInteger(CanonMakernoteDirectory.FocalLength.TagAfPointUsed);
+			int value = _directory.GetInteger(CanonMakernoteDirectory.FocalLength.TagAfPointUsed);
 			if (value == null)
 			{
 				return null;
@@ -471,7 +470,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		[CanBeNull]
 		public virtual string GetFlashDetailsDescription()
 		{
-			int? value = _directory.GetInteger(CanonMakernoteDirectory.CameraSettings.TagFlashDetails);
+			int value = _directory.GetInteger(CanonMakernoteDirectory.CameraSettings.TagFlashDetails);
 			if (value == null)
 			{
 				return null;
@@ -498,7 +497,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		[CanBeNull]
 		public virtual string GetFocalUnitsPerMillimetreDescription()
 		{
-			int? value = _directory.GetInteger(CanonMakernoteDirectory.CameraSettings.TagFocalUnitsPerMm);
+			int value = _directory.GetInteger(CanonMakernoteDirectory.CameraSettings.TagFocalUnitsPerMm);
 			if (value == null)
 			{
 				return null;
@@ -516,7 +515,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		[CanBeNull]
 		public virtual string GetShortFocalLengthDescription()
 		{
-			int? value = _directory.GetInteger(CanonMakernoteDirectory.CameraSettings.TagShortFocalLength);
+			int value = _directory.GetInteger(CanonMakernoteDirectory.CameraSettings.TagShortFocalLength);
 			if (value == null)
 			{
 				return null;
@@ -528,7 +527,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		[CanBeNull]
 		public virtual string GetLongFocalLengthDescription()
 		{
-			int? value = _directory.GetInteger(CanonMakernoteDirectory.CameraSettings.TagLongFocalLength);
+			int value = _directory.GetInteger(CanonMakernoteDirectory.CameraSettings.TagLongFocalLength);
 			if (value == null)
 			{
 				return null;
@@ -558,7 +557,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		[CanBeNull]
 		public virtual string GetIsoDescription()
 		{
-			int? value = _directory.GetInteger(CanonMakernoteDirectory.CameraSettings.TagIso);
+			int value = _directory.GetInteger(CanonMakernoteDirectory.CameraSettings.TagIso);
 			if (value == null)
 			{
 				return null;
@@ -611,7 +610,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		[CanBeNull]
 		public virtual string GetSharpnessDescription()
 		{
-			int? value = _directory.GetInteger(CanonMakernoteDirectory.CameraSettings.TagSharpness);
+			int value = _directory.GetInteger(CanonMakernoteDirectory.CameraSettings.TagSharpness);
 			if (value == null)
 			{
 				return null;
@@ -643,7 +642,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		[CanBeNull]
 		public virtual string GetSaturationDescription()
 		{
-			int? value = _directory.GetInteger(CanonMakernoteDirectory.CameraSettings.TagSaturation);
+			int value = _directory.GetInteger(CanonMakernoteDirectory.CameraSettings.TagSaturation);
 			if (value == null)
 			{
 				return null;
@@ -675,7 +674,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		[CanBeNull]
 		public virtual string GetContrastDescription()
 		{
-			int? value = _directory.GetInteger(CanonMakernoteDirectory.CameraSettings.TagContrast);
+			int value = _directory.GetInteger(CanonMakernoteDirectory.CameraSettings.TagContrast);
 			if (value == null)
 			{
 				return null;
@@ -707,8 +706,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		[CanBeNull]
 		public virtual string GetEasyShootingModeDescription()
 		{
-			return GetIndexedDescription(CanonMakernoteDirectory.CameraSettings.TagEasyShootingMode, "Full auto", "Manual", "Landscape", "Fast shutter", "Slow shutter", "Night", "B&W", "Sepia", "Portrait", "Sports"
-				, "Macro / Closeup", "Pan focus");
+			return GetIndexedDescription(CanonMakernoteDirectory.CameraSettings.TagEasyShootingMode, "Full auto", "Manual", "Landscape", "Fast shutter", "Slow shutter", "Night", "B&W", "Sepia", "Portrait", "Sports", "Macro / Closeup", "Pan focus");
 		}
 
 		[CanBeNull]
@@ -727,7 +725,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		[CanBeNull]
 		public virtual string GetContinuousDriveModeDescription()
 		{
-			int? value = _directory.GetInteger(CanonMakernoteDirectory.CameraSettings.TagContinuousDriveMode);
+			int value = _directory.GetInteger(CanonMakernoteDirectory.CameraSettings.TagContinuousDriveMode);
 			if (value == null)
 			{
 				return null;
@@ -736,7 +734,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 			{
 				case 0:
 				{
-					int? delay = _directory.GetInteger(CanonMakernoteDirectory.CameraSettings.TagSelfTimerDelay);
+					int delay = _directory.GetInteger(CanonMakernoteDirectory.CameraSettings.TagSelfTimerDelay);
 					if (delay != null)
 					{
 						return delay == 0 ? "Single shot" : "Single shot with self-timer";
@@ -755,7 +753,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		[CanBeNull]
 		public virtual string GetFlashModeDescription()
 		{
-			int? value = _directory.GetInteger(CanonMakernoteDirectory.CameraSettings.TagFlashMode);
+			int value = _directory.GetInteger(CanonMakernoteDirectory.CameraSettings.TagFlashMode);
 			if (value == null)
 			{
 				return null;
@@ -813,7 +811,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		[CanBeNull]
 		public virtual string GetSelfTimerDelayDescription()
 		{
-			int? value = _directory.GetInteger(CanonMakernoteDirectory.CameraSettings.TagSelfTimerDelay);
+			int value = _directory.GetInteger(CanonMakernoteDirectory.CameraSettings.TagSelfTimerDelay);
 			if (value == null)
 			{
 				return null;
@@ -850,7 +848,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		[CanBeNull]
 		public virtual string GetFocusTypeDescription()
 		{
-			int? value = _directory.GetInteger(CanonMakernoteDirectory.CameraSettings.TagFocusType);
+			int value = _directory.GetInteger(CanonMakernoteDirectory.CameraSettings.TagFocusType);
 			if (value == null)
 			{
 				return null;

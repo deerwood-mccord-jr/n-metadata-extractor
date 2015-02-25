@@ -1,26 +1,25 @@
 /*
- * Copyright 2002-2013 Drew Noakes
- *
- *    Licensed under the Apache License, Version 2.0 (the "License");
- *    you may not use this file except in compliance with the License.
- *    You may obtain a copy of the License at
- *
- *        http://www.apache.org/licenses/LICENSE-2.0
- *
- *    Unless required by applicable law or agreed to in writing, software
- *    distributed under the License is distributed on an "AS IS" BASIS,
- *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    See the License for the specific language governing permissions and
- *    limitations under the License.
- *
- * More information about this project is available at:
- *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
- */
+* Copyright 2002-2013 Drew Noakes
+*
+*    Licensed under the Apache License, Version 2.0 (the "License");
+*    you may not use this file except in compliance with the License.
+*    You may obtain a copy of the License at
+*
+*        http://www.apache.org/licenses/LICENSE-2.0
+*
+*    Unless required by applicable law or agreed to in writing, software
+*    distributed under the License is distributed on an "AS IS" BASIS,
+*    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+*    See the License for the specific language governing permissions and
+*    limitations under the License.
+*
+* More information about this project is available at:
+*
+*    http://drewnoakes.com/code/exif/
+*    http://code.google.com/p/metadata-extractor/
+*/
 using Com.Drew.Lang;
 using Com.Drew.Metadata;
-using Com.Drew.Metadata.Exif;
 using JetBrains.Annotations;
 using Sharpen;
 
@@ -67,92 +66,92 @@ namespace Com.Drew.Metadata.Exif
 		{
 			switch (tagType)
 			{
-				case ExifThumbnailDirectory.TagOrientation:
+				case TagOrientation:
 				{
 					return GetOrientationDescription();
 				}
 
-                case ExifThumbnailDirectory.TagResolutionUnit:
+				case TagResolutionUnit:
 				{
 					return GetResolutionDescription();
 				}
 
-                case ExifThumbnailDirectory.TagYcbcrPositioning:
+				case TagYcbcrPositioning:
 				{
 					return GetYCbCrPositioningDescription();
 				}
 
-                case ExifThumbnailDirectory.TagXResolution:
+				case TagXResolution:
 				{
 					return GetXResolutionDescription();
 				}
 
-                case ExifThumbnailDirectory.TagYResolution:
+				case TagYResolution:
 				{
 					return GetYResolutionDescription();
 				}
 
-                case ExifThumbnailDirectory.TagThumbnailOffset:
+				case TagThumbnailOffset:
 				{
 					return GetThumbnailOffsetDescription();
 				}
 
-                case ExifThumbnailDirectory.TagThumbnailLength:
+				case TagThumbnailLength:
 				{
 					return GetThumbnailLengthDescription();
 				}
 
-                case ExifThumbnailDirectory.TagThumbnailImageWidth:
+				case TagThumbnailImageWidth:
 				{
 					return GetThumbnailImageWidthDescription();
 				}
 
-                case ExifThumbnailDirectory.TagThumbnailImageHeight:
+				case TagThumbnailImageHeight:
 				{
 					return GetThumbnailImageHeightDescription();
 				}
 
-                case ExifThumbnailDirectory.TagBitsPerSample:
+				case TagBitsPerSample:
 				{
 					return GetBitsPerSampleDescription();
 				}
 
-                case ExifThumbnailDirectory.TagThumbnailCompression:
+				case TagThumbnailCompression:
 				{
 					return GetCompressionDescription();
 				}
 
-                case ExifThumbnailDirectory.TagPhotometricInterpretation:
+				case TagPhotometricInterpretation:
 				{
 					return GetPhotometricInterpretationDescription();
 				}
 
-                case ExifThumbnailDirectory.TagRowsPerStrip:
+				case TagRowsPerStrip:
 				{
 					return GetRowsPerStripDescription();
 				}
 
-                case ExifThumbnailDirectory.TagStripByteCounts:
+				case TagStripByteCounts:
 				{
 					return GetStripByteCountsDescription();
 				}
 
-                case ExifThumbnailDirectory.TagSamplesPerPixel:
+				case TagSamplesPerPixel:
 				{
 					return GetSamplesPerPixelDescription();
 				}
 
-                case ExifThumbnailDirectory.TagPlanarConfiguration:
+				case TagPlanarConfiguration:
 				{
 					return GetPlanarConfigurationDescription();
 				}
 
-                case ExifThumbnailDirectory.TagYcbcrSubsampling:
+				case TagYcbcrSubsampling:
 				{
 					return GetYCbCrSubsamplingDescription();
 				}
 
-                case ExifThumbnailDirectory.TagReferenceBlackWhite:
+				case TagReferenceBlackWhite:
 				{
 					return GetReferenceBlackWhiteDescription();
 				}
@@ -167,7 +166,7 @@ namespace Com.Drew.Metadata.Exif
 		[CanBeNull]
 		public virtual string GetReferenceBlackWhiteDescription()
 		{
-            int[] ints = _directory.GetIntArray(ExifThumbnailDirectory.TagReferenceBlackWhite);
+			int[] ints = _directory.GetIntArray(TagReferenceBlackWhite);
 			if (ints == null || ints.Length < 6)
 			{
 				return null;
@@ -184,7 +183,7 @@ namespace Com.Drew.Metadata.Exif
 		[CanBeNull]
 		public virtual string GetYCbCrSubsamplingDescription()
 		{
-            int[] positions = _directory.GetIntArray(ExifThumbnailDirectory.TagYcbcrSubsampling);
+			int[] positions = _directory.GetIntArray(TagYcbcrSubsampling);
 			if (positions == null || positions.Length < 2)
 			{
 				return null;
@@ -213,27 +212,27 @@ namespace Com.Drew.Metadata.Exif
 			// data. If value is '1', Y/Cb/Cr value is chunky format, contiguous for each subsampling
 			// pixel. If value is '2', Y/Cb/Cr value is separated and stored to Y plane/Cb plane/Cr
 			// plane format.
-            return GetIndexedDescription(ExifThumbnailDirectory.TagPlanarConfiguration, 1, "Chunky (contiguous for each subsampling pixel)", "Separate (Y-plane/Cb-plane/Cr-plane format)");
+			return GetIndexedDescription(TagPlanarConfiguration, 1, "Chunky (contiguous for each subsampling pixel)", "Separate (Y-plane/Cb-plane/Cr-plane format)");
 		}
 
 		[CanBeNull]
 		public virtual string GetSamplesPerPixelDescription()
 		{
-            string value = _directory.GetString(ExifThumbnailDirectory.TagSamplesPerPixel);
+			string value = _directory.GetString(TagSamplesPerPixel);
 			return value == null ? null : value + " samples/pixel";
 		}
 
 		[CanBeNull]
 		public virtual string GetRowsPerStripDescription()
 		{
-            string value = _directory.GetString(ExifThumbnailDirectory.TagRowsPerStrip);
+			string value = _directory.GetString(TagRowsPerStrip);
 			return value == null ? null : value + " rows/strip";
 		}
 
 		[CanBeNull]
 		public virtual string GetStripByteCountsDescription()
 		{
-            string value = _directory.GetString(ExifThumbnailDirectory.TagStripByteCounts);
+			string value = _directory.GetString(TagStripByteCounts);
 			return value == null ? null : value + " bytes";
 		}
 
@@ -241,7 +240,7 @@ namespace Com.Drew.Metadata.Exif
 		public virtual string GetPhotometricInterpretationDescription()
 		{
 			// Shows the color space of the image data components
-            int? value = _directory.GetInteger(ExifThumbnailDirectory.TagPhotometricInterpretation);
+			int value = _directory.GetInteger(TagPhotometricInterpretation);
 			if (value == null)
 			{
 				return null;
@@ -328,7 +327,7 @@ namespace Com.Drew.Metadata.Exif
 		[CanBeNull]
 		public virtual string GetCompressionDescription()
 		{
-            int? value = _directory.GetInteger(ExifThumbnailDirectory.TagThumbnailCompression);
+			int value = _directory.GetInteger(TagThumbnailCompression);
 			if (value == null)
 			{
 				return null;
@@ -480,42 +479,42 @@ namespace Com.Drew.Metadata.Exif
 		[CanBeNull]
 		public virtual string GetBitsPerSampleDescription()
 		{
-            string value = _directory.GetString(ExifThumbnailDirectory.TagBitsPerSample);
+			string value = _directory.GetString(TagBitsPerSample);
 			return value == null ? null : value + " bits/component/pixel";
 		}
 
 		[CanBeNull]
 		public virtual string GetThumbnailImageWidthDescription()
 		{
-            string value = _directory.GetString(ExifThumbnailDirectory.TagThumbnailImageWidth);
+			string value = _directory.GetString(TagThumbnailImageWidth);
 			return value == null ? null : value + " pixels";
 		}
 
 		[CanBeNull]
 		public virtual string GetThumbnailImageHeightDescription()
 		{
-            string value = _directory.GetString(ExifThumbnailDirectory.TagThumbnailImageHeight);
+			string value = _directory.GetString(TagThumbnailImageHeight);
 			return value == null ? null : value + " pixels";
 		}
 
 		[CanBeNull]
 		public virtual string GetThumbnailLengthDescription()
 		{
-            string value = _directory.GetString(ExifThumbnailDirectory.TagThumbnailLength);
+			string value = _directory.GetString(TagThumbnailLength);
 			return value == null ? null : value + " bytes";
 		}
 
 		[CanBeNull]
 		public virtual string GetThumbnailOffsetDescription()
 		{
-            string value = _directory.GetString(ExifThumbnailDirectory.TagThumbnailOffset);
+			string value = _directory.GetString(TagThumbnailOffset);
 			return value == null ? null : value + " bytes";
 		}
 
 		[CanBeNull]
 		public virtual string GetYResolutionDescription()
 		{
-            Rational value = _directory.GetRational(ExifThumbnailDirectory.TagYResolution);
+			Rational value = _directory.GetRational(TagYResolution);
 			if (value == null)
 			{
 				return null;
@@ -527,7 +526,7 @@ namespace Com.Drew.Metadata.Exif
 		[CanBeNull]
 		public virtual string GetXResolutionDescription()
 		{
-            Rational value = _directory.GetRational(ExifThumbnailDirectory.TagXResolution);
+			Rational value = _directory.GetRational(TagXResolution);
 			if (value == null)
 			{
 				return null;
@@ -539,21 +538,21 @@ namespace Com.Drew.Metadata.Exif
 		[CanBeNull]
 		public virtual string GetYCbCrPositioningDescription()
 		{
-            return GetIndexedDescription(ExifThumbnailDirectory.TagYcbcrPositioning, 1, "Center of pixel array", "Datum point");
+			return GetIndexedDescription(TagYcbcrPositioning, 1, "Center of pixel array", "Datum point");
 		}
 
 		[CanBeNull]
 		public virtual string GetOrientationDescription()
 		{
-            return GetIndexedDescription(ExifThumbnailDirectory.TagOrientation, 1, "Top, left side (Horizontal / normal)", "Top, right side (Mirror horizontal)", "Bottom, right side (Rotate 180)", "Bottom, left side (Mirror vertical)", 
-				"Left side, top (Mirror horizontal and rotate 270 CW)", "Right side, top (Rotate 90 CW)", "Right side, bottom (Mirror horizontal and rotate 90 CW)", "Left side, bottom (Rotate 270 CW)");
+			return GetIndexedDescription(TagOrientation, 1, "Top, left side (Horizontal / normal)", "Top, right side (Mirror horizontal)", "Bottom, right side (Rotate 180)", "Bottom, left side (Mirror vertical)", "Left side, top (Mirror horizontal and rotate 270 CW)"
+				, "Right side, top (Rotate 90 CW)", "Right side, bottom (Mirror horizontal and rotate 90 CW)", "Left side, bottom (Rotate 270 CW)");
 		}
 
 		[CanBeNull]
 		public virtual string GetResolutionDescription()
 		{
 			// '1' means no-unit, '2' means inch, '3' means centimeter. Default value is '2'(inch)
-            return GetIndexedDescription(ExifThumbnailDirectory.TagResolutionUnit, 1, "(No unit)", "Inch", "cm");
+			return GetIndexedDescription(TagResolutionUnit, 1, "(No unit)", "Inch", "cm");
 		}
 	}
 }

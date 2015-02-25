@@ -1,25 +1,24 @@
 /*
- * Copyright 2002-2013 Drew Noakes
- *
- *    Licensed under the Apache License, Version 2.0 (the "License");
- *    you may not use this file except in compliance with the License.
- *    You may obtain a copy of the License at
- *
- *        http://www.apache.org/licenses/LICENSE-2.0
- *
- *    Unless required by applicable law or agreed to in writing, software
- *    distributed under the License is distributed on an "AS IS" BASIS,
- *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    See the License for the specific language governing permissions and
- *    limitations under the License.
- *
- * More information about this project is available at:
- *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
- */
+* Copyright 2002-2013 Drew Noakes
+*
+*    Licensed under the Apache License, Version 2.0 (the "License");
+*    you may not use this file except in compliance with the License.
+*    You may obtain a copy of the License at
+*
+*        http://www.apache.org/licenses/LICENSE-2.0
+*
+*    Unless required by applicable law or agreed to in writing, software
+*    distributed under the License is distributed on an "AS IS" BASIS,
+*    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+*    See the License for the specific language governing permissions and
+*    limitations under the License.
+*
+* More information about this project is available at:
+*
+*    http://drewnoakes.com/code/exif/
+*    http://code.google.com/p/metadata-extractor/
+*/
 using Com.Drew.Metadata;
-using Com.Drew.Metadata.Exif.Makernotes;
 using JetBrains.Annotations;
 using Sharpen;
 
@@ -43,62 +42,62 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		{
 			switch (tagType)
 			{
-                case CasioType1MakernoteDirectory.TagRecordingMode:
+				case TagRecordingMode:
 				{
 					return GetRecordingModeDescription();
 				}
 
-                case CasioType1MakernoteDirectory.TagQuality:
+				case TagQuality:
 				{
 					return GetQualityDescription();
 				}
 
-                case CasioType1MakernoteDirectory.TagFocusingMode:
+				case TagFocusingMode:
 				{
 					return GetFocusingModeDescription();
 				}
 
-                case CasioType1MakernoteDirectory.TagFlashMode:
+				case TagFlashMode:
 				{
 					return GetFlashModeDescription();
 				}
 
-                case CasioType1MakernoteDirectory.TagFlashIntensity:
+				case TagFlashIntensity:
 				{
 					return GetFlashIntensityDescription();
 				}
 
-                case CasioType1MakernoteDirectory.TagObjectDistance:
+				case TagObjectDistance:
 				{
 					return GetObjectDistanceDescription();
 				}
 
-                case CasioType1MakernoteDirectory.TagWhiteBalance:
+				case TagWhiteBalance:
 				{
 					return GetWhiteBalanceDescription();
 				}
 
-                case CasioType1MakernoteDirectory.TagDigitalZoom:
+				case TagDigitalZoom:
 				{
 					return GetDigitalZoomDescription();
 				}
 
-                case CasioType1MakernoteDirectory.TagSharpness:
+				case TagSharpness:
 				{
 					return GetSharpnessDescription();
 				}
 
-                case CasioType1MakernoteDirectory.TagContrast:
+				case TagContrast:
 				{
 					return GetContrastDescription();
 				}
 
-                case CasioType1MakernoteDirectory.TagSaturation:
+				case TagSaturation:
 				{
 					return GetSaturationDescription();
 				}
 
-                case CasioType1MakernoteDirectory.TagCcdSensitivity:
+				case TagCcdSensitivity:
 				{
 					return GetCcdSensitivityDescription();
 				}
@@ -113,7 +112,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		[CanBeNull]
 		public virtual string GetCcdSensitivityDescription()
 		{
-            int? value = _directory.GetInteger(CasioType1MakernoteDirectory.TagCcdSensitivity);
+			int value = _directory.GetInteger(TagCcdSensitivity);
 			if (value == null)
 			{
 				return null;
@@ -162,25 +161,25 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		[CanBeNull]
 		public virtual string GetSaturationDescription()
 		{
-            return GetIndexedDescription(CasioType1MakernoteDirectory.TagSaturation, "Normal", "Low", "High");
+			return GetIndexedDescription(TagSaturation, "Normal", "Low", "High");
 		}
 
 		[CanBeNull]
 		public virtual string GetContrastDescription()
 		{
-            return GetIndexedDescription(CasioType1MakernoteDirectory.TagContrast, "Normal", "Low", "High");
+			return GetIndexedDescription(TagContrast, "Normal", "Low", "High");
 		}
 
 		[CanBeNull]
 		public virtual string GetSharpnessDescription()
 		{
-            return GetIndexedDescription(CasioType1MakernoteDirectory.TagSharpness, "Normal", "Soft", "Hard");
+			return GetIndexedDescription(TagSharpness, "Normal", "Soft", "Hard");
 		}
 
 		[CanBeNull]
 		public virtual string GetDigitalZoomDescription()
 		{
-            int? value = _directory.GetInteger(CasioType1MakernoteDirectory.TagDigitalZoom);
+			int value = _directory.GetInteger(TagDigitalZoom);
 			if (value == null)
 			{
 				return null;
@@ -217,7 +216,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		[CanBeNull]
 		public virtual string GetWhiteBalanceDescription()
 		{
-            int? value = _directory.GetInteger(CasioType1MakernoteDirectory.TagWhiteBalance);
+			int value = _directory.GetInteger(TagWhiteBalance);
 			if (value == null)
 			{
 				return null;
@@ -264,7 +263,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		[CanBeNull]
 		public virtual string GetObjectDistanceDescription()
 		{
-            int? value = _directory.GetInteger(CasioType1MakernoteDirectory.TagObjectDistance);
+			int value = _directory.GetInteger(TagObjectDistance);
 			if (value == null)
 			{
 				return null;
@@ -275,7 +274,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		[CanBeNull]
 		public virtual string GetFlashIntensityDescription()
 		{
-            int? value = _directory.GetInteger(CasioType1MakernoteDirectory.TagFlashIntensity);
+			int value = _directory.GetInteger(TagFlashIntensity);
 			if (value == null)
 			{
 				return null;
@@ -307,25 +306,25 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		[CanBeNull]
 		public virtual string GetFlashModeDescription()
 		{
-			return GetIndexedDescription(CasioType1MakernoteDirectory.TagFlashMode, 1, "Auto", "On", "Off", "Red eye reduction");
+			return GetIndexedDescription(TagFlashMode, 1, "Auto", "On", "Off", "Red eye reduction");
 		}
 
 		[CanBeNull]
 		public virtual string GetFocusingModeDescription()
 		{
-            return GetIndexedDescription(CasioType1MakernoteDirectory.TagFocusingMode, 2, "Macro", "Auto focus", "Manual focus", "Infinity");
+			return GetIndexedDescription(TagFocusingMode, 2, "Macro", "Auto focus", "Manual focus", "Infinity");
 		}
 
 		[CanBeNull]
 		public virtual string GetQualityDescription()
 		{
-            return GetIndexedDescription(CasioType1MakernoteDirectory.TagQuality, 1, "Economy", "Normal", "Fine");
+			return GetIndexedDescription(TagQuality, 1, "Economy", "Normal", "Fine");
 		}
 
 		[CanBeNull]
 		public virtual string GetRecordingModeDescription()
 		{
-            return GetIndexedDescription(CasioType1MakernoteDirectory.TagRecordingMode, 1, "Single shutter", "Panorama", "Night scene", "Portrait", "Landscape");
+			return GetIndexedDescription(TagRecordingMode, 1, "Single shutter", "Panorama", "Night scene", "Portrait", "Landscape");
 		}
 	}
 }

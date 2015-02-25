@@ -1,29 +1,28 @@
 /*
- * Copyright 2002-2013 Drew Noakes
- *
- *    Licensed under the Apache License, Version 2.0 (the "License");
- *    you may not use this file except in compliance with the License.
- *    You may obtain a copy of the License at
- *
- *        http://www.apache.org/licenses/LICENSE-2.0
- *
- *    Unless required by applicable law or agreed to in writing, software
- *    distributed under the License is distributed on an "AS IS" BASIS,
- *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    See the License for the specific language governing permissions and
- *    limitations under the License.
- *
- * More information about this project is available at:
- *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
- */
+* Copyright 2002-2013 Drew Noakes
+*
+*    Licensed under the Apache License, Version 2.0 (the "License");
+*    you may not use this file except in compliance with the License.
+*    You may obtain a copy of the License at
+*
+*        http://www.apache.org/licenses/LICENSE-2.0
+*
+*    Unless required by applicable law or agreed to in writing, software
+*    distributed under the License is distributed on an "AS IS" BASIS,
+*    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+*    See the License for the specific language governing permissions and
+*    limitations under the License.
+*
+* More information about this project is available at:
+*
+*    http://drewnoakes.com/code/exif/
+*    http://code.google.com/p/metadata-extractor/
+*/
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Com.Drew.Lang;
-using Com.Drew.Metadata;
 using JetBrains.Annotations;
 using Sharpen;
 using Sharpen.Reflect;
@@ -54,7 +53,7 @@ namespace Com.Drew.Metadata
 		private readonly ICollection<string> _errorList = new AList<string>(4);
 
 		/// <summary>The descriptor used to interpret tag values.</summary>
-		protected internal ITagDescriptor _descriptor;
+		protected internal TagDescriptor _descriptor;
 
 		// ABSTRACT METHODS
 		/// <summary>Provides the name of the directory, for display purposes.</summary>
@@ -98,7 +97,7 @@ namespace Com.Drew.Metadata
 
 		/// <summary>Sets the descriptor used to interpret tag values.</summary>
 		/// <param name="descriptor">the descriptor used to interpret tag values</param>
-		public virtual void SetDescriptor(ITagDescriptor descriptor)
+		public virtual void SetDescriptor(TagDescriptor descriptor)
 		{
 			if (descriptor == null)
 			{
@@ -126,7 +125,7 @@ namespace Com.Drew.Metadata
 		[NotNull]
 		public virtual Iterable<string> GetErrors()
 		{
-			return _errorList.AsIterable();
+			return _errorList;
 		}
 
 		/// <summary>Returns the count of error messages in this directory.</summary>
@@ -269,7 +268,7 @@ namespace Com.Drew.Metadata
 			//        else {
 			//            final Object oldValue = _tagMap.get(tagType);
 			//            if (!oldValue.equals(value))
-			//                addError(Sharpen.Extensions.StringFormat("Overwritten tag 0x%s (%s).  Old=%s, New=%s", Integer.toHexString(tagType), getTagName(tagType), oldValue, value));
+			//                addError(String.format("Overwritten tag 0x%s (%s).  Old=%s, New=%s", Integer.toHexString(tagType), getTagName(tagType), oldValue, value));
 			//        }
 			_tagMap.Put(tagType, value);
 		}
@@ -300,9 +299,9 @@ namespace Com.Drew.Metadata
 		/// </remarks>
 		/// <exception cref="MetadataException">if no value exists for tagType or if it cannot be converted to an int.</exception>
 		/// <exception cref="Com.Drew.Metadata.MetadataException"/>
-		public virtual int? GetInt(int tagType)
+		public virtual int GetInt(int tagType)
 		{
-			int? integer = GetInteger(tagType);
+			int integer = GetInteger(tagType);
 			if (integer != null)
 			{
 				return integer;
@@ -331,16 +330,16 @@ namespace Com.Drew.Metadata
 		/// If the value is not found or cannot be converted to int, <code>null</code> is returned.
 		/// </remarks>
 		[CanBeNull]
-		public virtual int? GetInteger(int tagType)
+		public virtual int GetInteger(int tagType)
 		{
 			object o = GetObject(tagType);
 			if (o == null)
 			{
 				return null;
 			}
-			if (o.IsNumber())
+			if (o is Number)
 			{
-				return Number.GetInstance(o).IntValue();
+				return ((Number)o).IntValue();
 			}
 			else
 			{
@@ -614,10 +613,10 @@ namespace Com.Drew.Metadata
 		/// <exception cref="Com.Drew.Metadata.MetadataException"/>
 		public virtual double GetDouble(int tagType)
 		{
-			double? value = GetDoubleObject(tagType);
+			double value = GetDoubleObject(tagType);
 			if (value != null)
 			{
-				return value.Value;
+				return value;
 			}
 			object o = GetObject(tagType);
 			if (o == null)
@@ -630,7 +629,7 @@ namespace Com.Drew.Metadata
 		/// <summary>Returns the specified tag's value as a Double.</summary>
 		/// <remarks>Returns the specified tag's value as a Double.  If the tag is not set or cannot be converted, <code>null</code> is returned.</remarks>
 		[CanBeNull]
-		public virtual double? GetDoubleObject(int tagType)
+		public virtual double GetDoubleObject(int tagType)
 		{
 			object o = GetObject(tagType);
 			if (o == null)
@@ -648,9 +647,9 @@ namespace Com.Drew.Metadata
 					return null;
 				}
 			}
-			if (o.IsNumber())
+			if (o is Number)
 			{
-				return Number.GetInstance(o).DoubleValue();
+				return ((Number)o).DoubleValue();
 			}
 			return null;
 		}
@@ -659,10 +658,10 @@ namespace Com.Drew.Metadata
 		/// <exception cref="Com.Drew.Metadata.MetadataException"/>
 		public virtual float GetFloat(int tagType)
 		{
-			float? value = GetFloatObject(tagType);
+			float value = GetFloatObject(tagType);
 			if (value != null)
 			{
-				return value.Value;
+				return value;
 			}
 			object o = GetObject(tagType);
 			if (o == null)
@@ -675,7 +674,7 @@ namespace Com.Drew.Metadata
 		/// <summary>Returns the specified tag's value as a float.</summary>
 		/// <remarks>Returns the specified tag's value as a float.  If the tag is not set or cannot be converted, <code>null</code> is returned.</remarks>
 		[CanBeNull]
-		public virtual float? GetFloatObject(int tagType)
+		public virtual float GetFloatObject(int tagType)
 		{
 			object o = GetObject(tagType);
 			if (o == null)
@@ -693,9 +692,9 @@ namespace Com.Drew.Metadata
 					return null;
 				}
 			}
-			if (o.IsNumber())
+			if (o is Number)
 			{
-				return Number.GetInstance(o).FloatValue();
+				return ((Number)o).FloatValue();
 			}
 			return null;
 		}
@@ -704,10 +703,10 @@ namespace Com.Drew.Metadata
 		/// <exception cref="Com.Drew.Metadata.MetadataException"/>
 		public virtual long GetLong(int tagType)
 		{
-			long? value = GetLongObject(tagType);
+			long value = GetLongObject(tagType);
 			if (value != null)
 			{
-				return value.Value;
+				return value;
 			}
 			object o = GetObject(tagType);
 			if (o == null)
@@ -720,7 +719,7 @@ namespace Com.Drew.Metadata
 		/// <summary>Returns the specified tag's value as a long.</summary>
 		/// <remarks>Returns the specified tag's value as a long.  If the tag is not set or cannot be converted, <code>null</code> is returned.</remarks>
 		[CanBeNull]
-		public virtual long? GetLongObject(int tagType)
+		public virtual long GetLongObject(int tagType)
 		{
 			object o = GetObject(tagType);
 			if (o == null)
@@ -738,9 +737,9 @@ namespace Com.Drew.Metadata
 					return null;
 				}
 			}
-			if (o.IsNumber())
+			if (o is Number)
 			{
-				return Number.GetInstance(o).LongValue();
+				return ((Number)o).LongValue();
 			}
 			return null;
 		}
@@ -749,10 +748,10 @@ namespace Com.Drew.Metadata
 		/// <exception cref="Com.Drew.Metadata.MetadataException"/>
 		public virtual bool GetBoolean(int tagType)
 		{
-			bool? value = GetBooleanObject(tagType);
+			bool value = GetBooleanObject(tagType);
 			if (value != null)
 			{
-				return value.Value;
+				return value;
 			}
 			object o = GetObject(tagType);
 			if (o == null)
@@ -765,7 +764,7 @@ namespace Com.Drew.Metadata
 		/// <summary>Returns the specified tag's value as a boolean.</summary>
 		/// <remarks>Returns the specified tag's value as a boolean.  If the tag is not set or cannot be converted, <code>null</code> is returned.</remarks>
 		[CanBeNull]
-		public virtual bool? GetBooleanObject(int tagType)
+		public virtual bool GetBooleanObject(int tagType)
 		{
 			object o = GetObject(tagType);
 			if (o == null)
@@ -787,9 +786,9 @@ namespace Com.Drew.Metadata
 					return null;
 				}
 			}
-			if (o.IsNumber())
+			if (o is Number)
 			{
-				return (Number.GetInstance(o).DoubleValue() != 0);
+				return (((Number)o).DoubleValue() != 0);
 			}
 			return null;
 		}
@@ -808,7 +807,7 @@ namespace Com.Drew.Metadata
 		/// is known, call the overload that accepts one as an argument.
 		/// </remarks>
 		[CanBeNull]
-		public virtual DateTime? GetDate(int tagType)
+		public virtual DateTime GetDate(int tagType)
 		{
 			return GetDate(tagType, null);
 		}
@@ -828,7 +827,7 @@ namespace Com.Drew.Metadata
 		/// is only considered if the underlying value is a string and parsing occurs, otherwise it has no effect.
 		/// </remarks>
 		[CanBeNull]
-		public virtual DateTime? GetDate(int tagType, TimeZoneInfo timeZone)
+		public virtual DateTime GetDate(int tagType, TimeZoneInfo timeZone)
 		{
 			object o = GetObject(tagType);
 			if (o == null)

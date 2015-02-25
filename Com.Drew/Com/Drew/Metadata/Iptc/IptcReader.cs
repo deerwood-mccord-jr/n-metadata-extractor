@@ -1,28 +1,27 @@
 /*
- * Copyright 2002-2013 Drew Noakes
- *
- *    Licensed under the Apache License, Version 2.0 (the "License");
- *    you may not use this file except in compliance with the License.
- *    You may obtain a copy of the License at
- *
- *        http://www.apache.org/licenses/LICENSE-2.0
- *
- *    Unless required by applicable law or agreed to in writing, software
- *    distributed under the License is distributed on an "AS IS" BASIS,
- *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    See the License for the specific language governing permissions and
- *    limitations under the License.
- *
- * More information about this project is available at:
- *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
- */
+* Copyright 2002-2013 Drew Noakes
+*
+*    Licensed under the Apache License, Version 2.0 (the "License");
+*    you may not use this file except in compliance with the License.
+*    You may obtain a copy of the License at
+*
+*        http://www.apache.org/licenses/LICENSE-2.0
+*
+*    Unless required by applicable law or agreed to in writing, software
+*    distributed under the License is distributed on an "AS IS" BASIS,
+*    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+*    See the License for the specific language governing permissions and
+*    limitations under the License.
+*
+* More information about this project is available at:
+*
+*    http://drewnoakes.com/code/exif/
+*    http://code.google.com/p/metadata-extractor/
+*/
 using System;
 using System.IO;
 using Com.Drew.Imaging.Jpeg;
 using Com.Drew.Lang;
-using Com.Drew.Metadata.Iptc;
 using JetBrains.Annotations;
 using Sharpen;
 
@@ -42,22 +41,22 @@ namespace Com.Drew.Metadata.Iptc
 	{
 		// TODO consider breaking the IPTC section up into multiple directories and providing segregation of each IPTC directory
 		/*
-    public static final int DIRECTORY_IPTC = 2;
-
-    public static final int ENVELOPE_RECORD = 1;
-    public static final int APPLICATION_RECORD_2 = 2;
-    public static final int APPLICATION_RECORD_3 = 3;
-    public static final int APPLICATION_RECORD_4 = 4;
-    public static final int APPLICATION_RECORD_5 = 5;
-    public static final int APPLICATION_RECORD_6 = 6;
-    public static final int PRE_DATA_RECORD = 7;
-    public static final int DATA_RECORD = 8;
-    public static final int POST_DATA_RECORD = 9;
-*/
+		public static final int DIRECTORY_IPTC = 2;
+		
+		public static final int ENVELOPE_RECORD = 1;
+		public static final int APPLICATION_RECORD_2 = 2;
+		public static final int APPLICATION_RECORD_3 = 3;
+		public static final int APPLICATION_RECORD_4 = 4;
+		public static final int APPLICATION_RECORD_5 = 5;
+		public static final int APPLICATION_RECORD_6 = 6;
+		public static final int PRE_DATA_RECORD = 7;
+		public static final int DATA_RECORD = 8;
+		public static final int POST_DATA_RECORD = 9;
+		*/
 		[NotNull]
 		public virtual Iterable<JpegSegmentType> GetSegmentTypes()
 		{
-			return Arrays.AsList(JpegSegmentType.Appd).AsIterable();
+			return Arrays.AsList(JpegSegmentType.Appd);
 		}
 
 		public virtual bool CanProcess(sbyte[] segmentBytes, JpegSegmentType segmentType)

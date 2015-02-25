@@ -1,23 +1,23 @@
 /*
- * Copyright 2002-2013 Drew Noakes
- *
- *    Licensed under the Apache License, Version 2.0 (the "License");
- *    you may not use this file except in compliance with the License.
- *    You may obtain a copy of the License at
- *
- *        http://www.apache.org/licenses/LICENSE-2.0
- *
- *    Unless required by applicable law or agreed to in writing, software
- *    distributed under the License is distributed on an "AS IS" BASIS,
- *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    See the License for the specific language governing permissions and
- *    limitations under the License.
- *
- * More information about this project is available at:
- *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
- */
+* Copyright 2002-2013 Drew Noakes
+*
+*    Licensed under the Apache License, Version 2.0 (the "License");
+*    you may not use this file except in compliance with the License.
+*    You may obtain a copy of the License at
+*
+*        http://www.apache.org/licenses/LICENSE-2.0
+*
+*    Unless required by applicable law or agreed to in writing, software
+*    distributed under the License is distributed on an "AS IS" BASIS,
+*    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+*    See the License for the specific language governing permissions and
+*    limitations under the License.
+*
+* More information about this project is available at:
+*
+*    http://drewnoakes.com/code/exif/
+*    http://code.google.com/p/metadata-extractor/
+*/
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -25,7 +25,6 @@ using System.Text;
 using Com.Drew.Imaging;
 using Com.Drew.Lang;
 using Com.Drew.Metadata;
-using Com.Drew.Metadata.Exif;
 using JetBrains.Annotations;
 using Sharpen;
 
@@ -75,247 +74,247 @@ namespace Com.Drew.Metadata.Exif
 		{
 			switch (tagType)
 			{
-                case ExifSubIFDDirectory.TagNewSubfileType:
+				case TagNewSubfileType:
 				{
 					return GetNewSubfileTypeDescription();
 				}
 
-                case ExifSubIFDDirectory.TagSubfileType:
+				case TagSubfileType:
 				{
 					return GetSubfileTypeDescription();
 				}
 
-                case ExifSubIFDDirectory.TagThresholding:
+				case TagThresholding:
 				{
 					return GetThresholdingDescription();
 				}
 
-                case ExifSubIFDDirectory.TagFillOrder:
+				case TagFillOrder:
 				{
 					return GetFillOrderDescription();
 				}
 
-                case ExifSubIFDDirectory.TagExposureTime:
+				case TagExposureTime:
 				{
 					return GetExposureTimeDescription();
 				}
 
-                case ExifSubIFDDirectory.TagShutterSpeed:
+				case TagShutterSpeed:
 				{
 					return GetShutterSpeedDescription();
 				}
 
-                case ExifSubIFDDirectory.TagFnumber:
+				case TagFnumber:
 				{
 					return GetFNumberDescription();
 				}
 
-                case ExifSubIFDDirectory.TagCompressedAverageBitsPerPixel:
+				case TagCompressedAverageBitsPerPixel:
 				{
 					return GetCompressedAverageBitsPerPixelDescription();
 				}
 
-                case ExifSubIFDDirectory.TagSubjectDistance:
+				case TagSubjectDistance:
 				{
 					return GetSubjectDistanceDescription();
 				}
 
-                case ExifSubIFDDirectory.TagMeteringMode:
+				case TagMeteringMode:
 				{
 					return GetMeteringModeDescription();
 				}
 
-                case ExifSubIFDDirectory.TagWhiteBalance:
+				case TagWhiteBalance:
 				{
 					return GetWhiteBalanceDescription();
 				}
 
-                case ExifSubIFDDirectory.TagFlash:
+				case TagFlash:
 				{
 					return GetFlashDescription();
 				}
 
-                case ExifSubIFDDirectory.TagFocalLength:
+				case TagFocalLength:
 				{
 					return GetFocalLengthDescription();
 				}
 
-                case ExifSubIFDDirectory.TagColorSpace:
+				case TagColorSpace:
 				{
 					return GetColorSpaceDescription();
 				}
 
-                case ExifSubIFDDirectory.TagExifImageWidth:
+				case TagExifImageWidth:
 				{
 					return GetExifImageWidthDescription();
 				}
 
-                case ExifSubIFDDirectory.TagExifImageHeight:
+				case TagExifImageHeight:
 				{
 					return GetExifImageHeightDescription();
 				}
 
-                case ExifSubIFDDirectory.TagFocalPlaneResolutionUnit:
+				case TagFocalPlaneResolutionUnit:
 				{
 					return GetFocalPlaneResolutionUnitDescription();
 				}
 
-                case ExifSubIFDDirectory.TagFocalPlaneXResolution:
+				case TagFocalPlaneXResolution:
 				{
 					return GetFocalPlaneXResolutionDescription();
 				}
 
-                case ExifSubIFDDirectory.TagFocalPlaneYResolution:
+				case TagFocalPlaneYResolution:
 				{
 					return GetFocalPlaneYResolutionDescription();
 				}
 
-                case ExifSubIFDDirectory.TagBitsPerSample:
+				case TagBitsPerSample:
 				{
 					return GetBitsPerSampleDescription();
 				}
 
-                case ExifSubIFDDirectory.TagPhotometricInterpretation:
+				case TagPhotometricInterpretation:
 				{
 					return GetPhotometricInterpretationDescription();
 				}
 
-                case ExifSubIFDDirectory.TagRowsPerStrip:
+				case TagRowsPerStrip:
 				{
 					return GetRowsPerStripDescription();
 				}
 
-                case ExifSubIFDDirectory.TagStripByteCounts:
+				case TagStripByteCounts:
 				{
 					return GetStripByteCountsDescription();
 				}
 
-                case ExifSubIFDDirectory.TagSamplesPerPixel:
+				case TagSamplesPerPixel:
 				{
 					return GetSamplesPerPixelDescription();
 				}
 
-                case ExifSubIFDDirectory.TagPlanarConfiguration:
+				case TagPlanarConfiguration:
 				{
 					return GetPlanarConfigurationDescription();
 				}
 
-                case ExifSubIFDDirectory.TagYcbcrSubsampling:
+				case TagYcbcrSubsampling:
 				{
 					return GetYCbCrSubsamplingDescription();
 				}
 
-                case ExifSubIFDDirectory.TagExposureProgram:
+				case TagExposureProgram:
 				{
 					return GetExposureProgramDescription();
 				}
 
-                case ExifSubIFDDirectory.TagAperture:
+				case TagAperture:
 				{
 					return GetApertureValueDescription();
 				}
 
-                case ExifSubIFDDirectory.TagMaxAperture:
+				case TagMaxAperture:
 				{
 					return GetMaxApertureValueDescription();
 				}
 
-                case ExifSubIFDDirectory.TagSensingMethod:
+				case TagSensingMethod:
 				{
 					return GetSensingMethodDescription();
 				}
 
-                case ExifSubIFDDirectory.TagExposureBias:
+				case TagExposureBias:
 				{
 					return GetExposureBiasDescription();
 				}
 
-                case ExifSubIFDDirectory.TagFileSource:
+				case TagFileSource:
 				{
 					return GetFileSourceDescription();
 				}
 
-                case ExifSubIFDDirectory.TagSceneType:
+				case TagSceneType:
 				{
 					return GetSceneTypeDescription();
 				}
 
-                case ExifSubIFDDirectory.TagComponentsConfiguration:
+				case TagComponentsConfiguration:
 				{
 					return GetComponentConfigurationDescription();
 				}
 
-                case ExifSubIFDDirectory.TagExifVersion:
+				case TagExifVersion:
 				{
 					return GetExifVersionDescription();
 				}
 
-                case ExifSubIFDDirectory.TagFlashpixVersion:
+				case TagFlashpixVersion:
 				{
 					return GetFlashPixVersionDescription();
 				}
 
-                case ExifSubIFDDirectory.TagIsoEquivalent:
+				case TagIsoEquivalent:
 				{
 					return GetIsoEquivalentDescription();
 				}
 
-                case ExifSubIFDDirectory.TagUserComment:
+				case TagUserComment:
 				{
 					return GetUserCommentDescription();
 				}
 
-                case ExifSubIFDDirectory.TagCustomRendered:
+				case TagCustomRendered:
 				{
 					return GetCustomRenderedDescription();
 				}
 
-                case ExifSubIFDDirectory.TagExposureMode:
+				case TagExposureMode:
 				{
 					return GetExposureModeDescription();
 				}
 
-                case ExifSubIFDDirectory.TagWhiteBalanceMode:
+				case TagWhiteBalanceMode:
 				{
 					return GetWhiteBalanceModeDescription();
 				}
 
-                case ExifSubIFDDirectory.TagDigitalZoomRatio:
+				case TagDigitalZoomRatio:
 				{
 					return GetDigitalZoomRatioDescription();
 				}
 
-                case ExifSubIFDDirectory.Tag35mmFilmEquivFocalLength:
+				case Tag35mmFilmEquivFocalLength:
 				{
 					return Get35mmFilmEquivFocalLengthDescription();
 				}
 
-                case ExifSubIFDDirectory.TagSceneCaptureType:
+				case TagSceneCaptureType:
 				{
 					return GetSceneCaptureTypeDescription();
 				}
 
-                case ExifSubIFDDirectory.TagGainControl:
+				case TagGainControl:
 				{
 					return GetGainControlDescription();
 				}
 
-                case ExifSubIFDDirectory.TagContrast:
+				case TagContrast:
 				{
 					return GetContrastDescription();
 				}
 
-                case ExifSubIFDDirectory.TagSaturation:
+				case TagSaturation:
 				{
 					return GetSaturationDescription();
 				}
 
-                case ExifSubIFDDirectory.TagSharpness:
+				case TagSharpness:
 				{
 					return GetSharpnessDescription();
 				}
 
-                case ExifSubIFDDirectory.TagSubjectDistanceRange:
+				case TagSubjectDistanceRange:
 				{
 					return GetSubjectDistanceRangeDescription();
 				}
@@ -330,100 +329,100 @@ namespace Com.Drew.Metadata.Exif
 		[CanBeNull]
 		public virtual string GetNewSubfileTypeDescription()
 		{
-            return GetIndexedDescription(ExifSubIFDDirectory.TagNewSubfileType, 1, "Full-resolution image", "Reduced-resolution image", "Single page of multi-page reduced-resolution image", "Transparency mask", "Transparency mask of reduced-resolution image", "Transparency mask of multi-page image"
+			return GetIndexedDescription(TagNewSubfileType, 1, "Full-resolution image", "Reduced-resolution image", "Single page of multi-page reduced-resolution image", "Transparency mask", "Transparency mask of reduced-resolution image", "Transparency mask of multi-page image"
 				, "Transparency mask of reduced-resolution multi-page image");
 		}
 
 		[CanBeNull]
 		public virtual string GetSubfileTypeDescription()
 		{
-            return GetIndexedDescription(ExifSubIFDDirectory.TagSubfileType, 1, "Full-resolution image", "Reduced-resolution image", "Single page of multi-page image");
+			return GetIndexedDescription(TagSubfileType, 1, "Full-resolution image", "Reduced-resolution image", "Single page of multi-page image");
 		}
 
 		[CanBeNull]
 		public virtual string GetThresholdingDescription()
 		{
-            return GetIndexedDescription(ExifSubIFDDirectory.TagThresholding, 1, "No dithering or halftoning", "Ordered dither or halftone", "Randomized dither");
+			return GetIndexedDescription(TagThresholding, 1, "No dithering or halftoning", "Ordered dither or halftone", "Randomized dither");
 		}
 
 		[CanBeNull]
 		public virtual string GetFillOrderDescription()
 		{
-            return GetIndexedDescription(ExifSubIFDDirectory.TagFillOrder, 1, "Normal", "Reversed");
+			return GetIndexedDescription(TagFillOrder, 1, "Normal", "Reversed");
 		}
 
 		[CanBeNull]
 		public virtual string GetSubjectDistanceRangeDescription()
 		{
-            return GetIndexedDescription(ExifSubIFDDirectory.TagSubjectDistanceRange, "Unknown", "Macro", "Close view", "Distant view");
+			return GetIndexedDescription(TagSubjectDistanceRange, "Unknown", "Macro", "Close view", "Distant view");
 		}
 
 		[CanBeNull]
 		public virtual string GetSharpnessDescription()
 		{
-            return GetIndexedDescription(ExifSubIFDDirectory.TagSharpness, "None", "Low", "Hard");
+			return GetIndexedDescription(TagSharpness, "None", "Low", "Hard");
 		}
 
 		[CanBeNull]
 		public virtual string GetSaturationDescription()
 		{
-            return GetIndexedDescription(ExifSubIFDDirectory.TagSaturation, "None", "Low saturation", "High saturation");
+			return GetIndexedDescription(TagSaturation, "None", "Low saturation", "High saturation");
 		}
 
 		[CanBeNull]
 		public virtual string GetContrastDescription()
 		{
-            return GetIndexedDescription(ExifSubIFDDirectory.TagContrast, "None", "Soft", "Hard");
+			return GetIndexedDescription(TagContrast, "None", "Soft", "Hard");
 		}
 
 		[CanBeNull]
 		public virtual string GetGainControlDescription()
 		{
-            return GetIndexedDescription(ExifSubIFDDirectory.TagGainControl, "None", "Low gain up", "Low gain down", "High gain up", "High gain down");
+			return GetIndexedDescription(TagGainControl, "None", "Low gain up", "Low gain down", "High gain up", "High gain down");
 		}
 
 		[CanBeNull]
 		public virtual string GetSceneCaptureTypeDescription()
 		{
-            return GetIndexedDescription(ExifSubIFDDirectory.TagSceneCaptureType, "Standard", "Landscape", "Portrait", "Night scene");
+			return GetIndexedDescription(TagSceneCaptureType, "Standard", "Landscape", "Portrait", "Night scene");
 		}
 
 		[CanBeNull]
 		public virtual string Get35mmFilmEquivFocalLengthDescription()
 		{
-            int? value = _directory.GetInteger(ExifSubIFDDirectory.Tag35mmFilmEquivFocalLength);
-			return value == null ? null : value == 0 ? "Unknown" : SimpleDecimalFormatter.Format(value.Value) + "mm";
+			int value = _directory.GetInteger(Tag35mmFilmEquivFocalLength);
+			return value == null ? null : value == 0 ? "Unknown" : SimpleDecimalFormatter.Format(value) + "mm";
 		}
 
 		[CanBeNull]
 		public virtual string GetDigitalZoomRatioDescription()
 		{
-            Rational value = _directory.GetRational(ExifSubIFDDirectory.TagDigitalZoomRatio);
+			Rational value = _directory.GetRational(TagDigitalZoomRatio);
 			return value == null ? null : value.GetNumerator() == 0 ? "Digital zoom not used." : SimpleDecimalFormatter.Format(value.DoubleValue());
 		}
 
 		[CanBeNull]
 		public virtual string GetWhiteBalanceModeDescription()
 		{
-            return GetIndexedDescription(ExifSubIFDDirectory.TagWhiteBalanceMode, "Auto white balance", "Manual white balance");
+			return GetIndexedDescription(TagWhiteBalanceMode, "Auto white balance", "Manual white balance");
 		}
 
 		[CanBeNull]
 		public virtual string GetExposureModeDescription()
 		{
-            return GetIndexedDescription(ExifSubIFDDirectory.TagExposureMode, "Auto exposure", "Manual exposure", "Auto bracket");
+			return GetIndexedDescription(TagExposureMode, "Auto exposure", "Manual exposure", "Auto bracket");
 		}
 
 		[CanBeNull]
 		public virtual string GetCustomRenderedDescription()
 		{
-            return GetIndexedDescription(ExifSubIFDDirectory.TagCustomRendered, "Normal process", "Custom process");
+			return GetIndexedDescription(TagCustomRendered, "Normal process", "Custom process");
 		}
 
 		[CanBeNull]
 		public virtual string GetUserCommentDescription()
 		{
-            sbyte[] commentBytes = _directory.GetByteArray(ExifSubIFDDirectory.TagUserComment);
+			sbyte[] commentBytes = _directory.GetByteArray(TagUserComment);
 			if (commentBytes == null)
 			{
 				return null;
@@ -476,7 +475,7 @@ namespace Com.Drew.Metadata.Exif
 		public virtual string GetIsoEquivalentDescription()
 		{
 			// Have seen an exception here from files produced by ACDSEE that stored an int[] here with two values
-            int? isoEquiv = _directory.GetInteger(ExifSubIFDDirectory.TagIsoEquivalent);
+			int isoEquiv = _directory.GetInteger(TagIsoEquivalent);
 			// There used to be a check here that multiplied ISO values < 50 by 200.
 			// Issue 36 shows a smart-phone image from a Samsung Galaxy S2 with ISO-40.
 			return isoEquiv != null ? Sharpen.Extensions.ToString(isoEquiv) : null;
@@ -485,31 +484,31 @@ namespace Com.Drew.Metadata.Exif
 		[CanBeNull]
 		public virtual string GetExifVersionDescription()
 		{
-            return GetVersionBytesDescription(ExifSubIFDDirectory.TagExifVersion, 2);
+			return GetVersionBytesDescription(TagExifVersion, 2);
 		}
 
 		[CanBeNull]
 		public virtual string GetFlashPixVersionDescription()
 		{
-            return GetVersionBytesDescription(ExifSubIFDDirectory.TagFlashpixVersion, 2);
+			return GetVersionBytesDescription(TagFlashpixVersion, 2);
 		}
 
 		[CanBeNull]
 		public virtual string GetSceneTypeDescription()
 		{
-            return GetIndexedDescription(ExifSubIFDDirectory.TagSceneType, 1, "Directly photographed image");
+			return GetIndexedDescription(TagSceneType, 1, "Directly photographed image");
 		}
 
 		[CanBeNull]
 		public virtual string GetFileSourceDescription()
 		{
-            return GetIndexedDescription(ExifSubIFDDirectory.TagFileSource, 1, "Film Scanner", "Reflection Print Scanner", "Digital Still Camera (DSC)");
+			return GetIndexedDescription(TagFileSource, 1, "Film Scanner", "Reflection Print Scanner", "Digital Still Camera (DSC)");
 		}
 
 		[CanBeNull]
 		public virtual string GetExposureBiasDescription()
 		{
-            Rational value = _directory.GetRational(ExifSubIFDDirectory.TagExposureBias);
+			Rational value = _directory.GetRational(TagExposureBias);
 			if (value == null)
 			{
 				return null;
@@ -520,38 +519,37 @@ namespace Com.Drew.Metadata.Exif
 		[CanBeNull]
 		public virtual string GetMaxApertureValueDescription()
 		{
-            double? aperture = _directory.GetDoubleObject(ExifSubIFDDirectory.TagMaxAperture);
+			double aperture = _directory.GetDoubleObject(TagMaxAperture);
 			if (aperture == null)
 			{
 				return null;
 			}
-			double fStop = PhotographicConversions.ApertureToFStop(aperture.Value);
+			double fStop = PhotographicConversions.ApertureToFStop(aperture);
 			return "F" + SimpleDecimalFormatter.Format(fStop);
 		}
 
 		[CanBeNull]
 		public virtual string GetApertureValueDescription()
 		{
-            double? aperture = _directory.GetDoubleObject(ExifSubIFDDirectory.TagAperture);
+			double aperture = _directory.GetDoubleObject(TagAperture);
 			if (aperture == null)
 			{
 				return null;
 			}
-			double fStop = PhotographicConversions.ApertureToFStop(aperture.Value);
+			double fStop = PhotographicConversions.ApertureToFStop(aperture);
 			return "F" + SimpleDecimalFormatter.Format(fStop);
 		}
 
 		[CanBeNull]
 		public virtual string GetExposureProgramDescription()
 		{
-            return GetIndexedDescription(ExifSubIFDDirectory.TagExposureProgram, 1, "Manual control", "Program normal", "Aperture priority", "Shutter priority", "Program creative (slow program)", "Program action (high-speed program)"
-				, "Portrait mode", "Landscape mode");
+			return GetIndexedDescription(TagExposureProgram, 1, "Manual control", "Program normal", "Aperture priority", "Shutter priority", "Program creative (slow program)", "Program action (high-speed program)", "Portrait mode", "Landscape mode");
 		}
 
 		[CanBeNull]
 		public virtual string GetYCbCrSubsamplingDescription()
 		{
-            int[] positions = _directory.GetIntArray(ExifSubIFDDirectory.TagYcbcrSubsampling);
+			int[] positions = _directory.GetIntArray(TagYcbcrSubsampling);
 			if (positions == null)
 			{
 				return null;
@@ -580,27 +578,27 @@ namespace Com.Drew.Metadata.Exif
 			// data. If value is '1', Y/Cb/Cr value is chunky format, contiguous for each subsampling
 			// pixel. If value is '2', Y/Cb/Cr value is separated and stored to Y plane/Cb plane/Cr
 			// plane format.
-            return GetIndexedDescription(ExifSubIFDDirectory.TagPlanarConfiguration, 1, "Chunky (contiguous for each subsampling pixel)", "Separate (Y-plane/Cb-plane/Cr-plane format)");
+			return GetIndexedDescription(TagPlanarConfiguration, 1, "Chunky (contiguous for each subsampling pixel)", "Separate (Y-plane/Cb-plane/Cr-plane format)");
 		}
 
 		[CanBeNull]
 		public virtual string GetSamplesPerPixelDescription()
 		{
-            string value = _directory.GetString(ExifSubIFDDirectory.TagSamplesPerPixel);
+			string value = _directory.GetString(TagSamplesPerPixel);
 			return value == null ? null : value + " samples/pixel";
 		}
 
 		[CanBeNull]
 		public virtual string GetRowsPerStripDescription()
 		{
-            string value = _directory.GetString(ExifSubIFDDirectory.TagRowsPerStrip);
+			string value = _directory.GetString(TagRowsPerStrip);
 			return value == null ? null : value + " rows/strip";
 		}
 
 		[CanBeNull]
 		public virtual string GetStripByteCountsDescription()
 		{
-            string value = _directory.GetString(ExifSubIFDDirectory.TagStripByteCounts);
+			string value = _directory.GetString(TagStripByteCounts);
 			return value == null ? null : value + " bytes";
 		}
 
@@ -608,7 +606,7 @@ namespace Com.Drew.Metadata.Exif
 		public virtual string GetPhotometricInterpretationDescription()
 		{
 			// Shows the color space of the image data components
-            int? value = _directory.GetInteger(ExifSubIFDDirectory.TagPhotometricInterpretation);
+			int value = _directory.GetInteger(TagPhotometricInterpretation);
 			if (value == null)
 			{
 				return null;
@@ -695,14 +693,14 @@ namespace Com.Drew.Metadata.Exif
 		[CanBeNull]
 		public virtual string GetBitsPerSampleDescription()
 		{
-            string value = _directory.GetString(ExifSubIFDDirectory.TagBitsPerSample);
+			string value = _directory.GetString(TagBitsPerSample);
 			return value == null ? null : value + " bits/component/pixel";
 		}
 
 		[CanBeNull]
 		public virtual string GetFocalPlaneXResolutionDescription()
 		{
-            Rational rational = _directory.GetRational(ExifSubIFDDirectory.TagFocalPlaneXResolution);
+			Rational rational = _directory.GetRational(TagFocalPlaneXResolution);
 			if (rational == null)
 			{
 				return null;
@@ -714,7 +712,7 @@ namespace Com.Drew.Metadata.Exif
 		[CanBeNull]
 		public virtual string GetFocalPlaneYResolutionDescription()
 		{
-            Rational rational = _directory.GetRational(ExifSubIFDDirectory.TagFocalPlaneYResolution);
+			Rational rational = _directory.GetRational(TagFocalPlaneYResolution);
 			if (rational == null)
 			{
 				return null;
@@ -728,27 +726,27 @@ namespace Com.Drew.Metadata.Exif
 		{
 			// Unit of FocalPlaneXResolution/FocalPlaneYResolution.
 			// '1' means no-unit, '2' inch, '3' centimeter.
-            return GetIndexedDescription(ExifSubIFDDirectory.TagFocalPlaneResolutionUnit, 1, "(No unit)", "Inches", "cm");
+			return GetIndexedDescription(TagFocalPlaneResolutionUnit, 1, "(No unit)", "Inches", "cm");
 		}
 
 		[CanBeNull]
 		public virtual string GetExifImageWidthDescription()
 		{
-            int? value = _directory.GetInteger(ExifSubIFDDirectory.TagExifImageWidth);
+			int value = _directory.GetInteger(TagExifImageWidth);
 			return value == null ? null : value + " pixels";
 		}
 
 		[CanBeNull]
 		public virtual string GetExifImageHeightDescription()
 		{
-            int? value = _directory.GetInteger(ExifSubIFDDirectory.TagExifImageHeight);
+			int value = _directory.GetInteger(TagExifImageHeight);
 			return value == null ? null : value + " pixels";
 		}
 
 		[CanBeNull]
 		public virtual string GetColorSpaceDescription()
 		{
-            int? value = _directory.GetInteger(ExifSubIFDDirectory.TagColorSpace);
+			int value = _directory.GetInteger(TagColorSpace);
 			if (value == null)
 			{
 				return null;
@@ -767,7 +765,7 @@ namespace Com.Drew.Metadata.Exif
 		[CanBeNull]
 		public virtual string GetFocalLengthDescription()
 		{
-            Rational value = _directory.GetRational(ExifSubIFDDirectory.TagFocalLength);
+			Rational value = _directory.GetRational(TagFocalLength);
 			if (value == null)
 			{
 				return null;
@@ -780,16 +778,16 @@ namespace Com.Drew.Metadata.Exif
 		public virtual string GetFlashDescription()
 		{
 			/*
-         * This is a bit mask.
-         * 0 = flash fired
-         * 1 = return detected
-         * 2 = return able to be detected
-         * 3 = unknown
-         * 4 = auto used
-         * 5 = unknown
-         * 6 = red eye reduction used
-         */
-            int? value = _directory.GetInteger(ExifSubIFDDirectory.TagFlash);
+			* This is a bit mask.
+			* 0 = flash fired
+			* 1 = return detected
+			* 2 = return able to be detected
+			* 3 = unknown
+			* 4 = auto used
+			* 5 = unknown
+			* 6 = red eye reduction used
+			*/
+			int value = _directory.GetInteger(TagFlash);
 			if (value == null)
 			{
 				return null;
@@ -832,7 +830,7 @@ namespace Com.Drew.Metadata.Exif
 			// '0' means unknown, '1' daylight, '2' fluorescent, '3' tungsten, '10' flash,
 			// '17' standard light A, '18' standard light B, '19' standard light C, '20' D55,
 			// '21' D65, '22' D75, '255' other.
-            int? value = _directory.GetInteger(ExifSubIFDDirectory.TagWhiteBalance);
+			int value = _directory.GetInteger(TagWhiteBalance);
 			if (value == null)
 			{
 				return null;
@@ -911,7 +909,7 @@ namespace Com.Drew.Metadata.Exif
 		{
 			// '0' means unknown, '1' average, '2' center weighted average, '3' spot
 			// '4' multi-spot, '5' multi-segment, '6' partial, '255' other
-            int? value = _directory.GetInteger(ExifSubIFDDirectory.TagMeteringMode);
+			int value = _directory.GetInteger(TagMeteringMode);
 			if (value == null)
 			{
 				return null;
@@ -968,7 +966,7 @@ namespace Com.Drew.Metadata.Exif
 		[CanBeNull]
 		public virtual string GetSubjectDistanceDescription()
 		{
-            Rational value = _directory.GetRational(ExifSubIFDDirectory.TagSubjectDistance);
+			Rational value = _directory.GetRational(TagSubjectDistance);
 			if (value == null)
 			{
 				return null;
@@ -980,7 +978,7 @@ namespace Com.Drew.Metadata.Exif
 		[CanBeNull]
 		public virtual string GetCompressedAverageBitsPerPixelDescription()
 		{
-            Rational value = _directory.GetRational(ExifSubIFDDirectory.TagCompressedAverageBitsPerPixel);
+			Rational value = _directory.GetRational(TagCompressedAverageBitsPerPixel);
 			if (value == null)
 			{
 				return null;
@@ -992,7 +990,7 @@ namespace Com.Drew.Metadata.Exif
 		[CanBeNull]
 		public virtual string GetExposureTimeDescription()
 		{
-            string value = _directory.GetString(ExifSubIFDDirectory.TagExposureTime);
+			string value = _directory.GetString(TagExposureTime);
 			return value == null ? null : value + " sec";
 		}
 
@@ -1008,48 +1006,48 @@ namespace Com.Drew.Metadata.Exif
 			// thanks to Mark Edwards for spotting and patching a bug in the calculation of this
 			// description (spotted bug using a Canon EOS 300D)
 			// thanks also to Gli Blr for spotting this bug
-            float? apexValue = _directory.GetFloatObject(ExifSubIFDDirectory.TagShutterSpeed);
+			float apexValue = _directory.GetFloatObject(TagShutterSpeed);
 			if (apexValue == null)
 			{
 				return null;
 			}
 			if (apexValue <= 1)
 			{
-				float apexPower = (float)(1 / (Math.Exp(apexValue.Value * Math.Log(2))));
-				long apexPower10 = (long) Math.Round((double)apexPower * 10.0);
+				float apexPower = (float)(1 / (Math.Exp(apexValue * Math.Log(2))));
+				long apexPower10 = Math.Round((double)apexPower * 10.0);
 				float fApexPower = (float)apexPower10 / 10.0f;
 				return fApexPower + " sec";
 			}
 			else
 			{
-				int apexPower = (int)((Math.Exp(apexValue.Value * Math.Log(2))));
+				int apexPower = (int)((Math.Exp(apexValue * Math.Log(2))));
 				return "1/" + apexPower + " sec";
 			}
 		}
 
 		/*
-        // This alternative implementation offered by Bill Richards
-        // TODO determine which is the correct / more-correct implementation
-        double apexValue = _directory.getDouble(ExifSubIFDDirectory.TAG_SHUTTER_SPEED);
-        double apexPower = Math.pow(2.0, apexValue);
-
-        StringBuffer sb = new StringBuffer();
-        if (apexPower > 1)
-            apexPower = Math.floor(apexPower);
-
-        if (apexPower < 1) {
-            sb.append((int)Math.round(1/apexPower));
-        } else {
-            sb.append("1/");
-            sb.append((int)apexPower);
-        }
-        sb.append(" sec");
-        return sb.toString();
-*/
+		// This alternative implementation offered by Bill Richards
+		// TODO determine which is the correct / more-correct implementation
+		double apexValue = _directory.getDouble(ExifSubIFDDirectory.TAG_SHUTTER_SPEED);
+		double apexPower = Math.pow(2.0, apexValue);
+		
+		StringBuffer sb = new StringBuffer();
+		if (apexPower > 1)
+		apexPower = Math.floor(apexPower);
+		
+		if (apexPower < 1) {
+		sb.append((int)Math.round(1/apexPower));
+		} else {
+		sb.append("1/");
+		sb.append((int)apexPower);
+		}
+		sb.append(" sec");
+		return sb.toString();
+		*/
 		[CanBeNull]
 		public virtual string GetFNumberDescription()
 		{
-            Rational value = _directory.GetRational(ExifSubIFDDirectory.TagFnumber);
+			Rational value = _directory.GetRational(TagFnumber);
 			if (value == null)
 			{
 				return null;
@@ -1063,14 +1061,14 @@ namespace Com.Drew.Metadata.Exif
 			// '1' Not defined, '2' One-chip color area sensor, '3' Two-chip color area sensor
 			// '4' Three-chip color area sensor, '5' Color sequential area sensor
 			// '7' Trilinear sensor '8' Color sequential linear sensor,  'Other' reserved
-            return GetIndexedDescription(ExifSubIFDDirectory.TagSensingMethod, 1, "(Not defined)", "One-chip color area sensor", "Two-chip color area sensor", "Three-chip color area sensor", "Color sequential area sensor", null, "Trilinear sensor", "Color sequential linear sensor"
+			return GetIndexedDescription(TagSensingMethod, 1, "(Not defined)", "One-chip color area sensor", "Two-chip color area sensor", "Three-chip color area sensor", "Color sequential area sensor", null, "Trilinear sensor", "Color sequential linear sensor"
 				);
 		}
 
 		[CanBeNull]
 		public virtual string GetComponentConfigurationDescription()
 		{
-            int[] components = _directory.GetIntArray(ExifSubIFDDirectory.TagComponentsConfiguration);
+			int[] components = _directory.GetIntArray(TagComponentsConfiguration);
 			if (components == null)
 			{
 				return null;

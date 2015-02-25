@@ -1,4 +1,3 @@
-using Com.Drew.Imaging.Png;
 using JetBrains.Annotations;
 using Sharpen;
 
@@ -20,7 +19,7 @@ namespace Com.Drew.Imaging.Png
 		}
 
 		[NotNull]
-		public virtual PngChunkType GetChunkType()
+		public virtual PngChunkType GetType()
 		{
 			return _chunkType;
 		}

@@ -1,6 +1,5 @@
 using System;
 using Com.Drew.Metadata;
-using Com.Drew.Metadata.Bmp;
 using JetBrains.Annotations;
 using Sharpen;
 
@@ -42,12 +41,12 @@ namespace Com.Drew.Metadata.Bmp
 			// 6 = Bit field
 			try
 			{
-				int? value = _directory.GetInt(BmpHeaderDirectory.TagCompression);
+				int value = _directory.GetInt(BmpHeaderDirectory.TagCompression);
 				if (value == null)
 				{
 					return null;
 				}
-				int? headerSize = _directory.GetInt(BmpHeaderDirectory.TagHeaderSize);
+				int headerSize = _directory.GetInt(BmpHeaderDirectory.TagHeaderSize);
 				if (headerSize == null)
 				{
 					return null;

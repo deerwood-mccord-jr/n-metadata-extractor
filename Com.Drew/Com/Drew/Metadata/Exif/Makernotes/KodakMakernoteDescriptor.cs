@@ -1,25 +1,24 @@
 /*
- * Copyright 2002-2013 Drew Noakes
- *
- *    Licensed under the Apache License, Version 2.0 (the "License");
- *    you may not use this file except in compliance with the License.
- *    You may obtain a copy of the License at
- *
- *        http://www.apache.org/licenses/LICENSE-2.0
- *
- *    Unless required by applicable law or agreed to in writing, software
- *    distributed under the License is distributed on an "AS IS" BASIS,
- *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    See the License for the specific language governing permissions and
- *    limitations under the License.
- *
- * More information about this project is available at:
- *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
- */
+* Copyright 2002-2013 Drew Noakes
+*
+*    Licensed under the Apache License, Version 2.0 (the "License");
+*    you may not use this file except in compliance with the License.
+*    You may obtain a copy of the License at
+*
+*        http://www.apache.org/licenses/LICENSE-2.0
+*
+*    Unless required by applicable law or agreed to in writing, software
+*    distributed under the License is distributed on an "AS IS" BASIS,
+*    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+*    See the License for the specific language governing permissions and
+*    limitations under the License.
+*
+* More information about this project is available at:
+*
+*    http://drewnoakes.com/code/exif/
+*    http://code.google.com/p/metadata-extractor/
+*/
 using Com.Drew.Metadata;
-using Com.Drew.Metadata.Exif.Makernotes;
 using JetBrains.Annotations;
 using Sharpen;
 
@@ -43,47 +42,47 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		{
 			switch (tagType)
 			{
-                case KodakMakernoteDirectory.TagQuality:
+				case TagQuality:
 				{
 					return GetQualityDescription();
 				}
 
-                case KodakMakernoteDirectory.TagBurstMode:
+				case TagBurstMode:
 				{
 					return GetBurstModeDescription();
 				}
 
-                case KodakMakernoteDirectory.TagShutterMode:
+				case TagShutterMode:
 				{
 					return GetShutterModeDescription();
 				}
 
-                case KodakMakernoteDirectory.TagFocusMode:
+				case TagFocusMode:
 				{
 					return GetFocusModeDescription();
 				}
 
-                case KodakMakernoteDirectory.TagWhiteBalance:
+				case TagWhiteBalance:
 				{
 					return GetWhiteBalanceDescription();
 				}
 
-                case KodakMakernoteDirectory.TagFlashMode:
+				case TagFlashMode:
 				{
 					return GetFlashModeDescription();
 				}
 
-                case KodakMakernoteDirectory.TagFlashFired:
+				case TagFlashFired:
 				{
 					return GetFlashFiredDescription();
 				}
 
-                case KodakMakernoteDirectory.TagColorMode:
+				case TagColorMode:
 				{
 					return GetColorModeDescription();
 				}
 
-                case KodakMakernoteDirectory.TagSharpness:
+				case TagSharpness:
 				{
 					return GetSharpnessDescription();
 				}
@@ -98,13 +97,13 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		[CanBeNull]
 		public virtual string GetSharpnessDescription()
 		{
-            return GetIndexedDescription(KodakMakernoteDirectory.TagSharpness, "Normal");
+			return GetIndexedDescription(TagSharpness, "Normal");
 		}
 
 		[CanBeNull]
 		public virtual string GetColorModeDescription()
 		{
-            int? value = _directory.GetInteger(KodakMakernoteDirectory.TagColorMode);
+			int value = _directory.GetInteger(TagColorMode);
 			if (value == null)
 			{
 				return null;
@@ -159,13 +158,13 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		[CanBeNull]
 		public virtual string GetFlashFiredDescription()
 		{
-            return GetIndexedDescription(KodakMakernoteDirectory.TagFlashFired, "No", "Yes");
+			return GetIndexedDescription(TagFlashFired, "No", "Yes");
 		}
 
 		[CanBeNull]
 		public virtual string GetFlashModeDescription()
 		{
-            int? value = _directory.GetInteger(KodakMakernoteDirectory.TagFlashMode);
+			int value = _directory.GetInteger(TagFlashMode);
 			if (value == null)
 			{
 				return null;
@@ -205,19 +204,19 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		[CanBeNull]
 		public virtual string GetWhiteBalanceDescription()
 		{
-            return GetIndexedDescription(KodakMakernoteDirectory.TagWhiteBalance, "Auto", "Flash", "Tungsten", "Daylight");
+			return GetIndexedDescription(TagWhiteBalance, "Auto", "Flash", "Tungsten", "Daylight");
 		}
 
 		[CanBeNull]
 		public virtual string GetFocusModeDescription()
 		{
-            return GetIndexedDescription(KodakMakernoteDirectory.TagFocusMode, "Normal", null, "Macro");
+			return GetIndexedDescription(TagFocusMode, "Normal", null, "Macro");
 		}
 
 		[CanBeNull]
 		public virtual string GetShutterModeDescription()
 		{
-			int? value = _directory.GetInteger(KodakMakernoteDirectory.TagShutterMode);
+			int value = _directory.GetInteger(TagShutterMode);
 			if (value == null)
 			{
 				return null;
@@ -249,13 +248,13 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		[CanBeNull]
 		public virtual string GetBurstModeDescription()
 		{
-            return GetIndexedDescription(KodakMakernoteDirectory.TagBurstMode, "Off", "On");
+			return GetIndexedDescription(TagBurstMode, "Off", "On");
 		}
 
 		[CanBeNull]
 		public virtual string GetQualityDescription()
 		{
-            return GetIndexedDescription(KodakMakernoteDirectory.TagQuality, 1, "Fine", "Normal");
+			return GetIndexedDescription(TagQuality, 1, "Fine", "Normal");
 		}
 	}
 }

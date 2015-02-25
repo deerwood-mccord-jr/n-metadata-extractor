@@ -1,6 +1,5 @@
 using System.IO;
 using Com.Drew.Lang;
-using Com.Drew.Metadata.Bmp;
 using Sharpen;
 
 namespace Com.Drew.Metadata.Bmp

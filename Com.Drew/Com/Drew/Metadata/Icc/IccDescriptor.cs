@@ -1,29 +1,28 @@
 /*
- * Copyright 2002-2013 Drew Noakes
- *
- *    Licensed under the Apache License, Version 2.0 (the "License");
- *    you may not use this file except in compliance with the License.
- *    You may obtain a copy of the License at
- *
- *        http://www.apache.org/licenses/LICENSE-2.0
- *
- *    Unless required by applicable law or agreed to in writing, software
- *    distributed under the License is distributed on an "AS IS" BASIS,
- *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    See the License for the specific language governing permissions and
- *    limitations under the License.
- *
- * More information about this project is available at:
- *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
- */
+* Copyright 2002-2013 Drew Noakes
+*
+*    Licensed under the Apache License, Version 2.0 (the "License");
+*    you may not use this file except in compliance with the License.
+*    You may obtain a copy of the License at
+*
+*        http://www.apache.org/licenses/LICENSE-2.0
+*
+*    Unless required by applicable law or agreed to in writing, software
+*    distributed under the License is distributed on an "AS IS" BASIS,
+*    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+*    See the License for the specific language governing permissions and
+*    limitations under the License.
+*
+* More information about this project is available at:
+*
+*    http://drewnoakes.com/code/exif/
+*    http://code.google.com/p/metadata-extractor/
+*/
 using System;
 using System.IO;
 using System.Text;
 using Com.Drew.Lang;
 using Com.Drew.Metadata;
-using Com.Drew.Metadata.Icc;
 using JetBrains.Annotations;
 using Sharpen;
 
@@ -136,13 +135,13 @@ namespace Com.Drew.Metadata.Icc
 
 							case 1:
 							{
-								observerString = "1931 2В°";
+								observerString = "1931 2°";
 								break;
 							}
 
 							case 2:
 							{
-								observerString = "1964 10В°";
+								observerString = "1964 10°";
 								break;
 							}
 
@@ -350,7 +349,7 @@ namespace Com.Drew.Metadata.Icc
 		[CanBeNull]
 		private string GetRenderingIntentDescription()
 		{
-			int? value = _directory.GetInteger(IccDirectory.TagRenderingIntent);
+			int value = _directory.GetInteger(IccDirectory.TagRenderingIntent);
 			if (value == null)
 			{
 				return null;
@@ -506,14 +505,14 @@ namespace Com.Drew.Metadata.Icc
 		[CanBeNull]
 		private string GetProfileVersionDescription()
 		{
-			int? value = _directory.GetInteger(IccDirectory.TagProfileVersion);
+			int value = _directory.GetInteger(IccDirectory.TagProfileVersion);
 			if (value == null)
 			{
 				return null;
 			}
-			int m = (value.Value & unchecked((int)(0xFF000000))) >> 24;
-			int r = (value.Value & unchecked((int)(0x00F00000))) >> 20;
-			int R = (value.Value & unchecked((int)(0x000F0000))) >> 16;
+			int m = (value & unchecked((int)(0xFF000000))) >> 24;
+			int r = (value & unchecked((int)(0x00F00000))) >> 20;
+			int R = (value & unchecked((int)(0x000F0000))) >> 16;
 			return Sharpen.Extensions.StringFormat("%d.%d.%d", m, r, R);
 		}
 

@@ -1,4 +1,3 @@
-using Com.Drew.Imaging.Jpeg;
 using JetBrains.Annotations;
 using Sharpen;
 

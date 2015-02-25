@@ -1,23 +1,23 @@
 /*
- * Copyright 2002-2013 Drew Noakes
- *
- *    Licensed under the Apache License, Version 2.0 (the "License");
- *    you may not use this file except in compliance with the License.
- *    You may obtain a copy of the License at
- *
- *        http://www.apache.org/licenses/LICENSE-2.0
- *
- *    Unless required by applicable law or agreed to in writing, software
- *    distributed under the License is distributed on an "AS IS" BASIS,
- *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    See the License for the specific language governing permissions and
- *    limitations under the License.
- *
- * More information about this project is available at:
- *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
- */
+* Copyright 2002-2013 Drew Noakes
+*
+*    Licensed under the Apache License, Version 2.0 (the "License");
+*    you may not use this file except in compliance with the License.
+*    You may obtain a copy of the License at
+*
+*        http://www.apache.org/licenses/LICENSE-2.0
+*
+*    Unless required by applicable law or agreed to in writing, software
+*    distributed under the License is distributed on an "AS IS" BASIS,
+*    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+*    See the License for the specific language governing permissions and
+*    limitations under the License.
+*
+* More information about this project is available at:
+*
+*    http://drewnoakes.com/code/exif/
+*    http://code.google.com/p/metadata-extractor/
+*/
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -35,7 +35,7 @@ namespace Com.Drew.Metadata
 	/// The directory is provided to the tag descriptor via its constructor.
 	/// </remarks>
 	/// <author>Drew Noakes http://drewnoakes.com</author>
-	public class TagDescriptor<T> : ITagDescriptor
+	public class TagDescriptor<T>
 		where T : Com.Drew.Metadata.Directory
 	{
 		[NotNull]
@@ -141,12 +141,12 @@ namespace Com.Drew.Metadata
 		[CanBeNull]
 		protected internal virtual string GetIndexedDescription(int tagType, int baseIndex, params string[] descriptions)
 		{
-			int? index = _directory.GetInteger(tagType);
+			int index = _directory.GetInteger(tagType);
 			if (index == null)
 			{
 				return null;
 			}
-			int arrayIndex = index.Value - baseIndex;
+			int arrayIndex = index - baseIndex;
 			if (arrayIndex >= 0 && arrayIndex < descriptions.Length)
 			{
 				string description = descriptions[arrayIndex];
@@ -194,7 +194,7 @@ namespace Com.Drew.Metadata
 		[CanBeNull]
 		protected internal virtual string GetFormattedInt(int tagType, string format)
 		{
-			int? value = _directory.GetInteger(tagType);
+			int value = _directory.GetInteger(tagType);
 			if (value == null)
 			{
 				return null;
@@ -205,7 +205,7 @@ namespace Com.Drew.Metadata
 		[CanBeNull]
 		protected internal virtual string GetFormattedFloat(int tagType, string format)
 		{
-			float? value = _directory.GetFloatObject(tagType);
+			float value = _directory.GetFloatObject(tagType);
 			if (value == null)
 			{
 				return null;
@@ -228,12 +228,12 @@ namespace Com.Drew.Metadata
 		protected internal virtual string GetEpochTimeDescription(int tagType)
 		{
 			// TODO have observed a byte[8] here which is likely some kind of date (ticks as long?)
-			long? value = _directory.GetLongObject(tagType);
+			long value = _directory.GetLongObject(tagType);
 			if (value == null)
 			{
 				return null;
 			}
-			return Sharpen.Extensions.CreateDate(value.Value).ToString();
+			return Sharpen.Extensions.CreateDate(value).ToString();
 		}
 
 		/// <summary>LSB first.</summary>
@@ -241,7 +241,7 @@ namespace Com.Drew.Metadata
 		[CanBeNull]
 		protected internal virtual string GetBitFlagDescription(int tagType, params object[] labels)
 		{
-			int? value = _directory.GetInteger(tagType);
+			int value = _directory.GetInteger(tagType);
 			if (value == null)
 			{
 				return null;
@@ -271,7 +271,7 @@ namespace Com.Drew.Metadata
 				value >>= 1;
 				bitIndex++;
 			}
-            return string.Join(", ", parts);
+			return StringUtil.Join(parts.AsIterable(), ", ");
 		}
 
 		[CanBeNull]

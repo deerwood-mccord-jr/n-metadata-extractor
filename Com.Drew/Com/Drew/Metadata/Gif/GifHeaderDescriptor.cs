@@ -1,5 +1,4 @@
 using Com.Drew.Metadata;
-using Com.Drew.Metadata.Gif;
 using Sharpen;
 
 namespace Com.Drew.Metadata.Gif

@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Com.Drew.Metadata.Gif;
 using JetBrains.Annotations;
 using Sharpen;
 

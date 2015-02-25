@@ -1,6 +1,5 @@
 using System.IO;
 using Com.Drew.Lang;
-using Com.Drew.Metadata.Gif;
 using Sharpen;
 
 namespace Com.Drew.Metadata.Gif

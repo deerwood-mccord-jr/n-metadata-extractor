@@ -1,30 +1,29 @@
 /*
- * Copyright 2002-2013 Drew Noakes
- *
- *    Licensed under the Apache License, Version 2.0 (the "License");
- *    you may not use this file except in compliance with the License.
- *    You may obtain a copy of the License at
- *
- *        http://www.apache.org/licenses/LICENSE-2.0
- *
- *    Unless required by applicable law or agreed to in writing, software
- *    distributed under the License is distributed on an "AS IS" BASIS,
- *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    See the License for the specific language governing permissions and
- *    limitations under the License.
- *
- * More information about this project is available at:
- *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
- */
+* Copyright 2002-2013 Drew Noakes
+*
+*    Licensed under the Apache License, Version 2.0 (the "License");
+*    you may not use this file except in compliance with the License.
+*    You may obtain a copy of the License at
+*
+*        http://www.apache.org/licenses/LICENSE-2.0
+*
+*    Unless required by applicable law or agreed to in writing, software
+*    distributed under the License is distributed on an "AS IS" BASIS,
+*    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+*    See the License for the specific language governing permissions and
+*    limitations under the License.
+*
+* More information about this project is available at:
+*
+*    http://drewnoakes.com/code/exif/
+*    http://code.google.com/p/metadata-extractor/
+*/
 using System;
 using System.Collections.Generic;
 using System.IO;
 using Com.Drew.Imaging.Jpeg;
 using Com.Drew.Imaging.Tiff;
 using Com.Drew.Lang;
-using Com.Drew.Metadata.Exif;
 using Com.Drew.Metadata.Exif.Makernotes;
 using JetBrains.Annotations;
 using Sharpen;
@@ -111,7 +110,7 @@ namespace Com.Drew.Metadata.Exif
 		[NotNull]
 		public virtual Iterable<JpegSegmentType> GetSegmentTypes()
 		{
-			return Arrays.AsList(JpegSegmentType.App1).AsIterable();
+			return Arrays.AsList(JpegSegmentType.App1);
 		}
 
 		public virtual bool CanProcess(sbyte[] segmentBytes, JpegSegmentType segmentType)
@@ -246,13 +245,13 @@ namespace Com.Drew.Metadata.Exif
 			ExifThumbnailDirectory thumbnailDirectory = metadata.GetDirectory<ExifThumbnailDirectory>();
 			if (thumbnailDirectory != null && thumbnailDirectory.ContainsTag(ExifThumbnailDirectory.TagThumbnailCompression))
 			{
-				int? offset = thumbnailDirectory.GetInteger(ExifThumbnailDirectory.TagThumbnailOffset);
-				int? length = thumbnailDirectory.GetInteger(ExifThumbnailDirectory.TagThumbnailLength);
+				int offset = thumbnailDirectory.GetInteger(ExifThumbnailDirectory.TagThumbnailOffset);
+				int length = thumbnailDirectory.GetInteger(ExifThumbnailDirectory.TagThumbnailLength);
 				if (offset != null && length != null)
 				{
 					try
 					{
-						sbyte[] thumbnailData = reader.GetBytes(tiffHeaderOffset + offset.Value, length.Value);
+						sbyte[] thumbnailData = reader.GetBytes(tiffHeaderOffset + offset, length);
 						thumbnailDirectory.SetThumbnailData(thumbnailData);
 					}
 					catch (IOException ex)
@@ -490,13 +489,13 @@ namespace Com.Drew.Metadata.Exif
 							case 1:
 							{
 								/* There are two scenarios here:
-                 * Type 1:                  **
-                 * :0000: 4E 69 6B 6F 6E 00 01 00-05 00 02 00 02 00 06 00 Nikon...........
-                 * :0010: 00 00 EC 02 00 00 03 00-03 00 01 00 00 00 06 00 ................
-                 * Type 3:                  **
-                 * :0000: 4E 69 6B 6F 6E 00 02 00-00 00 4D 4D 00 2A 00 00 Nikon....MM.*...
-                 * :0010: 00 08 00 1E 00 01 00 07-00 00 00 04 30 32 30 30 ............0200
-                 */
+								* Type 1:                  **
+								* :0000: 4E 69 6B 6F 6E 00 01 00-05 00 02 00 02 00 06 00 Nikon...........
+								* :0010: 00 00 EC 02 00 00 03 00-03 00 01 00 00 00 06 00 ................
+								* Type 3:                  **
+								* :0000: 4E 69 6B 6F 6E 00 02 00-00 00 4D 4D 00 2A 00 00 Nikon....MM.*...
+								* :0010: 00 08 00 1E 00 01 00 07-00 00 00 04 30 32 30 30 ............0200
+								*/
 								ProcessIFD(metadata.GetOrCreateDirectory<NikonType1MakernoteDirectory>(), processedIfdOffsets, makernoteOffset + 8, tiffHeaderOffset, metadata, reader);
 								break;
 							}

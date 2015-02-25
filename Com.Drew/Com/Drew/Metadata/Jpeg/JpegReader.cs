@@ -1,27 +1,26 @@
 /*
- * Copyright 2002-2013 Drew Noakes
- *
- *    Licensed under the Apache License, Version 2.0 (the "License");
- *    you may not use this file except in compliance with the License.
- *    You may obtain a copy of the License at
- *
- *        http://www.apache.org/licenses/LICENSE-2.0
- *
- *    Unless required by applicable law or agreed to in writing, software
- *    distributed under the License is distributed on an "AS IS" BASIS,
- *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    See the License for the specific language governing permissions and
- *    limitations under the License.
- *
- * More information about this project is available at:
- *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
- */
+* Copyright 2002-2013 Drew Noakes
+*
+*    Licensed under the Apache License, Version 2.0 (the "License");
+*    you may not use this file except in compliance with the License.
+*    You may obtain a copy of the License at
+*
+*        http://www.apache.org/licenses/LICENSE-2.0
+*
+*    Unless required by applicable law or agreed to in writing, software
+*    distributed under the License is distributed on an "AS IS" BASIS,
+*    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+*    See the License for the specific language governing permissions and
+*    limitations under the License.
+*
+* More information about this project is available at:
+*
+*    http://drewnoakes.com/code/exif/
+*    http://code.google.com/p/metadata-extractor/
+*/
 using System.IO;
 using Com.Drew.Imaging.Jpeg;
 using Com.Drew.Lang;
-using Com.Drew.Metadata.Jpeg;
 using JetBrains.Annotations;
 using Sharpen;
 
@@ -43,7 +42,7 @@ namespace Com.Drew.Metadata.Jpeg
 		{
 			// NOTE that some SOFn values do not exist
 			return Arrays.AsList(JpegSegmentType.Sof0, JpegSegmentType.Sof1, JpegSegmentType.Sof2, JpegSegmentType.Sof3, JpegSegmentType.Sof5, JpegSegmentType.Sof6, JpegSegmentType.Sof7, JpegSegmentType.Sof8, JpegSegmentType.Sof9, JpegSegmentType.Sof10, 
-				JpegSegmentType.Sof11, JpegSegmentType.Sof13, JpegSegmentType.Sof14, JpegSegmentType.Sof15).AsIterable();
+				JpegSegmentType.Sof11, JpegSegmentType.Sof13, JpegSegmentType.Sof14, JpegSegmentType.Sof15);
 		}
 
 		//            JpegSegmentType.SOF4,
@@ -55,7 +54,7 @@ namespace Com.Drew.Metadata.Jpeg
 
 		public virtual void Extract(sbyte[] segmentBytes, Com.Drew.Metadata.Metadata metadata, JpegSegmentType segmentType)
 		{
-            if (metadata.ContainsDirectory<JpegDirectory>())
+			if (metadata.ContainsDirectory(typeof(JpegDirectory)))
 			{
 				// If this directory is already present, discontinue this operation.
 				// We only store metadata for the *first* matching SOFn segment.

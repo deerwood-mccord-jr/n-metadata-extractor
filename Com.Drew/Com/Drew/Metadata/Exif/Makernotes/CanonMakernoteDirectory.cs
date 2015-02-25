@@ -1,25 +1,24 @@
 /*
- * Copyright 2002-2013 Drew Noakes
- *
- *    Licensed under the Apache License, Version 2.0 (the "License");
- *    you may not use this file except in compliance with the License.
- *    You may obtain a copy of the License at
- *
- *        http://www.apache.org/licenses/LICENSE-2.0
- *
- *    Unless required by applicable law or agreed to in writing, software
- *    distributed under the License is distributed on an "AS IS" BASIS,
- *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    See the License for the specific language governing permissions and
- *    limitations under the License.
- *
- * More information about this project is available at:
- *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
- */
+* Copyright 2002-2013 Drew Noakes
+*
+*    Licensed under the Apache License, Version 2.0 (the "License");
+*    you may not use this file except in compliance with the License.
+*    You may obtain a copy of the License at
+*
+*        http://www.apache.org/licenses/LICENSE-2.0
+*
+*    Unless required by applicable law or agreed to in writing, software
+*    distributed under the License is distributed on an "AS IS" BASIS,
+*    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+*    See the License for the specific language governing permissions and
+*    limitations under the License.
+*
+* More information about this project is available at:
+*
+*    http://drewnoakes.com/code/exif/
+*    http://code.google.com/p/metadata-extractor/
+*/
 using System.Collections.Generic;
-using Com.Drew.Metadata.Exif.Makernotes;
 using JetBrains.Annotations;
 using Sharpen;
 
@@ -170,7 +169,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 
 		public sealed class CameraSettings
 		{
-		    internal const int Offset = unchecked((int)(0xC100));
+			private const int Offset = unchecked((int)(0xC100));
 
 			/// <summary>
 			/// 1 = Macro
@@ -387,7 +386,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 
 		public sealed class FocalLength
 		{
-		    internal const int Offset = unchecked((int)(0xC200));
+			private const int Offset = unchecked((int)(0xC200));
 
 			/// <summary>
 			/// 0 = Auto
@@ -437,7 +436,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 
 		public sealed class ShotInfo
 		{
-		    internal const int Offset = unchecked((int)(0xC400));
+			private const int Offset = unchecked((int)(0xC400));
 
 			public const int TagAutoIso = Offset + 1;
 
@@ -499,7 +498,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 
 		public sealed class Panorama
 		{
-		    internal const int Offset = unchecked((int)(0xC500));
+			private const int Offset = unchecked((int)(0xC500));
 
 			public const int TagPanoramaFrameNumber = Offset + 2;
 
@@ -509,7 +508,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 
 		public sealed class AFInfo
 		{
-		    internal const int Offset = unchecked((int)(0xD200));
+			private const int Offset = unchecked((int)(0xD200));
 
 			public const int TagNumAfPoints = Offset;
 

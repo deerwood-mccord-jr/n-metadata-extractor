@@ -1,4 +1,3 @@
-using Com.Drew.Imaging.Png;
 using JetBrains.Annotations;
 using Sharpen;
 
@@ -27,7 +26,7 @@ namespace Com.Drew.Imaging.Png
 		[CanBeNull]
 		public static Com.Drew.Imaging.Png.PngColorType FromNumericValue(int numericValue)
 		{
-            Com.Drew.Imaging.Png.PngColorType[] colorTypes = typeof(Com.Drew.Imaging.Png.PngColorType).GetEnumConstants<PngColorType>();
+			Com.Drew.Imaging.Png.PngColorType[] colorTypes = typeof(Com.Drew.Imaging.Png.PngColorType).GetEnumConstants();
 			foreach (Com.Drew.Imaging.Png.PngColorType colorType in colorTypes)
 			{
 				if (colorType.GetNumericValue() == numericValue)
@@ -48,26 +47,26 @@ namespace Com.Drew.Imaging.Png
 
 		private PngColorType(int numericValue, string description, params int[] allowedBitDepths)
 		{
-			_numericValue = numericValue;
-			_description = description;
-			_allowedBitDepths = allowedBitDepths;
+			Com.Drew.Imaging.Png.PngColorType._numericValue = numericValue;
+			Com.Drew.Imaging.Png.PngColorType._description = description;
+			Com.Drew.Imaging.Png.PngColorType._allowedBitDepths = allowedBitDepths;
 		}
 
 		public int GetNumericValue()
 		{
-			return _numericValue;
+			return Com.Drew.Imaging.Png.PngColorType._numericValue;
 		}
 
 		[NotNull]
 		public string GetDescription()
 		{
-			return _description;
+			return Com.Drew.Imaging.Png.PngColorType._description;
 		}
 
 		[NotNull]
 		public int[] GetAllowedBitDepths()
 		{
-			return _allowedBitDepths;
+			return Com.Drew.Imaging.Png.PngColorType._allowedBitDepths;
 		}
 	}
 }

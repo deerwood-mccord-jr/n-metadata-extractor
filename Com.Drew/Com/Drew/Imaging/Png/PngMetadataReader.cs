@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Com.Drew.Imaging.Png;
 using Com.Drew.Lang;
 using Com.Drew.Metadata.Icc;
 using Com.Drew.Metadata.Png;
@@ -57,7 +56,7 @@ namespace Com.Drew.Imaging.Png
 			IList<KeyValuePair> textPairs = new AList<KeyValuePair>();
 			foreach (PngChunk chunk in chunks)
 			{
-				PngChunkType chunkType = chunk.GetChunkType();
+				PngChunkType chunkType = chunk.GetType();
 				sbyte[] bytes = chunk.GetBytes();
 				if (chunkType.Equals(PngChunkType.Ihdr))
 				{

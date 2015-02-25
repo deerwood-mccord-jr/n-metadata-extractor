@@ -1,25 +1,24 @@
 /*
- * Copyright 2002-2013 Drew Noakes
- *
- *    Licensed under the Apache License, Version 2.0 (the "License");
- *    you may not use this file except in compliance with the License.
- *    You may obtain a copy of the License at
- *
- *        http://www.apache.org/licenses/LICENSE-2.0
- *
- *    Unless required by applicable law or agreed to in writing, software
- *    distributed under the License is distributed on an "AS IS" BASIS,
- *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    See the License for the specific language governing permissions and
- *    limitations under the License.
- *
- * More information about this project is available at:
- *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
- */
+* Copyright 2002-2013 Drew Noakes
+*
+*    Licensed under the Apache License, Version 2.0 (the "License");
+*    you may not use this file except in compliance with the License.
+*    You may obtain a copy of the License at
+*
+*        http://www.apache.org/licenses/LICENSE-2.0
+*
+*    Unless required by applicable law or agreed to in writing, software
+*    distributed under the License is distributed on an "AS IS" BASIS,
+*    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+*    See the License for the specific language governing permissions and
+*    limitations under the License.
+*
+* More information about this project is available at:
+*
+*    http://drewnoakes.com/code/exif/
+*    http://code.google.com/p/metadata-extractor/
+*/
 using System;
-using Com.Drew.Lang;
 using JetBrains.Annotations;
 using Sharpen;
 
@@ -73,14 +72,14 @@ namespace Com.Drew.Lang
 		/// <summary>
 		/// Converts a decimal degree angle into its corresponding DMS (degrees-minutes-seconds) representation as a string,
 		/// of format:
-		/// <c>-1В° 23' 4.56"</c>
+		/// <c>-1° 23' 4.56"</c>
 		/// </summary>
 		[NotNull]
 		public static string DecimalToDegreesMinutesSecondsString(double @decimal)
 		{
 			double[] dms = DecimalToDegreesMinutesSeconds(@decimal);
 			DecimalFormat format = new DecimalFormat("0.##");
-			return Sharpen.Extensions.StringFormat("%sВ° %s' %s\"", format.Format(dms[0]), format.Format(dms[1]), format.Format(dms[2]));
+			return Sharpen.Extensions.StringFormat("%s° %s' %s\"", format.Format(dms[0]), format.Format(dms[1]), format.Format(dms[2]));
 		}
 
 		/// <summary>
@@ -103,7 +102,7 @@ namespace Com.Drew.Lang
 		/// into a single value in degrees, as a double.
 		/// </summary>
 		[CanBeNull]
-		public static double? DegreesMinutesSecondsToDecimal(Rational degs, Rational mins, Rational secs, bool isNegative)
+		public static double DegreesMinutesSecondsToDecimal(Rational degs, Rational mins, Rational secs, bool isNegative)
 		{
 			double @decimal = Math.Abs(degs.DoubleValue()) + mins.DoubleValue() / 60.0d + secs.DoubleValue() / 3600.0d;
 			if (double.IsNaN(@decimal))
@@ -162,7 +161,7 @@ namespace Com.Drew.Lang
 
 		/// <returns>
 		/// a string representation of this location, of format:
-		/// <c>-1В° 23' 4.56", 54В° 32' 1.92"</c>
+		/// <c>-1° 23' 4.56", 54° 32' 1.92"</c>
 		/// </returns>
 		[NotNull]
 		public string ToDMSString()
