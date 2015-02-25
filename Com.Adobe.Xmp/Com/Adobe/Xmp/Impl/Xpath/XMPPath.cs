@@ -8,7 +8,6 @@
 // =================================================================================================
 using System.Collections;
 using System.Text;
-using Com.Adobe.Xmp.Impl.Xpath;
 using Sharpen;
 
 namespace Com.Adobe.Xmp.Impl.Xpath

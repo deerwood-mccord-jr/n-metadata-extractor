@@ -9,7 +9,6 @@
 using System;
 using System.Globalization;
 using Com.Adobe.Xmp;
-using Com.Adobe.Xmp.Impl;
 using Sharpen;
 
 namespace Com.Adobe.Xmp.Impl
@@ -232,7 +231,7 @@ namespace Com.Adobe.Xmp.Impl
 			this.hasTime = true;
 		}
 
-		/// <seealso cref="System.IComparable{T}.CompareTo(T)"/>
+		/// <seealso cref="System.IComparable{T}.CompareTo(object)"/>
 		public virtual int CompareTo(object dt)
 		{
 			long d = GetCalendar().GetTimeInMillis() - ((XMPDateTime)dt).GetCalendar().GetTimeInMillis();

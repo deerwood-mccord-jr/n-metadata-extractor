@@ -8,7 +8,6 @@
 // =================================================================================================
 using System.Collections;
 using Com.Adobe.Xmp;
-using Com.Adobe.Xmp.Impl;
 using Com.Adobe.Xmp.Options;
 using Com.Adobe.Xmp.Properties;
 using Sharpen;

@@ -6,7 +6,6 @@
 // NOTICE:  Adobe permits you to use, modify, and distribute this file in accordance with the terms
 // of the Adobe license agreement accompanying it.
 // =================================================================================================
-using System;
 using Com.Adobe.Xmp;
 using Sharpen;
 
@@ -18,7 +17,7 @@ namespace Com.Adobe.Xmp.Options
 	/// .
 	/// </summary>
 	/// <since>24.01.2006</since>
-    public sealed class SerializeOptions : Com.Adobe.Xmp.Options.Options, ICloneable
+	public sealed class SerializeOptions : Com.Adobe.Xmp.Options.Options
 	{
 		/// <summary>Omit the XML packet wrapper.</summary>
 		public const int OmitPacketWrapper = unchecked((int)(0x0010));
@@ -31,7 +30,7 @@ namespace Com.Adobe.Xmp.Options
 		/// <remarks>
 		/// Use a compact form of RDF.
 		/// The compact form is the default serialization format (this flag is technically ignored).
-        /// To serialize to the canonical form, set the flag UseCanonicalFormat.
+		/// To serialize to the canonical form, set the flag USE_CANONICAL_FORMAT.
 		/// If both flags &quot;compact&quot; and &quot;canonical&quot; are set, canonical is used.
 		/// </remarks>
 		public const int UseCompactFormat = unchecked((int)(0x0040));

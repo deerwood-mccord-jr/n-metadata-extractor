@@ -6,7 +6,6 @@
 // NOTICE:  Adobe permits you to use, modify, and distribute this file in accordance with the terms
 // of the Adobe license agreement accompanying it.
 // =================================================================================================
-using Com.Adobe.Xmp.Options;
 using Sharpen;
 
 namespace Com.Adobe.Xmp.Options
@@ -31,7 +30,7 @@ namespace Com.Adobe.Xmp.Options
 		/// <summary>The actual is an alternate text array, the alias is to the 'x-default' element of the array.</summary>
 		public const int PropArrayAltText = PropertyOptions.ArrayAltText;
 
-		/// <seealso cref="Options"/>
+		/// <seealso cref="Options.Options()"/>
 		public AliasOptions()
 		{
 		}
