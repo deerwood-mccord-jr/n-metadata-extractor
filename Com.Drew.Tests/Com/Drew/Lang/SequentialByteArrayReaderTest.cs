@@ -1,4 +1,3 @@
-using Com.Drew.Lang;
 using Sharpen;
 
 namespace Com.Drew.Lang

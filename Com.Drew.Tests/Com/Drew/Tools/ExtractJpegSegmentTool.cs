@@ -1,27 +1,26 @@
 /*
- * Copyright 2002-2013 Drew Noakes
- *
- *    Licensed under the Apache License, Version 2.0 (the "License");
- *    you may not use this file except in compliance with the License.
- *    You may obtain a copy of the License at
- *
- *        http://www.apache.org/licenses/LICENSE-2.0
- *
- *    Unless required by applicable law or agreed to in writing, software
- *    distributed under the License is distributed on an "AS IS" BASIS,
- *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    See the License for the specific language governing permissions and
- *    limitations under the License.
- *
- * More information about this project is available at:
- *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
- */
+* Copyright 2002-2013 Drew Noakes
+*
+*    Licensed under the Apache License, Version 2.0 (the "License");
+*    you may not use this file except in compliance with the License.
+*    You may obtain a copy of the License at
+*
+*        http://www.apache.org/licenses/LICENSE-2.0
+*
+*    Unless required by applicable law or agreed to in writing, software
+*    distributed under the License is distributed on an "AS IS" BASIS,
+*    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+*    See the License for the specific language governing permissions and
+*    limitations under the License.
+*
+* More information about this project is available at:
+*
+*    http://drewnoakes.com/code/exif/
+*    http://code.google.com/p/metadata-extractor/
+*/
 using System.Collections.Generic;
 using Com.Drew.Imaging.Jpeg;
 using Com.Drew.Lang;
-using Com.Drew.Tools;
 using Sharpen;
 
 namespace Com.Drew.Tools
@@ -54,7 +53,7 @@ namespace Com.Drew.Tools
 			ICollection<JpegSegmentType> segmentTypes = new HashSet<JpegSegmentType>();
 			for (int i = 1; i < args.Length; i++)
 			{
-                JpegSegmentType segmentType = JpegSegmentType.ValueOf(args[i].ToUpper());
+				JpegSegmentType segmentType = Sharpen.(args[i].ToUpper());
 				if (!segmentType.canContainMetadata)
 				{
 					System.Console.Error.Printf("WARNING: Segment type %s cannot contain metadata so it may not be necessary to extract it%n", segmentType);

@@ -1,23 +1,23 @@
 /*
- * Copyright 2002-2013 Drew Noakes
- *
- *    Licensed under the Apache License, Version 2.0 (the "License");
- *    you may not use this file except in compliance with the License.
- *    You may obtain a copy of the License at
- *
- *        http://www.apache.org/licenses/LICENSE-2.0
- *
- *    Unless required by applicable law or agreed to in writing, software
- *    distributed under the License is distributed on an "AS IS" BASIS,
- *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    See the License for the specific language governing permissions and
- *    limitations under the License.
- *
- * More information about this project is available at:
- *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
- */
+* Copyright 2002-2013 Drew Noakes
+*
+*    Licensed under the Apache License, Version 2.0 (the "License");
+*    you may not use this file except in compliance with the License.
+*    You may obtain a copy of the License at
+*
+*        http://www.apache.org/licenses/LICENSE-2.0
+*
+*    Unless required by applicable law or agreed to in writing, software
+*    distributed under the License is distributed on an "AS IS" BASIS,
+*    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+*    See the License for the specific language governing permissions and
+*    limitations under the License.
+*
+* More information about this project is available at:
+*
+*    http://drewnoakes.com/code/exif/
+*    http://code.google.com/p/metadata-extractor/
+*/
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -25,7 +25,6 @@ using Com.Drew.Imaging;
 using Com.Drew.Lang;
 using Com.Drew.Metadata;
 using Com.Drew.Metadata.Exif;
-using Com.Drew.Tools;
 using JetBrains.Annotations;
 using Sharpen;
 
@@ -299,15 +298,20 @@ namespace Com.Drew.Tools
 
 				internal Com.Drew.Metadata.Metadata metadata;
 
-				[CanBeNull] internal string manufacturer;
+				[CanBeNull]
+				private string manufacturer;
 
-				[CanBeNull] internal string model;
+				[CanBeNull]
+				private string model;
 
-				[CanBeNull] internal string exifVersion;
+				[CanBeNull]
+				private string exifVersion;
 
-				[CanBeNull] internal string thumbnail;
+				[CanBeNull]
+				private string thumbnail;
 
-				[CanBeNull] internal string makernote;
+				[CanBeNull]
+				private string makernote;
 
 				internal Row(WikiTableOutputHandler _enclosing, FilePath file, Com.Drew.Metadata.Metadata metadata)
 				{
@@ -330,8 +334,8 @@ namespace Com.Drew.Tools
 					}
 					if (thumbDir != null)
 					{
-						int? width = thumbDir.GetInteger(ExifThumbnailDirectory.TagThumbnailImageWidth);
-						int? height = thumbDir.GetInteger(ExifThumbnailDirectory.TagThumbnailImageHeight);
+						int width = thumbDir.GetInteger(ExifThumbnailDirectory.TagThumbnailImageWidth);
+						int height = thumbDir.GetInteger(ExifThumbnailDirectory.TagThumbnailImageHeight);
 						this.thumbnail = width != null && height != null ? Sharpen.Extensions.StringFormat("Yes (%s x %s)", width, height) : "Yes";
 					}
 					foreach (Com.Drew.Metadata.Directory directory in metadata.GetDirectories())
@@ -417,7 +421,7 @@ namespace Com.Drew.Tools
 			/// <exception cref="System.IO.IOException"/>
 			private void WriteOutput(PrintStream stream)
 			{
-				TextWriter writer = new OutputStreamWriter(stream);
+				Writer writer = new OutputStreamWriter(stream);
 				writer.Write("#summary Tabular summary of metadata found in the image database\n\n");
 				writer.Write("= Image Database Summary =\n\n");
 				foreach (string extension in _rowListByExtension.Keys)

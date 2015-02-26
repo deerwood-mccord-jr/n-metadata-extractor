@@ -1,5 +1,4 @@
 using System.IO;
-using Com.Drew.Lang;
 using Sharpen;
 
 namespace Com.Drew.Lang
