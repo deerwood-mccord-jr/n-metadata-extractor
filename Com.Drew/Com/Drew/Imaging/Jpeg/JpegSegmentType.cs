@@ -148,7 +148,7 @@ namespace Com.Drew.Imaging.Jpeg
 					segmentTypes.Add(segmentType);
 				}
 			}
-			Com.Drew.Imaging.Jpeg.JpegSegmentType.canContainMetadataTypes = segmentTypes;
+			canContainMetadataTypes = segmentTypes;
 		}
 
 		public readonly sbyte byteValue;

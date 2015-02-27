@@ -47,26 +47,26 @@ namespace Com.Drew.Imaging.Png
 
 		private PngColorType(int numericValue, [NotNull] string description, [NotNull] params int[] allowedBitDepths)
 		{
-			Com.Drew.Imaging.Png.PngColorType._numericValue = numericValue;
-			Com.Drew.Imaging.Png.PngColorType._description = description;
-			Com.Drew.Imaging.Png.PngColorType._allowedBitDepths = allowedBitDepths;
+			_numericValue = numericValue;
+			_description = description;
+			_allowedBitDepths = allowedBitDepths;
 		}
 
 		public int GetNumericValue()
 		{
-			return Com.Drew.Imaging.Png.PngColorType._numericValue;
+			return _numericValue;
 		}
 
 		[NotNull]
 		public string GetDescription()
 		{
-			return Com.Drew.Imaging.Png.PngColorType._description;
+			return _description;
 		}
 
 		[NotNull]
 		public int[] GetAllowedBitDepths()
 		{
-			return Com.Drew.Imaging.Png.PngColorType._allowedBitDepths;
+			return _allowedBitDepths;
 		}
 	}
 }
