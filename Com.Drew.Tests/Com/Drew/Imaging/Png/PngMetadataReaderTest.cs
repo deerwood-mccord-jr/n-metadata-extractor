@@ -13,7 +13,7 @@ namespace Com.Drew.Imaging.Png
 		/// <exception cref="System.IO.IOException"/>
 		/// <exception cref="Com.Drew.Imaging.Png.PngProcessingException"/>
 		[NotNull]
-		public static T ProcessFile<T>(string filePath)
+		public static T ProcessFile<T>([NotNull]string filePath)
 			where T : Com.Drew.Metadata.Directory
 		{
 			System.Type directoryClass = typeof(T);
@@ -25,7 +25,7 @@ namespace Com.Drew.Imaging.Png
 		/// <exception cref="Com.Drew.Imaging.Png.PngProcessingException"/>
 		/// <exception cref="System.IO.IOException"/>
 		[NotNull]
-		private static Com.Drew.Metadata.Metadata ProcessFile(string filePath)
+		private static Com.Drew.Metadata.Metadata ProcessFile([NotNull]string filePath)
 		{
 			FileInputStream inputStream = null;
 			try

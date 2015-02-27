@@ -34,7 +34,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 	/// <author>Drew Noakes http://drewnoakes.com</author>
 	public class LeicaMakernoteDescriptor : TagDescriptor<LeicaMakernoteDirectory>
 	{
-		public LeicaMakernoteDescriptor(LeicaMakernoteDirectory directory)
+		public LeicaMakernoteDescriptor([NotNull]LeicaMakernoteDirectory directory)
 			: base(directory)
 		{
 		}

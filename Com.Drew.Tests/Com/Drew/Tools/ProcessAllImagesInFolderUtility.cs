@@ -78,7 +78,7 @@ namespace Com.Drew.Tools
 			System.Console.Out.Println(Sharpen.Extensions.StringFormat("Completed in %d ms", (Runtime.NanoTime() - start) / 1000000));
 		}
 
-		private static void ProcessDirectory(FilePath path, ProcessAllImagesInFolderUtility.FileHandler handler)
+		private static void ProcessDirectory([NotNull]FilePath path, [NotNull]ProcessAllImagesInFolderUtility.FileHandler handler)
 		{
 			string[] pathItems = path.List();
 			if (pathItems == null)
@@ -118,15 +118,15 @@ namespace Com.Drew.Tools
 
 		internal interface FileHandler
 		{
-			bool ShouldProcess(FilePath file);
+			bool ShouldProcess([NotNull]FilePath file);
 
-			void OnException(FilePath file, Exception throwable);
+			void OnException([NotNull]FilePath file, [NotNull]Exception throwable);
 
-			void OnExtracted(FilePath file, Com.Drew.Metadata.Metadata metadata);
+			void OnExtracted([NotNull]FilePath file, [NotNull]Com.Drew.Metadata.Metadata metadata);
 
 			void OnCompleted();
 
-			void OnProcessingStarting(FilePath file);
+			void OnProcessingStarting([NotNull]FilePath file);
 		}
 
 		internal abstract class FileHandlerBase : ProcessAllImagesInFolderUtility.FileHandler
@@ -141,19 +141,19 @@ namespace Com.Drew.Tools
 
 			private long _processedByteCount = 0;
 
-			public virtual bool ShouldProcess(FilePath file)
+			public virtual bool ShouldProcess([NotNull]FilePath file)
 			{
 				string extension = GetExtension(file);
 				return extension != null && _supportedExtensions.Contains(extension.ToLower());
 			}
 
-			public virtual void OnProcessingStarting(FilePath file)
+			public virtual void OnProcessingStarting([NotNull]FilePath file)
 			{
 				_processedFileCount++;
 				_processedByteCount += file.Length();
 			}
 
-			public virtual void OnException(FilePath file, Exception throwable)
+			public virtual void OnException([NotNull]FilePath file, [NotNull]Exception throwable)
 			{
 				_exceptionCount++;
 				if (throwable is ImageProcessingException)
@@ -170,7 +170,7 @@ namespace Com.Drew.Tools
 				}
 			}
 
-			public virtual void OnExtracted(FilePath file, Com.Drew.Metadata.Metadata metadata)
+			public virtual void OnExtracted([NotNull]FilePath file, [NotNull]Com.Drew.Metadata.Metadata metadata)
 			{
 				if (metadata.HasErrors())
 				{
@@ -199,7 +199,7 @@ namespace Com.Drew.Tools
 			}
 
 			[CanBeNull]
-			protected internal virtual string GetExtension(FilePath file)
+			protected internal virtual string GetExtension([NotNull]FilePath file)
 			{
 				string fileName = file.GetName();
 				int i = fileName.LastIndexOf('.');
@@ -218,7 +218,7 @@ namespace Com.Drew.Tools
 		/// <summary>Writes a text file containing the extracted metadata for each input file.</summary>
 		internal class TextFileOutputHandler : ProcessAllImagesInFolderUtility.FileHandlerBase
 		{
-			public override void OnExtracted(FilePath file, Com.Drew.Metadata.Metadata metadata)
+			public override void OnExtracted([NotNull]FilePath file, [NotNull]Com.Drew.Metadata.Metadata metadata)
 			{
 				base.OnExtracted(file, metadata);
 				try
@@ -313,7 +313,7 @@ namespace Com.Drew.Tools
 				[CanBeNull]
 				private string makernote;
 
-				internal Row(WikiTableOutputHandler _enclosing, FilePath file, Com.Drew.Metadata.Metadata metadata)
+				internal Row(WikiTableOutputHandler _enclosing, [NotNull]FilePath file, [NotNull]Com.Drew.Metadata.Metadata metadata)
 				{
 					this._enclosing = _enclosing;
 					this.file = file;
@@ -359,7 +359,7 @@ namespace Com.Drew.Tools
 				_extensionEquivalence.Put("jpeg", "jpg");
 			}
 
-			public override void OnExtracted(FilePath file, Com.Drew.Metadata.Metadata metadata)
+			public override void OnExtracted([NotNull]FilePath file, [NotNull]Com.Drew.Metadata.Metadata metadata)
 			{
 				base.OnExtracted(file, metadata);
 				string extension = GetExtension(file);
@@ -419,7 +419,7 @@ namespace Com.Drew.Tools
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			private void WriteOutput(PrintStream stream)
+			private void WriteOutput([NotNull]PrintStream stream)
 			{
 				Writer writer = new OutputStreamWriter(stream);
 				writer.Write("#summary Tabular summary of metadata found in the image database\n\n");
@@ -463,7 +463,7 @@ namespace Com.Drew.Tools
 		/// </remarks>
 		internal class BasicFileHandler : ProcessAllImagesInFolderUtility.FileHandlerBase
 		{
-			public override void OnExtracted(FilePath file, Com.Drew.Metadata.Metadata metadata)
+			public override void OnExtracted([NotNull]FilePath file, [NotNull]Com.Drew.Metadata.Metadata metadata)
 			{
 				base.OnExtracted(file, metadata);
 				// Iterate through all values, calling toString to flush out any formatting exceptions

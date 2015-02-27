@@ -20,6 +20,7 @@
 */
 using System;
 using Com.Drew.Lang;
+using JetBrains.Annotations;
 using Sharpen;
 
 namespace Com.Drew.Metadata
@@ -31,17 +32,17 @@ namespace Com.Drew.Metadata
 	{
 		private const long serialVersionUID = 8612756143363919682L;
 
-		public MetadataException(string msg)
+		public MetadataException([CanBeNull]string msg)
 			: base(msg)
 		{
 		}
 
-		public MetadataException(Exception exception)
+		public MetadataException([CanBeNull]Exception exception)
 			: base(exception)
 		{
 		}
 
-		public MetadataException(string msg, Exception innerException)
+		public MetadataException([CanBeNull]string msg, [CanBeNull]Exception innerException)
 			: base(msg, innerException)
 		{
 		}

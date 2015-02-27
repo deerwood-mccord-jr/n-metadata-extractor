@@ -41,12 +41,12 @@ namespace Com.Drew.Metadata.Jfif
 			return Arrays.AsList(JpegSegmentType.App0);
 		}
 
-		public virtual bool CanProcess(sbyte[] segmentBytes, JpegSegmentType segmentType)
+		public virtual bool CanProcess([NotNull]sbyte[] segmentBytes, [NotNull]JpegSegmentType segmentType)
 		{
 			return segmentBytes.Length > 3 && "JFIF".Equals(Sharpen.Runtime.GetStringForBytes(segmentBytes, 0, 4));
 		}
 
-		public virtual void Extract(sbyte[] segmentBytes, Com.Drew.Metadata.Metadata metadata, JpegSegmentType segmentType)
+		public virtual void Extract([NotNull]sbyte[] segmentBytes, [NotNull]Com.Drew.Metadata.Metadata metadata, [NotNull]JpegSegmentType segmentType)
 		{
 			Extract(new ByteArrayReader(segmentBytes), metadata);
 		}
@@ -57,7 +57,7 @@ namespace Com.Drew.Metadata.Jfif
 		/// <see cref="Com.Drew.Metadata.Metadata"/>
 		/// .
 		/// </summary>
-		public virtual void Extract(RandomAccessReader reader, Com.Drew.Metadata.Metadata metadata)
+		public virtual void Extract([NotNull]RandomAccessReader reader, [NotNull]Com.Drew.Metadata.Metadata metadata)
 		{
 			JfifDirectory directory = metadata.GetOrCreateDirectory<JfifDirectory>();
 			try

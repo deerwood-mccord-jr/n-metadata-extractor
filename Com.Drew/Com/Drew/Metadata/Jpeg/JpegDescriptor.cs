@@ -33,7 +33,7 @@ namespace Com.Drew.Metadata.Jpeg
 	/// <author>Drew Noakes http://drewnoakes.com</author>
 	public class JpegDescriptor : TagDescriptor<JpegDirectory>
 	{
-		public JpegDescriptor(JpegDirectory directory)
+		public JpegDescriptor([NotNull]JpegDirectory directory)
 			: base(directory)
 		{
 		}

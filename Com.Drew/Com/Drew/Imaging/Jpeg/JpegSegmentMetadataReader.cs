@@ -16,7 +16,7 @@ namespace Com.Drew.Imaging.Jpeg
 		/// that no errors will occur, but rather a best-effort indication of whether the parse is likely to succeed.
 		/// Implementations are expected to check things such as the opening bytes, data length, etc.
 		/// </remarks>
-		bool CanProcess(sbyte[] segmentBytes, JpegSegmentType segmentType);
+		bool CanProcess([NotNull]sbyte[] segmentBytes, [NotNull]JpegSegmentType segmentType);
 
 		/// <summary>
 		/// Extracts metadata from a JPEG segment's byte array and merges it into the specified
@@ -34,6 +34,6 @@ namespace Com.Drew.Imaging.Jpeg
 		/// <see cref="JpegSegmentType"/>
 		/// being read.
 		/// </param>
-		void Extract(sbyte[] segmentBytes, Com.Drew.Metadata.Metadata metadata, JpegSegmentType segmentType);
+		void Extract([NotNull]sbyte[] segmentBytes, [NotNull]Com.Drew.Metadata.Metadata metadata, [NotNull]JpegSegmentType segmentType);
 	}
 }

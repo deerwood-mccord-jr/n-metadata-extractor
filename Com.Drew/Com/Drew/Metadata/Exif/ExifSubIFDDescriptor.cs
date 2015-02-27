@@ -47,7 +47,7 @@ namespace Com.Drew.Metadata.Exif
 		[NotNull]
 		private static readonly DecimalFormat SimpleDecimalFormatter = new DecimalFormat("0.#");
 
-		public ExifSubIFDDescriptor(ExifSubIFDDirectory directory)
+		public ExifSubIFDDescriptor([NotNull]ExifSubIFDDirectory directory)
 			: base(directory)
 		{
 		}

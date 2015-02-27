@@ -8,7 +8,7 @@ namespace Com.Drew.Metadata.Bmp
 	/// <author>Drew Noakes http://drewnoakes.com</author>
 	public class BmpHeaderDescriptor : TagDescriptor<BmpHeaderDirectory>
 	{
-		public BmpHeaderDescriptor(BmpHeaderDirectory directory)
+		public BmpHeaderDescriptor([NotNull]BmpHeaderDirectory directory)
 			: base(directory)
 		{
 		}

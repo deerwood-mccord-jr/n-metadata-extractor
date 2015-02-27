@@ -35,7 +35,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 	/// <author>Drew Noakes http://drewnoakes.com</author>
 	public class PentaxMakernoteDescriptor : TagDescriptor<PentaxMakernoteDirectory>
 	{
-		public PentaxMakernoteDescriptor(PentaxMakernoteDirectory directory)
+		public PentaxMakernoteDescriptor([NotNull]PentaxMakernoteDirectory directory)
 			: base(directory)
 		{
 		}

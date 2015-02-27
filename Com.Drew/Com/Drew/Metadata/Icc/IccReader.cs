@@ -45,12 +45,12 @@ namespace Com.Drew.Metadata.Icc
 			return Arrays.AsList(JpegSegmentType.App2);
 		}
 
-		public virtual bool CanProcess(sbyte[] segmentBytes, JpegSegmentType segmentType)
+		public virtual bool CanProcess([NotNull]sbyte[] segmentBytes, [NotNull]JpegSegmentType segmentType)
 		{
 			return segmentBytes.Length > 10 && Sharpen.Runtime.EqualsIgnoreCase("ICC_PROFILE", Sharpen.Runtime.GetStringForBytes(segmentBytes, 0, 11));
 		}
 
-		public virtual void Extract(sbyte[] segmentBytes, Com.Drew.Metadata.Metadata metadata, JpegSegmentType segmentType)
+		public virtual void Extract([NotNull]sbyte[] segmentBytes, [NotNull]Com.Drew.Metadata.Metadata metadata, [NotNull]JpegSegmentType segmentType)
 		{
 			// skip the first 14 bytes
 			sbyte[] iccProfileBytes = new sbyte[segmentBytes.Length - 14];
@@ -58,7 +58,7 @@ namespace Com.Drew.Metadata.Icc
 			Extract(new ByteArrayReader(iccProfileBytes), metadata);
 		}
 
-		public virtual void Extract(RandomAccessReader reader, Com.Drew.Metadata.Metadata metadata)
+		public virtual void Extract([NotNull]RandomAccessReader reader, [NotNull]Com.Drew.Metadata.Metadata metadata)
 		{
 			// TODO review whether the 'tagPtr' values below really do require ICC processing to work with a RandomAccessReader
 			IccDirectory directory = metadata.GetOrCreateDirectory<IccDirectory>();
@@ -112,7 +112,7 @@ namespace Com.Drew.Metadata.Icc
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		private void Set4ByteString(Com.Drew.Metadata.Directory directory, int tagType, RandomAccessReader reader)
+		private void Set4ByteString([NotNull]Com.Drew.Metadata.Directory directory, int tagType, [NotNull]RandomAccessReader reader)
 		{
 			int i = reader.GetInt32(tagType);
 			if (i != 0)
@@ -122,7 +122,7 @@ namespace Com.Drew.Metadata.Icc
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		private void SetInt32(Com.Drew.Metadata.Directory directory, int tagType, RandomAccessReader reader)
+		private void SetInt32([NotNull]Com.Drew.Metadata.Directory directory, int tagType, [NotNull]RandomAccessReader reader)
 		{
 			int i = reader.GetInt32(tagType);
 			if (i != 0)
@@ -132,7 +132,7 @@ namespace Com.Drew.Metadata.Icc
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		private void SetInt64(Com.Drew.Metadata.Directory directory, int tagType, RandomAccessReader reader)
+		private void SetInt64([NotNull]Com.Drew.Metadata.Directory directory, int tagType, [NotNull]RandomAccessReader reader)
 		{
 			long l = reader.GetInt64(tagType);
 			if (l != 0)
@@ -142,7 +142,7 @@ namespace Com.Drew.Metadata.Icc
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		private void SetDate(IccDirectory directory, int tagType, RandomAccessReader reader)
+		private void SetDate([NotNull]IccDirectory directory, int tagType, [NotNull]RandomAccessReader reader)
 		{
 			int y = reader.GetUInt16(tagType);
 			int m = reader.GetUInt16(tagType + 2);

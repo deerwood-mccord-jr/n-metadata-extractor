@@ -38,7 +38,7 @@ namespace Com.Drew.Metadata.Xmp
 		[NotNull]
 		private static readonly DecimalFormat SimpleDecimalFormatter = new DecimalFormat("0.#");
 
-		public XmpDescriptor(XmpDirectory directory)
+		public XmpDescriptor([NotNull]XmpDirectory directory)
 			: base(directory)
 		{
 		}

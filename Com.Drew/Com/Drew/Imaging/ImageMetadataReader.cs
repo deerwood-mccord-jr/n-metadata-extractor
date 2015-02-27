@@ -128,7 +128,7 @@ namespace Com.Drew.Imaging
 		/// <exception cref="Com.Drew.Imaging.ImageProcessingException"/>
 		/// <exception cref="System.IO.IOException"/>
 		[NotNull]
-		public static Com.Drew.Metadata.Metadata ReadMetadata(InputStream inputStream)
+		public static Com.Drew.Metadata.Metadata ReadMetadata([NotNull]InputStream inputStream)
 		{
 			InputStream bufferedInputStream = inputStream is BufferedInputStream ? inputStream : new BufferedInputStream(inputStream);
 			int magicNumber = PeekMagicNumber(bufferedInputStream);
@@ -210,7 +210,7 @@ namespace Com.Drew.Imaging
 		/// <exception cref="Com.Drew.Imaging.ImageProcessingException"/>
 		/// <exception cref="System.IO.IOException"/>
 		[NotNull]
-		public static Com.Drew.Metadata.Metadata ReadMetadata(FilePath file)
+		public static Com.Drew.Metadata.Metadata ReadMetadata([NotNull]FilePath file)
 		{
 			InputStream inputStream = new FileInputStream(file);
 			try
@@ -225,7 +225,7 @@ namespace Com.Drew.Imaging
 
 		/// <summary>Reads the first two bytes from <code>inputStream</code>, then rewinds.</summary>
 		/// <exception cref="System.IO.IOException"/>
-		private static int PeekMagicNumber(InputStream inputStream)
+		private static int PeekMagicNumber([NotNull]InputStream inputStream)
 		{
 			inputStream.Mark(2);
 			int byte1 = inputStream.Read();
@@ -259,7 +259,7 @@ namespace Com.Drew.Imaging
 		/// <param name="args">the command line arguments</param>
 		/// <exception cref="Com.Drew.Metadata.MetadataException"/>
 		/// <exception cref="System.IO.IOException"/>
-		public static void Main(string[] args)
+		public static void Main([NotNull]string[] args)
 		{
 			ICollection<string> argList = new AList<string>(Arrays.AsList(args));
 			bool thumbRequested = argList.Remove("-thumb");

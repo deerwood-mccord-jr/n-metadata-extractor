@@ -32,7 +32,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 	/// <author>Drew Noakes http://drewnoakes.com</author>
 	public class CasioType1MakernoteDescriptor : TagDescriptor<CasioType1MakernoteDirectory>
 	{
-		public CasioType1MakernoteDescriptor(CasioType1MakernoteDirectory directory)
+		public CasioType1MakernoteDescriptor([NotNull]CasioType1MakernoteDirectory directory)
 			: base(directory)
 		{
 		}

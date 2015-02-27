@@ -40,7 +40,7 @@ namespace Com.Drew.Metadata.Exif
 		/// </summary>
 		private readonly bool _allowDecimalRepresentationOfRationals = true;
 
-		public ExifIFD0Descriptor(ExifIFD0Directory directory)
+		public ExifIFD0Descriptor([NotNull]ExifIFD0Directory directory)
 			: base(directory)
 		{
 		}

@@ -47,12 +47,12 @@ namespace Com.Drew.Metadata.Jpeg
 
 		//            JpegSegmentType.SOF4,
 		//            JpegSegmentType.SOF12,
-		public virtual bool CanProcess(sbyte[] segmentBytes, JpegSegmentType segmentType)
+		public virtual bool CanProcess([NotNull]sbyte[] segmentBytes, [NotNull]JpegSegmentType segmentType)
 		{
 			return true;
 		}
 
-		public virtual void Extract(sbyte[] segmentBytes, Com.Drew.Metadata.Metadata metadata, JpegSegmentType segmentType)
+		public virtual void Extract([NotNull]sbyte[] segmentBytes, [NotNull]Com.Drew.Metadata.Metadata metadata, [NotNull]JpegSegmentType segmentType)
 		{
 			if (metadata.ContainsDirectory(typeof(JpegDirectory)))
 			{

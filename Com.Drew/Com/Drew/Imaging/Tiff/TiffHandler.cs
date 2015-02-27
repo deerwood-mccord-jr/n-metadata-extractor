@@ -20,6 +20,7 @@
 */
 using System.Collections.Generic;
 using Com.Drew.Lang;
+using JetBrains.Annotations;
 using Sharpen;
 
 namespace Com.Drew.Imaging.Tiff
@@ -44,53 +45,53 @@ namespace Com.Drew.Imaging.Tiff
 
 		void EndingIFD();
 
-		void Completed(RandomAccessReader reader, int tiffHeaderOffset);
+		void Completed([NotNull]RandomAccessReader reader, int tiffHeaderOffset);
 
 		/// <exception cref="System.IO.IOException"/>
-		bool CustomProcessTag(int makernoteOffset, ICollection<int> processedIfdOffsets, int tiffHeaderOffset, RandomAccessReader reader, int tagId, int byteCount);
+		bool CustomProcessTag(int makernoteOffset, [NotNull]ICollection<int> processedIfdOffsets, int tiffHeaderOffset, [NotNull]RandomAccessReader reader, int tagId, int byteCount);
 
-		void Warn(string message);
+		void Warn([NotNull]string message);
 
-		void Error(string message);
+		void Error([NotNull]string message);
 
-		void SetByteArray(int tagId, sbyte[] bytes);
+		void SetByteArray(int tagId, [NotNull]sbyte[] bytes);
 
-		void SetString(int tagId, string @string);
+		void SetString(int tagId, [NotNull]string @string);
 
-		void SetRational(int tagId, Rational rational);
+		void SetRational(int tagId, [NotNull]Rational rational);
 
-		void SetRationalArray(int tagId, Rational[] array);
+		void SetRationalArray(int tagId, [NotNull]Rational[] array);
 
 		void SetFloat(int tagId, float float32);
 
-		void SetFloatArray(int tagId, float[] array);
+		void SetFloatArray(int tagId, [NotNull]float[] array);
 
 		void SetDouble(int tagId, double double64);
 
-		void SetDoubleArray(int tagId, double[] array);
+		void SetDoubleArray(int tagId, [NotNull]double[] array);
 
 		void SetInt8s(int tagId, sbyte int8s);
 
-		void SetInt8sArray(int tagId, sbyte[] array);
+		void SetInt8sArray(int tagId, [NotNull]sbyte[] array);
 
 		void SetInt8u(int tagId, short int8u);
 
-		void SetInt8uArray(int tagId, short[] array);
+		void SetInt8uArray(int tagId, [NotNull]short[] array);
 
 		void SetInt16s(int tagId, int int16s);
 
-		void SetInt16sArray(int tagId, short[] array);
+		void SetInt16sArray(int tagId, [NotNull]short[] array);
 
 		void SetInt16u(int tagId, int int16u);
 
-		void SetInt16uArray(int tagId, int[] array);
+		void SetInt16uArray(int tagId, [NotNull]int[] array);
 
 		void SetInt32s(int tagId, int int32s);
 
-		void SetInt32sArray(int tagId, int[] array);
+		void SetInt32sArray(int tagId, [NotNull]int[] array);
 
 		void SetInt32u(int tagId, long int32u);
 
-		void SetInt32uArray(int tagId, long[] array);
+		void SetInt32uArray(int tagId, [NotNull]long[] array);
 	}
 }

@@ -34,7 +34,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 	/// <author>Drew Noakes http://drewnoakes.com</author>
 	public class OlympusMakernoteDescriptor : TagDescriptor<OlympusMakernoteDirectory>
 	{
-		public OlympusMakernoteDescriptor(OlympusMakernoteDirectory directory)
+		public OlympusMakernoteDescriptor([NotNull]OlympusMakernoteDirectory directory)
 			: base(directory)
 		{
 		}

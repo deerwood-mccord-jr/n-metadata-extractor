@@ -42,7 +42,7 @@ namespace Com.Drew.Lang
 		private int _currentIndex;
 
 		/// <exception cref="System.IO.IOException"/>
-		public RandomAccessFileReader(RandomAccessFile file)
+		public RandomAccessFileReader([NotNull]RandomAccessFile file)
 		{
 			if (file == null)
 			{

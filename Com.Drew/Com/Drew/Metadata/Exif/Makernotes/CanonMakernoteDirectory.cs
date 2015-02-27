@@ -818,7 +818,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 			return _tagNameMap;
 		}
 
-		public override void SetObjectArray(int tagType, object array)
+		public override void SetObjectArray(int tagType, [NotNull]object array)
 		{
 			switch (tagType)
 			{

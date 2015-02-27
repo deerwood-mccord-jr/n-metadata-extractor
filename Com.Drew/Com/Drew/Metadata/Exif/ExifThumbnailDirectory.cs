@@ -202,14 +202,14 @@ namespace Com.Drew.Metadata.Exif
 			return _thumbnailData;
 		}
 
-		public virtual void SetThumbnailData(sbyte[] data)
+		public virtual void SetThumbnailData([CanBeNull]sbyte[] data)
 		{
 			_thumbnailData = data;
 		}
 
 		/// <exception cref="Com.Drew.Metadata.MetadataException"/>
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void WriteThumbnail(string filename)
+		public virtual void WriteThumbnail([NotNull]string filename)
 		{
 			sbyte[] data = _thumbnailData;
 			if (data == null)

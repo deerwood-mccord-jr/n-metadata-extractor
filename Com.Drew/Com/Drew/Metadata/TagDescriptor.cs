@@ -41,7 +41,7 @@ namespace Com.Drew.Metadata
 		[NotNull]
 		protected internal readonly T _directory;
 
-		public TagDescriptor(T directory)
+		public TagDescriptor([NotNull]T directory)
 		{
 			_directory = directory;
 		}
@@ -98,7 +98,7 @@ namespace Com.Drew.Metadata
 		/// <param name="majorDigits">the number of components to be</param>
 		/// <returns>the version as a string of form "2.10" or null if the argument cannot be converted</returns>
 		[CanBeNull]
-		public static string ConvertBytesToVersionString(int[] components, int majorDigits)
+		public static string ConvertBytesToVersionString([CanBeNull]int[] components, int majorDigits)
 		{
 			if (components == null)
 			{
@@ -133,13 +133,13 @@ namespace Com.Drew.Metadata
 		}
 
 		[CanBeNull]
-		protected internal virtual string GetIndexedDescription(int tagType, params string[] descriptions)
+		protected internal virtual string GetIndexedDescription(int tagType, params [NotNull]string[] descriptions)
 		{
 			return GetIndexedDescription(tagType, 0, descriptions);
 		}
 
 		[CanBeNull]
-		protected internal virtual string GetIndexedDescription(int tagType, int baseIndex, params string[] descriptions)
+		protected internal virtual string GetIndexedDescription(int tagType, int baseIndex, params [NotNull]string[] descriptions)
 		{
 			int index = _directory.GetInteger(tagType);
 			if (index == null)
@@ -192,7 +192,7 @@ namespace Com.Drew.Metadata
 		}
 
 		[CanBeNull]
-		protected internal virtual string GetFormattedInt(int tagType, string format)
+		protected internal virtual string GetFormattedInt(int tagType, [NotNull]string format)
 		{
 			int value = _directory.GetInteger(tagType);
 			if (value == null)
@@ -203,7 +203,7 @@ namespace Com.Drew.Metadata
 		}
 
 		[CanBeNull]
-		protected internal virtual string GetFormattedFloat(int tagType, string format)
+		protected internal virtual string GetFormattedFloat(int tagType, [NotNull]string format)
 		{
 			float value = _directory.GetFloatObject(tagType);
 			if (value == null)
@@ -214,7 +214,7 @@ namespace Com.Drew.Metadata
 		}
 
 		[CanBeNull]
-		protected internal virtual string GetFormattedString(int tagType, string format)
+		protected internal virtual string GetFormattedString(int tagType, [NotNull]string format)
 		{
 			string value = _directory.GetString(tagType);
 			if (value == null)
@@ -239,7 +239,7 @@ namespace Com.Drew.Metadata
 		/// <summary>LSB first.</summary>
 		/// <remarks>LSB first. Labels may be null, a String, or a String[2] with (low label,high label) values.</remarks>
 		[CanBeNull]
-		protected internal virtual string GetBitFlagDescription(int tagType, params object[] labels)
+		protected internal virtual string GetBitFlagDescription(int tagType, params [NotNull]object[] labels)
 		{
 			int value = _directory.GetInteger(tagType);
 			if (value == null)

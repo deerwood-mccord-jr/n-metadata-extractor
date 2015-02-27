@@ -39,7 +39,7 @@ namespace Com.Drew.Metadata.Exif
 		/// </summary>
 		private readonly bool _allowDecimalRepresentationOfRationals = true;
 
-		public ExifThumbnailDescriptor(ExifThumbnailDirectory directory)
+		public ExifThumbnailDescriptor([NotNull]ExifThumbnailDirectory directory)
 			: base(directory)
 		{
 		}

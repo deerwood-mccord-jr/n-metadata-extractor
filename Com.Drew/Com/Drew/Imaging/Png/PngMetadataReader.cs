@@ -16,7 +16,7 @@ namespace Com.Drew.Imaging.Png
 		/// <exception cref="Com.Drew.Imaging.Png.PngProcessingException"/>
 		/// <exception cref="System.IO.IOException"/>
 		[NotNull]
-		public static Com.Drew.Metadata.Metadata ReadMetadata(FilePath file)
+		public static Com.Drew.Metadata.Metadata ReadMetadata([NotNull]FilePath file)
 		{
 			InputStream inputStream = null;
 			try
@@ -36,7 +36,7 @@ namespace Com.Drew.Imaging.Png
 		/// <exception cref="Com.Drew.Imaging.Png.PngProcessingException"/>
 		/// <exception cref="System.IO.IOException"/>
 		[NotNull]
-		public static Com.Drew.Metadata.Metadata ReadMetadata(InputStream inputStream)
+		public static Com.Drew.Metadata.Metadata ReadMetadata([NotNull]InputStream inputStream)
 		{
 			// TODO keep a single static hash of these
 			ICollection<PngChunkType> desiredChunkTypes = new HashSet<PngChunkType>();

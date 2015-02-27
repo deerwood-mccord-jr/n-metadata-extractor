@@ -44,17 +44,17 @@ namespace Com.Drew.Lang
 		[CanBeNull]
 		private readonly Exception _innerException;
 
-		public CompoundException(string msg)
+		public CompoundException([CanBeNull]string msg)
 			: this(msg, null)
 		{
 		}
 
-		public CompoundException(Exception exception)
+		public CompoundException([CanBeNull]Exception exception)
 			: this(null, exception)
 		{
 		}
 
-		public CompoundException(string msg, Exception innerException)
+		public CompoundException([CanBeNull]string msg, [CanBeNull]Exception innerException)
 			: base(msg)
 		{
 			_innerException = innerException;
@@ -81,7 +81,7 @@ namespace Com.Drew.Lang
 			return @string.ToString();
 		}
 
-		public override void PrintStackTrace(PrintStream s)
+		public override void PrintStackTrace([NotNull]PrintStream s)
 		{
 			base.Sharpen.Runtime.PrintStackTrace(s);
 			if (_innerException != null)
@@ -91,7 +91,7 @@ namespace Com.Drew.Lang
 			}
 		}
 
-		public override void PrintStackTrace(PrintWriter s)
+		public override void PrintStackTrace([NotNull]PrintWriter s)
 		{
 			base.Sharpen.Runtime.PrintStackTrace(s);
 			if (_innerException != null)

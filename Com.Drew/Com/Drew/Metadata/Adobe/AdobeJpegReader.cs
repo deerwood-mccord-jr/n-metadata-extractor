@@ -36,17 +36,17 @@ namespace Com.Drew.Metadata.Adobe
 			return Arrays.AsList(JpegSegmentType.Appe);
 		}
 
-		public virtual bool CanProcess(sbyte[] segmentBytes, JpegSegmentType segmentType)
+		public virtual bool CanProcess([NotNull]sbyte[] segmentBytes, [NotNull]JpegSegmentType segmentType)
 		{
 			return segmentBytes.Length == 12 && Sharpen.Runtime.EqualsIgnoreCase("Adobe", Sharpen.Runtime.GetStringForBytes(segmentBytes, 0, 5));
 		}
 
-		public virtual void Extract(sbyte[] segmentBytes, Com.Drew.Metadata.Metadata metadata, JpegSegmentType segmentType)
+		public virtual void Extract([NotNull]sbyte[] segmentBytes, [NotNull]Com.Drew.Metadata.Metadata metadata, [NotNull]JpegSegmentType segmentType)
 		{
 			Extract(new SequentialByteArrayReader(segmentBytes), metadata);
 		}
 
-		public virtual void Extract(SequentialReader reader, Com.Drew.Metadata.Metadata metadata)
+		public virtual void Extract([NotNull]SequentialReader reader, [NotNull]Com.Drew.Metadata.Metadata metadata)
 		{
 			Com.Drew.Metadata.Directory directory = metadata.GetOrCreateDirectory<AdobeJpegDirectory>();
 			try

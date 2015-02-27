@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using JetBrains.Annotations;
 using Sharpen;
 
 namespace Com.Drew.Imaging.Png
@@ -101,12 +102,12 @@ namespace Com.Drew.Imaging.Png
 
 		private readonly bool _multipleAllowed;
 
-		public PngChunkType(string identifier)
+		public PngChunkType([NotNull]string identifier)
 			: this(identifier, false)
 		{
 		}
 
-		public PngChunkType(string identifier, bool multipleAllowed)
+		public PngChunkType([NotNull]string identifier, bool multipleAllowed)
 		{
 			//
 			// Standard critical chunks
@@ -127,7 +128,7 @@ namespace Com.Drew.Imaging.Png
 			}
 		}
 
-		public PngChunkType(sbyte[] bytes)
+		public PngChunkType([NotNull]sbyte[] bytes)
 		{
 			ValidateBytes(bytes);
 			_bytes = bytes;

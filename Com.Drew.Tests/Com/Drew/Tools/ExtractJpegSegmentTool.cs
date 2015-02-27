@@ -21,6 +21,7 @@
 using System.Collections.Generic;
 using Com.Drew.Imaging.Jpeg;
 using Com.Drew.Lang;
+using JetBrains.Annotations;
 using Sharpen;
 
 namespace Com.Drew.Tools
@@ -70,7 +71,7 @@ namespace Com.Drew.Tools
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public static void SaveSegmentFiles(string jpegFilePath, JpegSegmentData segmentData)
+		public static void SaveSegmentFiles([NotNull]string jpegFilePath, [NotNull]JpegSegmentData segmentData)
 		{
 			foreach (JpegSegmentType segmentType in segmentData.GetSegmentTypes())
 			{

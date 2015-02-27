@@ -20,6 +20,7 @@
 */
 using System;
 using Com.Drew.Imaging;
+using JetBrains.Annotations;
 using Sharpen;
 
 namespace Com.Drew.Imaging.Jpeg
@@ -31,17 +32,17 @@ namespace Com.Drew.Imaging.Jpeg
 	{
 		private const long serialVersionUID = -7870179776125450158L;
 
-		public JpegProcessingException(string message)
+		public JpegProcessingException([CanBeNull]string message)
 			: base(message)
 		{
 		}
 
-		public JpegProcessingException(string message, Exception cause)
+		public JpegProcessingException([CanBeNull]string message, [CanBeNull]Exception cause)
 			: base(message, cause)
 		{
 		}
 
-		public JpegProcessingException(Exception cause)
+		public JpegProcessingException([CanBeNull]Exception cause)
 			: base(cause)
 		{
 		}

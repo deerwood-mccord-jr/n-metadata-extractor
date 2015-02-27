@@ -28,7 +28,7 @@ namespace Com.Drew.Metadata.Photoshop
 	/// <author>Drew Noakes http://drewnoakes.com</author>
 	public class PsdHeaderDescriptor : TagDescriptor<PsdHeaderDirectory>
 	{
-		public PsdHeaderDescriptor(PsdHeaderDirectory directory)
+		public PsdHeaderDescriptor([NotNull]PsdHeaderDirectory directory)
 			: base(directory)
 		{
 		}

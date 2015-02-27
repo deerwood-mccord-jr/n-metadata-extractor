@@ -21,6 +21,7 @@
 using System.IO;
 using Com.Drew.Lang;
 using Com.Drew.Metadata;
+using JetBrains.Annotations;
 using Sharpen;
 
 namespace Com.Drew.Metadata.Photoshop
@@ -29,7 +30,7 @@ namespace Com.Drew.Metadata.Photoshop
 	/// <author>Drew Noakes http://drewnoakes.com</author>
 	public class PsdReader : MetadataReader
 	{
-		public virtual void Extract(RandomAccessReader reader, Com.Drew.Metadata.Metadata metadata)
+		public virtual void Extract([NotNull]RandomAccessReader reader, [NotNull]Com.Drew.Metadata.Metadata metadata)
 		{
 			PsdHeaderDirectory directory = metadata.GetOrCreateDirectory<PsdHeaderDirectory>();
 			try

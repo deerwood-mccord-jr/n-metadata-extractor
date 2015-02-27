@@ -34,7 +34,7 @@ namespace Com.Drew.Metadata.Iptc
 	/// <author>Drew Noakes http://drewnoakes.com</author>
 	public class IptcDescriptor : TagDescriptor<IptcDirectory>
 	{
-		public IptcDescriptor(IptcDirectory directory)
+		public IptcDescriptor([NotNull]IptcDirectory directory)
 			: base(directory)
 		{
 		}

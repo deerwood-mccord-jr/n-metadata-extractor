@@ -53,7 +53,7 @@ namespace Com.Drew.Metadata
 		/// <param name="s">The String in format <code>0031:07:15 00:00:00</code>.</param>
 		/// <returns>The parsed Age object, or null if the value could not be parsed</returns>
 		[CanBeNull]
-		public static Com.Drew.Metadata.Age FromPanasonicString(string s)
+		public static Com.Drew.Metadata.Age FromPanasonicString([NotNull]string s)
 		{
 			if (s == null)
 			{

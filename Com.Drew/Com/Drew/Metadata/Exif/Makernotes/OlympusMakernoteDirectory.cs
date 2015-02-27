@@ -426,7 +426,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 			return "Olympus Makernote";
 		}
 
-		public override void SetByteArray(int tagType, sbyte[] bytes)
+		public override void SetByteArray(int tagType, [NotNull]sbyte[] bytes)
 		{
 			if (tagType == TagCameraSettings1 || tagType == TagCameraSettings2)
 			{

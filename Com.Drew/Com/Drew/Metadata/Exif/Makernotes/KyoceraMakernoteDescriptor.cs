@@ -39,7 +39,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 	/// <author>Drew Noakes http://drewnoakes.com</author>
 	public class KyoceraMakernoteDescriptor : TagDescriptor<KyoceraMakernoteDirectory>
 	{
-		public KyoceraMakernoteDescriptor(KyoceraMakernoteDirectory directory)
+		public KyoceraMakernoteDescriptor([NotNull]KyoceraMakernoteDirectory directory)
 			: base(directory)
 		{
 		}

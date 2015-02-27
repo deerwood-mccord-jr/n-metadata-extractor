@@ -31,7 +31,7 @@ namespace Com.Drew.Metadata.Icc
 	/// <author>Yuri Binev, Drew Noakes http://drewnoakes.com</author>
 	public class IccDescriptor : TagDescriptor<IccDirectory>
 	{
-		public IccDescriptor(IccDirectory directory)
+		public IccDescriptor([NotNull]IccDirectory directory)
 			: base(directory)
 		{
 		}
@@ -517,7 +517,7 @@ namespace Com.Drew.Metadata.Icc
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		private static int GetInt32FromString(string @string)
+		private static int GetInt32FromString([NotNull]string @string)
 		{
 			sbyte[] bytes = Sharpen.Runtime.GetBytesForString(@string);
 			return new ByteArrayReader(bytes).GetInt32(0);

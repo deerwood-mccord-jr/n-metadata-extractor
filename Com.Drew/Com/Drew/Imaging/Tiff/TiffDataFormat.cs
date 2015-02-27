@@ -162,7 +162,7 @@ namespace Com.Drew.Imaging.Tiff
 			return null;
 		}
 
-		private TiffDataFormat(string name, int tiffFormatCode, int componentSizeBytes)
+		private TiffDataFormat([NotNull]string name, int tiffFormatCode, int componentSizeBytes)
 		{
 			_name = name;
 			_tiffFormatCode = tiffFormatCode;

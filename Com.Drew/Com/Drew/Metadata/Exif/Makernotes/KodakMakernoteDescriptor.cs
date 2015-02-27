@@ -32,7 +32,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 	/// <author>Drew Noakes http://drewnoakes.com</author>
 	public class KodakMakernoteDescriptor : TagDescriptor<KodakMakernoteDirectory>
 	{
-		public KodakMakernoteDescriptor(KodakMakernoteDirectory directory)
+		public KodakMakernoteDescriptor([NotNull]KodakMakernoteDirectory directory)
 			: base(directory)
 		{
 		}

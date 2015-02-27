@@ -49,7 +49,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 	/// <author>Drew Noakes http://drewnoakes.com</author>
 	public class FujifilmMakernoteDescriptor : TagDescriptor<FujifilmMakernoteDirectory>
 	{
-		public FujifilmMakernoteDescriptor(FujifilmMakernoteDirectory directory)
+		public FujifilmMakernoteDescriptor([NotNull]FujifilmMakernoteDirectory directory)
 			: base(directory)
 		{
 		}

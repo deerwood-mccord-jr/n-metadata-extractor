@@ -46,17 +46,17 @@ namespace Com.Drew.Metadata.Photoshop
 			return Arrays.AsList(JpegSegmentType.Appd);
 		}
 
-		public virtual bool CanProcess(sbyte[] segmentBytes, JpegSegmentType segmentType)
+		public virtual bool CanProcess([NotNull]sbyte[] segmentBytes, [NotNull]JpegSegmentType segmentType)
 		{
 			return segmentBytes.Length > 12 && "Photoshop 3.0".Equals(Sharpen.Runtime.GetStringForBytes(segmentBytes, 0, 13));
 		}
 
-		public virtual void Extract(sbyte[] segmentBytes, Com.Drew.Metadata.Metadata metadata, JpegSegmentType segmentType)
+		public virtual void Extract([NotNull]sbyte[] segmentBytes, [NotNull]Com.Drew.Metadata.Metadata metadata, [NotNull]JpegSegmentType segmentType)
 		{
 			Extract(new ByteArrayReader(segmentBytes), metadata);
 		}
 
-		public virtual void Extract(RandomAccessReader reader, Com.Drew.Metadata.Metadata metadata)
+		public virtual void Extract([NotNull]RandomAccessReader reader, [NotNull]Com.Drew.Metadata.Metadata metadata)
 		{
 			PhotoshopDirectory directory = metadata.GetOrCreateDirectory<PhotoshopDirectory>();
 			int pos;

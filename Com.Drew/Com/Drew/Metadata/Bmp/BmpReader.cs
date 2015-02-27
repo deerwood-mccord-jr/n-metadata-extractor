@@ -1,5 +1,6 @@
 using System.IO;
 using Com.Drew.Lang;
+using JetBrains.Annotations;
 using Sharpen;
 
 namespace Com.Drew.Metadata.Bmp
@@ -7,7 +8,7 @@ namespace Com.Drew.Metadata.Bmp
 	/// <author>Drew Noakes http://drewnoakes.com</author>
 	public class BmpReader
 	{
-		public virtual void Extract(SequentialReader reader, Com.Drew.Metadata.Metadata metadata)
+		public virtual void Extract([NotNull]SequentialReader reader, [NotNull]Com.Drew.Metadata.Metadata metadata)
 		{
 			BmpHeaderDirectory directory = metadata.GetOrCreateDirectory<BmpHeaderDirectory>();
 			// FILE HEADER

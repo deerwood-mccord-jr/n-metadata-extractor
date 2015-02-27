@@ -36,7 +36,7 @@ namespace Com.Drew.Metadata.Iptc
 	{
 		/// <exception cref="System.IO.IOException"/>
 		[NotNull]
-		public static IptcDirectory ProcessBytes(string filePath)
+		public static IptcDirectory ProcessBytes([NotNull]string filePath)
 		{
 			Com.Drew.Metadata.Metadata metadata = new Com.Drew.Metadata.Metadata();
 			sbyte[] bytes = FileUtil.ReadBytes(filePath);

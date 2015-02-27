@@ -32,7 +32,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 	/// <author>Drew Noakes http://drewnoakes.com</author>
 	public class SigmaMakernoteDescriptor : TagDescriptor<SigmaMakernoteDirectory>
 	{
-		public SigmaMakernoteDescriptor(SigmaMakernoteDirectory directory)
+		public SigmaMakernoteDescriptor([NotNull]SigmaMakernoteDirectory directory)
 			: base(directory)
 		{
 		}
