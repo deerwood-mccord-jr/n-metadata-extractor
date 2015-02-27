@@ -33,7 +33,7 @@ namespace Com.Drew.Metadata.Exif
 	/// <author>Drew Noakes http://drewnoakes.com</author>
 	public class GpsDescriptor : TagDescriptor<GpsDirectory>
 	{
-		public GpsDescriptor([NotNull]GpsDirectory directory)
+		public GpsDescriptor([NotNull] GpsDirectory directory)
 			: base(directory)
 		{
 		}

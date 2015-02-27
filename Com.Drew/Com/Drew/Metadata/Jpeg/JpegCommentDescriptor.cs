@@ -28,7 +28,7 @@ namespace Com.Drew.Metadata.Jpeg
 	/// <author>Drew Noakes http://drewnoakes.com</author>
 	public class JpegCommentDescriptor : TagDescriptor<JpegCommentDirectory>
 	{
-		public JpegCommentDescriptor([NotNull]JpegCommentDirectory directory)
+		public JpegCommentDescriptor([NotNull] JpegCommentDirectory directory)
 			: base(directory)
 		{
 		}

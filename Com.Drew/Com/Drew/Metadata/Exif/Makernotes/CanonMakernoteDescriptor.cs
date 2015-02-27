@@ -32,7 +32,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 	/// <author>Drew Noakes http://drewnoakes.com</author>
 	public class CanonMakernoteDescriptor : TagDescriptor<CanonMakernoteDirectory>
 	{
-		public CanonMakernoteDescriptor([NotNull]CanonMakernoteDirectory directory)
+		public CanonMakernoteDescriptor([NotNull] CanonMakernoteDirectory directory)
 			: base(directory)
 		{
 		}

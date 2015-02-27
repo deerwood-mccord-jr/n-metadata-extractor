@@ -102,12 +102,12 @@ namespace Com.Drew.Imaging.Png
 
 		private readonly bool _multipleAllowed;
 
-		public PngChunkType([NotNull]string identifier)
+		public PngChunkType([NotNull] string identifier)
 			: this(identifier, false)
 		{
 		}
 
-		public PngChunkType([NotNull]string identifier, bool multipleAllowed)
+		public PngChunkType([NotNull] string identifier, bool multipleAllowed)
 		{
 			//
 			// Standard critical chunks
@@ -128,7 +128,7 @@ namespace Com.Drew.Imaging.Png
 			}
 		}
 
-		public PngChunkType([NotNull]sbyte[] bytes)
+		public PngChunkType([NotNull] sbyte[] bytes)
 		{
 			ValidateBytes(bytes);
 			_bytes = bytes;

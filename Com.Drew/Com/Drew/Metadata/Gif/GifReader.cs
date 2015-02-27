@@ -12,7 +12,7 @@ namespace Com.Drew.Metadata.Gif
 
 		private const string Gif89aVersionIdentifier = "89a";
 
-		public virtual void Extract([NotNull]SequentialReader reader, [NotNull]Com.Drew.Metadata.Metadata metadata)
+		public virtual void Extract([NotNull] SequentialReader reader, [NotNull] Com.Drew.Metadata.Metadata metadata)
 		{
 			GifHeaderDirectory directory = metadata.GetOrCreateDirectory<GifHeaderDirectory>();
 			// FILE HEADER

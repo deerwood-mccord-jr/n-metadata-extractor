@@ -30,7 +30,7 @@ namespace Com.Drew.Metadata.Photoshop
 	{
 		/// <exception cref="System.Exception"/>
 		[NotNull]
-		public static PsdHeaderDirectory ProcessBytes([NotNull]string file)
+		public static PsdHeaderDirectory ProcessBytes([NotNull] string file)
 		{
 			Com.Drew.Metadata.Metadata metadata = new Com.Drew.Metadata.Metadata();
 			RandomAccessFile randomAccessFile = new RandomAccessFile(new FilePath(file), "r");

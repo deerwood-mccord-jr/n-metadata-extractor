@@ -32,7 +32,7 @@ namespace Com.Drew.Imaging.Psd
 	{
 		/// <exception cref="System.IO.IOException"/>
 		[NotNull]
-		public static Com.Drew.Metadata.Metadata ReadMetadata([NotNull]FilePath file)
+		public static Com.Drew.Metadata.Metadata ReadMetadata([NotNull] FilePath file)
 		{
 			Com.Drew.Metadata.Metadata metadata = new Com.Drew.Metadata.Metadata();
 			RandomAccessFile randomAccessFile = new RandomAccessFile(file, "r");
@@ -48,7 +48,7 @@ namespace Com.Drew.Imaging.Psd
 		}
 
 		[NotNull]
-		public static Com.Drew.Metadata.Metadata ReadMetadata([NotNull]InputStream inputStream)
+		public static Com.Drew.Metadata.Metadata ReadMetadata([NotNull] InputStream inputStream)
 		{
 			Com.Drew.Metadata.Metadata metadata = new Com.Drew.Metadata.Metadata();
 			new PsdReader().Extract(new RandomAccessStreamReader(inputStream), metadata);

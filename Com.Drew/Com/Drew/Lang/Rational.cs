@@ -252,7 +252,7 @@ namespace Com.Drew.Lang
 		/// <see cref="Rational"/>
 		/// .
 		/// </returns>
-		public override bool Equals([CanBeNull]object obj)
+		public override bool Equals([CanBeNull] object obj)
 		{
 			if (obj == null || !(obj is Com.Drew.Lang.Rational))
 			{

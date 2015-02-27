@@ -51,7 +51,7 @@ namespace Com.Drew.Imaging.Tiff
 		/// </exception>
 		/// <exception cref="System.IO.IOException">an error occurred while accessing the required data</exception>
 		/// <exception cref="Com.Drew.Imaging.Tiff.TiffProcessingException"/>
-		public virtual void ProcessTiff([NotNull]RandomAccessReader reader, [NotNull]TiffHandler handler, int tiffHeaderOffset)
+		public virtual void ProcessTiff([NotNull] RandomAccessReader reader, [NotNull] TiffHandler handler, int tiffHeaderOffset)
 		{
 			// This must be either "MM" or "II".
 			short byteOrderIdentifier = reader.GetInt16(tiffHeaderOffset);
@@ -119,7 +119,7 @@ namespace Com.Drew.Imaging.Tiff
 		/// <param name="ifdOffset">the offset within <code>reader</code> at which the IFD data starts</param>
 		/// <param name="tiffHeaderOffset">the offset within <code>reader</code> at which the TIFF header starts</param>
 		/// <exception cref="System.IO.IOException">an error occurred while accessing the required data</exception>
-		public static void ProcessIfd([NotNull]TiffHandler handler, [NotNull]RandomAccessReader reader, [NotNull]ICollection<int> processedIfdOffsets, int ifdOffset, int tiffHeaderOffset)
+		public static void ProcessIfd([NotNull] TiffHandler handler, [NotNull] RandomAccessReader reader, [NotNull] ICollection<int> processedIfdOffsets, int ifdOffset, int tiffHeaderOffset)
 		{
 			try
 			{
@@ -249,7 +249,7 @@ namespace Com.Drew.Imaging.Tiff
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		private static void ProcessTag([NotNull]TiffHandler handler, int tagId, int tagValueOffset, int componentCount, int formatCode, [NotNull]RandomAccessReader reader)
+		private static void ProcessTag([NotNull] TiffHandler handler, int tagId, int tagValueOffset, int componentCount, int formatCode, [NotNull] RandomAccessReader reader)
 		{
 			switch (formatCode)
 			{

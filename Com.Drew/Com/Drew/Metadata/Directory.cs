@@ -97,7 +97,7 @@ namespace Com.Drew.Metadata
 
 		/// <summary>Sets the descriptor used to interpret tag values.</summary>
 		/// <param name="descriptor">the descriptor used to interpret tag values</param>
-		public virtual void SetDescriptor([NotNull]TagDescriptor descriptor)
+		public virtual void SetDescriptor([NotNull] TagDescriptor descriptor)
 		{
 			if (descriptor == null)
 			{
@@ -108,7 +108,7 @@ namespace Com.Drew.Metadata
 
 		/// <summary>Registers an error message with this directory.</summary>
 		/// <param name="message">an error message.</param>
-		public virtual void AddError([NotNull]string message)
+		public virtual void AddError([NotNull] string message)
 		{
 			_errorList.Add(message);
 		}
@@ -146,7 +146,7 @@ namespace Com.Drew.Metadata
 		/// <summary>Sets an <code>int[]</code> (array) for the specified tag.</summary>
 		/// <param name="tagType">the tag identifier</param>
 		/// <param name="ints">the int array to store</param>
-		public virtual void SetIntArray(int tagType, [NotNull]int[] ints)
+		public virtual void SetIntArray(int tagType, [NotNull] int[] ints)
 		{
 			SetObjectArray(tagType, ints);
 		}
@@ -162,7 +162,7 @@ namespace Com.Drew.Metadata
 		/// <summary>Sets a <code>float[]</code> (array) for the specified tag.</summary>
 		/// <param name="tagType">the tag identifier</param>
 		/// <param name="floats">the float array to store</param>
-		public virtual void SetFloatArray(int tagType, [NotNull]float[] floats)
+		public virtual void SetFloatArray(int tagType, [NotNull] float[] floats)
 		{
 			SetObjectArray(tagType, floats);
 		}
@@ -178,7 +178,7 @@ namespace Com.Drew.Metadata
 		/// <summary>Sets a <code>double[]</code> (array) for the specified tag.</summary>
 		/// <param name="tagType">the tag identifier</param>
 		/// <param name="doubles">the double array to store</param>
-		public virtual void SetDoubleArray(int tagType, [NotNull]double[] doubles)
+		public virtual void SetDoubleArray(int tagType, [NotNull] double[] doubles)
 		{
 			SetObjectArray(tagType, doubles);
 		}
@@ -186,7 +186,7 @@ namespace Com.Drew.Metadata
 		/// <summary>Sets a <code>String</code> value for the specified tag.</summary>
 		/// <param name="tagType">the tag's value as an int</param>
 		/// <param name="value">the value for the specified tag as a String</param>
-		public virtual void SetString(int tagType, [NotNull]string value)
+		public virtual void SetString(int tagType, [NotNull] string value)
 		{
 			if (value == null)
 			{
@@ -198,7 +198,7 @@ namespace Com.Drew.Metadata
 		/// <summary>Sets a <code>String[]</code> (array) for the specified tag.</summary>
 		/// <param name="tagType">the tag identifier</param>
 		/// <param name="strings">the String array to store</param>
-		public virtual void SetStringArray(int tagType, [NotNull]string[] strings)
+		public virtual void SetStringArray(int tagType, [NotNull] string[] strings)
 		{
 			SetObjectArray(tagType, strings);
 		}
@@ -222,7 +222,7 @@ namespace Com.Drew.Metadata
 		/// <summary>Sets a <code>java.util.Date</code> value for the specified tag.</summary>
 		/// <param name="tagType">the tag's value as an int</param>
 		/// <param name="value">the value for the specified tag as a java.util.Date</param>
-		public virtual void SetDate(int tagType, [NotNull]DateTime value)
+		public virtual void SetDate(int tagType, [NotNull] DateTime value)
 		{
 			SetObject(tagType, value);
 		}
@@ -230,7 +230,7 @@ namespace Com.Drew.Metadata
 		/// <summary>Sets a <code>Rational</code> value for the specified tag.</summary>
 		/// <param name="tagType">the tag's value as an int</param>
 		/// <param name="rational">rational number</param>
-		public virtual void SetRational(int tagType, [NotNull]Rational rational)
+		public virtual void SetRational(int tagType, [NotNull] Rational rational)
 		{
 			SetObject(tagType, rational);
 		}
@@ -238,7 +238,7 @@ namespace Com.Drew.Metadata
 		/// <summary>Sets a <code>Rational[]</code> (array) for the specified tag.</summary>
 		/// <param name="tagType">the tag identifier</param>
 		/// <param name="rationals">the Rational array to store</param>
-		public virtual void SetRationalArray(int tagType, [NotNull]Rational[] rationals)
+		public virtual void SetRationalArray(int tagType, [NotNull] Rational[] rationals)
 		{
 			SetObjectArray(tagType, rationals);
 		}
@@ -246,7 +246,7 @@ namespace Com.Drew.Metadata
 		/// <summary>Sets a <code>byte[]</code> (array) for the specified tag.</summary>
 		/// <param name="tagType">the tag identifier</param>
 		/// <param name="bytes">the byte array to store</param>
-		public virtual void SetByteArray(int tagType, [NotNull]sbyte[] bytes)
+		public virtual void SetByteArray(int tagType, [NotNull] sbyte[] bytes)
 		{
 			SetObjectArray(tagType, bytes);
 		}
@@ -255,7 +255,7 @@ namespace Com.Drew.Metadata
 		/// <param name="tagType">the tag's value as an int</param>
 		/// <param name="value">the value for the specified tag</param>
 		/// <exception cref="System.ArgumentNullException">if value is <code>null</code></exception>
-		public virtual void SetObject(int tagType, [NotNull]object value)
+		public virtual void SetObject(int tagType, [NotNull] object value)
 		{
 			if (value == null)
 			{
@@ -276,7 +276,7 @@ namespace Com.Drew.Metadata
 		/// <summary>Sets an array <code>Object</code> for the specified tag.</summary>
 		/// <param name="tagType">the tag's value as an int</param>
 		/// <param name="array">the array of values for the specified tag</param>
-		public virtual void SetObjectArray(int tagType, [NotNull]object array)
+		public virtual void SetObjectArray(int tagType, [NotNull] object array)
 		{
 			// for now, we don't do anything special -- this method might be a candidate for removal once the dust settles
 			SetObject(tagType, array);
@@ -827,7 +827,7 @@ namespace Com.Drew.Metadata
 		/// is only considered if the underlying value is a string and parsing occurs, otherwise it has no effect.
 		/// </remarks>
 		[CanBeNull]
-		public virtual DateTime GetDate(int tagType, [CanBeNull]TimeZoneInfo timeZone)
+		public virtual DateTime GetDate(int tagType, [CanBeNull] TimeZoneInfo timeZone)
 		{
 			object o = GetObject(tagType);
 			if (o == null)

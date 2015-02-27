@@ -15,7 +15,7 @@ namespace Com.Drew.Lang
 
 		private readonly string _value;
 
-		public KeyValuePair([NotNull]string key, [NotNull]string value)
+		public KeyValuePair([NotNull] string key, [NotNull] string value)
 		{
 			_key = key;
 			_value = value;

@@ -32,7 +32,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 	/// <author>Drew Noakes http://drewnoakes.com</author>
 	public class SanyoMakernoteDescriptor : TagDescriptor<SanyoMakernoteDirectory>
 	{
-		public SanyoMakernoteDescriptor([NotNull]SanyoMakernoteDirectory directory)
+		public SanyoMakernoteDescriptor([NotNull] SanyoMakernoteDirectory directory)
 			: base(directory)
 		{
 		}

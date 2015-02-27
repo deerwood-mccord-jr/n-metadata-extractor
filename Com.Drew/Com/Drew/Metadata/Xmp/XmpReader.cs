@@ -72,7 +72,7 @@ namespace Com.Drew.Metadata.Xmp
 			return Arrays.AsList(JpegSegmentType.App1);
 		}
 
-		public virtual bool CanProcess([NotNull]sbyte[] segmentBytes, [NotNull]JpegSegmentType segmentType)
+		public virtual bool CanProcess([NotNull] sbyte[] segmentBytes, [NotNull] JpegSegmentType segmentType)
 		{
 			return segmentBytes.Length > 27 && Sharpen.Runtime.EqualsIgnoreCase("http://ns.adobe.com/xap/1.0/", Sharpen.Runtime.GetStringForBytes(segmentBytes, 0, 28));
 		}
@@ -93,7 +93,7 @@ namespace Com.Drew.Metadata.Xmp
 		/// <see cref="Com.Drew.Imaging.Jpeg.JpegSegmentType"/>
 		/// being read.
 		/// </param>
-		public virtual void Extract([NotNull]sbyte[] segmentBytes, [NotNull]Com.Drew.Metadata.Metadata metadata, [NotNull]JpegSegmentType segmentType)
+		public virtual void Extract([NotNull] sbyte[] segmentBytes, [NotNull] Com.Drew.Metadata.Metadata metadata, [NotNull] JpegSegmentType segmentType)
 		{
 			XmpDirectory directory = metadata.GetOrCreateDirectory<XmpDirectory>();
 			// XMP in a JPEG file has a 29 byte preamble which is not valid XML.
@@ -123,7 +123,7 @@ namespace Com.Drew.Metadata.Xmp
 		/// <p/>
 		/// The extraction is done with Adobe's XMPCore library.
 		/// </summary>
-		public virtual void Extract([NotNull]sbyte[] xmpBytes, [NotNull]Com.Drew.Metadata.Metadata metadata)
+		public virtual void Extract([NotNull] sbyte[] xmpBytes, [NotNull] Com.Drew.Metadata.Metadata metadata)
 		{
 			XmpDirectory directory = metadata.GetOrCreateDirectory<XmpDirectory>();
 			try
@@ -144,7 +144,7 @@ namespace Com.Drew.Metadata.Xmp
 		/// <p/>
 		/// The extraction is done with Adobe's XMPCore library.
 		/// </summary>
-		public virtual void Extract([NotNull]string xmpString, [NotNull]Com.Drew.Metadata.Metadata metadata)
+		public virtual void Extract([NotNull] string xmpString, [NotNull] Com.Drew.Metadata.Metadata metadata)
 		{
 			XmpDirectory directory = metadata.GetOrCreateDirectory<XmpDirectory>();
 			try
@@ -219,7 +219,7 @@ namespace Com.Drew.Metadata.Xmp
 		/// <summary>Reads an property value with given namespace URI and property name.</summary>
 		/// <remarks>Reads an property value with given namespace URI and property name. Add property value to directory if exists</remarks>
 		/// <exception cref="Com.Adobe.Xmp.XMPException"/>
-		private void ProcessXmpTag([NotNull]XMPMeta meta, [NotNull]XmpDirectory directory, [NotNull]string schemaNS, [NotNull]string propName, int tagType, int formatCode)
+		private void ProcessXmpTag([NotNull] XMPMeta meta, [NotNull] XmpDirectory directory, [NotNull] string schemaNS, [NotNull] string propName, int tagType, int formatCode)
 		{
 			string property = meta.GetPropertyString(schemaNS, propName);
 			if (property == null)
@@ -291,7 +291,7 @@ namespace Com.Drew.Metadata.Xmp
 		}
 
 		/// <exception cref="Com.Adobe.Xmp.XMPException"/>
-		private void ProcessXmpDateTag([NotNull]XMPMeta meta, [NotNull]XmpDirectory directory, [NotNull]string schemaNS, [NotNull]string propName, int tagType)
+		private void ProcessXmpDateTag([NotNull] XMPMeta meta, [NotNull] XmpDirectory directory, [NotNull] string schemaNS, [NotNull] string propName, int tagType)
 		{
 			Sharpen.Calendar cal = meta.GetPropertyCalendar(schemaNS, propName);
 			if (cal != null)

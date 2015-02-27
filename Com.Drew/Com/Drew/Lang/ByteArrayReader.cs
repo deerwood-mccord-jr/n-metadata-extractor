@@ -41,7 +41,7 @@ namespace Com.Drew.Lang
 		[NotNull]
 		private readonly sbyte[] _buffer;
 
-		public ByteArrayReader([NotNull]sbyte[] buffer)
+		public ByteArrayReader([NotNull] sbyte[] buffer)
 		{
 			if (buffer == null)
 			{

@@ -49,6 +49,6 @@ namespace Com.Drew.Metadata
 		/// <see cref="Metadata"/>
 		/// object into which extracted values should be merged.
 		/// </param>
-		void Extract([NotNull]RandomAccessReader reader, [NotNull]Com.Drew.Metadata.Metadata metadata);
+		void Extract([NotNull] RandomAccessReader reader, [NotNull] Com.Drew.Metadata.Metadata metadata);
 	}
 }

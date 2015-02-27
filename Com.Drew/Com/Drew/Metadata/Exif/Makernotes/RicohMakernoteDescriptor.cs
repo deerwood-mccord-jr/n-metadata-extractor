@@ -35,7 +35,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 	/// <author>Drew Noakes http://drewnoakes.com</author>
 	public class RicohMakernoteDescriptor : TagDescriptor<RicohMakernoteDirectory>
 	{
-		public RicohMakernoteDescriptor([NotNull]RicohMakernoteDirectory directory)
+		public RicohMakernoteDescriptor([NotNull] RicohMakernoteDirectory directory)
 			: base(directory)
 		{
 		}

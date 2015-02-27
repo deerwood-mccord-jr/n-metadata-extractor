@@ -12,7 +12,7 @@ namespace Com.Drew.Imaging.Png
 		[NotNull]
 		private readonly sbyte[] _bytes;
 
-		public PngChunk([NotNull]PngChunkType chunkType, [NotNull]sbyte[] bytes)
+		public PngChunk([NotNull] PngChunkType chunkType, [NotNull] sbyte[] bytes)
 		{
 			_chunkType = chunkType;
 			_bytes = bytes;

@@ -59,13 +59,13 @@ namespace Com.Drew.Metadata.Iptc
 			return Arrays.AsList(JpegSegmentType.Appd);
 		}
 
-		public virtual bool CanProcess([NotNull]sbyte[] segmentBytes, [NotNull]JpegSegmentType segmentType)
+		public virtual bool CanProcess([NotNull] sbyte[] segmentBytes, [NotNull] JpegSegmentType segmentType)
 		{
 			// Check whether the first byte resembles
 			return segmentBytes.Length != 0 && segmentBytes[0] == unchecked((int)(0x1c));
 		}
 
-		public virtual void Extract([NotNull]sbyte[] segmentBytes, [NotNull]Com.Drew.Metadata.Metadata metadata, [NotNull]JpegSegmentType segmentType)
+		public virtual void Extract([NotNull] sbyte[] segmentBytes, [NotNull] Com.Drew.Metadata.Metadata metadata, [NotNull] JpegSegmentType segmentType)
 		{
 			Extract(new SequentialByteArrayReader(segmentBytes), metadata, segmentBytes.Length);
 		}
@@ -75,7 +75,7 @@ namespace Com.Drew.Metadata.Iptc
 		/// <see cref="Com.Drew.Metadata.Metadata"/>
 		/// .
 		/// </summary>
-		public virtual void Extract([NotNull]SequentialReader reader, [NotNull]Com.Drew.Metadata.Metadata metadata, long length)
+		public virtual void Extract([NotNull] SequentialReader reader, [NotNull] Com.Drew.Metadata.Metadata metadata, long length)
 		{
 			IptcDirectory directory = metadata.GetOrCreateDirectory<IptcDirectory>();
 			int offset = 0;
@@ -139,7 +139,7 @@ namespace Com.Drew.Metadata.Iptc
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		private void ProcessTag([NotNull]SequentialReader reader, [NotNull]Com.Drew.Metadata.Directory directory, int directoryType, int tagType, int tagByteCount)
+		private void ProcessTag([NotNull] SequentialReader reader, [NotNull] Com.Drew.Metadata.Directory directory, int directoryType, int tagType, int tagByteCount)
 		{
 			int tagIdentifier = tagType | (directoryType << 8);
 			string @string = null;

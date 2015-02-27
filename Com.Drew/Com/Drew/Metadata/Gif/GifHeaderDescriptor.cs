@@ -7,7 +7,7 @@ namespace Com.Drew.Metadata.Gif
 	/// <author>Drew Noakes http://drewnoakes.com</author>
 	public class GifHeaderDescriptor : TagDescriptor<GifHeaderDirectory>
 	{
-		public GifHeaderDescriptor([NotNull]GifHeaderDirectory directory)
+		public GifHeaderDescriptor([NotNull] GifHeaderDirectory directory)
 			: base(directory)
 		{
 		}

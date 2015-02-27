@@ -13,7 +13,7 @@ namespace Com.Drew.Imaging.Png
 
 		/// <exception cref="Com.Drew.Imaging.Png.PngProcessingException"/>
 		/// <exception cref="System.IO.IOException"/>
-		public virtual Iterable<PngChunk> Extract([NotNull]SequentialReader reader, [CanBeNull]ICollection<PngChunkType> desiredChunkTypes)
+		public virtual Iterable<PngChunk> Extract([NotNull] SequentialReader reader, [CanBeNull] ICollection<PngChunkType> desiredChunkTypes)
 		{
 			//
 			// PNG DATA STREAM

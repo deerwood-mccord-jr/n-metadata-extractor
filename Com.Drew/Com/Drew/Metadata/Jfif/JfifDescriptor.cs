@@ -33,7 +33,7 @@ namespace Com.Drew.Metadata.Jfif
 	/// <author>Yuri Binev, Drew Noakes</author>
 	public class JfifDescriptor : TagDescriptor<JfifDirectory>
 	{
-		public JfifDescriptor([NotNull]JfifDirectory directory)
+		public JfifDescriptor([NotNull] JfifDirectory directory)
 			: base(directory)
 		{
 		}

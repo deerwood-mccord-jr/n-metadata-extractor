@@ -34,7 +34,7 @@ namespace Com.Drew.Metadata.Exif
 	{
 		/// <exception cref="System.IO.IOException"/>
 		[NotNull]
-		public static Com.Drew.Metadata.Metadata ProcessBytes([NotNull]string filePath)
+		public static Com.Drew.Metadata.Metadata ProcessBytes([NotNull] string filePath)
 		{
 			Com.Drew.Metadata.Metadata metadata = new Com.Drew.Metadata.Metadata();
 			new ExifReader().Extract(FileUtil.ReadBytes(filePath), metadata, JpegSegmentType.App1);
@@ -43,7 +43,7 @@ namespace Com.Drew.Metadata.Exif
 
 		/// <exception cref="System.IO.IOException"/>
 		[NotNull]
-		public static T ProcessBytes<T>([NotNull]string filePath)
+		public static T ProcessBytes<T>([NotNull] string filePath)
 			where T : Com.Drew.Metadata.Directory
 		{
 			System.Type directoryClass = typeof(T);

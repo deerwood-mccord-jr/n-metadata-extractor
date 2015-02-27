@@ -113,12 +113,12 @@ namespace Com.Drew.Metadata.Exif
 			return Arrays.AsList(JpegSegmentType.App1);
 		}
 
-		public virtual bool CanProcess([NotNull]sbyte[] segmentBytes, [NotNull]JpegSegmentType segmentType)
+		public virtual bool CanProcess([NotNull] sbyte[] segmentBytes, [NotNull] JpegSegmentType segmentType)
 		{
 			return segmentBytes.Length >= JpegExifSegmentPreamble.Length && Sharpen.Runtime.EqualsIgnoreCase(Sharpen.Runtime.GetStringForBytes(segmentBytes, 0, JpegExifSegmentPreamble.Length), JpegExifSegmentPreamble);
 		}
 
-		public virtual void Extract([NotNull]sbyte[] segmentBytes, [NotNull]Com.Drew.Metadata.Metadata metadata, [NotNull]JpegSegmentType segmentType)
+		public virtual void Extract([NotNull] sbyte[] segmentBytes, [NotNull] Com.Drew.Metadata.Metadata metadata, [NotNull] JpegSegmentType segmentType)
 		{
 			if (segmentBytes == null)
 			{
@@ -183,7 +183,7 @@ namespace Com.Drew.Metadata.Exif
 		/// </param>
 		/// <param name="metadata">The Metadata object into which extracted values should be merged.</param>
 		[Obsolete]
-		public virtual void ExtractTiff([NotNull]RandomAccessReader reader, [NotNull]Com.Drew.Metadata.Metadata metadata)
+		public virtual void ExtractTiff([NotNull] RandomAccessReader reader, [NotNull] Com.Drew.Metadata.Metadata metadata)
 		{
 			ExifIFD0Directory directory = metadata.GetOrCreateDirectory<ExifIFD0Directory>();
 			try
@@ -198,7 +198,7 @@ namespace Com.Drew.Metadata.Exif
 
 		/// <exception cref="System.IO.IOException"/>
 		[Obsolete]
-		private static void ExtractTiff([NotNull]RandomAccessReader reader, [NotNull]Com.Drew.Metadata.Metadata metadata, [NotNull]Com.Drew.Metadata.Directory firstDirectory, int tiffHeaderOffset)
+		private static void ExtractTiff([NotNull] RandomAccessReader reader, [NotNull] Com.Drew.Metadata.Metadata metadata, [NotNull] Com.Drew.Metadata.Directory firstDirectory, int tiffHeaderOffset)
 		{
 			// this should be either "MM" or "II"
 			string byteOrderIdentifier = reader.GetString(tiffHeaderOffset, 2);
@@ -289,8 +289,8 @@ namespace Com.Drew.Metadata.Exif
 		/// <param name="tiffHeaderOffset">the offset within <code>reader</code> at which the TIFF header starts</param>
 		/// <exception cref="System.IO.IOException"/>
 		[Obsolete]
-		private static void ProcessIFD([NotNull]Com.Drew.Metadata.Directory directory, [NotNull]ICollection<int> processedIfdOffsets, int ifdOffset, int tiffHeaderOffset, [NotNull]Com.Drew.Metadata.Metadata metadata, [NotNull]RandomAccessReader reader
-			)
+		private static void ProcessIFD([NotNull] Com.Drew.Metadata.Directory directory, [NotNull] ICollection<int> processedIfdOffsets, int ifdOffset, int tiffHeaderOffset, [NotNull] Com.Drew.Metadata.Metadata metadata, [NotNull] RandomAccessReader 
+			reader)
 		{
 			// check for directories we've already visited to avoid stack overflows when recursive/cyclic directory structures exist
 			if (processedIfdOffsets.Contains(Sharpen.Extensions.ValueOf(ifdOffset)))
@@ -456,7 +456,7 @@ namespace Com.Drew.Metadata.Exif
 
 		/// <exception cref="System.IO.IOException"/>
 		[Obsolete]
-		private static void ProcessMakernote(int makernoteOffset, [NotNull]ICollection<int> processedIfdOffsets, int tiffHeaderOffset, [NotNull]Com.Drew.Metadata.Metadata metadata, [NotNull]RandomAccessReader reader)
+		private static void ProcessMakernote(int makernoteOffset, [NotNull] ICollection<int> processedIfdOffsets, int tiffHeaderOffset, [NotNull] Com.Drew.Metadata.Metadata metadata, [NotNull] RandomAccessReader reader)
 		{
 			// Determine the camera model and makernote format
 			Com.Drew.Metadata.Directory ifd0Directory = metadata.GetDirectory<ExifIFD0Directory>();
@@ -676,7 +676,7 @@ namespace Com.Drew.Metadata.Exif
 		}
 
 		[Obsolete]
-		private static void ProcessKodakMakernote([NotNull]KodakMakernoteDirectory directory, int tagValueOffset, [NotNull]RandomAccessReader reader)
+		private static void ProcessKodakMakernote([NotNull] KodakMakernoteDirectory directory, int tagValueOffset, [NotNull] RandomAccessReader reader)
 		{
 			// Kodak's makernote is not in IFD format. It has values at fixed offsets.
 			int dataOffset = tagValueOffset + 8;
@@ -717,7 +717,7 @@ namespace Com.Drew.Metadata.Exif
 
 		/// <exception cref="System.IO.IOException"/>
 		[Obsolete]
-		private static void ProcessTag([NotNull]Com.Drew.Metadata.Directory directory, int tagType, int tagValueOffset, int componentCount, int formatCode, [NotNull]RandomAccessReader reader)
+		private static void ProcessTag([NotNull] Com.Drew.Metadata.Directory directory, int tagType, int tagValueOffset, int componentCount, int formatCode, [NotNull] RandomAccessReader reader)
 		{
 			switch (formatCode)
 			{

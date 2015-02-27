@@ -31,7 +31,7 @@ namespace Com.Drew.Metadata.Adobe
 	{
 		/// <exception cref="System.IO.IOException"/>
 		[NotNull]
-		public static AdobeJpegDirectory ProcessBytes([NotNull]string filePath)
+		public static AdobeJpegDirectory ProcessBytes([NotNull] string filePath)
 		{
 			Com.Drew.Metadata.Metadata metadata = new Com.Drew.Metadata.Metadata();
 			new AdobeJpegReader().Extract(new SequentialByteArrayReader(FileUtil.ReadBytes(filePath)), metadata);

@@ -40,13 +40,13 @@ namespace Com.Drew.Metadata.Jpeg
 			return Arrays.AsList(JpegSegmentType.Com);
 		}
 
-		public virtual bool CanProcess([NotNull]sbyte[] segmentBytes, [NotNull]JpegSegmentType segmentType)
+		public virtual bool CanProcess([NotNull] sbyte[] segmentBytes, [NotNull] JpegSegmentType segmentType)
 		{
 			// The entire contents of the byte[] is the comment. There's nothing here to discriminate upon.
 			return true;
 		}
 
-		public virtual void Extract([NotNull]sbyte[] segmentBytes, [NotNull]Com.Drew.Metadata.Metadata metadata, [NotNull]JpegSegmentType segmentType)
+		public virtual void Extract([NotNull] sbyte[] segmentBytes, [NotNull] Com.Drew.Metadata.Metadata metadata, [NotNull] JpegSegmentType segmentType)
 		{
 			JpegCommentDirectory directory = metadata.GetOrCreateDirectory<JpegCommentDirectory>();
 			// The entire contents of the directory are the comment

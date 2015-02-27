@@ -32,7 +32,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 	/// <author>Drew Noakes http://drewnoakes.com</author>
 	public class SonyType6MakernoteDescriptor : TagDescriptor<SonyType6MakernoteDirectory>
 	{
-		public SonyType6MakernoteDescriptor([NotNull]SonyType6MakernoteDirectory directory)
+		public SonyType6MakernoteDescriptor([NotNull] SonyType6MakernoteDirectory directory)
 			: base(directory)
 		{
 		}

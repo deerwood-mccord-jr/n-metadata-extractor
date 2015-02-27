@@ -33,17 +33,17 @@ namespace Com.Drew.Imaging.Tiff
 	{
 		private const long serialVersionUID = -1658134119488001891L;
 
-		public TiffProcessingException([CanBeNull]string message)
+		public TiffProcessingException([CanBeNull] string message)
 			: base(message)
 		{
 		}
 
-		public TiffProcessingException([CanBeNull]string message, [CanBeNull]Exception cause)
+		public TiffProcessingException([CanBeNull] string message, [CanBeNull] Exception cause)
 			: base(message, cause)
 		{
 		}
 
-		public TiffProcessingException([CanBeNull]Exception cause)
+		public TiffProcessingException([CanBeNull] Exception cause)
 			: base(cause)
 		{
 		}

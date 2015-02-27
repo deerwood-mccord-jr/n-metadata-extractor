@@ -34,7 +34,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 	/// <author>Drew Noakes http://drewnoakes.com</author>
 	public class NikonType2MakernoteDescriptor : TagDescriptor<NikonType2MakernoteDirectory>
 	{
-		public NikonType2MakernoteDescriptor([NotNull]NikonType2MakernoteDirectory directory)
+		public NikonType2MakernoteDescriptor([NotNull] NikonType2MakernoteDirectory directory)
 			: base(directory)
 		{
 		}

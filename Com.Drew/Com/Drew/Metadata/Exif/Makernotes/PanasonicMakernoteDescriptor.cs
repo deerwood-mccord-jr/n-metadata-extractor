@@ -42,7 +42,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 	/// <author>Philipp Sandhaus</author>
 	public class PanasonicMakernoteDescriptor : TagDescriptor<PanasonicMakernoteDirectory>
 	{
-		public PanasonicMakernoteDescriptor([NotNull]PanasonicMakernoteDirectory directory)
+		public PanasonicMakernoteDescriptor([NotNull] PanasonicMakernoteDirectory directory)
 			: base(directory)
 		{
 		}
@@ -667,7 +667,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		}
 
 		[CanBeNull]
-		private string BuildFacesDescription([CanBeNull]Face[] faces)
+		private string BuildFacesDescription([CanBeNull] Face[] faces)
 		{
 			if (faces == null)
 			{

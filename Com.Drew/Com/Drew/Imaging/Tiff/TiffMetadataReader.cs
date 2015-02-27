@@ -36,7 +36,7 @@ namespace Com.Drew.Imaging.Tiff
 	{
 		/// <exception cref="System.IO.IOException"/>
 		[NotNull]
-		public static Com.Drew.Metadata.Metadata ReadMetadata([NotNull]FilePath file)
+		public static Com.Drew.Metadata.Metadata ReadMetadata([NotNull] FilePath file)
 		{
 			Com.Drew.Metadata.Metadata metadata = new Com.Drew.Metadata.Metadata();
 			RandomAccessFile randomAccessFile = new RandomAccessFile(file, "r");
@@ -52,7 +52,7 @@ namespace Com.Drew.Imaging.Tiff
 		}
 
 		[NotNull]
-		public static Com.Drew.Metadata.Metadata ReadMetadata([NotNull]InputStream inputStream)
+		public static Com.Drew.Metadata.Metadata ReadMetadata([NotNull] InputStream inputStream)
 		{
 			// TIFF processing requires random access, as directories can be scattered throughout the byte sequence.
 			// InputStream does not support seeking backwards, and so is not a viable option for TIFF processing.

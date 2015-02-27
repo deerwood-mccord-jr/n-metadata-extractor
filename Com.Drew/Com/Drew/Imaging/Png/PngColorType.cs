@@ -45,7 +45,7 @@ namespace Com.Drew.Imaging.Png
 		[NotNull]
 		private readonly int[] _allowedBitDepths;
 
-		private PngColorType(int numericValue, [NotNull]string description, params [NotNull]int[] allowedBitDepths)
+		private PngColorType(int numericValue, [NotNull] string description, [NotNull] params int[] allowedBitDepths)
 		{
 			Com.Drew.Imaging.Png.PngColorType._numericValue = numericValue;
 			Com.Drew.Imaging.Png.PngColorType._description = description;

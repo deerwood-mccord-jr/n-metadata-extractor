@@ -42,7 +42,7 @@ namespace Com.Drew.Metadata.Exif
 	{
 		private bool _storeThumbnailBytes;
 
-		public ExifTiffHandler([NotNull]Com.Drew.Metadata.Metadata metadata, bool storeThumbnailBytes)
+		public ExifTiffHandler([NotNull] Com.Drew.Metadata.Metadata metadata, bool storeThumbnailBytes)
 			: base(metadata, typeof(ExifIFD0Directory))
 		{
 			_storeThumbnailBytes = storeThumbnailBytes;
@@ -102,7 +102,7 @@ namespace Com.Drew.Metadata.Exif
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public override bool CustomProcessTag(int makernoteOffset, [NotNull]ICollection<int> processedIfdOffsets, int tiffHeaderOffset, [NotNull]RandomAccessReader reader, int tagId, int byteCount)
+		public override bool CustomProcessTag(int makernoteOffset, [NotNull] ICollection<int> processedIfdOffsets, int tiffHeaderOffset, [NotNull] RandomAccessReader reader, int tagId, int byteCount)
 		{
 			// In Exif, we only want custom processing for the Makernote tag
 			if (tagId == ExifSubIFDDirectory.TagMakernote && _currentDirectory is ExifSubIFDDirectory)
@@ -112,7 +112,7 @@ namespace Com.Drew.Metadata.Exif
 			return false;
 		}
 
-		public override void Completed([NotNull]RandomAccessReader reader, int tiffHeaderOffset)
+		public override void Completed([NotNull] RandomAccessReader reader, int tiffHeaderOffset)
 		{
 			if (_storeThumbnailBytes)
 			{
@@ -139,7 +139,7 @@ namespace Com.Drew.Metadata.Exif
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		private bool ProcessMakernote(int makernoteOffset, [NotNull]ICollection<int> processedIfdOffsets, int tiffHeaderOffset, [NotNull]RandomAccessReader reader, int byteCount)
+		private bool ProcessMakernote(int makernoteOffset, [NotNull] ICollection<int> processedIfdOffsets, int tiffHeaderOffset, [NotNull] RandomAccessReader reader, int byteCount)
 		{
 			// Determine the camera model and makernote format.
 			Com.Drew.Metadata.Directory ifd0Directory = _metadata.GetDirectory<ExifIFD0Directory>();
@@ -412,7 +412,7 @@ namespace Com.Drew.Metadata.Exif
 			return true;
 		}
 
-		private static void ProcessKodakMakernote([NotNull]KodakMakernoteDirectory directory, int tagValueOffset, [NotNull]RandomAccessReader reader)
+		private static void ProcessKodakMakernote([NotNull] KodakMakernoteDirectory directory, int tagValueOffset, [NotNull] RandomAccessReader reader)
 		{
 			// Kodak's makernote is not in IFD format. It has values at fixed offsets.
 			int dataOffset = tagValueOffset + 8;

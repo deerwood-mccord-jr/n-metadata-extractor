@@ -30,7 +30,7 @@ namespace Com.Drew.Metadata.Photoshop
 	/// <author>Yuri Binev, Drew Noakes http://drewnoakes.com</author>
 	public class PhotoshopDescriptor : TagDescriptor<PhotoshopDirectory>
 	{
-		public PhotoshopDescriptor([NotNull]PhotoshopDirectory directory)
+		public PhotoshopDescriptor([NotNull] PhotoshopDirectory directory)
 			: base(directory)
 		{
 		}

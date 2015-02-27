@@ -32,7 +32,7 @@ namespace Com.Drew.Metadata.Exif
 	/// <author>Drew Noakes http://drewnoakes.com</author>
 	public class ExifInteropDescriptor : TagDescriptor<ExifInteropDirectory>
 	{
-		public ExifInteropDescriptor([NotNull]ExifInteropDirectory directory)
+		public ExifInteropDescriptor([NotNull] ExifInteropDirectory directory)
 			: base(directory)
 		{
 		}

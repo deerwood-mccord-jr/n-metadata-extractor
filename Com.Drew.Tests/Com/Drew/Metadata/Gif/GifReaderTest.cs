@@ -29,7 +29,7 @@ namespace Com.Drew.Metadata.Gif
 	{
 		/// <exception cref="System.Exception"/>
 		[NotNull]
-		public static GifHeaderDirectory ProcessBytes([NotNull]string file)
+		public static GifHeaderDirectory ProcessBytes([NotNull] string file)
 		{
 			Com.Drew.Metadata.Metadata metadata = new Com.Drew.Metadata.Metadata();
 			InputStream stream = new FileInputStream(file);

@@ -38,7 +38,7 @@ namespace Com.Drew.Tools
 		/// .
 		/// </summary>
 		/// <exception cref="System.IO.IOException"/>
-		public static void SaveBytes([NotNull]FilePath file, [NotNull]sbyte[] bytes)
+		public static void SaveBytes([NotNull] FilePath file, [NotNull] sbyte[] bytes)
 		{
 			FileOutputStream stream = null;
 			try
@@ -64,7 +64,7 @@ namespace Com.Drew.Tools
 		/// </summary>
 		/// <exception cref="System.IO.IOException"/>
 		[NotNull]
-		public static sbyte[] ReadBytes([NotNull]FilePath file)
+		public static sbyte[] ReadBytes([NotNull] FilePath file)
 		{
 			int length = (int)file.Length();
 			// should only be zero if loading from a network or similar
@@ -104,7 +104,7 @@ namespace Com.Drew.Tools
 		/// </summary>
 		/// <exception cref="System.IO.IOException"/>
 		[NotNull]
-		public static sbyte[] ReadBytes([NotNull]string filePath)
+		public static sbyte[] ReadBytes([NotNull] string filePath)
 		{
 			return ReadBytes(new FilePath(filePath));
 		}

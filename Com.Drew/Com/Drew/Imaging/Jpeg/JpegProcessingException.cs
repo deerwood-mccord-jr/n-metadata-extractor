@@ -32,17 +32,17 @@ namespace Com.Drew.Imaging.Jpeg
 	{
 		private const long serialVersionUID = -7870179776125450158L;
 
-		public JpegProcessingException([CanBeNull]string message)
+		public JpegProcessingException([CanBeNull] string message)
 			: base(message)
 		{
 		}
 
-		public JpegProcessingException([CanBeNull]string message, [CanBeNull]Exception cause)
+		public JpegProcessingException([CanBeNull] string message, [CanBeNull] Exception cause)
 			: base(message, cause)
 		{
 		}
 
-		public JpegProcessingException([CanBeNull]Exception cause)
+		public JpegProcessingException([CanBeNull] Exception cause)
 			: base(cause)
 		{
 		}

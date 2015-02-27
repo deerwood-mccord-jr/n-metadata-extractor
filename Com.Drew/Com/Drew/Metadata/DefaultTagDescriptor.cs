@@ -32,7 +32,7 @@ namespace Com.Drew.Metadata
 	/// <author>Drew Noakes http://drewnoakes.com</author>
 	public class DefaultTagDescriptor : TagDescriptor<Com.Drew.Metadata.Directory>
 	{
-		public DefaultTagDescriptor([NotNull]Com.Drew.Metadata.Directory directory)
+		public DefaultTagDescriptor([NotNull] Com.Drew.Metadata.Directory directory)
 			: base(directory)
 		{
 		}

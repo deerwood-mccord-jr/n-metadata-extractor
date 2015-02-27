@@ -49,7 +49,7 @@ namespace Com.Drew.Metadata
 		[CanBeNull]
 		private readonly Age _age;
 
-		public Face(int x, int y, int width, int height, [CanBeNull]string name, [CanBeNull]Age age)
+		public Face(int x, int y, int width, int height, [CanBeNull] string name, [CanBeNull] Age age)
 		{
 			_x = x;
 			_y = y;
@@ -91,7 +91,7 @@ namespace Com.Drew.Metadata
 			return _age;
 		}
 
-		public override bool Equals([CanBeNull]object o)
+		public override bool Equals([CanBeNull] object o)
 		{
 			if (this == o)
 			{

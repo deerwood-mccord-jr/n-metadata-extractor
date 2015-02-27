@@ -156,7 +156,7 @@ namespace Com.Drew.Metadata.Xmp
 			return _tagNameMap;
 		}
 
-		internal virtual void AddProperty([NotNull]string path, [NotNull]string value)
+		internal virtual void AddProperty([NotNull] string path, [NotNull] string value)
 		{
 			_propertyValueByPath.Put(path, value);
 		}
@@ -174,7 +174,7 @@ namespace Com.Drew.Metadata.Xmp
 			return _propertyValueByPath;
 		}
 
-		public virtual void SetXMPMeta([NotNull]XMPMeta xmpMeta)
+		public virtual void SetXMPMeta([NotNull] XMPMeta xmpMeta)
 		{
 			_xmpMeta = xmpMeta;
 		}

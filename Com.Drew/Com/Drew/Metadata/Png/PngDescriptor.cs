@@ -12,7 +12,7 @@ namespace Com.Drew.Metadata.Png
 	/// <author>Drew Noakes http://drewnoakes.com</author>
 	public class PngDescriptor : TagDescriptor<PngDirectory>
 	{
-		public PngDescriptor([NotNull]PngDirectory directory)
+		public PngDescriptor([NotNull] PngDirectory directory)
 			: base(directory)
 		{
 		}

@@ -102,7 +102,7 @@ namespace Com.Drew.Lang
 		/// into a single value in degrees, as a double.
 		/// </summary>
 		[CanBeNull]
-		public static double DegreesMinutesSecondsToDecimal([NotNull]Rational degs, [NotNull]Rational mins, [NotNull]Rational secs, bool isNegative)
+		public static double DegreesMinutesSecondsToDecimal([NotNull] Rational degs, [NotNull] Rational mins, [NotNull] Rational secs, bool isNegative)
 		{
 			double @decimal = Math.Abs(degs.DoubleValue()) + mins.DoubleValue() / 60.0d + secs.DoubleValue() / 3600.0d;
 			if (double.IsNaN(@decimal))

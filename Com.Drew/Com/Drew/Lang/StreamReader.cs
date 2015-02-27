@@ -31,7 +31,7 @@ namespace Com.Drew.Lang
 		[NotNull]
 		private readonly InputStream _stream;
 
-		public StreamReader([NotNull]InputStream stream)
+		public StreamReader([NotNull] InputStream stream)
 		{
 			if (stream == null)
 			{

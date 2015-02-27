@@ -24,7 +24,7 @@ namespace Com.Drew.Imaging.Png
 		private sbyte _interlaceMethod;
 
 		/// <exception cref="Com.Drew.Imaging.Png.PngProcessingException"/>
-		public PngHeader([NotNull]sbyte[] bytes)
+		public PngHeader([NotNull] sbyte[] bytes)
 		{
 			if (bytes.Length != 13)
 			{

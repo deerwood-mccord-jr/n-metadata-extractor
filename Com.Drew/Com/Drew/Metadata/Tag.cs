@@ -37,7 +37,7 @@ namespace Com.Drew.Metadata
 		[NotNull]
 		private readonly Com.Drew.Metadata.Directory _directory;
 
-		public Tag(int tagType, [NotNull]Com.Drew.Metadata.Directory directory)
+		public Tag(int tagType, [NotNull] Com.Drew.Metadata.Directory directory)
 		{
 			_tagType = tagType;
 			_directory = directory;

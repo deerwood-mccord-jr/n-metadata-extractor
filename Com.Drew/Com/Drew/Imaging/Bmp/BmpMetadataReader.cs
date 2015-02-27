@@ -31,7 +31,7 @@ namespace Com.Drew.Imaging.Bmp
 	{
 		/// <exception cref="System.IO.IOException"/>
 		[NotNull]
-		public static Com.Drew.Metadata.Metadata ReadMetadata([NotNull]FilePath file)
+		public static Com.Drew.Metadata.Metadata ReadMetadata([NotNull] FilePath file)
 		{
 			FileInputStream stream = null;
 			try
@@ -49,7 +49,7 @@ namespace Com.Drew.Imaging.Bmp
 		}
 
 		[NotNull]
-		public static Com.Drew.Metadata.Metadata ReadMetadata([NotNull]InputStream inputStream)
+		public static Com.Drew.Metadata.Metadata ReadMetadata([NotNull] InputStream inputStream)
 		{
 			Com.Drew.Metadata.Metadata metadata = new Com.Drew.Metadata.Metadata();
 			new BmpReader().Extract(new Com.Drew.Lang.StreamReader(inputStream), metadata);

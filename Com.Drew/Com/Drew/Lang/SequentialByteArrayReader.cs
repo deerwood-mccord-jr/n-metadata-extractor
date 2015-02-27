@@ -33,7 +33,7 @@ namespace Com.Drew.Lang
 
 		private int _index;
 
-		public SequentialByteArrayReader([NotNull]sbyte[] bytes)
+		public SequentialByteArrayReader([NotNull] sbyte[] bytes)
 		{
 			if (bytes == null)
 			{

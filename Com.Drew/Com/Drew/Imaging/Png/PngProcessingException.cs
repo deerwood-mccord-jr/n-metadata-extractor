@@ -32,17 +32,17 @@ namespace Com.Drew.Imaging.Png
 	{
 		private const long serialVersionUID = -687991554932005033L;
 
-		public PngProcessingException([CanBeNull]string message)
+		public PngProcessingException([CanBeNull] string message)
 			: base(message)
 		{
 		}
 
-		public PngProcessingException([CanBeNull]string message, [CanBeNull]Exception cause)
+		public PngProcessingException([CanBeNull] string message, [CanBeNull] Exception cause)
 			: base(message, cause)
 		{
 		}
 
-		public PngProcessingException([CanBeNull]Exception cause)
+		public PngProcessingException([CanBeNull] Exception cause)
 			: base(cause)
 		{
 		}

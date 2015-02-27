@@ -71,7 +71,7 @@ namespace Com.Drew.Tools
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public static void SaveSegmentFiles([NotNull]string jpegFilePath, [NotNull]JpegSegmentData segmentData)
+		public static void SaveSegmentFiles([NotNull] string jpegFilePath, [NotNull] JpegSegmentData segmentData)
 		{
 			foreach (JpegSegmentType segmentType in segmentData.GetSegmentTypes())
 			{

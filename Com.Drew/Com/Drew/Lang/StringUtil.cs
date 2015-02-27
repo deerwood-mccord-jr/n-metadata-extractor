@@ -29,7 +29,7 @@ namespace Com.Drew.Lang
 	public class StringUtil
 	{
 		[NotNull]
-		public static string Join<_T0>(Iterable<_T0> strings, [NotNull]string delimiter)
+		public static string Join<_T0>(Iterable<_T0> strings, [NotNull] string delimiter)
 			where _T0 : CharSequence
 		{
 			int capacity = 0;
@@ -54,7 +54,7 @@ namespace Com.Drew.Lang
 		}
 
 		[NotNull]
-		public static string Join<T>([NotNull]T[] strings, [NotNull]string delimiter)
+		public static string Join<T>([NotNull] T[] strings, [NotNull] string delimiter)
 			where T : CharSequence
 		{
 			int capacity = 0;
@@ -82,7 +82,7 @@ namespace Com.Drew.Lang
 
 		/// <exception cref="System.IO.IOException"/>
 		[NotNull]
-		public static string FromStream([NotNull]InputStream stream)
+		public static string FromStream([NotNull] InputStream stream)
 		{
 			BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
 			StringBuilder sb = new StringBuilder();
@@ -94,7 +94,7 @@ namespace Com.Drew.Lang
 			return sb.ToString();
 		}
 
-		public static int Compare([CanBeNull]string s1, [CanBeNull]string s2)
+		public static int Compare([CanBeNull] string s1, [CanBeNull] string s2)
 		{
 			bool null1 = s1 == null;
 			bool null2 = s2 == null;
@@ -123,7 +123,7 @@ namespace Com.Drew.Lang
 		}
 
 		[CanBeNull]
-		public static string EscapeForWiki([CanBeNull]string text)
+		public static string EscapeForWiki([CanBeNull] string text)
 		{
 			if (text == null)
 			{
@@ -142,7 +142,7 @@ namespace Com.Drew.Lang
 		}
 
 		[NotNull]
-		public static string UrlEncode([NotNull]string name)
+		public static string UrlEncode([NotNull] string name)
 		{
 			// Sufficient for now, it seems
 			return name.Replace(" ", "%20");
