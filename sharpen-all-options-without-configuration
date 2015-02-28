@@ -1,11 +1,20 @@
 -pascalCase+ 
 -organizeUsings
+-mapByteToSbyte
+-disableMapIteratorToEnumerator
+-numberValueGetter
 -nativeTypeSystem
 -separateInterfaceConstants
 -maxColumns 240
 
 -typeMapping java.io.StringReader Sharpen.StringReader
 -methodMapping java.lang.Math.signum System.Math.Sign
+-methodMapping java.lang.Short.shortValue ""
+-methodMapping java.lang.Integer.intValue ""
+-methodMapping java.lang.Long.longValue ""
+-methodMapping java.lang.Byte.byteValue ""
+-methodMapping java.lang.Float.floatValue ""
+-methodMapping java.lang.Double.doubleValue ""
 -methodMapping java.lang.Byte.toString System.Convert.ToString
 -methodMapping java.lang.Float.toString ToString
 -methodMapping java.lang.Float.parseFloat float.Parse
@@ -255,4 +264,14 @@
 -fullyQualify KeyPair
 -fullyQualify GSSContext
 -fullyQualify Test
-            
+
+-removeTypeMapping java.io.Writer
+-removeTypeMapping java.io.PrintStream
+-removeMemberMapping java.io.PrintStream.print
+-removeMemberMapping java.io.PrintStream.println
+-removeMemberMapping java.lang.Object.clone
+-removeMemberMapping java.util.Dictionary.put
+-removeMemberMapping java.util.Map.get
+-removeMemberMapping java.util.Map.put
+-removeMemberMapping java.util.Map.containsKey
+-removeMemberMapping java.util.Map.entrySet
