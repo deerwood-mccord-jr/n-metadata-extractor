@@ -465,16 +465,16 @@ namespace Com.Adobe.Xmp.Impl
 			{
 				throw new XMPException("Mismatch between alias and base nodes", XMPErrorConstants.Badxmp);
 			}
-			for (Iterator an = aliasNode.IterateChildren(); an.HasNext() && bn.HasNext(); )
+			for (Iterator an = aliasNode.IterateChildren(), bn = baseNode.IterateChildren(); an.HasNext() && bn.HasNext(); )
 			{
 				XMPNode aliasChild = (XMPNode)an.Next();
 				XMPNode baseChild = (XMPNode)bn.Next();
 				CompareAliasedSubtrees(aliasChild, baseChild, false);
 			}
-			for (Iterator an_1 = aliasNode.IterateQualifier(); an_1.HasNext() && bn.HasNext(); )
+			for (Iterator an_1 = aliasNode.IterateQualifier(), bn_1 = baseNode.IterateQualifier(); an_1.HasNext() && bn_1.HasNext(); )
 			{
 				XMPNode aliasQual = (XMPNode)an_1.Next();
-				XMPNode baseQual = (XMPNode)bn.Next();
+				XMPNode baseQual = (XMPNode)bn_1.Next();
 				CompareAliasedSubtrees(aliasQual, baseQual, false);
 			}
 		}
