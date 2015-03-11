@@ -1,23 +1,23 @@
 /*
-* Copyright 2002-2013 Drew Noakes
-*
-*    Licensed under the Apache License, Version 2.0 (the "License");
-*    you may not use this file except in compliance with the License.
-*    You may obtain a copy of the License at
-*
-*        http://www.apache.org/licenses/LICENSE-2.0
-*
-*    Unless required by applicable law or agreed to in writing, software
-*    distributed under the License is distributed on an "AS IS" BASIS,
-*    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-*    See the License for the specific language governing permissions and
-*    limitations under the License.
-*
-* More information about this project is available at:
-*
-*    http://drewnoakes.com/code/exif/
-*    http://code.google.com/p/metadata-extractor/
-*/
+ * Copyright 2002-2013 Drew Noakes
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ *
+ * More information about this project is available at:
+ *
+ *    http://drewnoakes.com/code/exif/
+ *    http://code.google.com/p/metadata-extractor/
+ */
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -778,16 +778,16 @@ namespace Com.Drew.Metadata.Exif
 		[CanBeNull]
 		public virtual string GetFlashDescription()
 		{
-			/*
-			* This is a bit mask.
-			* 0 = flash fired
-			* 1 = return detected
-			* 2 = return able to be detected
-			* 3 = unknown
-			* 4 = auto used
-			* 5 = unknown
-			* 6 = red eye reduction used
-			*/
+        /*
+         * This is a bit mask.
+         * 0 = flash fired
+         * 1 = return detected
+         * 2 = return able to be detected
+         * 3 = unknown
+         * 4 = auto used
+         * 5 = unknown
+         * 6 = red eye reduction used
+         */
 			int value = _directory.GetInteger(ExifSubIFDDirectory.TagFlash);
 			if (value == null)
 			{
@@ -1026,25 +1026,25 @@ namespace Com.Drew.Metadata.Exif
 			}
 		}
 
-		/*
-		// This alternative implementation offered by Bill Richards
-		// TODO determine which is the correct / more-correct implementation
-		double apexValue = _directory.getDouble(ExifSubIFDDirectory.TAG_SHUTTER_SPEED);
-		double apexPower = Math.pow(2.0, apexValue);
-		
-		StringBuffer sb = new StringBuffer();
-		if (apexPower > 1)
-		apexPower = Math.floor(apexPower);
-		
-		if (apexPower < 1) {
-		sb.append((int)Math.round(1/apexPower));
-		} else {
-		sb.append("1/");
-		sb.append((int)apexPower);
-		}
-		sb.append(" sec");
-		return sb.toString();
-		*/
+/*
+        // This alternative implementation offered by Bill Richards
+        // TODO determine which is the correct / more-correct implementation
+        double apexValue = _directory.getDouble(ExifSubIFDDirectory.TAG_SHUTTER_SPEED);
+        double apexPower = Math.pow(2.0, apexValue);
+
+        StringBuffer sb = new StringBuffer();
+        if (apexPower > 1)
+            apexPower = Math.floor(apexPower);
+
+        if (apexPower < 1) {
+            sb.append((int)Math.round(1/apexPower));
+        } else {
+            sb.append("1/");
+            sb.append((int)apexPower);
+        }
+        sb.append(" sec");
+        return sb.toString();
+*/
 		[CanBeNull]
 		public virtual string GetFNumberDescription()
 		{

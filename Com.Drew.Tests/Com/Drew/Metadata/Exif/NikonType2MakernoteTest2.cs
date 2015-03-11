@@ -1,23 +1,23 @@
 /*
-* Copyright 2002-2013 Drew Noakes
-*
-*    Licensed under the Apache License, Version 2.0 (the "License");
-*    you may not use this file except in compliance with the License.
-*    You may obtain a copy of the License at
-*
-*        http://www.apache.org/licenses/LICENSE-2.0
-*
-*    Unless required by applicable law or agreed to in writing, software
-*    distributed under the License is distributed on an "AS IS" BASIS,
-*    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-*    See the License for the specific language governing permissions and
-*    limitations under the License.
-*
-* More information about this project is available at:
-*
-*    http://drewnoakes.com/code/exif/
-*    http://code.google.com/p/metadata-extractor/
-*/
+ * Copyright 2002-2013 Drew Noakes
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ *
+ * More information about this project is available at:
+ *
+ *    http://drewnoakes.com/code/exif/
+ *    http://code.google.com/p/metadata-extractor/
+ */
 using Com.Drew.Lang;
 using Com.Drew.Metadata.Exif.Makernotes;
 using Sharpen;
@@ -48,29 +48,29 @@ namespace Com.Drew.Metadata.Exif
 			NUnit.Framework.Assert.IsNotNull(_exifSubIFDDirectory);
 		}
 
-		/*
-		[Nikon Makernote] Makernote Unknown 1 =
-		[Nikon Makernote] ISO Setting = Unknown (0 0)
-		[Nikon Makernote] Color Mode = COLOR
-		[Nikon Makernote] Quality = NORMAL
-		[Nikon Makernote] White Balance = AUTO
-		[Nikon Makernote] Image Sharpening = AUTO
-		[Nikon Makernote] Focus Mode = AF-C
-		[Nikon Makernote] Flash Setting = NORMAL
-		[Nikon Makernote] Makernote Unknown 2 = 4416/500
-		[Nikon Makernote] ISO Selection = AUTO
-		[Nikon Makernote] Unknown tag (0x0011) = 1300
-		[Nikon Makernote] Image Adjustment = AUTO
-		[Nikon Makernote] Adapter = OFF
-		[Nikon Makernote] Focus Distance = 0
-		[Nikon Makernote] Digital Zoom = No digital zoom
-		[Nikon Makernote] AF Focus Position = Unknown ()
-		[Nikon Makernote] Unknown tag (0x008f) =
-		[Nikon Makernote] Unknown tag (0x0094) = 0
-		[Nikon Makernote] Unknown tag (0x0095) = FPNR
-		[Nikon Makernote] Unknown tag (0x0e00) = PrintIM
-		[Nikon Makernote] Unknown tag (0x0e10) = 1394
-		*/
+    /*
+        [Nikon Makernote] Makernote Unknown 1 =
+        [Nikon Makernote] ISO Setting = Unknown (0 0)
+        [Nikon Makernote] Color Mode = COLOR
+        [Nikon Makernote] Quality = NORMAL
+        [Nikon Makernote] White Balance = AUTO
+        [Nikon Makernote] Image Sharpening = AUTO
+        [Nikon Makernote] Focus Mode = AF-C
+        [Nikon Makernote] Flash Setting = NORMAL
+        [Nikon Makernote] Makernote Unknown 2 = 4416/500
+        [Nikon Makernote] ISO Selection = AUTO
+        [Nikon Makernote] Unknown tag (0x0011) = 1300
+        [Nikon Makernote] Image Adjustment = AUTO
+        [Nikon Makernote] Adapter = OFF
+        [Nikon Makernote] Focus Distance = 0
+        [Nikon Makernote] Digital Zoom = No digital zoom
+        [Nikon Makernote] AF Focus Position = Unknown ()
+        [Nikon Makernote] Unknown tag (0x008f) =
+        [Nikon Makernote] Unknown tag (0x0094) = 0
+        [Nikon Makernote] Unknown tag (0x0095) = FPNR
+        [Nikon Makernote] Unknown tag (0x0e00) = PrintIM
+        [Nikon Makernote] Unknown tag (0x0e10) = 1394
+    */
 		/// <exception cref="System.Exception"/>
 		[NUnit.Framework.Test]
 		public virtual void TestNikonMakernote_MatchesKnownValues()
@@ -99,38 +99,38 @@ namespace Com.Drew.Metadata.Exif
 			Sharpen.Tests.AreEqual(1394, _nikonDirectory.GetInt(unchecked((int)(0x0e10))));
 		}
 
-		/*
-		[Exif] Image Description =
-		[Exif] Make = NIKON
-		[Exif] Model = E995
-		[Exif] X Resolution = 300 dots per inch
-		[Exif] Y Resolution = 300 dots per inch
-		[Exif] Resolution Unit = Inch
-		[Exif] Software = E995v1.6
-		[Exif] Date/Time = 2002:08:29 17:31:40
-		[Exif] YCbCr Positioning = Center of pixel array
-		[Exif] Exposure Time = 2439024/100000000 sec
-		[Exif] F-Number = F2.6
-		[Exif] Exposure Program = Program normal
-		[Exif] ISO Speed Ratings = 100
-		[Exif] Exif Version = 2.10
-		[Exif] Date/Time Original = 2002:08:29 17:31:40
-		[Exif] Date/Time Digitized = 2002:08:29 17:31:40
-		[Exif] Components Configuration = YCbCr
-		[Exif] Exposure Bias Value = 0 EV
-		[Exif] Max Aperture Value = F1
-		[Exif] Metering Mode = Multi-segment
-		[Exif] White Balance = Unknown
-		[Exif] Flash = Flash fired
-		[Exif] Focal Length = 8.2 mm
-		[Exif] User Comment =
-		[Exif] FlashPix Version = 1.00
-		[Exif] Color Space = sRGB
-		[Exif] Exif Image Width = 2048 pixels
-		[Exif] Exif Image Height = 1536 pixels
-		[Exif] File Source = Digital Still Camera (DSC)
-		[Exif] Scene Type = Directly photographed image
-		*/
+    /*
+        [Exif] Image Description =
+        [Exif] Make = NIKON
+        [Exif] Model = E995
+        [Exif] X Resolution = 300 dots per inch
+        [Exif] Y Resolution = 300 dots per inch
+        [Exif] Resolution Unit = Inch
+        [Exif] Software = E995v1.6
+        [Exif] Date/Time = 2002:08:29 17:31:40
+        [Exif] YCbCr Positioning = Center of pixel array
+        [Exif] Exposure Time = 2439024/100000000 sec
+        [Exif] F-Number = F2.6
+        [Exif] Exposure Program = Program normal
+        [Exif] ISO Speed Ratings = 100
+        [Exif] Exif Version = 2.10
+        [Exif] Date/Time Original = 2002:08:29 17:31:40
+        [Exif] Date/Time Digitized = 2002:08:29 17:31:40
+        [Exif] Components Configuration = YCbCr
+        [Exif] Exposure Bias Value = 0 EV
+        [Exif] Max Aperture Value = F1
+        [Exif] Metering Mode = Multi-segment
+        [Exif] White Balance = Unknown
+        [Exif] Flash = Flash fired
+        [Exif] Focal Length = 8.2 mm
+        [Exif] User Comment =
+        [Exif] FlashPix Version = 1.00
+        [Exif] Color Space = sRGB
+        [Exif] Exif Image Width = 2048 pixels
+        [Exif] Exif Image Height = 1536 pixels
+        [Exif] File Source = Digital Still Camera (DSC)
+        [Exif] Scene Type = Directly photographed image
+    */
 		/// <exception cref="System.Exception"/>
 		[NUnit.Framework.Test]
 		public virtual void TestExifDirectory_MatchesKnownValues()
@@ -168,14 +168,14 @@ namespace Com.Drew.Metadata.Exif
 			Sharpen.Tests.AreEqual(1, _exifSubIFDDirectory.GetInt(ExifSubIFDDirectory.TagSceneType));
 		}
 
-		/*
-		[Exif Thumbnail] Thumbnail Compression = JPEG (old-style)
-		[Exif Thumbnail] X Resolution = 72 dots per inch
-		[Exif Thumbnail] Y Resolution = 72 dots per inch
-		[Exif Thumbnail] Resolution Unit = Inch
-		[Exif Thumbnail] Thumbnail Offset = 1494 bytes
-		[Exif Thumbnail] Thumbnail Length = 6077 bytes
-		*/
+    /*
+        [Exif Thumbnail] Thumbnail Compression = JPEG (old-style)
+        [Exif Thumbnail] X Resolution = 72 dots per inch
+        [Exif Thumbnail] Y Resolution = 72 dots per inch
+        [Exif Thumbnail] Resolution Unit = Inch
+        [Exif Thumbnail] Thumbnail Offset = 1494 bytes
+        [Exif Thumbnail] Thumbnail Length = 6077 bytes
+    */
 		/// <exception cref="System.Exception"/>
 		[NUnit.Framework.Test]
 		public virtual void TestExifThumbnailDirectory_MatchesKnownValues()

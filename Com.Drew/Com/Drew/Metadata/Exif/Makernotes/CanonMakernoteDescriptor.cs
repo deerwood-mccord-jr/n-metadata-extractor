@@ -1,23 +1,23 @@
 /*
-* Copyright 2002-2013 Drew Noakes
-*
-*    Licensed under the Apache License, Version 2.0 (the "License");
-*    you may not use this file except in compliance with the License.
-*    You may obtain a copy of the License at
-*
-*        http://www.apache.org/licenses/LICENSE-2.0
-*
-*    Unless required by applicable law or agreed to in writing, software
-*    distributed under the License is distributed on an "AS IS" BASIS,
-*    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-*    See the License for the specific language governing permissions and
-*    limitations under the License.
-*
-* More information about this project is available at:
-*
-*    http://drewnoakes.com/code/exif/
-*    http://code.google.com/p/metadata-extractor/
-*/
+ * Copyright 2002-2013 Drew Noakes
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ *
+ * More information about this project is available at:
+ *
+ *    http://drewnoakes.com/code/exif/
+ *    http://code.google.com/p/metadata-extractor/
+ */
 using Com.Drew.Metadata;
 using JetBrains.Annotations;
 using Sharpen;
@@ -223,184 +223,184 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 			return Sharpen.Extensions.StringFormat("%04X%05d", (value >> 8) & unchecked((int)(0xFF)), value & unchecked((int)(0xFF)));
 		}
 
-		/*
-		@Nullable
-		public String getLongExposureNoiseReductionDescription()
-		{
-		Integer value = _directory.getInteger(TAG_CANON_CUSTOM_FUNCTION_LONG_EXPOSURE_NOISE_REDUCTION);
-		if (value==null)
-		return null;
-		switch (value) {
-		case 0:     return "Off";
-		case 1:     return "On";
-		default:    return "Unknown (" + value + ")";
-		}
-		}
-		
-		@Nullable
-		public String getShutterAutoExposureLockButtonDescription()
-		{
-		Integer value = _directory.getInteger(TAG_CANON_CUSTOM_FUNCTION_SHUTTER_AUTO_EXPOSURE_LOCK_BUTTONS);
-		if (value==null)
-		return null;
-		switch (value) {
-		case 0:     return "AF/AE lock";
-		case 1:     return "AE lock/AF";
-		case 2:     return "AF/AF lock";
-		case 3:     return "AE+release/AE+AF";
-		default:    return "Unknown (" + value + ")";
-		}
-		}
-		
-		@Nullable
-		public String getMirrorLockupDescription()
-		{
-		Integer value = _directory.getInteger(TAG_CANON_CUSTOM_FUNCTION_MIRROR_LOCKUP);
-		if (value==null)
-		return null;
-		switch (value) {
-		case 0:     return "Disabled";
-		case 1:     return "Enabled";
-		default:    return "Unknown (" + value + ")";
-		}
-		}
-		
-		@Nullable
-		public String getTvAndAvExposureLevelDescription()
-		{
-		Integer value = _directory.getInteger(TAG_CANON_CUSTOM_FUNCTION_TV_AV_AND_EXPOSURE_LEVEL);
-		if (value==null)
-		return null;
-		switch (value) {
-		case 0:     return "1/2 stop";
-		case 1:     return "1/3 stop";
-		default:    return "Unknown (" + value + ")";
-		}
-		}
-		
-		@Nullable
-		public String getAutoFocusAssistLightDescription()
-		{
-		Integer value = _directory.getInteger(TAG_CANON_CUSTOM_FUNCTION_AF_ASSIST_LIGHT);
-		if (value==null)
-		return null;
-		switch (value) {
-		case 0:     return "On (Auto)";
-		case 1:     return "Off";
-		default:    return "Unknown (" + value + ")";
-		}
-		}
-		
-		@Nullable
-		public String getShutterSpeedInAvModeDescription()
-		{
-		Integer value = _directory.getInteger(TAG_CANON_CUSTOM_FUNCTION_SHUTTER_SPEED_IN_AV_MODE);
-		if (value==null)
-		return null;
-		switch (value) {
-		case 0:     return "Automatic";
-		case 1:     return "1/200 (fixed)";
-		default:    return "Unknown (" + value + ")";
-		}
-		}
-		
-		@Nullable
-		public String getAutoExposureBracketingSequenceAndAutoCancellationDescription()
-		{
-		Integer value = _directory.getInteger(TAG_CANON_CUSTOM_FUNCTION_BRACKETING);
-		if (value==null)
-		return null;
-		switch (value) {
-		case 0:     return "0,-,+ / Enabled";
-		case 1:     return "0,-,+ / Disabled";
-		case 2:     return "-,0,+ / Enabled";
-		case 3:     return "-,0,+ / Disabled";
-		default:    return "Unknown (" + value + ")";
-		}
-		}
-		
-		@Nullable
-		public String getShutterCurtainSyncDescription()
-		{
-		Integer value = _directory.getInteger(TAG_CANON_CUSTOM_FUNCTION_SHUTTER_CURTAIN_SYNC);
-		if (value==null)
-		return null;
-		switch (value) {
-		case 0:     return "1st Curtain Sync";
-		case 1:     return "2nd Curtain Sync";
-		default:    return "Unknown (" + value + ")";
-		}
-		}
-		
-		@Nullable
-		public String getLensAutoFocusStopButtonDescription()
-		{
-		Integer value = _directory.getInteger(TAG_CANON_CUSTOM_FUNCTION_AF_STOP);
-		if (value==null)
-		return null;
-		switch (value) {
-		case 0:     return "AF stop";
-		case 1:     return "Operate AF";
-		case 2:     return "Lock AE and start timer";
-		default:    return "Unknown (" + value + ")";
-		}
-		}
-		
-		@Nullable
-		public String getFillFlashReductionDescription()
-		{
-		Integer value = _directory.getInteger(TAG_CANON_CUSTOM_FUNCTION_FILL_FLASH_REDUCTION);
-		if (value==null)
-		return null;
-		switch (value) {
-		case 0:     return "Enabled";
-		case 1:     return "Disabled";
-		default:    return "Unknown (" + value + ")";
-		}
-		}
-		
-		@Nullable
-		public String getMenuButtonReturnPositionDescription()
-		{
-		Integer value = _directory.getInteger(TAG_CANON_CUSTOM_FUNCTION_MENU_BUTTON_RETURN);
-		if (value==null)
-		return null;
-		switch (value) {
-		case 0:     return "Top";
-		case 1:     return "Previous (volatile)";
-		case 2:     return "Previous";
-		default:    return "Unknown (" + value + ")";
-		}
-		}
-		
-		@Nullable
-		public String getSetButtonFunctionWhenShootingDescription()
-		{
-		Integer value = _directory.getInteger(TAG_CANON_CUSTOM_FUNCTION_SET_BUTTON_FUNCTION);
-		if (value==null)
-		return null;
-		switch (value) {
-		case 0:     return "Not Assigned";
-		case 1:     return "Change Quality";
-		case 2:     return "Change ISO Speed";
-		case 3:     return "Select Parameters";
-		default:    return "Unknown (" + value + ")";
-		}
-		}
-		
-		@Nullable
-		public String getSensorCleaningDescription()
-		{
-		Integer value = _directory.getInteger(TAG_CANON_CUSTOM_FUNCTION_SENSOR_CLEANING);
-		if (value==null)
-		return null;
-		switch (value) {
-		case 0:     return "Disabled";
-		case 1:     return "Enabled";
-		default:    return "Unknown (" + value + ")";
-		}
-		}
-		*/
+/*
+    @Nullable
+    public String getLongExposureNoiseReductionDescription()
+    {
+        Integer value = _directory.getInteger(TAG_CANON_CUSTOM_FUNCTION_LONG_EXPOSURE_NOISE_REDUCTION);
+        if (value==null)
+            return null;
+        switch (value) {
+            case 0:     return "Off";
+            case 1:     return "On";
+            default:    return "Unknown (" + value + ")";
+        }
+    }
+
+    @Nullable
+    public String getShutterAutoExposureLockButtonDescription()
+    {
+        Integer value = _directory.getInteger(TAG_CANON_CUSTOM_FUNCTION_SHUTTER_AUTO_EXPOSURE_LOCK_BUTTONS);
+        if (value==null)
+            return null;
+        switch (value) {
+            case 0:     return "AF/AE lock";
+            case 1:     return "AE lock/AF";
+            case 2:     return "AF/AF lock";
+            case 3:     return "AE+release/AE+AF";
+            default:    return "Unknown (" + value + ")";
+        }
+    }
+
+    @Nullable
+    public String getMirrorLockupDescription()
+    {
+        Integer value = _directory.getInteger(TAG_CANON_CUSTOM_FUNCTION_MIRROR_LOCKUP);
+        if (value==null)
+            return null;
+        switch (value) {
+            case 0:     return "Disabled";
+            case 1:     return "Enabled";
+            default:    return "Unknown (" + value + ")";
+        }
+    }
+
+    @Nullable
+    public String getTvAndAvExposureLevelDescription()
+    {
+        Integer value = _directory.getInteger(TAG_CANON_CUSTOM_FUNCTION_TV_AV_AND_EXPOSURE_LEVEL);
+        if (value==null)
+            return null;
+        switch (value) {
+            case 0:     return "1/2 stop";
+            case 1:     return "1/3 stop";
+            default:    return "Unknown (" + value + ")";
+        }
+    }
+
+    @Nullable
+    public String getAutoFocusAssistLightDescription()
+    {
+        Integer value = _directory.getInteger(TAG_CANON_CUSTOM_FUNCTION_AF_ASSIST_LIGHT);
+        if (value==null)
+            return null;
+        switch (value) {
+            case 0:     return "On (Auto)";
+            case 1:     return "Off";
+            default:    return "Unknown (" + value + ")";
+        }
+    }
+
+    @Nullable
+    public String getShutterSpeedInAvModeDescription()
+    {
+        Integer value = _directory.getInteger(TAG_CANON_CUSTOM_FUNCTION_SHUTTER_SPEED_IN_AV_MODE);
+        if (value==null)
+            return null;
+        switch (value) {
+            case 0:     return "Automatic";
+            case 1:     return "1/200 (fixed)";
+            default:    return "Unknown (" + value + ")";
+        }
+    }
+
+    @Nullable
+    public String getAutoExposureBracketingSequenceAndAutoCancellationDescription()
+    {
+        Integer value = _directory.getInteger(TAG_CANON_CUSTOM_FUNCTION_BRACKETING);
+        if (value==null)
+            return null;
+        switch (value) {
+            case 0:     return "0,-,+ / Enabled";
+            case 1:     return "0,-,+ / Disabled";
+            case 2:     return "-,0,+ / Enabled";
+            case 3:     return "-,0,+ / Disabled";
+            default:    return "Unknown (" + value + ")";
+        }
+    }
+
+    @Nullable
+    public String getShutterCurtainSyncDescription()
+    {
+        Integer value = _directory.getInteger(TAG_CANON_CUSTOM_FUNCTION_SHUTTER_CURTAIN_SYNC);
+        if (value==null)
+            return null;
+        switch (value) {
+            case 0:     return "1st Curtain Sync";
+            case 1:     return "2nd Curtain Sync";
+            default:    return "Unknown (" + value + ")";
+        }
+    }
+
+    @Nullable
+    public String getLensAutoFocusStopButtonDescription()
+    {
+        Integer value = _directory.getInteger(TAG_CANON_CUSTOM_FUNCTION_AF_STOP);
+        if (value==null)
+            return null;
+        switch (value) {
+            case 0:     return "AF stop";
+            case 1:     return "Operate AF";
+            case 2:     return "Lock AE and start timer";
+            default:    return "Unknown (" + value + ")";
+        }
+    }
+
+    @Nullable
+    public String getFillFlashReductionDescription()
+    {
+        Integer value = _directory.getInteger(TAG_CANON_CUSTOM_FUNCTION_FILL_FLASH_REDUCTION);
+        if (value==null)
+            return null;
+        switch (value) {
+            case 0:     return "Enabled";
+            case 1:     return "Disabled";
+            default:    return "Unknown (" + value + ")";
+        }
+    }
+
+    @Nullable
+    public String getMenuButtonReturnPositionDescription()
+    {
+        Integer value = _directory.getInteger(TAG_CANON_CUSTOM_FUNCTION_MENU_BUTTON_RETURN);
+        if (value==null)
+            return null;
+        switch (value) {
+            case 0:     return "Top";
+            case 1:     return "Previous (volatile)";
+            case 2:     return "Previous";
+            default:    return "Unknown (" + value + ")";
+        }
+    }
+
+    @Nullable
+    public String getSetButtonFunctionWhenShootingDescription()
+    {
+        Integer value = _directory.getInteger(TAG_CANON_CUSTOM_FUNCTION_SET_BUTTON_FUNCTION);
+        if (value==null)
+            return null;
+        switch (value) {
+            case 0:     return "Not Assigned";
+            case 1:     return "Change Quality";
+            case 2:     return "Change ISO Speed";
+            case 3:     return "Select Parameters";
+            default:    return "Unknown (" + value + ")";
+        }
+    }
+
+    @Nullable
+    public String getSensorCleaningDescription()
+    {
+        Integer value = _directory.getInteger(TAG_CANON_CUSTOM_FUNCTION_SENSOR_CLEANING);
+        if (value==null)
+            return null;
+        switch (value) {
+            case 0:     return "Disabled";
+            case 1:     return "Enabled";
+            default:    return "Unknown (" + value + ")";
+        }
+    }
+*/
 		[CanBeNull]
 		public virtual string GetFlashBiasDescription()
 		{

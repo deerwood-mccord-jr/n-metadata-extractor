@@ -1,23 +1,23 @@
 /*
-* Copyright 2002-2013 Drew Noakes
-*
-*    Licensed under the Apache License, Version 2.0 (the "License");
-*    you may not use this file except in compliance with the License.
-*    You may obtain a copy of the License at
-*
-*        http://www.apache.org/licenses/LICENSE-2.0
-*
-*    Unless required by applicable law or agreed to in writing, software
-*    distributed under the License is distributed on an "AS IS" BASIS,
-*    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-*    See the License for the specific language governing permissions and
-*    limitations under the License.
-*
-* More information about this project is available at:
-*
-*    http://drewnoakes.com/code/exif/
-*    http://code.google.com/p/metadata-extractor/
-*/
+ * Copyright 2002-2013 Drew Noakes
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ *
+ * More information about this project is available at:
+ *
+ *    http://drewnoakes.com/code/exif/
+ *    http://code.google.com/p/metadata-extractor/
+ */
 using System;
 using System.Collections.Generic;
 using Com.Drew.Imaging.Jpeg;
@@ -49,22 +49,22 @@ namespace Com.Drew.Metadata.Xmp
 			_directory = ProcessApp1Bytes("Tests/Data/withXmpAndIptc.jpg.app1.1");
 		}
 
-		/*
-		[Xmp] Lens Information = 24/1 70/1 0/0 0/0
-		[Xmp] Lens = EF24-70mm f/2.8L USM
-		[Xmp] Serial Number = 380319450
-		[Xmp] Firmware = 1.2.1
-		[Xmp] Make = Canon
-		[Xmp] Model = Canon EOS 7D
-		[Xmp] Exposure Time = 1/125 sec
-		[Xmp] Exposure Program = Manual control
-		[Xmp] Aperture Value = F11
-		[Xmp] F-Number = F11
-		[Xmp] Focal Length = 57.0 mm
-		[Xmp] Shutter Speed Value = 1/124 sec
-		[Xmp] Date/Time Original = Sun Dec 12 11:41:35 GMT 2010
-		[Xmp] Date/Time Digitized = Sun Dec 12 11:41:35 GMT 2010
-		*/
+    /*
+    [Xmp] Lens Information = 24/1 70/1 0/0 0/0
+    [Xmp] Lens = EF24-70mm f/2.8L USM
+    [Xmp] Serial Number = 380319450
+    [Xmp] Firmware = 1.2.1
+    [Xmp] Make = Canon
+    [Xmp] Model = Canon EOS 7D
+    [Xmp] Exposure Time = 1/125 sec
+    [Xmp] Exposure Program = Manual control
+    [Xmp] Aperture Value = F11
+    [Xmp] F-Number = F11
+    [Xmp] Focal Length = 57.0 mm
+    [Xmp] Shutter Speed Value = 1/124 sec
+    [Xmp] Date/Time Original = Sun Dec 12 11:41:35 GMT 2010
+    [Xmp] Date/Time Digitized = Sun Dec 12 11:41:35 GMT 2010
+    */
 		/// <exception cref="System.Exception"/>
 		[NUnit.Framework.Test]
 		public virtual void TestExtract_LensInformation()
@@ -92,33 +92,33 @@ namespace Com.Drew.Metadata.Xmp
 			Sharpen.Tests.AreEqual("EF24-70mm f/2.8L USM", _directory.GetString(XmpDirectory.TagLens));
 		}
 
-		/*
-		// this requires further research
-		
-		@Test
-		public void testExtract_Format() throws Exception
-		{
-		assertEquals("image/tiff", _directory.getString(XmpDirectory.TAG_FORMAT));
-		}
-		
-		@Test
-		public void testExtract_Creator() throws Exception
-		{
-		assertEquals("", _directory.getString(XmpDirectory.TAG_CREATOR));
-		}
-		
-		@Test
-		public void testExtract_Rights() throws Exception
-		{
-		assertEquals("", _directory.getString(XmpDirectory.TAG_RIGHTS));
-		}
-		
-		@Test
-		public void testExtract_Description() throws Exception
-		{
-		assertEquals("", _directory.getString(XmpDirectory.TAG_DESCRIPTION));
-		}
-		*/
+/*
+    // this requires further research
+
+    @Test
+    public void testExtract_Format() throws Exception
+    {
+        assertEquals("image/tiff", _directory.getString(XmpDirectory.TAG_FORMAT));
+    }
+
+    @Test
+    public void testExtract_Creator() throws Exception
+    {
+        assertEquals("", _directory.getString(XmpDirectory.TAG_CREATOR));
+    }
+
+    @Test
+    public void testExtract_Rights() throws Exception
+    {
+        assertEquals("", _directory.getString(XmpDirectory.TAG_RIGHTS));
+    }
+
+    @Test
+    public void testExtract_Description() throws Exception
+    {
+        assertEquals("", _directory.getString(XmpDirectory.TAG_DESCRIPTION));
+    }
+*/
 		/// <exception cref="System.Exception"/>
 		[NUnit.Framework.Test]
 		public virtual void TestExtract_SerialNumber()
