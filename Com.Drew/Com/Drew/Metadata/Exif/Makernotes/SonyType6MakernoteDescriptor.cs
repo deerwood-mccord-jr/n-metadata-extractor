@@ -42,7 +42,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		{
 			switch (tagType)
 			{
-				case TagMakernoteThumbVersion:
+				case SonyType6MakernoteDirectory.TagMakernoteThumbVersion:
 				{
 					return GetMakernoteThumbVersionDescription();
 				}
@@ -57,7 +57,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		[CanBeNull]
 		public virtual string GetMakernoteThumbVersionDescription()
 		{
-			return GetVersionBytesDescription(TagMakernoteThumbVersion, 2);
+			return GetVersionBytesDescription(SonyType6MakernoteDirectory.TagMakernoteThumbVersion, 2);
 		}
 	}
 }

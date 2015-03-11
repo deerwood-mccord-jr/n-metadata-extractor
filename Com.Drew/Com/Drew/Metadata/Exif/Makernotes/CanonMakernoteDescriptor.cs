@@ -42,7 +42,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		{
 			switch (tagType)
 			{
-				case TagCanonSerialNumber:
+				case CanonMakernoteDirectory.TagCanonSerialNumber:
 				{
 					return GetSerialNumberDescription();
 				}
@@ -215,7 +215,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		[CanBeNull]
 		public virtual string GetSerialNumberDescription()
 		{
-			int value = _directory.GetInteger(TagCanonSerialNumber);
+			int value = _directory.GetInteger(CanonMakernoteDirectory.TagCanonSerialNumber);
 			if (value == null)
 			{
 				return null;

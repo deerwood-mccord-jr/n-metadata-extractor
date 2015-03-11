@@ -45,72 +45,72 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		{
 			switch (tagType)
 			{
-				case TagMakernoteVersion:
+				case OlympusMakernoteDirectory.TagMakernoteVersion:
 				{
 					return GetMakernoteVersionDescription();
 				}
 
-				case TagColourMode:
+				case OlympusMakernoteDirectory.TagColourMode:
 				{
 					return GetColorModeDescription();
 				}
 
-				case TagImageQuality1:
+				case OlympusMakernoteDirectory.TagImageQuality1:
 				{
 					return GetImageQuality1Description();
 				}
 
-				case TagImageQuality2:
+				case OlympusMakernoteDirectory.TagImageQuality2:
 				{
 					return GetImageQuality2Description();
 				}
 
-				case TagSpecialMode:
+				case OlympusMakernoteDirectory.TagSpecialMode:
 				{
 					return GetSpecialModeDescription();
 				}
 
-				case TagJpegQuality:
+				case OlympusMakernoteDirectory.TagJpegQuality:
 				{
 					return GetJpegQualityDescription();
 				}
 
-				case TagMacroMode:
+				case OlympusMakernoteDirectory.TagMacroMode:
 				{
 					return GetMacroModeDescription();
 				}
 
-				case TagBwMode:
+				case OlympusMakernoteDirectory.TagBwMode:
 				{
 					return GetBWModeDescription();
 				}
 
-				case TagDigiZoomRatio:
+				case OlympusMakernoteDirectory.TagDigiZoomRatio:
 				{
 					return GetDigiZoomRatioDescription();
 				}
 
-				case TagCameraId:
+				case OlympusMakernoteDirectory.TagCameraId:
 				{
 					return GetCameraIdDescription();
 				}
 
-				case TagFlashMode:
+				case OlympusMakernoteDirectory.TagFlashMode:
 				{
 					return GetFlashModeDescription();
 				}
 
-				case TagFocusRange:
+				case OlympusMakernoteDirectory.TagFocusRange:
 				{
 					return GetFocusRangeDescription();
 				}
 
-				case TagFocusMode:
+				case OlympusMakernoteDirectory.TagFocusMode:
 				{
 					return GetFocusModeDescription();
 				}
 
-				case TagSharpness:
+				case OlympusMakernoteDirectory.TagSharpness:
 				{
 					return GetSharpnessDescription();
 				}
@@ -725,61 +725,61 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		[CanBeNull]
 		public virtual string GetMakernoteVersionDescription()
 		{
-			return GetVersionBytesDescription(TagMakernoteVersion, 2);
+			return GetVersionBytesDescription(OlympusMakernoteDirectory.TagMakernoteVersion, 2);
 		}
 
 		[CanBeNull]
 		public virtual string GetImageQuality2Description()
 		{
-			return GetIndexedDescription(TagImageQuality2, "Raw", "Super Fine", "Fine", "Standard", "Extra Fine");
+			return GetIndexedDescription(OlympusMakernoteDirectory.TagImageQuality2, "Raw", "Super Fine", "Fine", "Standard", "Extra Fine");
 		}
 
 		[CanBeNull]
 		public virtual string GetImageQuality1Description()
 		{
-			return GetIndexedDescription(TagImageQuality1, "Raw", "Super Fine", "Fine", "Standard", "Extra Fine");
+			return GetIndexedDescription(OlympusMakernoteDirectory.TagImageQuality1, "Raw", "Super Fine", "Fine", "Standard", "Extra Fine");
 		}
 
 		[CanBeNull]
 		public virtual string GetColorModeDescription()
 		{
-			return GetIndexedDescription(TagColourMode, "Natural Colour", "Black & White", "Vivid Colour", "Solarization", "AdobeRGB");
+			return GetIndexedDescription(OlympusMakernoteDirectory.TagColourMode, "Natural Colour", "Black & White", "Vivid Colour", "Solarization", "AdobeRGB");
 		}
 
 		[CanBeNull]
 		public virtual string GetSharpnessDescription()
 		{
-			return GetIndexedDescription(TagSharpness, "Normal", "Hard", "Soft");
+			return GetIndexedDescription(OlympusMakernoteDirectory.TagSharpness, "Normal", "Hard", "Soft");
 		}
 
 		[CanBeNull]
 		public virtual string GetFocusModeDescription()
 		{
-			return GetIndexedDescription(TagFocusMode, "Auto", "Manual");
+			return GetIndexedDescription(OlympusMakernoteDirectory.TagFocusMode, "Auto", "Manual");
 		}
 
 		[CanBeNull]
 		public virtual string GetFocusRangeDescription()
 		{
-			return GetIndexedDescription(TagFocusRange, "Normal", "Macro");
+			return GetIndexedDescription(OlympusMakernoteDirectory.TagFocusRange, "Normal", "Macro");
 		}
 
 		[CanBeNull]
 		public virtual string GetFlashModeDescription()
 		{
-			return GetIndexedDescription(TagFlashMode, null, null, "On", "Off");
+			return GetIndexedDescription(OlympusMakernoteDirectory.TagFlashMode, null, null, "On", "Off");
 		}
 
 		[CanBeNull]
 		public virtual string GetDigiZoomRatioDescription()
 		{
-			return GetIndexedDescription(TagDigiZoomRatio, "Normal", null, "Digital 2x Zoom");
+			return GetIndexedDescription(OlympusMakernoteDirectory.TagDigiZoomRatio, "Normal", null, "Digital 2x Zoom");
 		}
 
 		[CanBeNull]
 		public virtual string GetCameraIdDescription()
 		{
-			sbyte[] bytes = _directory.GetByteArray(TagCameraId);
+			sbyte[] bytes = _directory.GetByteArray(OlympusMakernoteDirectory.TagCameraId);
 			if (bytes == null)
 			{
 				return null;
@@ -790,25 +790,25 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		[CanBeNull]
 		public virtual string GetMacroModeDescription()
 		{
-			return GetIndexedDescription(TagMacroMode, "Normal (no macro)", "Macro");
+			return GetIndexedDescription(OlympusMakernoteDirectory.TagMacroMode, "Normal (no macro)", "Macro");
 		}
 
 		[CanBeNull]
 		public virtual string GetBWModeDescription()
 		{
-			return GetIndexedDescription(TagBwMode, "Off", "On");
+			return GetIndexedDescription(OlympusMakernoteDirectory.TagBwMode, "Off", "On");
 		}
 
 		[CanBeNull]
 		public virtual string GetJpegQualityDescription()
 		{
-			return GetIndexedDescription(TagJpegQuality, 1, "Standard Quality", "High Quality", "Super High Quality");
+			return GetIndexedDescription(OlympusMakernoteDirectory.TagJpegQuality, 1, "Standard Quality", "High Quality", "Super High Quality");
 		}
 
 		[CanBeNull]
 		public virtual string GetSpecialModeDescription()
 		{
-			long[] values = (long[])_directory.GetObject(TagSpecialMode);
+			long[] values = (long[])_directory.GetObject(OlympusMakernoteDirectory.TagSpecialMode);
 			if (values == null)
 			{
 				return null;

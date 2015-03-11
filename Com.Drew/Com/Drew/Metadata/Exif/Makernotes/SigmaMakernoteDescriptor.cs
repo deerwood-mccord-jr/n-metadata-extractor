@@ -41,12 +41,12 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		{
 			switch (tagType)
 			{
-				case TagExposureMode:
+				case SigmaMakernoteDirectory.TagExposureMode:
 				{
 					return GetExposureModeDescription();
 				}
 
-				case TagMeteringMode:
+				case SigmaMakernoteDirectory.TagMeteringMode:
 				{
 					return GetMeteringModeDescription();
 				}
@@ -57,7 +57,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		[CanBeNull]
 		private string GetMeteringModeDescription()
 		{
-			string value = _directory.GetString(TagMeteringMode);
+			string value = _directory.GetString(SigmaMakernoteDirectory.TagMeteringMode);
 			if (value == null || value.Length == 0)
 			{
 				return null;
@@ -89,7 +89,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		[CanBeNull]
 		private string GetExposureModeDescription()
 		{
-			string value = _directory.GetString(TagExposureMode);
+			string value = _directory.GetString(SigmaMakernoteDirectory.TagExposureMode);
 			if (value == null || value.Length == 0)
 			{
 				return null;
