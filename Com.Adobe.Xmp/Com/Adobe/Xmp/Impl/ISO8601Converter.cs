@@ -244,7 +244,7 @@ namespace Com.Adobe.Xmp.Impl
 			}
 			// create a corresponding TZ and set it time zone
 			int offset = (tzHour * 3600 * 1000 + tzMinute * 60 * 1000) * tzSign;
-			binValue.SetTimeZone(new SimpleTimeZone(offset, string.Empty));
+            binValue.SetTimeZone((TimeZoneInfo)new SimpleTimeZone(offset, string.Empty));
 			if (input.HasNext())
 			{
 				throw new XMPException("Invalid date string, extra chars at end", XMPErrorConstants.Badvalue);
