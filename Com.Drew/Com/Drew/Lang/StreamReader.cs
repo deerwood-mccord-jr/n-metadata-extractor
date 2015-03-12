@@ -44,7 +44,7 @@ namespace Com.Drew.Lang
 		protected internal override sbyte GetByte()
 		{
 			int value = _stream.Read();
-			if (value == -1)
+			if (value == unchecked((byte)(-1)))
 			{
 				throw new EOFException("End of data reached.");
 			}

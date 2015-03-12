@@ -33,7 +33,7 @@ namespace Com.Drew.Metadata.Adobe
 		[NotNull]
 		public virtual Iterable<JpegSegmentType> GetSegmentTypes()
 		{
-			return Arrays.AsList(JpegSegmentType.Appe);
+			return Arrays.AsList(JpegSegmentType.Appe).AsIterable();
 		}
 
 		public virtual bool CanProcess([NotNull] sbyte[] segmentBytes, [NotNull] JpegSegmentType segmentType)

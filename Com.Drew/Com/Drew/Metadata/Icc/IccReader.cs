@@ -42,7 +42,7 @@ namespace Com.Drew.Metadata.Icc
 		[NotNull]
 		public virtual Iterable<JpegSegmentType> GetSegmentTypes()
 		{
-			return Arrays.AsList(JpegSegmentType.App2);
+			return Arrays.AsList(JpegSegmentType.App2).AsIterable();
 		}
 
 		public virtual bool CanProcess([NotNull] sbyte[] segmentBytes, [NotNull] JpegSegmentType segmentType)

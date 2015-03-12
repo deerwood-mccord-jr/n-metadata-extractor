@@ -246,7 +246,7 @@ namespace Com.Adobe.Xmp.Impl
 							else
 							{
 								nextKind = UckSemicolon;
-								nextChar = (char)unchecked((int)(0x3B));
+								nextChar = (char)0x3B;
 							}
 							if (ch == nextChar)
 							{
@@ -855,92 +855,92 @@ namespace Com.Adobe.Xmp.Impl
 		{
 			switch (openQuote)
 			{
-				case unchecked((int)(0x0022)):
+				case (char)0x0022:
 				{
-					return unchecked((int)(0x0022));
+					return (char)0x0022;
 				}
 
-				case unchecked((int)(0x00AB)):
+				case (char)0x00AB:
 				{
 					// ! U+0022 is both opening and closing.
 					//		Not interpreted as brackets anymore
 					//		case 0x005B: 
 					//			return 0x005D;
-					return unchecked((int)(0x00BB));
+					return (char)0x00BB;
 				}
 
-				case unchecked((int)(0x00BB)):
+				case (char)0x00BB:
 				{
 					// ! U+00AB and U+00BB are reversible.
-					return unchecked((int)(0x00AB));
+					return (char)0x00AB;
 				}
 
-				case unchecked((int)(0x2015)):
+				case (char)0x2015:
 				{
-					return unchecked((int)(0x2015));
+					return (char)0x2015;
 				}
 
-				case unchecked((int)(0x2018)):
+				case (char)0x2018:
 				{
 					// ! U+2015 is both opening and closing.
-					return unchecked((int)(0x2019));
+					return (char)0x2019;
 				}
 
-				case unchecked((int)(0x201A)):
+				case (char)0x201A:
 				{
-					return unchecked((int)(0x201B));
+					return (char)0x201B;
 				}
 
-				case unchecked((int)(0x201C)):
+				case (char)0x201C:
 				{
-					return unchecked((int)(0x201D));
+					return (char)0x201D;
 				}
 
-				case unchecked((int)(0x201E)):
+				case (char)0x201E:
 				{
-					return unchecked((int)(0x201F));
+					return (char)0x201F;
 				}
 
-				case unchecked((int)(0x2039)):
+				case (char)0x2039:
 				{
-					return unchecked((int)(0x203A));
+					return (char)0x203A;
 				}
 
-				case unchecked((int)(0x203A)):
+				case (char)0x203A:
 				{
 					// ! U+2039 and U+203A are reversible.
-					return unchecked((int)(0x2039));
+					return (char)0x2039;
 				}
 
-				case unchecked((int)(0x3008)):
+				case (char)0x3008:
 				{
-					return unchecked((int)(0x3009));
+					return (char)0x3009;
 				}
 
-				case unchecked((int)(0x300A)):
+				case (char)0x300A:
 				{
-					return unchecked((int)(0x300B));
+					return (char)0x300B;
 				}
 
-				case unchecked((int)(0x300C)):
+				case (char)0x300C:
 				{
-					return unchecked((int)(0x300D));
+					return (char)0x300D;
 				}
 
-				case unchecked((int)(0x300E)):
+				case (char)0x300E:
 				{
-					return unchecked((int)(0x300F));
+					return (char)0x300F;
 				}
 
-				case unchecked((int)(0x301D)):
+				case (char)0x301D:
 				{
-					return unchecked((int)(0x301F));
+					return (char)0x301F;
 				}
 
 				default:
 				{
 					// ! U+301E also closes U+301D.
-					return 0;
+					return (char)0;
 				}
 			}
 		}

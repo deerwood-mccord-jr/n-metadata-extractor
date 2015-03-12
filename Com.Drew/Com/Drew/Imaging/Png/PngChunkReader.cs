@@ -92,7 +92,7 @@ namespace Com.Drew.Imaging.Png
 				}
 				seenChunkTypes.Add(chunkType);
 			}
-			return chunks;
+			return chunks.AsIterable();
 		}
 	}
 }

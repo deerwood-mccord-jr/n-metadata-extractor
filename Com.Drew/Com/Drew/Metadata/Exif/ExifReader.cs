@@ -110,7 +110,7 @@ namespace Com.Drew.Metadata.Exif
 		[NotNull]
 		public virtual Iterable<JpegSegmentType> GetSegmentTypes()
 		{
-			return Arrays.AsList(JpegSegmentType.App1);
+			return Arrays.AsList(JpegSegmentType.App1).AsIterable();
 		}
 
 		public virtual bool CanProcess([NotNull] sbyte[] segmentBytes, [NotNull] JpegSegmentType segmentType)
