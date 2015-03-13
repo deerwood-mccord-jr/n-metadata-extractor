@@ -151,8 +151,8 @@ namespace Com.Adobe.Xmp.Impl
 			int itemEnd;
 			int nextKind = UckNormal;
 			int charKind = UckNormal;
-			char ch = 0;
-			char nextChar = 0;
+			char ch = (char)0;
+			char nextChar = (char)0;
 			itemEnd = 0;
 			int endPos = catedStr.Length;
 			while (itemEnd < endPos)

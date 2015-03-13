@@ -524,7 +524,7 @@ namespace Com.Adobe.Xmp.Impl
 		{
 			xmlNameChars = new bool[unchecked((int)(0x0100))];
 			xmlNameStartChars = new bool[unchecked((int)(0x0100))];
-			for (char ch = 0; ch < xmlNameChars.Length; ch++)
+			for (char ch = (char)0; ch < xmlNameChars.Length; ch++)
 			{
 				xmlNameStartChars[ch] = ch == ':' || ('A' <= ch && ch <= 'Z') || ch == '_' || ('a' <= ch && ch <= 'z') || (unchecked((int)(0xC0)) <= ch && ch <= unchecked((int)(0xD6))) || (unchecked((int)(0xD8)) <= ch && ch <= unchecked((int)(0xF6))) || (unchecked(
 					(int)(0xF8)) <= ch && ch <= unchecked((int)(0xFF)));
