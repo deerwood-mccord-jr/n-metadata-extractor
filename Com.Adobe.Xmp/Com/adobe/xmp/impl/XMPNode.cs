@@ -29,7 +29,7 @@ namespace Com.Adobe.Xmp.Impl
 	/// 4. hasLanguage, hasType should be automatically maintained by XMPNode
 	/// </remarks>
 	/// <since>21.02.2006</since>
-	internal class XMPNode : IComparable
+	public class XMPNode : IComparable
 	{
 		/// <summary>name of the node, contains different information depending of the node kind</summary>
 		private string name;
