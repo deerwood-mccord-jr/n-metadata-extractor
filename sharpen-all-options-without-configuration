@@ -92,9 +92,7 @@
 -methodMapping java.util.Iterator.hasNext HasNext
 -methodMapping java.util.Iterator.next Next
 
--typeMapping com.db4o.ObjectSet Db4objects.Db4o.IObjectSet 
--methodMapping com.db4o.ObjectSet.hasNext Db4objects.Db4o.IObjectSet.HasNext 
--methodMapping com.db4o.ObjectSet.next Db4objects.Db4o.IObjectSet.Next  
+-methodMapping com.adobe.xmp.impl.XMPIteratorImpl.NodeIterator.iterateChildren IterateChildrenMethod
 
 -typeMapping java.util.Comparator System.Collections.IEnumerator   
 -typeMapping java.util.ArrayList System.Collections.ArrayList 
