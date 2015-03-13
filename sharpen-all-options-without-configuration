@@ -81,7 +81,6 @@
 -namespaceMapping javax.xml System.Xml
 -namespaceMapping org.xml.sax System.Xml    
 -namespaceMapping com.drew.lang.annotations JetBrains.Annotations
--methodMapping com.drew.imaging.jpeg.JpegSegmentType.valueOf Sharpen.
 -fullyQualify Calendar
 -fullyQualify GregorianCalendar
 -fullyQualify StringReader
@@ -188,7 +187,8 @@
 -fieldMapping java.util.Locale.ENGLISH Sharpen.Extensions.GetEnglishCulture()
 -typeMapping java.lang.Comparable System.IComparable
 -typeMapping java.util.Comparator<> System.Collections.Generic.IComparer
--typeMapping java.util.HashSet<> System.Collections.Generic.HashSet
+-typeMapping java.util.Set System.Collections.Generic.ICollection<object>
+-typeMapping java.util.HashSet System.Collections.Generic.HashSet<object>
 -typeMapping java.util.HashSet<> System.Collections.Generic.HashSet
 -typeMapping java.io.File Sharpen.FilePath
 -typeMapping java.lang.StringBuilder System.Text.StringBuilder
