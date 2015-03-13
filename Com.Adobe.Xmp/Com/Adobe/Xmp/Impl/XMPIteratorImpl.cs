@@ -250,7 +250,7 @@ namespace Com.Adobe.Xmp.Impl
 						{
 							this.childrenIterator = this.visitedNode.IterateChildren();
 						}
-						bool hasNext = this.IterateChildren(this.childrenIterator);
+						bool hasNext = this.IterateChildrenMethod(this.childrenIterator);
 						if (!hasNext && this.visitedNode.HasQualifier() && !this._enclosing.GetOptions().IsOmitQualifiers())
 						{
 							this.state = XMPIteratorImpl.NodeIterator.IterateQualifier;
@@ -265,7 +265,7 @@ namespace Com.Adobe.Xmp.Impl
 						{
 							this.childrenIterator = this.visitedNode.IterateQualifier();
 						}
-						return this.IterateChildren(this.childrenIterator);
+						return this.IterateChildrenMethod(this.childrenIterator);
 					}
 				}
 			}
@@ -289,7 +289,7 @@ namespace Com.Adobe.Xmp.Impl
 			/// <summary>Handles the iteration of the children or qualfier</summary>
 			/// <param name="iterator">an iterator</param>
 			/// <returns>Returns if there are more elements available.</returns>
-			private bool IterateChildren(Iterator iterator)
+			private bool IterateChildrenMethod(Iterator iterator)
 			{
 				if (this._enclosing.skipSiblings)
 				{
@@ -303,7 +303,7 @@ namespace Com.Adobe.Xmp.Impl
 				{
 					XMPNode child = (XMPNode)iterator.Next();
 					this.index++;
-					this.subIterator = new XMPIteratorImpl.NodeIterator(this, child, this.path, this.index);
+					this.subIterator = new XMPIteratorImpl.NodeIterator(this._enclosing, child, this.path, this.index);
 				}
 				if (this.subIterator.HasNext())
 				{

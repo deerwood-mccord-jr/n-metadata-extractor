@@ -19,7 +19,7 @@ namespace Com.Drew.Imaging.Png
 		}
 
 		[NotNull]
-		public virtual PngChunkType GetType()
+		public virtual PngChunkType GetChunkType()
 		{
 			return _chunkType;
 		}
