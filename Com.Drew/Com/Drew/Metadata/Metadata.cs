@@ -53,7 +53,7 @@ namespace Com.Drew.Metadata
 		[NotNull]
 		public Iterable<Com.Drew.Metadata.Directory> GetDirectories()
 		{
-			return _directoryList;
+			return _directoryList.AsIterable();
 		}
 
 		/// <summary>Returns a count of unique directories in this metadata collection.</summary>

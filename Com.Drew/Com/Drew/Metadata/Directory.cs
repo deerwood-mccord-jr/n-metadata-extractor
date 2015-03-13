@@ -125,7 +125,7 @@ namespace Com.Drew.Metadata
 		[NotNull]
 		public virtual Iterable<string> GetErrors()
 		{
-			return _errorList;
+			return _errorList.AsIterable();
 		}
 
 		/// <summary>Returns the count of error messages in this directory.</summary>
