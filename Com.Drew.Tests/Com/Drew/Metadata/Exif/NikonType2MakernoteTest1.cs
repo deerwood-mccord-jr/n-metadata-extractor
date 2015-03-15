@@ -139,7 +139,7 @@ namespace Com.Drew.Metadata.Exif
 			Sharpen.Tests.AreEqual("0.67 EV", descriptor.GetAutoFlashCompensationDescription());
 			directory.SetByteArray(NikonType2MakernoteDirectory.TagAutoFlashCompensation, new sbyte[] { unchecked((int)(0x02)), unchecked((int)(0x01)), unchecked((int)(0x06)) });
 			Sharpen.Tests.AreEqual("0.33 EV", descriptor.GetAutoFlashCompensationDescription());
-			directory.SetByteArray(NikonType2MakernoteDirectory.TagAutoFlashCompensation, new sbyte[] { unchecked((sbyte)unchecked((int)(0xFE))), unchecked((int)(0x01)), unchecked((int)(0x06)) });
+			directory.SetByteArray(NikonType2MakernoteDirectory.TagAutoFlashCompensation, new sbyte[] { unchecked((sbyte)0xFE), unchecked((int)(0x01)), unchecked((int)(0x06)) });
 			Sharpen.Tests.AreEqual("-0.33 EV", descriptor.GetAutoFlashCompensationDescription());
 		}
 	}

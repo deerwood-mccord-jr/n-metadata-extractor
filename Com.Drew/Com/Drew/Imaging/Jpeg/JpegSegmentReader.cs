@@ -43,10 +43,10 @@ namespace Com.Drew.Imaging.Jpeg
 	public class JpegSegmentReader
 	{
 		/// <summary>Private, because this segment crashes my algorithm, and searching for it doesn't work (yet).</summary>
-		private const sbyte SegmentSos = unchecked((sbyte)unchecked((int)(0xDA)));
+		private const sbyte SegmentSos = unchecked((sbyte)0xDA);
 
 		/// <summary>Private, because one wouldn't search for it.</summary>
-		private const sbyte MarkerEoi = unchecked((sbyte)unchecked((int)(0xD9)));
+		private const sbyte MarkerEoi = unchecked((sbyte)0xD9);
 
 		/// <summary>
 		/// Processes the provided JPEG data, and extracts the specified JPEG segments into a

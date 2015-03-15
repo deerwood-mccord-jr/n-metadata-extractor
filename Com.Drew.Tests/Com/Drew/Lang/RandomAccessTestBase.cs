@@ -44,7 +44,7 @@ namespace Com.Drew.Lang
 		[NUnit.Framework.Test]
 		public virtual void TestGetInt8()
 		{
-			sbyte[] buffer = new sbyte[] { unchecked((int)(0x00)), unchecked((int)(0x01)), unchecked((sbyte)unchecked((int)(0x7F))), unchecked((sbyte)unchecked((int)(0xFF))) };
+			sbyte[] buffer = new sbyte[] { unchecked((int)(0x00)), unchecked((int)(0x01)), unchecked((sbyte)0x7F), unchecked((sbyte)0xFF) };
 			RandomAccessReader reader = CreateReader(buffer);
 			Sharpen.Tests.AreEqual(unchecked((sbyte)0), reader.GetInt8(0));
 			Sharpen.Tests.AreEqual(unchecked((sbyte)1), reader.GetInt8(1));
@@ -56,7 +56,7 @@ namespace Com.Drew.Lang
 		[NUnit.Framework.Test]
 		public virtual void TestGetUInt8()
 		{
-			sbyte[] buffer = new sbyte[] { unchecked((int)(0x00)), unchecked((int)(0x01)), unchecked((sbyte)unchecked((int)(0x7F))), unchecked((sbyte)unchecked((int)(0xFF))) };
+			sbyte[] buffer = new sbyte[] { unchecked((int)(0x00)), unchecked((int)(0x01)), unchecked((sbyte)0x7F), unchecked((sbyte)0xFF) };
 			RandomAccessReader reader = CreateReader(buffer);
 			Sharpen.Tests.AreEqual(0, reader.GetUInt8(0));
 			Sharpen.Tests.AreEqual(1, reader.GetUInt8(1));
@@ -83,23 +83,23 @@ namespace Com.Drew.Lang
 		[NUnit.Framework.Test]
 		public virtual void TestGetInt16()
 		{
-			Sharpen.Tests.AreEqual(-1, CreateReader(new sbyte[] { unchecked((sbyte)unchecked((int)(0xff))), unchecked((sbyte)unchecked((int)(0xff))) }).GetInt16(0));
-			sbyte[] buffer = new sbyte[] { unchecked((int)(0x00)), unchecked((int)(0x01)), unchecked((sbyte)unchecked((int)(0x7F))), unchecked((sbyte)unchecked((int)(0xFF))) };
+			Sharpen.Tests.AreEqual(-1, CreateReader(new sbyte[] { unchecked((sbyte)0xff), unchecked((sbyte)0xff) }).GetInt16(0));
+			sbyte[] buffer = new sbyte[] { unchecked((int)(0x00)), unchecked((int)(0x01)), unchecked((sbyte)0x7F), unchecked((sbyte)0xFF) };
 			RandomAccessReader reader = CreateReader(buffer);
-			Sharpen.Tests.AreEqual((short)unchecked((int)(0x0001)), reader.GetInt16(0));
-			Sharpen.Tests.AreEqual((short)unchecked((int)(0x017F)), reader.GetInt16(1));
-			Sharpen.Tests.AreEqual((short)unchecked((int)(0x7FFF)), reader.GetInt16(2));
+			Sharpen.Tests.AreEqual((short)0x0001, reader.GetInt16(0));
+			Sharpen.Tests.AreEqual((short)0x017F, reader.GetInt16(1));
+			Sharpen.Tests.AreEqual((short)0x7FFF, reader.GetInt16(2));
 			reader.SetMotorolaByteOrder(false);
-			Sharpen.Tests.AreEqual((short)unchecked((int)(0x0100)), reader.GetInt16(0));
-			Sharpen.Tests.AreEqual((short)unchecked((int)(0x7F01)), reader.GetInt16(1));
-			Sharpen.Tests.AreEqual((short)unchecked((int)(0xFF7F)), reader.GetInt16(2));
+			Sharpen.Tests.AreEqual((short)0x0100, reader.GetInt16(0));
+			Sharpen.Tests.AreEqual((short)0x7F01, reader.GetInt16(1));
+			Sharpen.Tests.AreEqual(unchecked((short)(0xFF7F)), reader.GetInt16(2));
 		}
 
 		/// <exception cref="System.Exception"/>
 		[NUnit.Framework.Test]
 		public virtual void TestGetUInt16()
 		{
-			sbyte[] buffer = new sbyte[] { unchecked((int)(0x00)), unchecked((int)(0x01)), unchecked((sbyte)unchecked((int)(0x7F))), unchecked((sbyte)unchecked((int)(0xFF))) };
+			sbyte[] buffer = new sbyte[] { unchecked((int)(0x00)), unchecked((int)(0x01)), unchecked((sbyte)0x7F), unchecked((sbyte)0xFF) };
 			RandomAccessReader reader = CreateReader(buffer);
 			Sharpen.Tests.AreEqual(unchecked((int)(0x0001)), reader.GetUInt16(0));
 			Sharpen.Tests.AreEqual(unchecked((int)(0x017F)), reader.GetUInt16(1));
@@ -129,8 +129,8 @@ namespace Com.Drew.Lang
 		[NUnit.Framework.Test]
 		public virtual void TestGetInt32()
 		{
-			Sharpen.Tests.AreEqual(-1, CreateReader(new sbyte[] { unchecked((sbyte)unchecked((int)(0xff))), unchecked((sbyte)unchecked((int)(0xff))), unchecked((sbyte)unchecked((int)(0xff))), unchecked((sbyte)unchecked((int)(0xff))) }).GetInt32(0));
-			sbyte[] buffer = new sbyte[] { unchecked((int)(0x00)), unchecked((int)(0x01)), unchecked((sbyte)unchecked((int)(0x7F))), unchecked((sbyte)unchecked((int)(0xFF))), unchecked((int)(0x02)), unchecked((int)(0x03)), unchecked((int)(0x04)) };
+			Sharpen.Tests.AreEqual(-1, CreateReader(new sbyte[] { unchecked((sbyte)0xff), unchecked((sbyte)0xff), unchecked((sbyte)0xff), unchecked((sbyte)0xff) }).GetInt32(0));
+			sbyte[] buffer = new sbyte[] { unchecked((int)(0x00)), unchecked((int)(0x01)), unchecked((sbyte)0x7F), unchecked((sbyte)0xFF), unchecked((int)(0x02)), unchecked((int)(0x03)), unchecked((int)(0x04)) };
 			RandomAccessReader reader = CreateReader(buffer);
 			Sharpen.Tests.AreEqual(unchecked((int)(0x00017FFF)), reader.GetInt32(0));
 			Sharpen.Tests.AreEqual(unchecked((int)(0x017FFF02)), reader.GetInt32(1));
@@ -147,9 +147,8 @@ namespace Com.Drew.Lang
 		[NUnit.Framework.Test]
 		public virtual void TestGetUInt32()
 		{
-			Sharpen.Tests.AreEqual(4294967295L, CreateReader(new sbyte[] { unchecked((sbyte)unchecked((int)(0xff))), unchecked((sbyte)unchecked((int)(0xff))), unchecked((sbyte)unchecked((int)(0xff))), unchecked((sbyte)unchecked((int)(0xff))) }).GetUInt32
-				(0));
-			sbyte[] buffer = new sbyte[] { unchecked((int)(0x00)), unchecked((int)(0x01)), unchecked((sbyte)unchecked((int)(0x7F))), unchecked((sbyte)unchecked((int)(0xFF))), unchecked((int)(0x02)), unchecked((int)(0x03)), unchecked((int)(0x04)) };
+			Sharpen.Tests.AreEqual(4294967295L, CreateReader(new sbyte[] { unchecked((sbyte)0xff), unchecked((sbyte)0xff), unchecked((sbyte)0xff), unchecked((sbyte)0xff) }).GetUInt32(0));
+			sbyte[] buffer = new sbyte[] { unchecked((int)(0x00)), unchecked((int)(0x01)), unchecked((sbyte)0x7F), unchecked((sbyte)0xFF), unchecked((int)(0x02)), unchecked((int)(0x03)), unchecked((int)(0x04)) };
 			RandomAccessReader reader = CreateReader(buffer);
 			Sharpen.Tests.AreEqual(unchecked((long)(0x00017FFFL)), reader.GetUInt32(0));
 			Sharpen.Tests.AreEqual(unchecked((long)(0x017FFF02L)), reader.GetUInt32(1));
@@ -181,8 +180,8 @@ namespace Com.Drew.Lang
 		[NUnit.Framework.Test]
 		public virtual void TestGetInt64()
 		{
-			sbyte[] buffer = new sbyte[] { unchecked((int)(0x00)), unchecked((int)(0x01)), unchecked((int)(0x02)), unchecked((int)(0x03)), unchecked((int)(0x04)), unchecked((int)(0x05)), unchecked((int)(0x06)), unchecked((int)(0x07)), unchecked((sbyte)unchecked(
-				(int)(0xFF))) };
+			sbyte[] buffer = new sbyte[] { unchecked((int)(0x00)), unchecked((int)(0x01)), unchecked((int)(0x02)), unchecked((int)(0x03)), unchecked((int)(0x04)), unchecked((int)(0x05)), unchecked((int)(0x06)), unchecked((int)(0x07)), unchecked((sbyte)0xFF
+				) };
 			RandomAccessReader reader = CreateReader(buffer);
 			Sharpen.Tests.AreEqual(unchecked((long)(0x0001020304050607L)), reader.GetInt64(0));
 			Sharpen.Tests.AreEqual(unchecked((long)(0x01020304050607FFL)), reader.GetInt64(1));
@@ -223,7 +222,7 @@ namespace Com.Drew.Lang
 		{
 			int nanBits = unchecked((int)(0x7fc00000));
 			Sharpen.Tests.IsTrue(float.IsNaN(Sharpen.Extensions.IntBitsToFloat(nanBits)));
-			sbyte[] buffer = new sbyte[] { unchecked((int)(0x7f)), unchecked((sbyte)unchecked((int)(0xc0))), unchecked((int)(0x00)), unchecked((int)(0x00)) };
+			sbyte[] buffer = new sbyte[] { unchecked((int)(0x7f)), unchecked((sbyte)0xc0), unchecked((int)(0x00)), unchecked((int)(0x00)) };
 			RandomAccessReader reader = CreateReader(buffer);
 			Sharpen.Tests.IsTrue(float.IsNaN(reader.GetFloat32(0)));
 		}
@@ -234,8 +233,7 @@ namespace Com.Drew.Lang
 		{
 			long nanBits = unchecked((long)(0xfff0000000000001L));
 			Sharpen.Tests.IsTrue(double.IsNaN(Sharpen.Extensions.LongBitsToDouble(nanBits)));
-			sbyte[] buffer = new sbyte[] { unchecked((sbyte)unchecked((int)(0xff))), unchecked((sbyte)unchecked((int)(0xf0))), unchecked((int)(0x00)), unchecked((int)(0x00)), unchecked((int)(0x00)), unchecked((int)(0x00)), unchecked((int)(0x00)), unchecked(
-				(int)(0x01)) };
+			sbyte[] buffer = new sbyte[] { unchecked((sbyte)0xff), unchecked((sbyte)0xf0), unchecked((int)(0x00)), unchecked((int)(0x00)), unchecked((int)(0x00)), unchecked((int)(0x00)), unchecked((int)(0x00)), unchecked((int)(0x01)) };
 			RandomAccessReader reader = CreateReader(buffer);
 			Sharpen.Tests.IsTrue(double.IsNaN(reader.GetDouble64(0)));
 		}
