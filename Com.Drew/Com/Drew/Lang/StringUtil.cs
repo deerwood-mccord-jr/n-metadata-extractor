@@ -34,7 +34,7 @@ namespace Com.Drew.Lang
 		{
 			int capacity = 0;
 			int delimLength = delimiter.Length;
-			Iterator<CharSequence> iter = strings.Iterator();
+			Iterator<_T0> iter = strings.Iterator();
 			if (iter.HasNext())
 			{
 				capacity += iter.Next().Length + delimLength;
