@@ -85,7 +85,7 @@ namespace Com.Drew.Metadata.Exif
 		public const int TagWinSubject = unchecked((int)(0x9C9F));
 
 		[NotNull]
-		protected internal static readonly Dictionary<int, string> _tagNameMap = new Dictionary<int, string>();
+		protected internal static readonly Dictionary<int?, string> _tagNameMap = new Dictionary<int?, string>();
 
 		static ExifIFD0Directory()
 		{
@@ -125,7 +125,7 @@ namespace Com.Drew.Metadata.Exif
 		}
 
 		[NotNull]
-		protected internal override Dictionary<int, string> GetTagNameMap()
+		protected internal override Dictionary<int?, string> GetTagNameMap()
 		{
 			return _tagNameMap;
 		}

@@ -239,14 +239,14 @@ namespace Com.Drew.Metadata.Exif
 				// First directory normally starts 14 bytes in -- try it here and catch another error in the worst case
 				firstIfdOffset = 14;
 			}
-			ICollection<int> processedIfdOffsets = new HashSet<int>();
+			ICollection<int?> processedIfdOffsets = new HashSet<int?>();
 			ProcessIFD(firstDirectory, processedIfdOffsets, firstIfdOffset, tiffHeaderOffset, metadata, reader);
 			// after the extraction process, if we have the correct tags, we may be able to store thumbnail information
 			ExifThumbnailDirectory thumbnailDirectory = metadata.GetDirectory<ExifThumbnailDirectory>();
 			if (thumbnailDirectory != null && thumbnailDirectory.ContainsTag(ExifThumbnailDirectory.TagThumbnailCompression))
 			{
-				int offset = thumbnailDirectory.GetInteger(ExifThumbnailDirectory.TagThumbnailOffset);
-				int length = thumbnailDirectory.GetInteger(ExifThumbnailDirectory.TagThumbnailLength);
+				int? offset = thumbnailDirectory.GetInteger(ExifThumbnailDirectory.TagThumbnailOffset);
+				int? length = thumbnailDirectory.GetInteger(ExifThumbnailDirectory.TagThumbnailLength);
 				if (offset != null && length != null)
 				{
 					try
@@ -289,8 +289,8 @@ namespace Com.Drew.Metadata.Exif
 		/// <param name="tiffHeaderOffset">the offset within <code>reader</code> at which the TIFF header starts</param>
 		/// <exception cref="System.IO.IOException"/>
 		[Obsolete]
-		private static void ProcessIFD([NotNull] Com.Drew.Metadata.Directory directory, [NotNull] ICollection<int> processedIfdOffsets, int ifdOffset, int tiffHeaderOffset, [NotNull] Com.Drew.Metadata.Metadata metadata, [NotNull] RandomAccessReader 
-			reader)
+		private static void ProcessIFD([NotNull] Com.Drew.Metadata.Directory directory, [NotNull] ICollection<int?> processedIfdOffsets, int ifdOffset, int tiffHeaderOffset, [NotNull] Com.Drew.Metadata.Metadata metadata, [NotNull] RandomAccessReader
+			 reader)
 		{
 			// check for directories we've already visited to avoid stack overflows when recursive/cyclic directory structures exist
 			if (processedIfdOffsets.Contains(Sharpen.Extensions.ValueOf(ifdOffset)))
@@ -456,7 +456,7 @@ namespace Com.Drew.Metadata.Exif
 
 		/// <exception cref="System.IO.IOException"/>
 		[Obsolete]
-		private static void ProcessMakernote(int makernoteOffset, [NotNull] ICollection<int> processedIfdOffsets, int tiffHeaderOffset, [NotNull] Com.Drew.Metadata.Metadata metadata, [NotNull] RandomAccessReader reader)
+		private static void ProcessMakernote(int makernoteOffset, [NotNull] ICollection<int?> processedIfdOffsets, int tiffHeaderOffset, [NotNull] Com.Drew.Metadata.Metadata metadata, [NotNull] RandomAccessReader reader)
 		{
 			// Determine the camera model and makernote format
 			Com.Drew.Metadata.Directory ifd0Directory = metadata.GetDirectory<ExifIFD0Directory>();

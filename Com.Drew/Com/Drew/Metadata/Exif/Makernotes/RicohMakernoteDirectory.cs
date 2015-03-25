@@ -37,7 +37,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		public const int TagRicohCameraInfoMakernoteSubIfdPointer = unchecked((int)(0x2001));
 
 		[NotNull]
-		protected internal static readonly Dictionary<int, string> _tagNameMap = new Dictionary<int, string>();
+		protected internal static readonly Dictionary<int?, string> _tagNameMap = new Dictionary<int?, string>();
 
 		static RicohMakernoteDirectory()
 		{
@@ -59,7 +59,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		}
 
 		[NotNull]
-		protected internal override Dictionary<int, string> GetTagNameMap()
+		protected internal override Dictionary<int?, string> GetTagNameMap()
 		{
 			return _tagNameMap;
 		}

@@ -349,7 +349,7 @@ namespace Com.Drew.Metadata.Icc
 		[CanBeNull]
 		private string GetRenderingIntentDescription()
 		{
-			int value = _directory.GetInteger(IccDirectory.TagRenderingIntent);
+			int? value = _directory.GetInteger(IccDirectory.TagRenderingIntent);
 			if (value == null)
 			{
 				return null;
@@ -505,7 +505,7 @@ namespace Com.Drew.Metadata.Icc
 		[CanBeNull]
 		private string GetProfileVersionDescription()
 		{
-			int value = _directory.GetInteger(IccDirectory.TagProfileVersion);
+			int? value = _directory.GetInteger(IccDirectory.TagProfileVersion);
 			if (value == null)
 			{
 				return null;

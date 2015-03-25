@@ -213,7 +213,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		[CanBeNull]
 		public virtual string GetActiveDLightingDescription()
 		{
-			int value = _directory.GetInteger(NikonType2MakernoteDirectory.TagActiveDLighting);
+			int? value = _directory.GetInteger(NikonType2MakernoteDirectory.TagActiveDLighting);
 			if (value == null)
 			{
 				return null;
@@ -260,7 +260,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		[CanBeNull]
 		public virtual string GetVignetteControlDescription()
 		{
-			int value = _directory.GetInteger(NikonType2MakernoteDirectory.TagVignetteControl);
+			int? value = _directory.GetInteger(NikonType2MakernoteDirectory.TagVignetteControl);
 			if (value == null)
 			{
 				return null;

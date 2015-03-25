@@ -540,7 +540,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		}
 
 		[NotNull]
-		protected internal static readonly Dictionary<int, string> _tagNameMap = new Dictionary<int, string>();
+		protected internal static readonly Dictionary<int?, string> _tagNameMap = new Dictionary<int?, string>();
 
 		static CanonMakernoteDirectory()
 		{
@@ -813,7 +813,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		}
 
 		[NotNull]
-		protected internal override Dictionary<int, string> GetTagNameMap()
+		protected internal override Dictionary<int?, string> GetTagNameMap()
 		{
 			return _tagNameMap;
 		}

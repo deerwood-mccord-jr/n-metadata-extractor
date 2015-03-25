@@ -158,7 +158,7 @@ namespace Com.Drew.Metadata.Icc
 		public const int TagAppleMultiLanguageProfileName = unchecked((int)(0x6473636d));
 
 		[NotNull]
-		protected internal static readonly Dictionary<int, string> _tagNameMap = new Dictionary<int, string>();
+		protected internal static readonly Dictionary<int?, string> _tagNameMap = new Dictionary<int?, string>();
 
 		static IccDirectory()
 		{
@@ -243,7 +243,7 @@ namespace Com.Drew.Metadata.Icc
 		}
 
 		[NotNull]
-		protected internal override Dictionary<int, string> GetTagNameMap()
+		protected internal override Dictionary<int?, string> GetTagNameMap()
 		{
 			return _tagNameMap;
 		}

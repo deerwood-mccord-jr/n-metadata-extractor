@@ -217,7 +217,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		[CanBeNull]
 		public virtual string GetFocusMode2Description()
 		{
-			int value = _directory.GetInteger(CasioType2MakernoteDirectory.TagFocusMode2);
+			int? value = _directory.GetInteger(CasioType2MakernoteDirectory.TagFocusMode2);
 			if (value == null)
 			{
 				return null;
@@ -268,7 +268,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		[CanBeNull]
 		public virtual string GetObjectDistanceDescription()
 		{
-			int value = _directory.GetInteger(CasioType2MakernoteDirectory.TagObjectDistance);
+			int? value = _directory.GetInteger(CasioType2MakernoteDirectory.TagObjectDistance);
 			if (value == null)
 			{
 				return null;
@@ -279,7 +279,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		[CanBeNull]
 		public virtual string GetWhiteBalance2Description()
 		{
-			int value = _directory.GetInteger(CasioType2MakernoteDirectory.TagWhiteBalance2);
+			int? value = _directory.GetInteger(CasioType2MakernoteDirectory.TagWhiteBalance2);
 			if (value == null)
 			{
 				return null;
@@ -360,7 +360,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		[CanBeNull]
 		public virtual string GetFocalLengthDescription()
 		{
-			double value = _directory.GetDoubleObject(CasioType2MakernoteDirectory.TagFocalLength);
+			double? value = _directory.GetDoubleObject(CasioType2MakernoteDirectory.TagFocalLength);
 			if (value == null)
 			{
 				return null;
@@ -377,7 +377,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		[CanBeNull]
 		public virtual string GetIsoSensitivityDescription()
 		{
-			int value = _directory.GetInteger(CasioType2MakernoteDirectory.TagIsoSensitivity);
+			int? value = _directory.GetInteger(CasioType2MakernoteDirectory.TagIsoSensitivity);
 			if (value == null)
 			{
 				return null;
@@ -420,7 +420,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		[CanBeNull]
 		public virtual string GetImageSizeDescription()
 		{
-			int value = _directory.GetInteger(CasioType2MakernoteDirectory.TagImageSize);
+			int? value = _directory.GetInteger(CasioType2MakernoteDirectory.TagImageSize);
 			if (value == null)
 			{
 				return null;
@@ -484,7 +484,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		[CanBeNull]
 		public virtual string GetThumbnailSizeDescription()
 		{
-			int value = _directory.GetInteger(CasioType2MakernoteDirectory.TagThumbnailSize);
+			int? value = _directory.GetInteger(CasioType2MakernoteDirectory.TagThumbnailSize);
 			if (value == null)
 			{
 				return null;

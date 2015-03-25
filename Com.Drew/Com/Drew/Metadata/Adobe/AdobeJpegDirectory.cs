@@ -48,7 +48,7 @@ namespace Com.Drew.Metadata.Adobe
 
 		public const int TagColorTransform = 3;
 
-		private static readonly Dictionary<int, string> _tagNameMap = new Dictionary<int, string>();
+		private static readonly Dictionary<int?, string> _tagNameMap = new Dictionary<int?, string>();
 
 		static AdobeJpegDirectory()
 		{
@@ -70,7 +70,7 @@ namespace Com.Drew.Metadata.Adobe
 		}
 
 		[NotNull]
-		protected internal override Dictionary<int, string> GetTagNameMap()
+		protected internal override Dictionary<int?, string> GetTagNameMap()
 		{
 			return _tagNameMap;
 		}

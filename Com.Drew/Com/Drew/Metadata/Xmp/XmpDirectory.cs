@@ -60,7 +60,7 @@ namespace Com.Drew.Metadata.Xmp
 		public const int TagRating = unchecked((int)(0x1001));
 
 		[NotNull]
-		protected internal static readonly Dictionary<int, string> _tagNameMap = new Dictionary<int, string>();
+		protected internal static readonly Dictionary<int?, string> _tagNameMap = new Dictionary<int?, string>();
 
 		[NotNull]
 		private readonly IDictionary<string, string> _propertyValueByPath = new Dictionary<string, string>();
@@ -151,7 +151,7 @@ namespace Com.Drew.Metadata.Xmp
 		}
 
 		[NotNull]
-		protected internal override Dictionary<int, string> GetTagNameMap()
+		protected internal override Dictionary<int?, string> GetTagNameMap()
 		{
 			return _tagNameMap;
 		}

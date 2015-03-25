@@ -141,7 +141,7 @@ namespace Com.Drew.Metadata
 		[CanBeNull]
 		protected internal virtual string GetIndexedDescription(int tagType, int baseIndex, [NotNull] params string[] descriptions)
 		{
-			int index = _directory.GetInteger(tagType);
+			int? index = _directory.GetInteger(tagType);
 			if (index == null)
 			{
 				return null;
@@ -194,7 +194,7 @@ namespace Com.Drew.Metadata
 		[CanBeNull]
 		protected internal virtual string GetFormattedInt(int tagType, [NotNull] string format)
 		{
-			int value = _directory.GetInteger(tagType);
+			int? value = _directory.GetInteger(tagType);
 			if (value == null)
 			{
 				return null;
@@ -205,7 +205,7 @@ namespace Com.Drew.Metadata
 		[CanBeNull]
 		protected internal virtual string GetFormattedFloat(int tagType, [NotNull] string format)
 		{
-			float value = _directory.GetFloatObject(tagType);
+			float? value = _directory.GetFloatObject(tagType);
 			if (value == null)
 			{
 				return null;
@@ -228,7 +228,7 @@ namespace Com.Drew.Metadata
 		protected internal virtual string GetEpochTimeDescription(int tagType)
 		{
 			// TODO have observed a byte[8] here which is likely some kind of date (ticks as long?)
-			long value = _directory.GetLongObject(tagType);
+			long? value = _directory.GetLongObject(tagType);
 			if (value == null)
 			{
 				return null;
@@ -241,7 +241,7 @@ namespace Com.Drew.Metadata
 		[CanBeNull]
 		protected internal virtual string GetBitFlagDescription(int tagType, [NotNull] params object[] labels)
 		{
-			int value = _directory.GetInteger(tagType);
+			int? value = _directory.GetInteger(tagType);
 			if (value == null)
 			{
 				return null;

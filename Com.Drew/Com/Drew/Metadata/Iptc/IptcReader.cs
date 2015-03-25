@@ -174,7 +174,7 @@ namespace Com.Drew.Metadata.Iptc
 							int year = System.Convert.ToInt32(Sharpen.Runtime.Substring(@string, 0, 4));
 							int month = System.Convert.ToInt32(Sharpen.Runtime.Substring(@string, 4, 6)) - 1;
 							int day = System.Convert.ToInt32(Sharpen.Runtime.Substring(@string, 6, 8));
-							DateTime date = new Sharpen.GregorianCalendar(year, month, day).GetTime();
+							DateTime? date = new Sharpen.GregorianCalendar(year, month, day).GetTime();
 							directory.SetDate(tagIdentifier, date);
 							return;
 						}

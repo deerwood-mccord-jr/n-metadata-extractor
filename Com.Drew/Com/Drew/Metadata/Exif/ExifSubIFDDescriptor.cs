@@ -390,7 +390,7 @@ namespace Com.Drew.Metadata.Exif
 		[CanBeNull]
 		public virtual string Get35mmFilmEquivFocalLengthDescription()
 		{
-			int value = _directory.GetInteger(ExifSubIFDDirectory.Tag35mmFilmEquivFocalLength);
+			int? value = _directory.GetInteger(ExifSubIFDDirectory.Tag35mmFilmEquivFocalLength);
 			return value == null ? null : value == 0 ? "Unknown" : SimpleDecimalFormatter.Format(value) + "mm";
 		}
 
@@ -475,7 +475,7 @@ namespace Com.Drew.Metadata.Exif
 		public virtual string GetIsoEquivalentDescription()
 		{
 			// Have seen an exception here from files produced by ACDSEE that stored an int[] here with two values
-			int isoEquiv = _directory.GetInteger(ExifSubIFDDirectory.TagIsoEquivalent);
+			int? isoEquiv = _directory.GetInteger(ExifSubIFDDirectory.TagIsoEquivalent);
 			// There used to be a check here that multiplied ISO values < 50 by 200.
 			// Issue 36 shows a smart-phone image from a Samsung Galaxy S2 with ISO-40.
 			return isoEquiv != null ? Sharpen.Extensions.ToString(isoEquiv) : null;
@@ -519,7 +519,7 @@ namespace Com.Drew.Metadata.Exif
 		[CanBeNull]
 		public virtual string GetMaxApertureValueDescription()
 		{
-			double aperture = _directory.GetDoubleObject(ExifSubIFDDirectory.TagMaxAperture);
+			double? aperture = _directory.GetDoubleObject(ExifSubIFDDirectory.TagMaxAperture);
 			if (aperture == null)
 			{
 				return null;
@@ -531,7 +531,7 @@ namespace Com.Drew.Metadata.Exif
 		[CanBeNull]
 		public virtual string GetApertureValueDescription()
 		{
-			double aperture = _directory.GetDoubleObject(ExifSubIFDDirectory.TagAperture);
+			double? aperture = _directory.GetDoubleObject(ExifSubIFDDirectory.TagAperture);
 			if (aperture == null)
 			{
 				return null;
@@ -607,7 +607,7 @@ namespace Com.Drew.Metadata.Exif
 		public virtual string GetPhotometricInterpretationDescription()
 		{
 			// Shows the color space of the image data components
-			int value = _directory.GetInteger(ExifSubIFDDirectory.TagPhotometricInterpretation);
+			int? value = _directory.GetInteger(ExifSubIFDDirectory.TagPhotometricInterpretation);
 			if (value == null)
 			{
 				return null;
@@ -733,21 +733,21 @@ namespace Com.Drew.Metadata.Exif
 		[CanBeNull]
 		public virtual string GetExifImageWidthDescription()
 		{
-			int value = _directory.GetInteger(ExifSubIFDDirectory.TagExifImageWidth);
+			int? value = _directory.GetInteger(ExifSubIFDDirectory.TagExifImageWidth);
 			return value == null ? null : value + " pixels";
 		}
 
 		[CanBeNull]
 		public virtual string GetExifImageHeightDescription()
 		{
-			int value = _directory.GetInteger(ExifSubIFDDirectory.TagExifImageHeight);
+			int? value = _directory.GetInteger(ExifSubIFDDirectory.TagExifImageHeight);
 			return value == null ? null : value + " pixels";
 		}
 
 		[CanBeNull]
 		public virtual string GetColorSpaceDescription()
 		{
-			int value = _directory.GetInteger(ExifSubIFDDirectory.TagColorSpace);
+			int? value = _directory.GetInteger(ExifSubIFDDirectory.TagColorSpace);
 			if (value == null)
 			{
 				return null;
@@ -788,7 +788,7 @@ namespace Com.Drew.Metadata.Exif
          * 5 = unknown
          * 6 = red eye reduction used
          */
-			int value = _directory.GetInteger(ExifSubIFDDirectory.TagFlash);
+			int? value = _directory.GetInteger(ExifSubIFDDirectory.TagFlash);
 			if (value == null)
 			{
 				return null;
@@ -831,7 +831,7 @@ namespace Com.Drew.Metadata.Exif
 			// '0' means unknown, '1' daylight, '2' fluorescent, '3' tungsten, '10' flash,
 			// '17' standard light A, '18' standard light B, '19' standard light C, '20' D55,
 			// '21' D65, '22' D75, '255' other.
-			int value = _directory.GetInteger(ExifSubIFDDirectory.TagWhiteBalance);
+			int? value = _directory.GetInteger(ExifSubIFDDirectory.TagWhiteBalance);
 			if (value == null)
 			{
 				return null;
@@ -910,7 +910,7 @@ namespace Com.Drew.Metadata.Exif
 		{
 			// '0' means unknown, '1' average, '2' center weighted average, '3' spot
 			// '4' multi-spot, '5' multi-segment, '6' partial, '255' other
-			int value = _directory.GetInteger(ExifSubIFDDirectory.TagMeteringMode);
+			int? value = _directory.GetInteger(ExifSubIFDDirectory.TagMeteringMode);
 			if (value == null)
 			{
 				return null;
@@ -1007,7 +1007,7 @@ namespace Com.Drew.Metadata.Exif
 			// thanks to Mark Edwards for spotting and patching a bug in the calculation of this
 			// description (spotted bug using a Canon EOS 300D)
 			// thanks also to Gli Blr for spotting this bug
-			float apexValue = _directory.GetFloatObject(ExifSubIFDDirectory.TagShutterSpeed);
+			float? apexValue = _directory.GetFloatObject(ExifSubIFDDirectory.TagShutterSpeed);
 			if (apexValue == null)
 			{
 				return null;

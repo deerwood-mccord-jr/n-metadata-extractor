@@ -334,8 +334,8 @@ namespace Com.Drew.Tools
 					}
 					if (thumbDir != null)
 					{
-						int width = thumbDir.GetInteger(ExifThumbnailDirectory.TagThumbnailImageWidth);
-						int height = thumbDir.GetInteger(ExifThumbnailDirectory.TagThumbnailImageHeight);
+						int? width = thumbDir.GetInteger(ExifThumbnailDirectory.TagThumbnailImageWidth);
+						int? height = thumbDir.GetInteger(ExifThumbnailDirectory.TagThumbnailImageHeight);
 						this.thumbnail = width != null && height != null ? Sharpen.Extensions.StringFormat("Yes (%s x %s)", width, height) : "Yes";
 					}
 					foreach (Com.Drew.Metadata.Directory directory in metadata.GetDirectories())

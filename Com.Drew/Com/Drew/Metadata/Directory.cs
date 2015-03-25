@@ -38,7 +38,7 @@ namespace Com.Drew.Metadata
 	{
 		/// <summary>Map of values hashed by type identifiers.</summary>
 		[NotNull]
-		protected internal readonly IDictionary<int, object> _tagMap = new Dictionary<int, object>();
+		protected internal readonly IDictionary<int?, object> _tagMap = new Dictionary<int?, object>();
 
 		/// <summary>A convenient list holding tag values in the order in which they were stored.</summary>
 		/// <remarks>
@@ -65,7 +65,7 @@ namespace Com.Drew.Metadata
 		/// <summary>Provides the map of tag names, hashed by tag type identifier.</summary>
 		/// <returns>the map of tag names</returns>
 		[NotNull]
-		protected internal abstract Dictionary<int, string> GetTagNameMap();
+		protected internal abstract Dictionary<int?, string> GetTagNameMap();
 
 		protected internal Directory()
 		{
@@ -222,7 +222,7 @@ namespace Com.Drew.Metadata
 		/// <summary>Sets a <code>java.util.Date</code> value for the specified tag.</summary>
 		/// <param name="tagType">the tag's value as an int</param>
 		/// <param name="value">the value for the specified tag as a java.util.Date</param>
-		public virtual void SetDate(int tagType, [NotNull] DateTime value)
+		public virtual void SetDate(int tagType, [NotNull] DateTime? value)
 		{
 			SetObject(tagType, value);
 		}
@@ -301,7 +301,7 @@ namespace Com.Drew.Metadata
 		/// <exception cref="Com.Drew.Metadata.MetadataException"/>
 		public virtual int GetInt(int tagType)
 		{
-			int integer = GetInteger(tagType);
+			int? integer = GetInteger(tagType);
 			if (integer != null)
 			{
 				return integer;
@@ -330,7 +330,7 @@ namespace Com.Drew.Metadata
 		/// If the value is not found or cannot be converted to int, <code>null</code> is returned.
 		/// </remarks>
 		[CanBeNull]
-		public virtual int GetInteger(int tagType)
+		public virtual int? GetInteger(int tagType)
 		{
 			object o = GetObject(tagType);
 			if (o == null)
@@ -521,9 +521,9 @@ namespace Com.Drew.Metadata
 				}
 				return ints;
 			}
-			if (o is int)
+			if (o is int?)
 			{
-				return new int[] { (int)o };
+				return new int[] { (int?)o };
 			}
 			return null;
 		}
@@ -602,9 +602,9 @@ namespace Com.Drew.Metadata
 					}
 				}
 			}
-			if (o is int)
+			if (o is int?)
 			{
-				return new sbyte[] { ((int)o).ByteValue() };
+				return new sbyte[] { ((int?)o).ByteValue() };
 			}
 			return null;
 		}
@@ -613,7 +613,7 @@ namespace Com.Drew.Metadata
 		/// <exception cref="Com.Drew.Metadata.MetadataException"/>
 		public virtual double GetDouble(int tagType)
 		{
-			double value = GetDoubleObject(tagType);
+			double? value = GetDoubleObject(tagType);
 			if (value != null)
 			{
 				return value;
@@ -629,7 +629,7 @@ namespace Com.Drew.Metadata
 		/// <summary>Returns the specified tag's value as a Double.</summary>
 		/// <remarks>Returns the specified tag's value as a Double.  If the tag is not set or cannot be converted, <code>null</code> is returned.</remarks>
 		[CanBeNull]
-		public virtual double GetDoubleObject(int tagType)
+		public virtual double? GetDoubleObject(int tagType)
 		{
 			object o = GetObject(tagType);
 			if (o == null)
@@ -658,7 +658,7 @@ namespace Com.Drew.Metadata
 		/// <exception cref="Com.Drew.Metadata.MetadataException"/>
 		public virtual float GetFloat(int tagType)
 		{
-			float value = GetFloatObject(tagType);
+			float? value = GetFloatObject(tagType);
 			if (value != null)
 			{
 				return value;
@@ -674,7 +674,7 @@ namespace Com.Drew.Metadata
 		/// <summary>Returns the specified tag's value as a float.</summary>
 		/// <remarks>Returns the specified tag's value as a float.  If the tag is not set or cannot be converted, <code>null</code> is returned.</remarks>
 		[CanBeNull]
-		public virtual float GetFloatObject(int tagType)
+		public virtual float? GetFloatObject(int tagType)
 		{
 			object o = GetObject(tagType);
 			if (o == null)
@@ -703,7 +703,7 @@ namespace Com.Drew.Metadata
 		/// <exception cref="Com.Drew.Metadata.MetadataException"/>
 		public virtual long GetLong(int tagType)
 		{
-			long value = GetLongObject(tagType);
+			long? value = GetLongObject(tagType);
 			if (value != null)
 			{
 				return value;
@@ -719,7 +719,7 @@ namespace Com.Drew.Metadata
 		/// <summary>Returns the specified tag's value as a long.</summary>
 		/// <remarks>Returns the specified tag's value as a long.  If the tag is not set or cannot be converted, <code>null</code> is returned.</remarks>
 		[CanBeNull]
-		public virtual long GetLongObject(int tagType)
+		public virtual long? GetLongObject(int tagType)
 		{
 			object o = GetObject(tagType);
 			if (o == null)
@@ -748,7 +748,7 @@ namespace Com.Drew.Metadata
 		/// <exception cref="Com.Drew.Metadata.MetadataException"/>
 		public virtual bool GetBoolean(int tagType)
 		{
-			bool value = GetBooleanObject(tagType);
+			bool? value = GetBooleanObject(tagType);
 			if (value != null)
 			{
 				return value;
@@ -764,16 +764,16 @@ namespace Com.Drew.Metadata
 		/// <summary>Returns the specified tag's value as a boolean.</summary>
 		/// <remarks>Returns the specified tag's value as a boolean.  If the tag is not set or cannot be converted, <code>null</code> is returned.</remarks>
 		[CanBeNull]
-		public virtual bool GetBooleanObject(int tagType)
+		public virtual bool? GetBooleanObject(int tagType)
 		{
 			object o = GetObject(tagType);
 			if (o == null)
 			{
 				return null;
 			}
-			if (o is bool)
+			if (o is bool?)
 			{
-				return (bool)o;
+				return (bool?)o;
 			}
 			if (o is string)
 			{
@@ -807,7 +807,7 @@ namespace Com.Drew.Metadata
 		/// is known, call the overload that accepts one as an argument.
 		/// </remarks>
 		[CanBeNull]
-		public virtual DateTime GetDate(int tagType)
+		public virtual DateTime? GetDate(int tagType)
 		{
 			return GetDate(tagType, null);
 		}
@@ -827,16 +827,16 @@ namespace Com.Drew.Metadata
 		/// is only considered if the underlying value is a string and parsing occurs, otherwise it has no effect.
 		/// </remarks>
 		[CanBeNull]
-		public virtual DateTime GetDate(int tagType, [CanBeNull] TimeZoneInfo timeZone)
+		public virtual DateTime? GetDate(int tagType, [CanBeNull] TimeZoneInfo timeZone)
 		{
 			object o = GetObject(tagType);
 			if (o == null)
 			{
 				return null;
 			}
-			if (o is DateTime)
+			if (o is DateTime?)
 			{
-				return (DateTime)o;
+				return (DateTime?)o;
 			}
 			if (o is string)
 			{
@@ -878,13 +878,13 @@ namespace Com.Drew.Metadata
 			{
 				return (Rational)o;
 			}
-			if (o is int)
+			if (o is int?)
 			{
-				return new Rational((int)o, 1);
+				return new Rational((int?)o, 1);
 			}
-			if (o is long)
+			if (o is long?)
 			{
-				return new Rational((long)o, 1);
+				return new Rational((long?)o, 1);
 			}
 			// NOTE not doing conversions for real number types
 			return null;
@@ -1041,7 +1041,7 @@ namespace Com.Drew.Metadata
 		[NotNull]
 		public virtual string GetTagName(int tagType)
 		{
-			Dictionary<int, string> nameMap = GetTagNameMap();
+			Dictionary<int?, string> nameMap = GetTagNameMap();
 			if (!nameMap.ContainsKey(tagType))
 			{
 				string hex = Sharpen.Extensions.ToHexString(tagType);

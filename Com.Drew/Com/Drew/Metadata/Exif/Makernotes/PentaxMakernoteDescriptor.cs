@@ -116,7 +116,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		[CanBeNull]
 		public virtual string GetIsoSpeedDescription()
 		{
-			int value = _directory.GetInteger(PentaxMakernoteDirectory.TagIsoSpeed);
+			int? value = _directory.GetInteger(PentaxMakernoteDirectory.TagIsoSpeed);
 			if (value == null)
 			{
 				return null;
@@ -172,7 +172,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		[CanBeNull]
 		public virtual string GetDigitalZoomDescription()
 		{
-			float value = _directory.GetFloatObject(PentaxMakernoteDirectory.TagDigitalZoom);
+			float? value = _directory.GetFloatObject(PentaxMakernoteDirectory.TagDigitalZoom);
 			if (value == null)
 			{
 				return null;
