@@ -62,7 +62,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		public const int TagUnknown3 = unchecked((int)(0x0F00));
 
 		[NotNull]
-		protected internal static readonly Dictionary<int, string> _tagNameMap = new Dictionary<int, string>();
+		protected internal static readonly Dictionary<int?, string> _tagNameMap = new Dictionary<int?, string>();
 
 		static NikonType1MakernoteDirectory()
 		{
@@ -91,7 +91,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		}
 
 		[NotNull]
-		protected internal override Dictionary<int, string> GetTagNameMap()
+		protected internal override Dictionary<int?, string> GetTagNameMap()
 		{
 			return _tagNameMap;
 		}

@@ -183,7 +183,7 @@ namespace Com.Drew.Metadata.Iptc
 		public const int TagObjectPreviewData = unchecked((int)(0x02CA));
 
 		[NotNull]
-		protected internal static readonly Dictionary<int, string> _tagNameMap = new Dictionary<int, string>();
+		protected internal static readonly Dictionary<int?, string> _tagNameMap = new Dictionary<int?, string>();
 
 		static IptcDirectory()
 		{
@@ -357,7 +357,7 @@ namespace Com.Drew.Metadata.Iptc
 		}
 
 		[NotNull]
-		protected internal override Dictionary<int, string> GetTagNameMap()
+		protected internal override Dictionary<int?, string> GetTagNameMap()
 		{
 			return _tagNameMap;
 		}

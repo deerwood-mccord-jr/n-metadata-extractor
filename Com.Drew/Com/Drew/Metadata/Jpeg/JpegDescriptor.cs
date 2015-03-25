@@ -93,7 +93,7 @@ namespace Com.Drew.Metadata.Jpeg
 		[CanBeNull]
 		public virtual string GetImageCompressionTypeDescription()
 		{
-			int value = _directory.GetInteger(JpegDirectory.TagCompressionType);
+			int? value = _directory.GetInteger(JpegDirectory.TagCompressionType);
 			if (value == null)
 			{
 				return null;

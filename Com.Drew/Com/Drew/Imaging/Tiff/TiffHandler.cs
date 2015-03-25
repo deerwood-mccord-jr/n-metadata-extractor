@@ -48,7 +48,7 @@ namespace Com.Drew.Imaging.Tiff
 		void Completed([NotNull] RandomAccessReader reader, int tiffHeaderOffset);
 
 		/// <exception cref="System.IO.IOException"/>
-		bool CustomProcessTag(int makernoteOffset, [NotNull] ICollection<int> processedIfdOffsets, int tiffHeaderOffset, [NotNull] RandomAccessReader reader, int tagId, int byteCount);
+		bool CustomProcessTag(int makernoteOffset, [NotNull] ICollection<int?> processedIfdOffsets, int tiffHeaderOffset, [NotNull] RandomAccessReader reader, int tagId, int byteCount);
 
 		void Warn([NotNull] string message);
 

@@ -115,7 +115,7 @@ namespace Com.Drew.Metadata.Photoshop
 		public const int TagPrintFlagsInfo = unchecked((int)(0x2710));
 
 		[NotNull]
-		protected internal static readonly Dictionary<int, string> _tagNameMap = new Dictionary<int, string>();
+		protected internal static readonly Dictionary<int?, string> _tagNameMap = new Dictionary<int?, string>();
 
 		static PhotoshopDirectory()
 		{
@@ -176,7 +176,7 @@ namespace Com.Drew.Metadata.Photoshop
 		}
 
 		[NotNull]
-		protected internal override Dictionary<int, string> GetTagNameMap()
+		protected internal override Dictionary<int?, string> GetTagNameMap()
 		{
 			return _tagNameMap;
 		}

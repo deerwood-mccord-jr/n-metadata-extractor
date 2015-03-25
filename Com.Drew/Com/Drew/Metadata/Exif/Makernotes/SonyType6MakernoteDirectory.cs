@@ -35,7 +35,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		public const int TagMakernoteThumbVersion = unchecked((int)(0x2000));
 
 		[NotNull]
-		protected internal static readonly Dictionary<int, string> _tagNameMap = new Dictionary<int, string>();
+		protected internal static readonly Dictionary<int?, string> _tagNameMap = new Dictionary<int?, string>();
 
 		static SonyType6MakernoteDirectory()
 		{
@@ -58,7 +58,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		}
 
 		[NotNull]
-		protected internal override Dictionary<int, string> GetTagNameMap()
+		protected internal override Dictionary<int?, string> GetTagNameMap()
 		{
 			return _tagNameMap;
 		}

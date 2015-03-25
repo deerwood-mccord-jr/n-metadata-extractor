@@ -64,7 +64,7 @@ namespace Com.Drew.Metadata.Iptc
 		[CanBeNull]
 		public virtual string GetFileFormatDescription()
 		{
-			int value = _directory.GetInteger(IptcDirectory.TagFileFormat);
+			int? value = _directory.GetInteger(IptcDirectory.TagFileFormat);
 			if (value == null)
 			{
 				return null;

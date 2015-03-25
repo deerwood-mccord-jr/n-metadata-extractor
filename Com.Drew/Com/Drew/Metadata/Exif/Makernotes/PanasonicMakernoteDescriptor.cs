@@ -510,7 +510,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		[CanBeNull]
 		public virtual string GetUptimeDescription()
 		{
-			int value = _directory.GetInteger(PanasonicMakernoteDirectory.TagUptime);
+			int? value = _directory.GetInteger(PanasonicMakernoteDirectory.TagUptime);
 			if (value == null)
 			{
 				return null;
@@ -527,7 +527,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		[CanBeNull]
 		public virtual string GetContrastModeDescription()
 		{
-			int value = _directory.GetInteger(PanasonicMakernoteDirectory.TagContrastMode);
+			int? value = _directory.GetInteger(PanasonicMakernoteDirectory.TagContrastMode);
 			if (value == null)
 			{
 				return null;
@@ -596,7 +596,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		[CanBeNull]
 		public virtual string GetRotationDescription()
 		{
-			int value = _directory.GetInteger(PanasonicMakernoteDirectory.TagRotation);
+			int? value = _directory.GetInteger(PanasonicMakernoteDirectory.TagRotation);
 			if (value == null)
 			{
 				return null;

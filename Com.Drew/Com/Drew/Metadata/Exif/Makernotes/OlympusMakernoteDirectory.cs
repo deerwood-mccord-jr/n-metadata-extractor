@@ -310,7 +310,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		}
 
 		[NotNull]
-		protected internal static readonly Dictionary<int, string> _tagNameMap = new Dictionary<int, string>();
+		protected internal static readonly Dictionary<int?, string> _tagNameMap = new Dictionary<int?, string>();
 
 		static OlympusMakernoteDirectory()
 		{
@@ -460,12 +460,12 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 
 		public virtual bool IsIntervalMode()
 		{
-			long value = GetLongObject(OlympusMakernoteDirectory.CameraSettings.TagShootingMode);
+			long? value = GetLongObject(OlympusMakernoteDirectory.CameraSettings.TagShootingMode);
 			return value != null && value == 5;
 		}
 
 		[NotNull]
-		protected internal override Dictionary<int, string> GetTagNameMap()
+		protected internal override Dictionary<int?, string> GetTagNameMap()
 		{
 			return _tagNameMap;
 		}

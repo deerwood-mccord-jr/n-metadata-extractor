@@ -153,7 +153,7 @@ namespace Com.Drew.Metadata.Icc
 			//        final Date value = new Date(Date.UTC(y - 1900, m - 1, d, h, M, s));
 			Sharpen.Calendar calendar = Sharpen.Calendar.GetInstance(Sharpen.Extensions.GetTimeZone("UTC"));
 			calendar.Set(y, m, d, h, M, s);
-			DateTime value = calendar.GetTime();
+			DateTime? value = calendar.GetTime();
 			directory.SetDate(tagType, value);
 		}
 

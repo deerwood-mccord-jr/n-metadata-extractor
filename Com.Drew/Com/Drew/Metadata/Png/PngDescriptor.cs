@@ -72,7 +72,7 @@ namespace Com.Drew.Metadata.Png
 		[CanBeNull]
 		public virtual string GetColorTypeDescription()
 		{
-			int value = _directory.GetInteger(PngDirectory.TagColorType);
+			int? value = _directory.GetInteger(PngDirectory.TagColorType);
 			if (value == null)
 			{
 				return null;
@@ -136,7 +136,7 @@ namespace Com.Drew.Metadata.Png
 		public virtual string GetBackgroundColorDescription()
 		{
 			sbyte[] bytes = _directory.GetByteArray(PngDirectory.TagBackgroundColor);
-			int colorType = _directory.GetInteger(PngDirectory.TagColorType);
+			int? colorType = _directory.GetInteger(PngDirectory.TagColorType);
 			if (bytes == null || colorType == null)
 			{
 				return null;

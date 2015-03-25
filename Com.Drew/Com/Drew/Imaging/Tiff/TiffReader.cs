@@ -84,7 +84,7 @@ namespace Com.Drew.Imaging.Tiff
 				// First directory normally starts immediately after the offset bytes, so try that
 				firstIfdOffset = tiffHeaderOffset + 2 + 2 + 4;
 			}
-			ICollection<int> processedIfdOffsets = new HashSet<int>();
+			ICollection<int?> processedIfdOffsets = new HashSet<int?>();
 			ProcessIfd(handler, reader, processedIfdOffsets, firstIfdOffset, tiffHeaderOffset);
 			handler.Completed(reader, tiffHeaderOffset);
 		}
@@ -119,7 +119,7 @@ namespace Com.Drew.Imaging.Tiff
 		/// <param name="ifdOffset">the offset within <code>reader</code> at which the IFD data starts</param>
 		/// <param name="tiffHeaderOffset">the offset within <code>reader</code> at which the TIFF header starts</param>
 		/// <exception cref="System.IO.IOException">an error occurred while accessing the required data</exception>
-		public static void ProcessIfd([NotNull] TiffHandler handler, [NotNull] RandomAccessReader reader, [NotNull] ICollection<int> processedIfdOffsets, int ifdOffset, int tiffHeaderOffset)
+		public static void ProcessIfd([NotNull] TiffHandler handler, [NotNull] RandomAccessReader reader, [NotNull] ICollection<int?> processedIfdOffsets, int ifdOffset, int tiffHeaderOffset)
 		{
 			try
 			{

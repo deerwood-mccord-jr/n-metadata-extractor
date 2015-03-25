@@ -102,7 +102,7 @@ namespace Com.Drew.Metadata.Exif
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public override bool CustomProcessTag(int makernoteOffset, [NotNull] ICollection<int> processedIfdOffsets, int tiffHeaderOffset, [NotNull] RandomAccessReader reader, int tagId, int byteCount)
+		public override bool CustomProcessTag(int makernoteOffset, [NotNull] ICollection<int?> processedIfdOffsets, int tiffHeaderOffset, [NotNull] RandomAccessReader reader, int tagId, int byteCount)
 		{
 			// In Exif, we only want custom processing for the Makernote tag
 			if (tagId == ExifSubIFDDirectory.TagMakernote && _currentDirectory is ExifSubIFDDirectory)
@@ -120,8 +120,8 @@ namespace Com.Drew.Metadata.Exif
 				ExifThumbnailDirectory thumbnailDirectory = _metadata.GetDirectory<ExifThumbnailDirectory>();
 				if (thumbnailDirectory != null && thumbnailDirectory.ContainsTag(ExifThumbnailDirectory.TagThumbnailCompression))
 				{
-					int offset = thumbnailDirectory.GetInteger(ExifThumbnailDirectory.TagThumbnailOffset);
-					int length = thumbnailDirectory.GetInteger(ExifThumbnailDirectory.TagThumbnailLength);
+					int? offset = thumbnailDirectory.GetInteger(ExifThumbnailDirectory.TagThumbnailOffset);
+					int? length = thumbnailDirectory.GetInteger(ExifThumbnailDirectory.TagThumbnailLength);
 					if (offset != null && length != null)
 					{
 						try
@@ -139,7 +139,7 @@ namespace Com.Drew.Metadata.Exif
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		private bool ProcessMakernote(int makernoteOffset, [NotNull] ICollection<int> processedIfdOffsets, int tiffHeaderOffset, [NotNull] RandomAccessReader reader, int byteCount)
+		private bool ProcessMakernote(int makernoteOffset, [NotNull] ICollection<int?> processedIfdOffsets, int tiffHeaderOffset, [NotNull] RandomAccessReader reader, int byteCount)
 		{
 			// Determine the camera model and makernote format.
 			Com.Drew.Metadata.Directory ifd0Directory = _metadata.GetDirectory<ExifIFD0Directory>();

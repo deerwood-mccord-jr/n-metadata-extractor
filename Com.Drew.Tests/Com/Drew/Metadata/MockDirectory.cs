@@ -28,11 +28,11 @@ namespace Com.Drew.Metadata
 	/// <author>Drew Noakes http://drewnoakes.com</author>
 	public class MockDirectory : Com.Drew.Metadata.Directory
 	{
-		private readonly Dictionary<int, string> _tagNameMap;
+		private readonly Dictionary<int?, string> _tagNameMap;
 
 		public MockDirectory()
 		{
-			this._tagNameMap = new Dictionary<int, string>();
+			this._tagNameMap = new Dictionary<int?, string>();
 		}
 
 		[NotNull]
@@ -42,7 +42,7 @@ namespace Com.Drew.Metadata
 		}
 
 		[NotNull]
-		protected override Dictionary<int, string> GetTagNameMap()
+		protected override Dictionary<int?, string> GetTagNameMap()
 		{
 			return _tagNameMap;
 		}

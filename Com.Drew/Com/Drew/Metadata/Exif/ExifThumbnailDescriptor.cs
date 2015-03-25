@@ -240,7 +240,7 @@ namespace Com.Drew.Metadata.Exif
 		public virtual string GetPhotometricInterpretationDescription()
 		{
 			// Shows the color space of the image data components
-			int value = _directory.GetInteger(ExifThumbnailDirectory.TagPhotometricInterpretation);
+			int? value = _directory.GetInteger(ExifThumbnailDirectory.TagPhotometricInterpretation);
 			if (value == null)
 			{
 				return null;
@@ -327,7 +327,7 @@ namespace Com.Drew.Metadata.Exif
 		[CanBeNull]
 		public virtual string GetCompressionDescription()
 		{
-			int value = _directory.GetInteger(ExifThumbnailDirectory.TagThumbnailCompression);
+			int? value = _directory.GetInteger(ExifThumbnailDirectory.TagThumbnailCompression);
 			if (value == null)
 			{
 				return null;

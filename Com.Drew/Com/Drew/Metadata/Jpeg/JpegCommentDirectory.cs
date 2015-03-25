@@ -36,7 +36,7 @@ namespace Com.Drew.Metadata.Jpeg
 		public const int TagComment = 0;
 
 		[NotNull]
-		protected internal static readonly Dictionary<int, string> _tagNameMap = new Dictionary<int, string>();
+		protected internal static readonly Dictionary<int?, string> _tagNameMap = new Dictionary<int?, string>();
 
 		static JpegCommentDirectory()
 		{
@@ -55,7 +55,7 @@ namespace Com.Drew.Metadata.Jpeg
 		}
 
 		[NotNull]
-		protected internal override Dictionary<int, string> GetTagNameMap()
+		protected internal override Dictionary<int?, string> GetTagNameMap()
 		{
 			return _tagNameMap;
 		}

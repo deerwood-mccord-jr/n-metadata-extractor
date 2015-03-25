@@ -50,7 +50,7 @@ namespace Com.Drew.Metadata.Photoshop
 		public const int TagColorMode = 5;
 
 		[NotNull]
-		protected internal static readonly Dictionary<int, string> _tagNameMap = new Dictionary<int, string>();
+		protected internal static readonly Dictionary<int?, string> _tagNameMap = new Dictionary<int?, string>();
 
 		static PsdHeaderDirectory()
 		{
@@ -73,7 +73,7 @@ namespace Com.Drew.Metadata.Photoshop
 		}
 
 		[NotNull]
-		protected internal override Dictionary<int, string> GetTagNameMap()
+		protected internal override Dictionary<int?, string> GetTagNameMap()
 		{
 			return _tagNameMap;
 		}

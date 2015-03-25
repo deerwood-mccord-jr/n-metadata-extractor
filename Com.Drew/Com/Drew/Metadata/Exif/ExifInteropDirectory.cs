@@ -39,7 +39,7 @@ namespace Com.Drew.Metadata.Exif
 		public const int TagRelatedImageLength = unchecked((int)(0x1002));
 
 		[NotNull]
-		protected internal static readonly Dictionary<int, string> _tagNameMap = new Dictionary<int, string>();
+		protected internal static readonly Dictionary<int?, string> _tagNameMap = new Dictionary<int?, string>();
 
 		static ExifInteropDirectory()
 		{
@@ -62,7 +62,7 @@ namespace Com.Drew.Metadata.Exif
 		}
 
 		[NotNull]
-		protected internal override Dictionary<int, string> GetTagNameMap()
+		protected internal override Dictionary<int?, string> GetTagNameMap()
 		{
 			return _tagNameMap;
 		}
