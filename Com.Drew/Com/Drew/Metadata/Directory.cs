@@ -523,7 +523,7 @@ namespace Com.Drew.Metadata
 			}
 			if (o is int?)
 			{
-				return new int[] { (int?)o };
+				return new int[] { (int)o };
 			}
 			return null;
 		}
@@ -880,11 +880,11 @@ namespace Com.Drew.Metadata
 			}
 			if (o is int?)
 			{
-				return new Rational((int?)o, 1);
+				return new Rational((long)o, 1);
 			}
 			if (o is long?)
 			{
-				return new Rational((long)(long?)o, 1);
+				return new Rational((long)o, 1);
 			}
 			// NOTE not doing conversions for real number types
 			return null;

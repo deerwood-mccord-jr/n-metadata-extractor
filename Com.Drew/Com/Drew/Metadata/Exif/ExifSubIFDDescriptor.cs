@@ -1014,14 +1014,14 @@ namespace Com.Drew.Metadata.Exif
 			}
 			if (apexValue <= 1)
 			{
-				float apexPower = (float)(1 / (Math.Exp(apexValue * Math.Log(2))));
+				float apexPower = (float)(1 / (Math.Exp((double)apexValue * Math.Log(2))));
 				long apexPower10 = (long)System.Math.Round((double)apexPower * 10.0);
 				float fApexPower = (float)apexPower10 / 10.0f;
 				return fApexPower + " sec";
 			}
 			else
 			{
-				int apexPower = (int)((Math.Exp(apexValue * Math.Log(2))));
+				int apexPower = (int)((Math.Exp((double)apexValue * Math.Log(2))));
 				return "1/" + apexPower + " sec";
 			}
 		}
