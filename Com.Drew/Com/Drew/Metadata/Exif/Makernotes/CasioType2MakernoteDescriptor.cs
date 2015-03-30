@@ -365,7 +365,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 			{
 				return null;
 			}
-			return (value / 10d).ToString() + " mm";
+			return ((double)value / 10d).ToString() + " mm";
 		}
 
 		[CanBeNull]

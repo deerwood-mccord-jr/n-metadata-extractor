@@ -524,7 +524,7 @@ namespace Com.Drew.Metadata.Exif
 			{
 				return null;
 			}
-			double fStop = PhotographicConversions.ApertureToFStop(aperture);
+			double fStop = PhotographicConversions.ApertureToFStop((double)aperture);
 			return "F" + SimpleDecimalFormatter.Format(fStop);
 		}
 
@@ -536,7 +536,7 @@ namespace Com.Drew.Metadata.Exif
 			{
 				return null;
 			}
-			double fStop = PhotographicConversions.ApertureToFStop(aperture);
+			double fStop = PhotographicConversions.ApertureToFStop((double)aperture);
 			return "F" + SimpleDecimalFormatter.Format(fStop);
 		}
 

@@ -616,7 +616,7 @@ namespace Com.Drew.Metadata
 			double? value = GetDoubleObject(tagType);
 			if (value != null)
 			{
-				return value;
+				return (double)value;
 			}
 			object o = GetObject(tagType);
 			if (o == null)

@@ -233,7 +233,7 @@ namespace Com.Drew.Metadata.Xmp
 			{
 				return null;
 			}
-			double fStop = PhotographicConversions.ApertureToFStop(value);
+			double fStop = PhotographicConversions.ApertureToFStop((double)value);
 			return "F" + SimpleDecimalFormatter.Format(fStop);
 		}
 	}

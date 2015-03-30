@@ -267,7 +267,7 @@ namespace Com.Drew.Metadata.Xmp
 				{
 					try
 					{
-						directory.SetDouble(tagType, double.Parse(property));
+						directory.SetDouble(tagType, (double)double.Parse(property));
 					}
 					catch (FormatException)
 					{
