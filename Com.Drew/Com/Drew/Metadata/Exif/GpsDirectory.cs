@@ -206,7 +206,7 @@ namespace Com.Drew.Metadata.Exif
 			{
 				return null;
 			}
-			return new GeoLocation(lat, lon);
+			return new GeoLocation((double)lat, (double)lon);
 		}
 	}
 }

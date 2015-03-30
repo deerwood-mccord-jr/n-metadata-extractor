@@ -233,7 +233,7 @@ namespace Com.Drew.Metadata
 			{
 				return null;
 			}
-			return Sharpen.Extensions.CreateDate(value).ToString();
+			return Sharpen.Extensions.CreateDate((long)value).ToString();
 		}
 
 		/// <summary>LSB first.</summary>

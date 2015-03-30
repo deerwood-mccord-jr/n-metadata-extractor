@@ -273,7 +273,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 			{
 				return null;
 			}
-			return Sharpen.Extensions.ToString(value) + " mm";
+			return Sharpen.Extensions.ToString((int)value) + " mm";
 		}
 
 		[CanBeNull]
@@ -489,7 +489,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 			{
 				return null;
 			}
-			return Sharpen.Extensions.ToString(value) + " bytes";
+			return Sharpen.Extensions.ToString((int)value) + " bytes";
 		}
 
 		[CanBeNull]

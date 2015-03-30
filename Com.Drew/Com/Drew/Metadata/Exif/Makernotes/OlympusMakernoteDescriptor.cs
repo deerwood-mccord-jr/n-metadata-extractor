@@ -493,7 +493,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 				return "N/A";
 			}
 			long? value = _directory.GetLongObject(OlympusMakernoteDirectory.CameraSettings.TagIntervalNumber);
-			return value == null ? null : System.Convert.ToString(value);
+			return value == null ? null : System.Convert.ToString((long)value);
 		}
 
 		[CanBeNull]
@@ -573,7 +573,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		public virtual string GetLastFileNumberDescription()
 		{
 			long? value = _directory.GetLongObject(OlympusMakernoteDirectory.CameraSettings.TagLastFileNumber);
-			return value == null ? null : value == 0 ? "File Number Memory Off" : System.Convert.ToString(value);
+			return value == null ? null : value == 0 ? "File Number Memory Off" : System.Convert.ToString((long)value);
 		}
 
 		[CanBeNull]

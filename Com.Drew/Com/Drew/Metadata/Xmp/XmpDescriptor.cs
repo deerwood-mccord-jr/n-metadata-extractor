@@ -188,7 +188,7 @@ namespace Com.Drew.Metadata.Xmp
 			if (value <= 1)
 			{
 				float apexPower = (float)(1 / (Math.Exp(value * Math.Log(2))));
-				long apexPower10 = Math.Round((double)apexPower * 10.0);
+				long apexPower10 = (long)System.Math.Round((double)apexPower * 10.0);
 				float fApexPower = (float)apexPower10 / 10.0f;
 				return fApexPower + " sec";
 			}

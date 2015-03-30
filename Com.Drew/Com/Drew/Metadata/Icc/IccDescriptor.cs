@@ -241,7 +241,7 @@ namespace Com.Drew.Metadata.Icc
 								break;
 							}
 						}
-						return Sharpen.Extensions.StringFormat("%s Observer, Backing (%s, %s, %s), Geometry %s, Flare %d%%, Illuminant %s", observerString, x, y, z, geometryString, Math.Round(flare * 100), illuminantString);
+						return Sharpen.Extensions.StringFormat("%s Observer, Backing (%s, %s, %s), Geometry %s, Flare %d%%, Illuminant %s", observerString, x, y, z, geometryString, (long)System.Math.Round(flare * 100), illuminantString);
 					}
 
 					case IccTagTypeXyzArray:
@@ -325,10 +325,10 @@ namespace Com.Drew.Metadata.Icc
 		{
 			if (precision < 1)
 			{
-				return string.Empty + Math.Round(value);
+				return string.Empty + (long)System.Math.Round(value);
 			}
 			long intPart = Math.Abs((long)value);
-			long rest = (int)Math.Round((Math.Abs(value) - intPart) * Math.Pow(10, precision));
+			long rest = (int)(long)System.Math.Round((Math.Abs(value) - intPart) * Math.Pow(10, precision));
 			long restKept = rest;
 			string res = string.Empty;
 			sbyte cour;

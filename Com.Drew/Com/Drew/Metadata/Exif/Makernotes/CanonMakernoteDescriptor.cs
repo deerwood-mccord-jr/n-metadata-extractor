@@ -504,7 +504,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 			}
 			if (value != 0)
 			{
-				return Sharpen.Extensions.ToString(value);
+				return Sharpen.Extensions.ToString((int)value);
 			}
 			else
 			{
@@ -521,7 +521,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 				return null;
 			}
 			string units = GetFocalUnitsPerMillimetreDescription();
-			return Sharpen.Extensions.ToString(value) + " " + units;
+			return Sharpen.Extensions.ToString((int)value) + " " + units;
 		}
 
 		[CanBeNull]
@@ -533,7 +533,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 				return null;
 			}
 			string units = GetFocalUnitsPerMillimetreDescription();
-			return Sharpen.Extensions.ToString(value) + " " + units;
+			return Sharpen.Extensions.ToString((int)value) + " " + units;
 		}
 
 		[CanBeNull]

@@ -478,7 +478,7 @@ namespace Com.Drew.Metadata.Exif
 			int? isoEquiv = _directory.GetInteger(ExifSubIFDDirectory.TagIsoEquivalent);
 			// There used to be a check here that multiplied ISO values < 50 by 200.
 			// Issue 36 shows a smart-phone image from a Samsung Galaxy S2 with ISO-40.
-			return isoEquiv != null ? Sharpen.Extensions.ToString(isoEquiv) : null;
+			return isoEquiv != null ? Sharpen.Extensions.ToString((int)isoEquiv) : null;
 		}
 
 		[CanBeNull]
@@ -1015,7 +1015,7 @@ namespace Com.Drew.Metadata.Exif
 			if (apexValue <= 1)
 			{
 				float apexPower = (float)(1 / (Math.Exp(apexValue * Math.Log(2))));
-				long apexPower10 = Math.Round((double)apexPower * 10.0);
+				long apexPower10 = (long)System.Math.Round((double)apexPower * 10.0);
 				float fApexPower = (float)apexPower10 / 10.0f;
 				return fApexPower + " sec";
 			}
