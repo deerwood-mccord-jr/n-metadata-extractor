@@ -222,7 +222,7 @@ namespace Com.Drew.Metadata
 		/// <summary>Sets a <code>java.util.Date</code> value for the specified tag.</summary>
 		/// <param name="tagType">the tag's value as an int</param>
 		/// <param name="value">the value for the specified tag as a java.util.Date</param>
-		public virtual void SetDate(int tagType, [NotNull] DateTime? value)
+		public virtual void SetDate(int tagType, [NotNull] DateTime value)
 		{
 			SetObject(tagType, value);
 		}
@@ -304,7 +304,7 @@ namespace Com.Drew.Metadata
 			int? integer = GetInteger(tagType);
 			if (integer != null)
 			{
-				return integer;
+				return (int)integer;
 			}
 			object o = GetObject(tagType);
 			if (o == null)
@@ -661,7 +661,7 @@ namespace Com.Drew.Metadata
 			float? value = GetFloatObject(tagType);
 			if (value != null)
 			{
-				return value;
+				return (float)value;
 			}
 			object o = GetObject(tagType);
 			if (o == null)
@@ -706,7 +706,7 @@ namespace Com.Drew.Metadata
 			long? value = GetLongObject(tagType);
 			if (value != null)
 			{
-				return value;
+				return (long)value;
 			}
 			object o = GetObject(tagType);
 			if (o == null)
@@ -749,9 +749,9 @@ namespace Com.Drew.Metadata
 		public virtual bool GetBoolean(int tagType)
 		{
 			bool? value = GetBooleanObject(tagType);
-			if (value != null)
+			if ((bool)value != null)
 			{
-				return value;
+				return (bool)value;
 			}
 			object o = GetObject(tagType);
 			if (o == null)
@@ -807,7 +807,7 @@ namespace Com.Drew.Metadata
 		/// is known, call the overload that accepts one as an argument.
 		/// </remarks>
 		[CanBeNull]
-		public virtual DateTime? GetDate(int tagType)
+		public virtual DateTime GetDate(int tagType)
 		{
 			return GetDate(tagType, null);
 		}
@@ -827,16 +827,16 @@ namespace Com.Drew.Metadata
 		/// is only considered if the underlying value is a string and parsing occurs, otherwise it has no effect.
 		/// </remarks>
 		[CanBeNull]
-		public virtual DateTime? GetDate(int tagType, [CanBeNull] TimeZoneInfo timeZone)
+		public virtual DateTime GetDate(int tagType, [CanBeNull] TimeZoneInfo timeZone)
 		{
 			object o = GetObject(tagType);
 			if (o == null)
 			{
 				return null;
 			}
-			if (o is DateTime?)
+			if (o is DateTime)
 			{
-				return (DateTime?)o;
+				return (DateTime)o;
 			}
 			if (o is string)
 			{

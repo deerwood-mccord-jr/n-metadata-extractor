@@ -220,7 +220,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 			{
 				return null;
 			}
-			return Sharpen.Extensions.StringFormat("%04X%05d", (value >> 8) & unchecked((int)(0xFF)), value & unchecked((int)(0xFF)));
+			return Sharpen.Extensions.StringFormat("%04X%05d", ((int)value >> 8) & unchecked((int)(0xFF)), (int)value & unchecked((int)(0xFF)));
 		}
 
 /*
@@ -413,7 +413,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 			if (value > unchecked((int)(0xF000)))
 			{
 				isNegative = true;
-				value = unchecked((int)(0xFFFF)) - value;
+				value = unchecked((int)(0xFFFF)) - (int)value;
 				value++;
 			}
 			// this tag is interesting in that the values returned are:
@@ -431,19 +431,19 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 			{
 				return null;
 			}
-			if ((value & unchecked((int)(0x7))) == 0)
+			if (((int)value & unchecked((int)(0x7))) == 0)
 			{
 				return "Right";
 			}
 			else
 			{
-				if ((value & unchecked((int)(0x7))) == 1)
+				if (((int)value & unchecked((int)(0x7))) == 1)
 				{
 					return "Centre";
 				}
 				else
 				{
-					if ((value & unchecked((int)(0x7))) == 2)
+					if (((int)value & unchecked((int)(0x7))) == 2)
 					{
 						return "Left";
 					}
@@ -475,19 +475,19 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 			{
 				return null;
 			}
-			if (((value >> 14) & 1) > 0)
+			if ((((int)value >> 14) & 1) > 0)
 			{
 				return "External E-TTL";
 			}
-			if (((value >> 13) & 1) > 0)
+			if ((((int)value >> 13) & 1) > 0)
 			{
 				return "Internal flash";
 			}
-			if (((value >> 11) & 1) > 0)
+			if ((((int)value >> 11) & 1) > 0)
 			{
 				return "FP sync used";
 			}
-			if (((value >> 4) & 1) > 0)
+			if ((((int)value >> 4) & 1) > 0)
 			{
 				return "FP sync enabled";
 			}
@@ -564,9 +564,9 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 			}
 			// Canon PowerShot S3 is special
 			int canonMask = unchecked((int)(0x4000));
-			if ((value & canonMask) > 0)
+			if (((int)value & canonMask) > 0)
 			{
-				return string.Empty + (value & ~canonMask);
+				return string.Empty + ((int)value & ~canonMask);
 			}
 			switch (value)
 			{

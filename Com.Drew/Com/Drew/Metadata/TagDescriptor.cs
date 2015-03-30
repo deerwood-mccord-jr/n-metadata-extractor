@@ -146,7 +146,7 @@ namespace Com.Drew.Metadata
 			{
 				return null;
 			}
-			int arrayIndex = index - baseIndex;
+			int arrayIndex = (int)index - baseIndex;
 			if (arrayIndex >= 0 && arrayIndex < descriptions.Length)
 			{
 				string description = descriptions[arrayIndex];
@@ -253,7 +253,7 @@ namespace Com.Drew.Metadata
 				object labelObj = labels[bitIndex];
 				if (labelObj != null)
 				{
-					bool isBitSet = (value & 1) == 1;
+					bool isBitSet = ((int)value & 1) == 1;
 					if (labelObj is string[])
 					{
 						string[] labelPair = (string[])labelObj;

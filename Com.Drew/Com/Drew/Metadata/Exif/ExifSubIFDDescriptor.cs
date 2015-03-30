@@ -794,7 +794,7 @@ namespace Com.Drew.Metadata.Exif
 				return null;
 			}
 			StringBuilder sb = new StringBuilder();
-			if ((value & unchecked((int)(0x1))) != 0)
+			if (((int)value & unchecked((int)(0x1))) != 0)
 			{
 				sb.Append("Flash fired");
 			}
@@ -803,9 +803,9 @@ namespace Com.Drew.Metadata.Exif
 				sb.Append("Flash did not fire");
 			}
 			// check if we're able to detect a return, before we mention it
-			if ((value & unchecked((int)(0x4))) != 0)
+			if (((int)value & unchecked((int)(0x4))) != 0)
 			{
-				if ((value & unchecked((int)(0x2))) != 0)
+				if (((int)value & unchecked((int)(0x2))) != 0)
 				{
 					sb.Append(", return detected");
 				}
@@ -814,11 +814,11 @@ namespace Com.Drew.Metadata.Exif
 					sb.Append(", return not detected");
 				}
 			}
-			if ((value & unchecked((int)(0x10))) != 0)
+			if (((int)value & unchecked((int)(0x10))) != 0)
 			{
 				sb.Append(", auto");
 			}
-			if ((value & unchecked((int)(0x40))) != 0)
+			if (((int)value & unchecked((int)(0x40))) != 0)
 			{
 				sb.Append(", red-eye reduction");
 			}

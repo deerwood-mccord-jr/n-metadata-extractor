@@ -77,7 +77,7 @@ namespace Com.Drew.Metadata.Png
 			{
 				return null;
 			}
-			PngColorType colorType = PngColorType.FromNumericValue(value);
+			PngColorType colorType = PngColorType.FromNumericValue((int)value);
 			if (colorType == null)
 			{
 				return null;

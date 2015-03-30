@@ -251,7 +251,7 @@ namespace Com.Drew.Metadata.Exif
 				{
 					try
 					{
-						sbyte[] thumbnailData = reader.GetBytes(tiffHeaderOffset + offset, length);
+						sbyte[] thumbnailData = reader.GetBytes(tiffHeaderOffset + (int)offset, (int)length);
 						thumbnailDirectory.SetThumbnailData(thumbnailData);
 					}
 					catch (IOException ex)

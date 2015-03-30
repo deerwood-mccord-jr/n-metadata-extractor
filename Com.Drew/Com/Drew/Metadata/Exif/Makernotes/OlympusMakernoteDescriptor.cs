@@ -430,7 +430,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 			{
 				return null;
 			}
-			double shutterSpeed = Math.Pow((49 - value) / 8d, 2);
+			double shutterSpeed = Math.Pow((49 - (long)value) / 8d, 2);
 			return shutterSpeed.ToString() + " sec";
 		}
 
@@ -527,9 +527,9 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 			{
 				return null;
 			}
-			long day = value & unchecked((int)(0xFF));
-			long month = (value >> 16) & unchecked((int)(0xFF));
-			long year = (value >> 8) & unchecked((int)(0xFF));
+			long day = (long)value & unchecked((int)(0xFF));
+			long month = ((long)value >> 16) & unchecked((int)(0xFF));
+			long year = ((long)value >> 8) & unchecked((int)(0xFF));
 			return new Sharpen.GregorianCalendar((int)year + 1970, (int)month, (int)day).GetTime().ToString();
 		}
 
@@ -544,9 +544,9 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 			{
 				return null;
 			}
-			long hours = (value >> 8) & unchecked((int)(0xFF));
-			long minutes = (value >> 16) & unchecked((int)(0xFF));
-			long seconds = value & unchecked((int)(0xFF));
+			long hours = ((long)value >> 8) & unchecked((int)(0xFF));
+			long minutes = ((long)value >> 16) & unchecked((int)(0xFF));
+			long seconds = (long)value & unchecked((int)(0xFF));
 			return Sharpen.Extensions.StringFormat("%02d:%02d:%02d", hours, minutes, seconds);
 		}
 
@@ -601,14 +601,14 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		public virtual string GetSaturationDescription()
 		{
 			long? value = _directory.GetLongObject(OlympusMakernoteDirectory.CameraSettings.TagSaturation);
-			return value == null ? null : System.Convert.ToString(value - 3);
+			return value == null ? null : System.Convert.ToString((long)value - 3);
 		}
 
 		[CanBeNull]
 		public virtual string GetContrastDescription()
 		{
 			long? value = _directory.GetLongObject(OlympusMakernoteDirectory.CameraSettings.TagContrast);
-			return value == null ? null : System.Convert.ToString(value - 3);
+			return value == null ? null : System.Convert.ToString((long)value - 3);
 		}
 
 		[CanBeNull]
@@ -627,7 +627,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		public virtual string GetFlastCompensationDescription()
 		{
 			long? value = _directory.GetLongObject(OlympusMakernoteDirectory.CameraSettings.TagFlashCompensation);
-			return value == null ? null : ((value - 6) / 3d) + " EV";
+			return value == null ? null : (((long)value - 6) / 3d) + " EV";
 		}
 
 		[CanBeNull]
@@ -664,7 +664,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		public virtual string GetColorFilterDescription()
 		{
 			long? value = _directory.GetLongObject(OlympusMakernoteDirectory.CameraSettings.TagColorFilter);
-			return value == null ? null : System.Convert.ToString(value - 3);
+			return value == null ? null : System.Convert.ToString((long)value - 3);
 		}
 
 		[CanBeNull]

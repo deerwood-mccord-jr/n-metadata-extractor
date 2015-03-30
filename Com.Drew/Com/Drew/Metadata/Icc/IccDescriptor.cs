@@ -510,9 +510,9 @@ namespace Com.Drew.Metadata.Icc
 			{
 				return null;
 			}
-			int m = (value & unchecked((int)(0xFF000000))) >> 24;
-			int r = (value & unchecked((int)(0x00F00000))) >> 20;
-			int R = (value & unchecked((int)(0x000F0000))) >> 16;
+			int m = ((int)value & unchecked((int)(0xFF000000))) >> 24;
+			int r = ((int)value & unchecked((int)(0x00F00000))) >> 20;
+			int R = ((int)value & unchecked((int)(0x000F0000))) >> 16;
 			return Sharpen.Extensions.StringFormat("%d.%d.%d", m, r, R);
 		}
 

@@ -78,7 +78,7 @@ namespace Com.Drew.Metadata.Jfif
 			{
 				return null;
 			}
-			return Sharpen.Extensions.StringFormat("%d.%d", (value & unchecked((int)(0xFF00))) >> 8, value & unchecked((int)(0xFF)));
+			return Sharpen.Extensions.StringFormat("%d.%d", ((int)value & unchecked((int)(0xFF00))) >> 8, (int)value & unchecked((int)(0xFF)));
 		}
 
 		[CanBeNull]

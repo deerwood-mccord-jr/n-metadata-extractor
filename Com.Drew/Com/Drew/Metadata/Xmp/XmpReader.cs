@@ -254,7 +254,7 @@ namespace Com.Drew.Metadata.Xmp
 				{
 					try
 					{
-						directory.SetInt(tagType, Sharpen.Extensions.ValueOf(property));
+						directory.SetInt(tagType, (int)Sharpen.Extensions.ValueOf(property));
 					}
 					catch (FormatException)
 					{

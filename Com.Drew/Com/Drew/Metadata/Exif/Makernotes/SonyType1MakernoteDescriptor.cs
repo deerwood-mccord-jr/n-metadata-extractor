@@ -342,7 +342,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 			{
 				return "Auto";
 			}
-			int kelvin = ((value & unchecked((int)(0x00FF0000))) >> 8) | ((value & unchecked((int)(0xFF000000))) >> 24);
+			int kelvin = (((int)value & unchecked((int)(0x00FF0000))) >> 8) | (((int)value & unchecked((int)(0xFF000000))) >> 24);
 			return Sharpen.Extensions.StringFormat("%d K", kelvin);
 		}
 
