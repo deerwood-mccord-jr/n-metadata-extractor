@@ -749,7 +749,7 @@ namespace Com.Drew.Metadata
 		public virtual bool GetBoolean(int tagType)
 		{
 			bool? value = GetBooleanObject(tagType);
-			if ((bool)value != null)
+			if (value != null)
 			{
 				return (bool)value;
 			}
