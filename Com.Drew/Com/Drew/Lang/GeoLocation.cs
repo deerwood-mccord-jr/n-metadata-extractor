@@ -142,9 +142,9 @@ namespace Com.Drew.Lang
 		{
 			int result;
 			long temp;
-			temp = _latitude != +0.0d ? Sharpen.Extensions.DoubleToLongBits((long)_latitude) : 0L;
+			temp = _latitude != +0.0d ? Sharpen.Extensions.DoubleToLongBits(_latitude) : 0L;
 			result = (int)(temp ^ ((long)(((ulong)temp) >> 32)));
-			temp = _longitude != +0.0d ? Sharpen.Extensions.DoubleToLongBits((long)_longitude) : 0L;
+			temp = _longitude != +0.0d ? Sharpen.Extensions.DoubleToLongBits(_longitude) : 0L;
 			result = 31 * result + (int)(temp ^ ((long)(((ulong)temp) >> 32)));
 			return result;
 		}

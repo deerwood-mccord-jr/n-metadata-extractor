@@ -78,7 +78,7 @@ namespace Com.Drew.Lang
 			{
 				throw new EOFException("End of data reached.");
 			}
-			_index += n;
+			_index += unchecked((int)(n));
 		}
 
 		/// <exception cref="System.IO.IOException"/>
@@ -88,7 +88,7 @@ namespace Com.Drew.Lang
 			{
 				throw new ArgumentException("n must be zero or greater.");
 			}
-			_index += n;
+			_index += unchecked((int)(n));
 			if (_index > _bytes.Length)
 			{
 				_index = _bytes.Length;
