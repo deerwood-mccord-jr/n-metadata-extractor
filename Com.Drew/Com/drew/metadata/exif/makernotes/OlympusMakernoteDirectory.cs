@@ -280,7 +280,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 
 		public sealed class CameraSettings
 		{
-			private const int Offset = unchecked((int)(0xF000));
+		    internal const int Offset = unchecked((int)(0xF000));
 
 			public const int TagExposureMode = Offset + 2;
 
