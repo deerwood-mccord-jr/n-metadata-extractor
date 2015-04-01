@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,21 +15,20 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using System;
 using Com.Drew.Metadata;
-using Com.Drew.Metadata.Photoshop;
 using JetBrains.Annotations;
 using Sharpen;
 
 namespace Com.Drew.Metadata.Photoshop
 {
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class PsdHeaderDescriptor : TagDescriptor<PsdHeaderDirectory>
 	{
-		public PsdHeaderDescriptor(PsdHeaderDirectory directory)
+		public PsdHeaderDescriptor([NotNull] PsdHeaderDirectory directory)
 			: base(directory)
 		{
 		}
@@ -75,7 +74,8 @@ namespace Com.Drew.Metadata.Photoshop
 		{
 			try
 			{
-				int? value = _directory.GetInt(PsdHeaderDirectory.TagChannelCount);
+				// Supported range is 1 to 56.
+				int? value = _directory.GetInteger(PsdHeaderDirectory.TagChannelCount);
 				if (value == null)
 				{
 					return null;
@@ -93,7 +93,8 @@ namespace Com.Drew.Metadata.Photoshop
 		{
 			try
 			{
-				int? value = _directory.GetInt(PsdHeaderDirectory.TagBitsPerChannel);
+				// Supported values are 1, 8, 16 and 32.
+				int? value = _directory.GetInteger(PsdHeaderDirectory.TagBitsPerChannel);
 				if (value == null)
 				{
 					return null;
@@ -112,7 +113,7 @@ namespace Com.Drew.Metadata.Photoshop
 			// Bitmap = 0; Grayscale = 1; Indexed = 2; RGB = 3; CMYK = 4; Multichannel = 7; Duotone = 8; Lab = 9
 			try
 			{
-				int? value = _directory.GetInt(PsdHeaderDirectory.TagColorMode);
+				int? value = _directory.GetInteger(PsdHeaderDirectory.TagColorMode);
 				if (value == null)
 				{
 					return null;
@@ -176,7 +177,7 @@ namespace Com.Drew.Metadata.Photoshop
 		{
 			try
 			{
-				int? value = _directory.GetInt(PsdHeaderDirectory.TagImageHeight);
+				int? value = _directory.GetInteger(PsdHeaderDirectory.TagImageHeight);
 				if (value == null)
 				{
 					return null;
@@ -194,7 +195,7 @@ namespace Com.Drew.Metadata.Photoshop
 		{
 			try
 			{
-				int? value = _directory.GetInt(PsdHeaderDirectory.TagImageWidth);
+				int? value = _directory.GetInteger(PsdHeaderDirectory.TagImageWidth);
 				if (value == null)
 				{
 					return null;

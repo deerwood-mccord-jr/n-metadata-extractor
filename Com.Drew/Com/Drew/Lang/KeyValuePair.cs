@@ -8,14 +8,14 @@ namespace Com.Drew.Lang
 	/// <see cref="string"/>
 	/// objects.
 	/// </summary>
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class KeyValuePair
 	{
 		private readonly string _key;
 
 		private readonly string _value;
 
-		public KeyValuePair(string key, string value)
+		public KeyValuePair([NotNull] string key, [NotNull] string value)
 		{
 			_key = key;
 			_value = value;

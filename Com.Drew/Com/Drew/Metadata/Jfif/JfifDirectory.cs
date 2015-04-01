@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,11 +15,10 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using System.Collections.Generic;
-using Com.Drew.Metadata.Jfif;
 using JetBrains.Annotations;
 using Sharpen;
 
@@ -41,7 +40,7 @@ namespace Com.Drew.Metadata.Jfif
 		public const int TagResy = 10;
 
 		[NotNull]
-		protected internal static readonly Dictionary<int, string> _tagNameMap = new Dictionary<int, string>();
+		protected internal static readonly Dictionary<int?, string> _tagNameMap = new Dictionary<int?, string>();
 
 		static JfifDirectory()
 		{
@@ -63,31 +62,31 @@ namespace Com.Drew.Metadata.Jfif
 		}
 
 		[NotNull]
-		protected internal override Dictionary<int, string> GetTagNameMap()
+		protected internal override Dictionary<int?, string> GetTagNameMap()
 		{
 			return _tagNameMap;
 		}
 
 		/// <exception cref="Com.Drew.Metadata.MetadataException"/>
-		public virtual int? GetVersion()
+		public virtual int GetVersion()
 		{
 			return GetInt(Com.Drew.Metadata.Jfif.JfifDirectory.TagVersion);
 		}
 
 		/// <exception cref="Com.Drew.Metadata.MetadataException"/>
-		public virtual int? GetResUnits()
+		public virtual int GetResUnits()
 		{
 			return GetInt(Com.Drew.Metadata.Jfif.JfifDirectory.TagUnits);
 		}
 
 		/// <exception cref="Com.Drew.Metadata.MetadataException"/>
-		public virtual int? GetImageWidth()
+		public virtual int GetImageWidth()
 		{
 			return GetInt(Com.Drew.Metadata.Jfif.JfifDirectory.TagResy);
 		}
 
 		/// <exception cref="Com.Drew.Metadata.MetadataException"/>
-		public virtual int? GetImageHeight()
+		public virtual int GetImageHeight()
 		{
 			return GetInt(Com.Drew.Metadata.Jfif.JfifDirectory.TagResx);
 		}

@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,17 +15,16 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
- using Com.Drew.Metadata.Exif;
+using System.Globalization;
 using Com.Drew.Metadata.Exif.Makernotes;
- using NUnit.Framework;
- using Sharpen;
+using Sharpen;
 
 namespace Com.Drew.Metadata.Exif
 {
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class NikonType2MakernoteTest1
 	{
 		private NikonType2MakernoteDirectory _nikonDirectory;
@@ -36,12 +35,13 @@ namespace Com.Drew.Metadata.Exif
 		[NUnit.Framework.SetUp]
 		public virtual void SetUp()
 		{
+			System.Threading.Thread.CurrentThread.CurrentCulture = new CultureInfo("en", "GB");
 			_nikonDirectory = ExifReaderTest.ProcessBytes<NikonType2MakernoteDirectory>("Tests/Data/nikonMakernoteType2a.jpg.app1");
 			NUnit.Framework.Assert.IsNotNull(_nikonDirectory);
 			_descriptor = new NikonType2MakernoteDescriptor(_nikonDirectory);
 		}
 
-		/*
+    /*
         [Nikon Makernote] Firmware Version = 0200
         [Nikon Makernote] ISO = 0 320
         [Nikon Makernote] File Format = FINE
@@ -63,28 +63,18 @@ namespace Com.Drew.Metadata.Exif
         [Nikon Makernote] Unknown 06 = 
         [Nikon Makernote] Unknown 07 = 1
         [Nikon Makernote] Unknown 20 = 0
-        [Nikon Makernote] Unknown 08 = @
-
+        [Nikon Makernote] Unknown 08 = @
         [Nikon Makernote] Colour Mode = MODE1
         [Nikon Makernote] Unknown 10 = NATURAL
-        [Nikon Makernote] Unknown 11 = 0100
-
-        
-
-
-
-        
-
-
-
-        
--
+        [Nikon Makernote] Unknown 11 = 0100
+        
+        
+        -
         [Nikon Makernote] Camera Hue = 0
         [Nikon Makernote] Noise Reduction = OFF
         [Nikon Makernote] Unknown 12 = 0100
 
-        [Nikon Makernote] Unknown 13 = 0100
-{t@7b,4x,D"Y
+        [Nikon Makernote] Unknown 13 = 0100{t@7b,4x,D"Y
         [Nikon Makernote] Unknown 15 = 78/10 78/10
     */
 		/// <exception cref="System.Exception"/>
@@ -114,7 +104,7 @@ namespace Com.Drew.Metadata.Exif
 		}
 
 		/// <exception cref="Com.Drew.Metadata.MetadataException"/>
-        [NUnit.Framework.Test, SetCulture("en-US")]
+		[NUnit.Framework.Test]
 		public virtual void TestGetLensDescription()
 		{
 			Sharpen.Tests.AreEqual("24-85mm f/3.5-4.5", _descriptor.GetDescription(NikonType2MakernoteDirectory.TagLens));
@@ -138,7 +128,7 @@ namespace Com.Drew.Metadata.Exif
 		}
 
 		/// <exception cref="System.Exception"/>
-        [NUnit.Framework.Test, SetCulture("en-US")]
+		[NUnit.Framework.Test]
 		public virtual void TestGetAutoFlashCompensationDescription()
 		{
 			NikonType2MakernoteDirectory directory = new NikonType2MakernoteDirectory();
@@ -151,7 +141,7 @@ namespace Com.Drew.Metadata.Exif
 			Sharpen.Tests.AreEqual("0.67 EV", descriptor.GetAutoFlashCompensationDescription());
 			directory.SetByteArray(NikonType2MakernoteDirectory.TagAutoFlashCompensation, new sbyte[] { unchecked((int)(0x02)), unchecked((int)(0x01)), unchecked((int)(0x06)) });
 			Sharpen.Tests.AreEqual("0.33 EV", descriptor.GetAutoFlashCompensationDescription());
-			directory.SetByteArray(NikonType2MakernoteDirectory.TagAutoFlashCompensation, new sbyte[] { unchecked((sbyte)unchecked((int)(0xFE))), unchecked((int)(0x01)), unchecked((int)(0x06)) });
+			directory.SetByteArray(NikonType2MakernoteDirectory.TagAutoFlashCompensation, new sbyte[] { unchecked((sbyte)0xFE), unchecked((int)(0x01)), unchecked((int)(0x06)) });
 			Sharpen.Tests.AreEqual("-0.33 EV", descriptor.GetAutoFlashCompensationDescription());
 		}
 	}

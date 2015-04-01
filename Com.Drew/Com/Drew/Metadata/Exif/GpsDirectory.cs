@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,20 +15,19 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using System.Collections.Generic;
 using Com.Drew.Lang;
-using Com.Drew.Metadata.Exif;
 using JetBrains.Annotations;
 using Sharpen;
 
 namespace Com.Drew.Metadata.Exif
 {
 	/// <summary>Describes Exif tags that contain Global Positioning System (GPS) data.</summary>
-	/// <author>Drew Noakes http://drewnoakes.com</author>
-	public class GpsDirectory : Com.Drew.Metadata.Directory
+	/// <author>Drew Noakes https://drewnoakes.com</author>
+	public class GpsDirectory : ExifDirectoryBase
 	{
 		/// <summary>GPS tag version GPSVersionID 0 0 BYTE 4</summary>
 		public const int TagVersionId = unchecked((int)(0x0000));
@@ -121,10 +120,11 @@ namespace Com.Drew.Metadata.Exif
 		public const int TagDifferential = unchecked((int)(0x001E));
 
 		[NotNull]
-		protected internal static readonly Dictionary<int, string> _tagNameMap = new Dictionary<int, string>();
+		protected internal static readonly Dictionary<int?, string> _tagNameMap = new Dictionary<int?, string>();
 
 		static GpsDirectory()
 		{
+			AddExifTagNames(_tagNameMap);
 			_tagNameMap.Put(TagVersionId, "GPS Version ID");
 			_tagNameMap.Put(TagLatitudeRef, "GPS Latitude Ref");
 			_tagNameMap.Put(TagLatitude, "GPS Latitude");
@@ -170,7 +170,7 @@ namespace Com.Drew.Metadata.Exif
 		}
 
 		[NotNull]
-		protected internal override Dictionary<int, string> GetTagNameMap()
+		protected internal override Dictionary<int?, string> GetTagNameMap()
 		{
 			return _tagNameMap;
 		}
@@ -207,7 +207,7 @@ namespace Com.Drew.Metadata.Exif
 			{
 				return null;
 			}
-			return new GeoLocation(lat.Value, lon.Value);
+			return new GeoLocation((double)lat, (double)lon);
 		}
 	}
 }

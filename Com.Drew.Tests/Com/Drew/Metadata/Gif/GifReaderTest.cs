@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,28 +15,27 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using System.IO;
-using Com.Drew.Metadata.Gif;
 using JetBrains.Annotations;
 using Sharpen;
 
 namespace Com.Drew.Metadata.Gif
 {
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class GifReaderTest
 	{
 		/// <exception cref="System.Exception"/>
 		[NotNull]
-		public static GifHeaderDirectory ProcessBytes(string file)
+		public static GifHeaderDirectory ProcessBytes([NotNull] string file)
 		{
 			Com.Drew.Metadata.Metadata metadata = new Com.Drew.Metadata.Metadata();
 			InputStream stream = new FileInputStream(file);
 			new GifReader().Extract(new Com.Drew.Lang.StreamReader(stream), metadata);
 			stream.Close();
-			GifHeaderDirectory directory = metadata.GetDirectory<GifHeaderDirectory>();
+			GifHeaderDirectory directory = metadata.GetFirstDirectoryOfType<GifHeaderDirectory>();
 			NUnit.Framework.Assert.IsNotNull(directory);
 			return directory;
 		}

@@ -7,7 +7,6 @@
 // of the Adobe license agreement accompanying it.
 // =================================================================================================
 using Com.Adobe.Xmp.Options;
-using Com.Adobe.Xmp.Properties;
 using Sharpen;
 
 namespace Com.Adobe.Xmp.Properties
@@ -27,10 +26,10 @@ namespace Com.Adobe.Xmp.Properties
 
 		/// <returns>
 		/// Returns the kind of the alias. This can be a direct alias
-        /// (Array), a simple property to an ordered array
-		/// (ArrayOrdered), to an alternate array
-		/// (ArrayAlternate) or to an alternate text array
-		/// (ArrayAltText).
+		/// (ARRAY), a simple property to an ordered array
+		/// (ARRAY_ORDERED), to an alternate array
+		/// (ARRAY_ALTERNATE) or to an alternate text array
+		/// (ARRAY_ALT_TEXT).
 		/// </returns>
 		AliasOptions GetAliasForm();
 	}

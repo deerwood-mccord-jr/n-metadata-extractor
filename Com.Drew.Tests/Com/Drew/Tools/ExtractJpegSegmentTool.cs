@@ -21,7 +21,7 @@
 using System.Collections.Generic;
 using Com.Drew.Imaging.Jpeg;
 using Com.Drew.Lang;
-using Com.Drew.Tools;
+using JetBrains.Annotations;
 using Sharpen;
 
 namespace Com.Drew.Tools
@@ -54,7 +54,7 @@ namespace Com.Drew.Tools
 			ICollection<JpegSegmentType> segmentTypes = new HashSet<JpegSegmentType>();
 			for (int i = 1; i < args.Length; i++)
 			{
-                JpegSegmentType segmentType = JpegSegmentType.ValueOf(args[i].ToUpper());
+				JpegSegmentType segmentType = JpegSegmentType.ValueOf(args[i].ToUpper());
 				if (!segmentType.canContainMetadata)
 				{
 					System.Console.Error.Printf("WARNING: Segment type %s cannot contain metadata so it may not be necessary to extract it%n", segmentType);
@@ -71,7 +71,7 @@ namespace Com.Drew.Tools
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public static void SaveSegmentFiles(string jpegFilePath, JpegSegmentData segmentData)
+		public static void SaveSegmentFiles([NotNull] string jpegFilePath, [NotNull] JpegSegmentData segmentData)
 		{
 			foreach (JpegSegmentType segmentType in segmentData.GetSegmentTypes())
 			{

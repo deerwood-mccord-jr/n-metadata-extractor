@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,11 +15,11 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using Com.Drew.Lang;
-using Com.Drew.Metadata;
+using JetBrains.Annotations;
 using Sharpen;
 
 namespace Com.Drew.Metadata
@@ -28,10 +28,10 @@ namespace Com.Drew.Metadata
 	/// Defines an object capable of processing a particular type of metadata from a
 	/// <see cref="Com.Drew.Lang.RandomAccessReader"/>
 	/// .
-	/// <p/>
+	/// <p>
 	/// Instances of this interface must be thread-safe and reusable.
 	/// </summary>
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public interface MetadataReader
 	{
 		/// <summary>
@@ -49,6 +49,6 @@ namespace Com.Drew.Metadata
 		/// <see cref="Metadata"/>
 		/// object into which extracted values should be merged.
 		/// </param>
-		void Extract(RandomAccessReader reader, Com.Drew.Metadata.Metadata metadata);
+		void Extract([NotNull] RandomAccessReader reader, [NotNull] Com.Drew.Metadata.Metadata metadata);
 	}
 }

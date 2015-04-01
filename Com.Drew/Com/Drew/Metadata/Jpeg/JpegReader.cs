@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,13 +15,12 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using System.IO;
 using Com.Drew.Imaging.Jpeg;
 using Com.Drew.Lang;
-using Com.Drew.Metadata.Jpeg;
 using JetBrains.Annotations;
 using Sharpen;
 
@@ -34,7 +33,7 @@ namespace Com.Drew.Metadata.Jpeg
 	/// <see cref="JpegDirectory"/>
 	/// .
 	/// </summary>
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	/// <author>Darrell Silver http://www.darrellsilver.com</author>
 	public class JpegReader : JpegSegmentMetadataReader
 	{
@@ -48,20 +47,18 @@ namespace Com.Drew.Metadata.Jpeg
 
 		//            JpegSegmentType.SOF4,
 		//            JpegSegmentType.SOF12,
-		public virtual bool CanProcess(sbyte[] segmentBytes, JpegSegmentType segmentType)
+		public virtual void ReadJpegSegments([NotNull] Iterable<sbyte[]> segments, [NotNull] Com.Drew.Metadata.Metadata metadata, [NotNull] JpegSegmentType segmentType)
 		{
-			return true;
+			foreach (sbyte[] segmentBytes in segments)
+			{
+				Extract(segmentBytes, metadata, segmentType);
+			}
 		}
 
 		public virtual void Extract(sbyte[] segmentBytes, Com.Drew.Metadata.Metadata metadata, JpegSegmentType segmentType)
 		{
-            if (metadata.ContainsDirectory<JpegDirectory>())
-			{
-				// If this directory is already present, discontinue this operation.
-				// We only store metadata for the *first* matching SOFn segment.
-				return;
-			}
-			JpegDirectory directory = metadata.GetOrCreateDirectory<JpegDirectory>();
+			JpegDirectory directory = new JpegDirectory();
+			metadata.AddDirectory(directory);
 			// The value of TAG_COMPRESSION_TYPE is determined by the segment type found
 			directory.SetInt(JpegDirectory.TagCompressionType, segmentType.byteValue - JpegSegmentType.Sof0.byteValue);
 			SequentialReader reader = new SequentialByteArrayReader(segmentBytes);

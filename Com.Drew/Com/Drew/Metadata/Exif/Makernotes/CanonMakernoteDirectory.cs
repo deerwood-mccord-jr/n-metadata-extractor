@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,11 +15,10 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using System.Collections.Generic;
-using Com.Drew.Metadata.Exif.Makernotes;
 using JetBrains.Annotations;
 using Sharpen;
 
@@ -31,7 +30,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 	/// Thanks to Bill Richards for his contribution to this makernote directory.
 	/// Many tag definitions explained here: http://www.ozhiker.com/electronics/pjmt/jpeg_info/canon_mn.html
 	/// </remarks>
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class CanonMakernoteDirectory : Com.Drew.Metadata.Directory
 	{
 		private const int TagCameraSettingsArray = unchecked((int)(0x0001));
@@ -170,7 +169,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 
 		public sealed class CameraSettings
 		{
-		    internal const int Offset = unchecked((int)(0xC100));
+			private const int Offset = unchecked((int)(0xC100));
 
 			/// <summary>
 			/// 1 = Macro
@@ -236,7 +235,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 			/// 3 = Fast Shutter
 			/// 4 = Slow Shutter
 			/// 5 = Night
-			/// 6 = Black & White
+			/// 6 = Black &amp; White
 			/// 7 = Sepia
 			/// 8 = Portrait
 			/// 9 = Sports
@@ -387,7 +386,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 
 		public sealed class FocalLength
 		{
-		    internal const int Offset = unchecked((int)(0xC200));
+			private const int Offset = unchecked((int)(0xC200));
 
 			/// <summary>
 			/// 0 = Auto
@@ -437,7 +436,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 
 		public sealed class ShotInfo
 		{
-		    internal const int Offset = unchecked((int)(0xC400));
+			private const int Offset = unchecked((int)(0xC400));
 
 			public const int TagAutoIso = Offset + 1;
 
@@ -499,7 +498,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 
 		public sealed class Panorama
 		{
-		    internal const int Offset = unchecked((int)(0xC500));
+			private const int Offset = unchecked((int)(0xC500));
 
 			public const int TagPanoramaFrameNumber = Offset + 2;
 
@@ -509,7 +508,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 
 		public sealed class AFInfo
 		{
-		    internal const int Offset = unchecked((int)(0xD200));
+			private const int Offset = unchecked((int)(0xD200));
 
 			public const int TagNumAfPoints = Offset;
 
@@ -541,7 +540,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		}
 
 		[NotNull]
-		protected internal static readonly Dictionary<int, string> _tagNameMap = new Dictionary<int, string>();
+		protected internal static readonly Dictionary<int?, string> _tagNameMap = new Dictionary<int?, string>();
 
 		static CanonMakernoteDirectory()
 		{
@@ -814,12 +813,12 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		}
 
 		[NotNull]
-		protected internal override Dictionary<int, string> GetTagNameMap()
+		protected internal override Dictionary<int?, string> GetTagNameMap()
 		{
 			return _tagNameMap;
 		}
 
-		public override void SetObjectArray(int tagType, object array)
+		public override void SetObjectArray(int tagType, [NotNull] object array)
 		{
 			switch (tagType)
 			{

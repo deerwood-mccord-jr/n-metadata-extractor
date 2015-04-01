@@ -6,10 +6,7 @@
 // NOTICE:  Adobe permits you to use, modify, and distribute this file in accordance with the terms
 // of the Adobe license agreement accompanying it.
 // =================================================================================================
-
-using System;
 using Com.Adobe.Xmp;
-using Com.Adobe.Xmp.Impl;
 using Com.Adobe.Xmp.Impl.Xpath;
 using Com.Adobe.Xmp.Options;
 using Com.Adobe.Xmp.Properties;
@@ -257,7 +254,7 @@ namespace Com.Adobe.Xmp.Impl
 		{
 			try
 			{
-                // fieldNS and fieldName are checked inside ComposeStructFieldPath()
+				// fieldNS and fieldName are checked inside composeStructFieldPath()
 				ParameterAsserts.AssertSchemaNS(schemaNS);
 				ParameterAsserts.AssertStructName(structName);
 				string path = XMPPathFactory.ComposeStructFieldPath(fieldNS, fieldName);
@@ -274,7 +271,7 @@ namespace Com.Adobe.Xmp.Impl
 		{
 			try
 			{
-                // qualNS and qualName are checked inside ComposeQualifierPath()
+				// qualNS and qualName are checked inside composeQualifierPath()
 				ParameterAsserts.AssertSchemaNS(schemaNS);
 				ParameterAsserts.AssertPropName(propName);
 				string path = XMPPathFactory.ComposeQualifierPath(qualNS, qualName);
@@ -567,7 +564,7 @@ namespace Com.Adobe.Xmp.Impl
 		/// <seealso cref="Com.Adobe.Xmp.XMPMeta.GetProperty(string, string)"/>
 		/// <param name="schemaNS">a schema namespace</param>
 		/// <param name="propName">a property name or path</param>
-        /// <param name="valueType">the type of the value, see Value...</param>
+		/// <param name="valueType">the type of the value, see VALUE_...</param>
 		/// <returns>Returns an <code>XMPProperty</code></returns>
 		/// <exception cref="Com.Adobe.Xmp.XMPException">Collects any exception that occurs.</exception>
 		protected internal virtual XMPProperty GetProperty(string schemaNS, string propName, int valueType)
@@ -628,7 +625,7 @@ namespace Com.Adobe.Xmp.Impl
 		/// <seealso cref="Com.Adobe.Xmp.XMPMeta.GetProperty(string, string)"/>
 		/// <param name="schemaNS">a schema namespace</param>
 		/// <param name="propName">a property name or path</param>
-        /// <param name="valueType">the type of the value, see Value...</param>
+		/// <param name="valueType">the type of the value, see VALUE_...</param>
 		/// <returns>
 		/// Returns the node value as an object according to the
 		/// <code>valueType</code>.
@@ -823,7 +820,7 @@ namespace Com.Adobe.Xmp.Impl
 		/// <exception cref="Com.Adobe.Xmp.XMPException"/>
 		public virtual XMPProperty GetStructField(string schemaNS, string structName, string fieldNS, string fieldName)
 		{
-            // fieldNS and fieldName are checked inside ComposeStructFieldPath
+			// fieldNS and fieldName are checked inside composeStructFieldPath
 			ParameterAsserts.AssertSchemaNS(schemaNS);
 			ParameterAsserts.AssertStructName(structName);
 			string fieldPath = structName + XMPPathFactory.ComposeStructFieldPath(fieldNS, fieldName);
@@ -993,7 +990,7 @@ namespace Com.Adobe.Xmp.Impl
 		}
 
 		/// <summary>Performs a deep clone of the XMPMeta-object</summary>
-        /// <seealso cref="XMPMeta.Clone()"/>
+		/// <seealso cref="object.Clone()"/>
 		public virtual object Clone()
 		{
 			XMPNode clonedTree = (XMPNode)tree.Clone();
@@ -1051,7 +1048,7 @@ namespace Com.Adobe.Xmp.Impl
 			XMPNode itemNode = new XMPNode(XMPConstConstants.ArrayItemName, null);
 			itemOptions = XMPNodeUtils.VerifySetOptions(itemOptions, itemValue);
 			// in insert mode the index after the last is allowed,
-			// even ArrayLastItem points to the index *after* the last.
+			// even ARRAY_LAST_ITEM points to the index *after* the last.
 			int maxIndex = insert ? arrayNode.GetChildrenLength() + 1 : arrayNode.GetChildrenLength();
 			if (itemIndex == XMPConstConstants.ArrayLastItem)
 			{
@@ -1073,7 +1070,7 @@ namespace Com.Adobe.Xmp.Impl
 		}
 
 		/// <summary>
-		/// The internals for SetProperty() and related calls, used after the node is
+		/// The internals for setProperty() and related calls, used after the node is
 		/// found or created.
 		/// </summary>
 		/// <param name="node">the newly created node</param>
@@ -1087,7 +1084,7 @@ namespace Com.Adobe.Xmp.Impl
 			{
 				node.Clear();
 			}
-			// its checked by SetOptions(), if the merged result is a valid options set
+			// its checked by setOptions(), if the merged result is a valid options set
 			node.GetOptions().MergeWith(newOptions);
 			if (!node.GetOptions().IsCompositeProperty())
 			{

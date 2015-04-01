@@ -1,11 +1,31 @@
+/*
+ * Copyright 2002-2015 Drew Noakes
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ *
+ * More information about this project is available at:
+ *
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
+ */
 using System.Collections.Generic;
-using Com.Drew.Metadata.Png;
+using Com.Drew.Imaging.Png;
 using JetBrains.Annotations;
 using Sharpen;
 
 namespace Com.Drew.Metadata.Png
 {
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class PngDirectory : Com.Drew.Metadata.Directory
 	{
 		public const int TagImageWidth = 1;
@@ -30,7 +50,7 @@ namespace Com.Drew.Metadata.Png
 
 		public const int TagGamma = 11;
 
-		public const int TagProfileName = 12;
+		public const int TagIccProfileName = 12;
 
 		public const int TagTextualData = 13;
 
@@ -38,8 +58,16 @@ namespace Com.Drew.Metadata.Png
 
 		public const int TagBackgroundColor = 15;
 
+		public const int TagPixelsPerUnitX = 16;
+
+		public const int TagPixelsPerUnitY = 17;
+
+		public const int TagUnitSpecifier = 18;
+
+		public const int TagSignificantBits = 19;
+
 		[NotNull]
-		protected internal static readonly Dictionary<int, string> _tagNameMap = new Dictionary<int, string>();
+		protected internal static readonly Dictionary<int?, string> _tagNameMap = new Dictionary<int?, string>();
 
 		static PngDirectory()
 		{
@@ -54,25 +82,38 @@ namespace Com.Drew.Metadata.Png
 			_tagNameMap.Put(TagPaletteHasTransparency, "Palette Has Transparency");
 			_tagNameMap.Put(TagSrgbRenderingIntent, "sRGB Rendering Intent");
 			_tagNameMap.Put(TagGamma, "Image Gamma");
-			_tagNameMap.Put(TagProfileName, "ICC Profile Name");
+			_tagNameMap.Put(TagIccProfileName, "ICC Profile Name");
 			_tagNameMap.Put(TagTextualData, "Textual Data");
 			_tagNameMap.Put(TagLastModificationTime, "Last Modification Time");
 			_tagNameMap.Put(TagBackgroundColor, "Background Color");
+			_tagNameMap.Put(TagPixelsPerUnitX, "Pixels Per Unit X");
+			_tagNameMap.Put(TagPixelsPerUnitY, "Pixels Per Unit Y");
+			_tagNameMap.Put(TagUnitSpecifier, "Unit Specifier");
+			_tagNameMap.Put(TagSignificantBits, "Significant Bits");
 		}
 
-		public PngDirectory()
+		private readonly PngChunkType _pngChunkType;
+
+		public PngDirectory([NotNull] PngChunkType pngChunkType)
 		{
+			_pngChunkType = pngChunkType;
 			this.SetDescriptor(new PngDescriptor(this));
+		}
+
+		[NotNull]
+		public virtual PngChunkType GetPngChunkType()
+		{
+			return _pngChunkType;
 		}
 
 		[NotNull]
 		public override string GetName()
 		{
-			return "PNG";
+			return "PNG-" + _pngChunkType.GetIdentifier();
 		}
 
 		[NotNull]
-		protected internal override Dictionary<int, string> GetTagNameMap()
+		protected internal override Dictionary<int?, string> GetTagNameMap()
 		{
 			return _tagNameMap;
 		}

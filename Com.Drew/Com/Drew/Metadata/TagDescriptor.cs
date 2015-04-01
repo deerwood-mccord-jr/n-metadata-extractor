@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,8 +15,8 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using System.Collections.Generic;
 using System.IO;
@@ -34,14 +34,14 @@ namespace Com.Drew.Metadata
 	/// providing the human-readable string representation of tag values stored in a directory.
 	/// The directory is provided to the tag descriptor via its constructor.
 	/// </remarks>
-	/// <author>Drew Noakes http://drewnoakes.com</author>
-	public class TagDescriptor<T> : ITagDescriptor
+	/// <author>Drew Noakes https://drewnoakes.com</author>
+	public class TagDescriptor<T>
 		where T : Com.Drew.Metadata.Directory
 	{
 		[NotNull]
 		protected internal readonly T _directory;
 
-		public TagDescriptor(T directory)
+		public TagDescriptor([NotNull] T directory)
 		{
 			_directory = directory;
 		}
@@ -87,7 +87,7 @@ namespace Com.Drew.Metadata
 		/// <remarks>
 		/// Takes a series of 4 bytes from the specified offset, and converts these to a
 		/// well-known version number, where possible.
-		/// <p/>
+		/// <p>
 		/// Two different formats are processed:
 		/// <ul>
 		/// <li>[30 32 31 30] -&gt; 2.10</li>
@@ -98,7 +98,7 @@ namespace Com.Drew.Metadata
 		/// <param name="majorDigits">the number of components to be</param>
 		/// <returns>the version as a string of form "2.10" or null if the argument cannot be converted</returns>
 		[CanBeNull]
-		public static string ConvertBytesToVersionString(int[] components, int majorDigits)
+		public static string ConvertBytesToVersionString([CanBeNull] int[] components, int majorDigits)
 		{
 			if (components == null)
 			{
@@ -133,20 +133,20 @@ namespace Com.Drew.Metadata
 		}
 
 		[CanBeNull]
-		protected internal virtual string GetIndexedDescription(int tagType, params string[] descriptions)
+		protected internal virtual string GetIndexedDescription(int tagType, [NotNull] params string[] descriptions)
 		{
 			return GetIndexedDescription(tagType, 0, descriptions);
 		}
 
 		[CanBeNull]
-		protected internal virtual string GetIndexedDescription(int tagType, int baseIndex, params string[] descriptions)
+		protected internal virtual string GetIndexedDescription(int tagType, int baseIndex, [NotNull] params string[] descriptions)
 		{
 			int? index = _directory.GetInteger(tagType);
 			if (index == null)
 			{
 				return null;
 			}
-			int arrayIndex = index.Value - baseIndex;
+			int arrayIndex = (int)index - baseIndex;
 			if (arrayIndex >= 0 && arrayIndex < descriptions.Length)
 			{
 				string description = descriptions[arrayIndex];
@@ -192,7 +192,7 @@ namespace Com.Drew.Metadata
 		}
 
 		[CanBeNull]
-		protected internal virtual string GetFormattedInt(int tagType, string format)
+		protected internal virtual string GetFormattedInt(int tagType, [NotNull] string format)
 		{
 			int? value = _directory.GetInteger(tagType);
 			if (value == null)
@@ -203,7 +203,7 @@ namespace Com.Drew.Metadata
 		}
 
 		[CanBeNull]
-		protected internal virtual string GetFormattedFloat(int tagType, string format)
+		protected internal virtual string GetFormattedFloat(int tagType, [NotNull] string format)
 		{
 			float? value = _directory.GetFloatObject(tagType);
 			if (value == null)
@@ -214,7 +214,7 @@ namespace Com.Drew.Metadata
 		}
 
 		[CanBeNull]
-		protected internal virtual string GetFormattedString(int tagType, string format)
+		protected internal virtual string GetFormattedString(int tagType, [NotNull] string format)
 		{
 			string value = _directory.GetString(tagType);
 			if (value == null)
@@ -233,13 +233,13 @@ namespace Com.Drew.Metadata
 			{
 				return null;
 			}
-			return Sharpen.Extensions.CreateDate(value.Value).ToString();
+			return Sharpen.Extensions.CreateDate((long)value).ToString();
 		}
 
 		/// <summary>LSB first.</summary>
 		/// <remarks>LSB first. Labels may be null, a String, or a String[2] with (low label,high label) values.</remarks>
 		[CanBeNull]
-		protected internal virtual string GetBitFlagDescription(int tagType, params object[] labels)
+		protected internal virtual string GetBitFlagDescription(int tagType, [NotNull] params object[] labels)
 		{
 			int? value = _directory.GetInteger(tagType);
 			if (value == null)
@@ -253,7 +253,7 @@ namespace Com.Drew.Metadata
 				object labelObj = labels[bitIndex];
 				if (labelObj != null)
 				{
-					bool isBitSet = (value & 1) == 1;
+					bool isBitSet = ((int)value & 1) == 1;
 					if (labelObj is string[])
 					{
 						string[] labelPair = (string[])labelObj;
@@ -271,7 +271,7 @@ namespace Com.Drew.Metadata
 				value >>= 1;
 				bitIndex++;
 			}
-            return string.Join(", ", parts);
+			return StringUtil.Join(parts.AsIterable(), ", ");
 		}
 
 		[CanBeNull]

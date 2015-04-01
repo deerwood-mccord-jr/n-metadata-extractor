@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,11 +15,10 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using Com.Drew.Metadata;
-using Com.Drew.Metadata.Exif.Makernotes;
 using JetBrains.Annotations;
 using Sharpen;
 
@@ -30,10 +29,10 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 	/// <see cref="SonyType6MakernoteDirectory"/>
 	/// .
 	/// </summary>
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class SanyoMakernoteDescriptor : TagDescriptor<SanyoMakernoteDirectory>
 	{
-		public SanyoMakernoteDescriptor(SanyoMakernoteDirectory directory)
+		public SanyoMakernoteDescriptor([NotNull] SanyoMakernoteDirectory directory)
 			: base(directory)
 		{
 		}
@@ -43,92 +42,92 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		{
 			switch (tagType)
 			{
-                case SanyoMakernoteDirectory.TagSanyoQuality:
+				case SanyoMakernoteDirectory.TagSanyoQuality:
 				{
 					return GetSanyoQualityDescription();
 				}
 
-                case SanyoMakernoteDirectory.TagMacro:
+				case SanyoMakernoteDirectory.TagMacro:
 				{
 					return GetMacroDescription();
 				}
 
-                case SanyoMakernoteDirectory.TagDigitalZoom:
+				case SanyoMakernoteDirectory.TagDigitalZoom:
 				{
 					return GetDigitalZoomDescription();
 				}
 
-                case SanyoMakernoteDirectory.TagSequentialShot:
+				case SanyoMakernoteDirectory.TagSequentialShot:
 				{
 					return GetSequentialShotDescription();
 				}
 
-                case SanyoMakernoteDirectory.TagWideRange:
+				case SanyoMakernoteDirectory.TagWideRange:
 				{
 					return GetWideRangeDescription();
 				}
 
-                case SanyoMakernoteDirectory.TagColorAdjustmentMode:
+				case SanyoMakernoteDirectory.TagColorAdjustmentMode:
 				{
 					return GetColorAdjustmentModeDescription();
 				}
 
-                case SanyoMakernoteDirectory.TagQuickShot:
+				case SanyoMakernoteDirectory.TagQuickShot:
 				{
 					return GetQuickShotDescription();
 				}
 
-                case SanyoMakernoteDirectory.TagSelfTimer:
+				case SanyoMakernoteDirectory.TagSelfTimer:
 				{
 					return GetSelfTimerDescription();
 				}
 
-                case SanyoMakernoteDirectory.TagVoiceMemo:
+				case SanyoMakernoteDirectory.TagVoiceMemo:
 				{
 					return GetVoiceMemoDescription();
 				}
 
-                case SanyoMakernoteDirectory.TagRecordShutterRelease:
+				case SanyoMakernoteDirectory.TagRecordShutterRelease:
 				{
 					return GetRecordShutterDescription();
 				}
 
-                case SanyoMakernoteDirectory.TagFlickerReduce:
+				case SanyoMakernoteDirectory.TagFlickerReduce:
 				{
 					return GetFlickerReduceDescription();
 				}
 
-                case SanyoMakernoteDirectory.TagOpticalZoomOn:
+				case SanyoMakernoteDirectory.TagOpticalZoomOn:
 				{
 					return GetOptimalZoomOnDescription();
 				}
 
-                case SanyoMakernoteDirectory.TagDigitalZoomOn:
+				case SanyoMakernoteDirectory.TagDigitalZoomOn:
 				{
 					return GetDigitalZoomOnDescription();
 				}
 
-                case SanyoMakernoteDirectory.TagLightSourceSpecial:
+				case SanyoMakernoteDirectory.TagLightSourceSpecial:
 				{
 					return GetLightSourceSpecialDescription();
 				}
 
-                case SanyoMakernoteDirectory.TagResaved:
+				case SanyoMakernoteDirectory.TagResaved:
 				{
 					return GetResavedDescription();
 				}
 
-                case SanyoMakernoteDirectory.TagSceneSelect:
+				case SanyoMakernoteDirectory.TagSceneSelect:
 				{
 					return GetSceneSelectDescription();
 				}
 
-                case SanyoMakernoteDirectory.TagSequenceShotInterval:
+				case SanyoMakernoteDirectory.TagSequenceShotInterval:
 				{
 					return GetSequenceShotIntervalDescription();
 				}
 
-                case SanyoMakernoteDirectory.TagFlashMode:
+				case SanyoMakernoteDirectory.TagFlashMode:
 				{
 					return GetFlashModeDescription();
 				}
@@ -143,7 +142,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		[CanBeNull]
 		public virtual string GetSanyoQualityDescription()
 		{
-            int? value = _directory.GetInteger(SanyoMakernoteDirectory.TagSanyoQuality);
+			int? value = _directory.GetInteger(SanyoMakernoteDirectory.TagSanyoQuality);
 			if (value == null)
 			{
 				return null;
@@ -280,103 +279,103 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		[CanBeNull]
 		private string GetMacroDescription()
 		{
-            return GetIndexedDescription(SanyoMakernoteDirectory.TagMacro, "Normal", "Macro", "View", "Manual");
+			return GetIndexedDescription(SanyoMakernoteDirectory.TagMacro, "Normal", "Macro", "View", "Manual");
 		}
 
 		[CanBeNull]
 		private string GetDigitalZoomDescription()
 		{
-            return GetDecimalRational(SanyoMakernoteDirectory.TagDigitalZoom, 3);
+			return GetDecimalRational(SanyoMakernoteDirectory.TagDigitalZoom, 3);
 		}
 
 		[CanBeNull]
 		private string GetSequentialShotDescription()
 		{
-            return GetIndexedDescription(SanyoMakernoteDirectory.TagSequentialShot, "None", "Standard", "Best", "Adjust Exposure");
+			return GetIndexedDescription(SanyoMakernoteDirectory.TagSequentialShot, "None", "Standard", "Best", "Adjust Exposure");
 		}
 
 		[CanBeNull]
 		private string GetWideRangeDescription()
 		{
-            return GetIndexedDescription(SanyoMakernoteDirectory.TagWideRange, "Off", "On");
+			return GetIndexedDescription(SanyoMakernoteDirectory.TagWideRange, "Off", "On");
 		}
 
 		[CanBeNull]
 		private string GetColorAdjustmentModeDescription()
 		{
-            return GetIndexedDescription(SanyoMakernoteDirectory.TagColorAdjustmentMode, "Off", "On");
+			return GetIndexedDescription(SanyoMakernoteDirectory.TagColorAdjustmentMode, "Off", "On");
 		}
 
 		[CanBeNull]
 		private string GetQuickShotDescription()
 		{
-            return GetIndexedDescription(SanyoMakernoteDirectory.TagQuickShot, "Off", "On");
+			return GetIndexedDescription(SanyoMakernoteDirectory.TagQuickShot, "Off", "On");
 		}
 
 		[CanBeNull]
 		private string GetSelfTimerDescription()
 		{
-            return GetIndexedDescription(SanyoMakernoteDirectory.TagSelfTimer, "Off", "On");
+			return GetIndexedDescription(SanyoMakernoteDirectory.TagSelfTimer, "Off", "On");
 		}
 
 		[CanBeNull]
 		private string GetVoiceMemoDescription()
 		{
-            return GetIndexedDescription(SanyoMakernoteDirectory.TagVoiceMemo, "Off", "On");
+			return GetIndexedDescription(SanyoMakernoteDirectory.TagVoiceMemo, "Off", "On");
 		}
 
 		[CanBeNull]
 		private string GetRecordShutterDescription()
 		{
-            return GetIndexedDescription(SanyoMakernoteDirectory.TagRecordShutterRelease, "Record while down", "Press start, press stop");
+			return GetIndexedDescription(SanyoMakernoteDirectory.TagRecordShutterRelease, "Record while down", "Press start, press stop");
 		}
 
 		[CanBeNull]
 		private string GetFlickerReduceDescription()
 		{
-            return GetIndexedDescription(SanyoMakernoteDirectory.TagFlickerReduce, "Off", "On");
+			return GetIndexedDescription(SanyoMakernoteDirectory.TagFlickerReduce, "Off", "On");
 		}
 
 		[CanBeNull]
 		private string GetOptimalZoomOnDescription()
 		{
-            return GetIndexedDescription(SanyoMakernoteDirectory.TagOpticalZoomOn, "Off", "On");
+			return GetIndexedDescription(SanyoMakernoteDirectory.TagOpticalZoomOn, "Off", "On");
 		}
 
 		[CanBeNull]
 		private string GetDigitalZoomOnDescription()
 		{
-            return GetIndexedDescription(SanyoMakernoteDirectory.TagDigitalZoomOn, "Off", "On");
+			return GetIndexedDescription(SanyoMakernoteDirectory.TagDigitalZoomOn, "Off", "On");
 		}
 
 		[CanBeNull]
 		private string GetLightSourceSpecialDescription()
 		{
-            return GetIndexedDescription(SanyoMakernoteDirectory.TagLightSourceSpecial, "Off", "On");
+			return GetIndexedDescription(SanyoMakernoteDirectory.TagLightSourceSpecial, "Off", "On");
 		}
 
 		[CanBeNull]
 		private string GetResavedDescription()
 		{
-            return GetIndexedDescription(SanyoMakernoteDirectory.TagResaved, "No", "Yes");
+			return GetIndexedDescription(SanyoMakernoteDirectory.TagResaved, "No", "Yes");
 		}
 
 		[CanBeNull]
 		private string GetSceneSelectDescription()
 		{
-            return GetIndexedDescription(SanyoMakernoteDirectory.TagSceneSelect, "Off", "Sport", "TV", "Night", "User 1", "User 2", "Lamp");
+			return GetIndexedDescription(SanyoMakernoteDirectory.TagSceneSelect, "Off", "Sport", "TV", "Night", "User 1", "User 2", "Lamp");
 		}
 
 		[CanBeNull]
 		private string GetSequenceShotIntervalDescription()
 		{
-            return GetIndexedDescription(SanyoMakernoteDirectory.TagSequenceShotInterval, "5 frames/sec", "10 frames/sec", "15 frames/sec", "20 frames/sec");
+			return GetIndexedDescription(SanyoMakernoteDirectory.TagSequenceShotInterval, "5 frames/sec", "10 frames/sec", "15 frames/sec", "20 frames/sec");
 		}
 
 		[CanBeNull]
 		private string GetFlashModeDescription()
 		{
-            return GetIndexedDescription(SanyoMakernoteDirectory.TagFlashMode, "Auto", "Force", "Disabled", "Red eye");
+			return GetIndexedDescription(SanyoMakernoteDirectory.TagFlashMode, "Auto", "Force", "Disabled", "Red eye");
 		}
 	}
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,12 +15,10 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
-using Com.Drew.Imaging.Jpeg;
 using Com.Drew.Tools;
-using NUnit.Framework;
 using Sharpen;
 
 namespace Com.Drew.Imaging.Jpeg
@@ -30,7 +28,7 @@ namespace Com.Drew.Imaging.Jpeg
 	/// <see cref="JpegSegmentReader"/>
 	/// .
 	/// </summary>
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class JpegSegmentReaderTest
 	{
 		/// <exception cref="System.Exception"/>
@@ -114,7 +112,7 @@ namespace Com.Drew.Imaging.Jpeg
 		{
 			try
 			{
-				JpegSegmentReader.ReadSegments(new FilePath("Tests/Data/test.txt"), null);
+				JpegSegmentReader.ReadSegments(new FilePath("Tests/com/drew/imaging/jpeg/JpegSegmentReaderTest.java"), null);
 				NUnit.Framework.Assert.Fail("shouldn't be able to construct JpegSegmentReader with non-JPEG file");
 			}
 			catch (JpegProcessingException)

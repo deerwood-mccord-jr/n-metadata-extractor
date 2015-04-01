@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,18 +15,17 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using System;
 using System.IO;
-using Com.Drew.Lang;
 using JetBrains.Annotations;
 using Sharpen;
 
 namespace Com.Drew.Lang
 {
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class RandomAccessStreamReader : RandomAccessReader
 	{
 		private const int DefaultChunkLength = 2 * 1024;
@@ -42,12 +41,12 @@ namespace Com.Drew.Lang
 
 		private int _streamLength;
 
-		public RandomAccessStreamReader(InputStream stream)
+		public RandomAccessStreamReader([NotNull] InputStream stream)
 			: this(stream, DefaultChunkLength)
 		{
 		}
 
-		public RandomAccessStreamReader(InputStream stream, int chunkLength)
+		public RandomAccessStreamReader([NotNull] InputStream stream, int chunkLength)
 		{
 			if (stream == null)
 			{

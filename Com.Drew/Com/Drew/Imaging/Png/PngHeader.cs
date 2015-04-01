@@ -1,12 +1,11 @@
 using System.IO;
-using Com.Drew.Imaging.Png;
 using Com.Drew.Lang;
 using JetBrains.Annotations;
 using Sharpen;
 
 namespace Com.Drew.Imaging.Png
 {
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class PngHeader
 	{
 		private int _imageWidth;
@@ -25,7 +24,7 @@ namespace Com.Drew.Imaging.Png
 		private sbyte _interlaceMethod;
 
 		/// <exception cref="Com.Drew.Imaging.Png.PngProcessingException"/>
-		public PngHeader(sbyte[] bytes)
+		public PngHeader([NotNull] sbyte[] bytes)
 		{
 			if (bytes.Length != 13)
 			{

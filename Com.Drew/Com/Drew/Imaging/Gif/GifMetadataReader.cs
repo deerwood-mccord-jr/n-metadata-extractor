@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,11 +15,11 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using System.IO;
-using Com.Drew.Imaging.Gif;
+using Com.Drew.Metadata.File;
 using Com.Drew.Metadata.Gif;
 using JetBrains.Annotations;
 using Sharpen;
@@ -27,30 +27,29 @@ using Sharpen;
 namespace Com.Drew.Imaging.Gif
 {
 	/// <summary>Obtains metadata from GIF files.</summary>
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class GifMetadataReader
 	{
 		/// <exception cref="System.IO.IOException"/>
 		[NotNull]
-		public static Com.Drew.Metadata.Metadata ReadMetadata(FilePath file)
+		public static Com.Drew.Metadata.Metadata ReadMetadata([NotNull] FilePath file)
 		{
-			FileInputStream stream = null;
+			InputStream inputStream = new FileInputStream(file);
+			Com.Drew.Metadata.Metadata metadata;
 			try
 			{
-				stream = new FileInputStream(file);
-				return ReadMetadata(stream);
+				metadata = ReadMetadata(inputStream);
 			}
 			finally
 			{
-				if (stream != null)
-				{
-					stream.Close();
-				}
+				inputStream.Close();
 			}
+			new FileMetadataReader().Read(file, metadata);
+			return metadata;
 		}
 
 		[NotNull]
-		public static Com.Drew.Metadata.Metadata ReadMetadata(InputStream inputStream)
+		public static Com.Drew.Metadata.Metadata ReadMetadata([NotNull] InputStream inputStream)
 		{
 			Com.Drew.Metadata.Metadata metadata = new Com.Drew.Metadata.Metadata();
 			new GifReader().Extract(new Com.Drew.Lang.StreamReader(inputStream), metadata);

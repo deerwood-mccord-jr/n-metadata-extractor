@@ -12,14 +12,14 @@ namespace Com.Adobe.Xmp.Options
 {
 	/// <summary>
 	/// Options for
-	/// <see cref="Com.Adobe.Xmp.XMPMetaFactory.Parse(InputStream, ParseOptions)"/>
+	/// <see cref="Com.Adobe.Xmp.XMPMetaFactory.Parse(System.IO.InputStream, ParseOptions)"/>
 	/// .
 	/// </summary>
 	/// <since>24.01.2006</since>
 	public sealed class ParseOptions : Com.Adobe.Xmp.Options.Options
 	{
 		/// <summary>Require a surrounding &quot;x:xmpmeta&quot; element in the xml-document.</summary>
-		public const int RequireXMPMeta = unchecked((int)(0x0001));
+		public const int RequireXmpMeta = unchecked((int)(0x0001));
 
 		/// <summary>Do not reconcile alias differences, throw an exception instead.</summary>
 		public const int StrictAliasing = unchecked((int)(0x0004));
@@ -39,21 +39,21 @@ namespace Com.Adobe.Xmp.Options
 			SetOption(FixControlChars | AcceptLatin1, true);
 		}
 
-		/// <returns>Returns the RequireXMPMeta.</returns>
+		/// <returns>Returns the requireXMPMeta.</returns>
 		public bool GetRequireXMPMeta()
 		{
-			return GetOption(RequireXMPMeta);
+			return GetOption(RequireXmpMeta);
 		}
 
 		/// <param name="value">the value to set</param>
 		/// <returns>Returns the instance to call more set-methods.</returns>
 		public Com.Adobe.Xmp.Options.ParseOptions SetRequireXMPMeta(bool value)
 		{
-			SetOption(RequireXMPMeta, value);
+			SetOption(RequireXmpMeta, value);
 			return this;
 		}
 
-		/// <returns>Returns the StrictAliasing.</returns>
+		/// <returns>Returns the strictAliasing.</returns>
 		public bool GetStrictAliasing()
 		{
 			return GetOption(StrictAliasing);
@@ -67,7 +67,7 @@ namespace Com.Adobe.Xmp.Options
 			return this;
 		}
 
-		/// <returns>Returns the StrictAliasing.</returns>
+		/// <returns>Returns the strictAliasing.</returns>
 		public bool GetFixControlChars()
 		{
 			return GetOption(FixControlChars);
@@ -81,7 +81,7 @@ namespace Com.Adobe.Xmp.Options
 			return this;
 		}
 
-		/// <returns>Returns the StrictAliasing.</returns>
+		/// <returns>Returns the strictAliasing.</returns>
 		public bool GetAcceptLatin1()
 		{
 			return GetOption(AcceptLatin1);
@@ -114,7 +114,7 @@ namespace Com.Adobe.Xmp.Options
 		{
 			switch (option)
 			{
-				case RequireXMPMeta:
+				case RequireXmpMeta:
 				{
 					return "REQUIRE_XMP_META";
 				}
@@ -149,7 +149,7 @@ namespace Com.Adobe.Xmp.Options
 		/// <seealso cref="Options.GetValidOptions()"/>
 		protected internal override int GetValidOptions()
 		{
-            return RequireXMPMeta | StrictAliasing | FixControlChars | AcceptLatin1 | OmitNormalization;
+			return RequireXmpMeta | StrictAliasing | FixControlChars | AcceptLatin1 | OmitNormalization;
 		}
 	}
 }

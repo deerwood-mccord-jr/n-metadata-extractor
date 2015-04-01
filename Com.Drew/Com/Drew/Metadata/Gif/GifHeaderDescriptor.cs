@@ -1,13 +1,13 @@
 using Com.Drew.Metadata;
-using Com.Drew.Metadata.Gif;
+using JetBrains.Annotations;
 using Sharpen;
 
 namespace Com.Drew.Metadata.Gif
 {
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class GifHeaderDescriptor : TagDescriptor<GifHeaderDirectory>
 	{
-		public GifHeaderDescriptor(GifHeaderDirectory directory)
+		public GifHeaderDescriptor([NotNull] GifHeaderDirectory directory)
 			: base(directory)
 		{
 		}

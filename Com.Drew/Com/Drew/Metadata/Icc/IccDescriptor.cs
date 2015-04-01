@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,24 +15,24 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using System;
 using System.IO;
 using System.Text;
 using Com.Drew.Lang;
 using Com.Drew.Metadata;
-using Com.Drew.Metadata.Icc;
 using JetBrains.Annotations;
 using Sharpen;
 
 namespace Com.Drew.Metadata.Icc
 {
-	/// <author>Yuri Binev, Drew Noakes http://drewnoakes.com</author>
+	/// <author>Yuri Binev</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class IccDescriptor : TagDescriptor<IccDirectory>
 	{
-		public IccDescriptor(IccDirectory directory)
+		public IccDescriptor([NotNull] IccDirectory directory)
 			: base(directory)
 		{
 		}
@@ -88,6 +88,10 @@ namespace Com.Drew.Metadata.Icc
 			try
 			{
 				sbyte[] bytes = _directory.GetByteArray(tagType);
+				if (bytes == null)
+				{
+					return _directory.GetString(tagType);
+				}
 				RandomAccessReader reader = new ByteArrayReader(bytes);
 				int iccTagType = reader.GetInt32(0);
 				switch (iccTagType)
@@ -136,13 +140,13 @@ namespace Com.Drew.Metadata.Icc
 
 							case 1:
 							{
-								observerString = "1931 2В°";
+								observerString = "1931 2°";
 								break;
 							}
 
 							case 2:
 							{
-								observerString = "1964 10В°";
+								observerString = "1964 10°";
 								break;
 							}
 
@@ -242,7 +246,7 @@ namespace Com.Drew.Metadata.Icc
 								break;
 							}
 						}
-						return Sharpen.Extensions.StringFormat("%s Observer, Backing (%s, %s, %s), Geometry %s, Flare %d%%, Illuminant %s", observerString, x, y, z, geometryString, Math.Round(flare * 100), illuminantString);
+						return Sharpen.Extensions.StringFormat("%s Observer, Backing (%s, %s, %s), Geometry %s, Flare %d%%, Illuminant %s", observerString, x, y, z, geometryString, (long)System.Math.Round(flare * 100), illuminantString);
 					}
 
 					case IccTagTypeXyzArray:
@@ -326,10 +330,10 @@ namespace Com.Drew.Metadata.Icc
 		{
 			if (precision < 1)
 			{
-				return string.Empty + Math.Round(value);
+				return string.Empty + (long)System.Math.Round(value);
 			}
 			long intPart = Math.Abs((long)value);
-			long rest = (int)Math.Round((Math.Abs(value) - intPart) * Math.Pow(10, precision));
+			long rest = (int)(long)System.Math.Round((Math.Abs(value) - intPart) * Math.Pow(10, precision));
 			long restKept = rest;
 			string res = string.Empty;
 			sbyte cour;
@@ -511,14 +515,14 @@ namespace Com.Drew.Metadata.Icc
 			{
 				return null;
 			}
-			int m = (value.Value & unchecked((int)(0xFF000000))) >> 24;
-			int r = (value.Value & unchecked((int)(0x00F00000))) >> 20;
-			int R = (value.Value & unchecked((int)(0x000F0000))) >> 16;
+			int m = ((int)value & unchecked((int)(0xFF000000))) >> 24;
+			int r = ((int)value & unchecked((int)(0x00F00000))) >> 20;
+			int R = ((int)value & unchecked((int)(0x000F0000))) >> 16;
 			return Sharpen.Extensions.StringFormat("%d.%d.%d", m, r, R);
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		private static int GetInt32FromString(string @string)
+		private static int GetInt32FromString([NotNull] string @string)
 		{
 			sbyte[] bytes = Sharpen.Runtime.GetBytesForString(@string);
 			return new ByteArrayReader(bytes).GetInt32(0);

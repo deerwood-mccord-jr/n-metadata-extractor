@@ -1,20 +1,21 @@
 using System.IO;
 using Com.Drew.Lang;
-using Com.Drew.Metadata.Gif;
+using JetBrains.Annotations;
 using Sharpen;
 
 namespace Com.Drew.Metadata.Gif
 {
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class GifReader
 	{
 		private const string Gif87aVersionIdentifier = "87a";
 
 		private const string Gif89aVersionIdentifier = "89a";
 
-		public virtual void Extract(SequentialReader reader, Com.Drew.Metadata.Metadata metadata)
+		public virtual void Extract([NotNull] SequentialReader reader, [NotNull] Com.Drew.Metadata.Metadata metadata)
 		{
-			GifHeaderDirectory directory = metadata.GetOrCreateDirectory<GifHeaderDirectory>();
+			GifHeaderDirectory directory = new GifHeaderDirectory();
+			metadata.AddDirectory(directory);
 			// FILE HEADER
 			//
 			// 3 - signature: "GIF"

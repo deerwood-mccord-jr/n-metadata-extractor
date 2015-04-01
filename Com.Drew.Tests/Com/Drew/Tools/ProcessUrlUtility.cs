@@ -22,7 +22,6 @@ using System;
 using System.IO;
 using Com.Drew.Imaging;
 using Com.Drew.Metadata;
-using Com.Drew.Tools;
 using Sharpen;
 
 namespace Com.Drew.Tools
@@ -107,6 +106,6 @@ namespace Com.Drew.Tools
 			}
 		}
 		//        if (processedCount > 0)
-		//            System.out.println(Sharpen.Extensions.StringFormat("Processed %,d files (%,d bytes) with %,d exceptions and %,d file errors in %s", processedCount, byteCount, exceptionCount, errorCount, path));
+		//            System.out.println(String.format("Processed %,d files (%,d bytes) with %,d exceptions and %,d file errors in %s", processedCount, byteCount, exceptionCount, errorCount, path));
 	}
 }

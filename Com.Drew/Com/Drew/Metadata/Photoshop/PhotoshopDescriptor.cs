@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,23 +15,23 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using System;
 using System.IO;
 using Com.Drew.Lang;
 using Com.Drew.Metadata;
-using Com.Drew.Metadata.Photoshop;
 using JetBrains.Annotations;
 using Sharpen;
 
 namespace Com.Drew.Metadata.Photoshop
 {
-	/// <author>Yuri Binev, Drew Noakes http://drewnoakes.com</author>
+	/// <author>Yuri Binev</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class PhotoshopDescriptor : TagDescriptor<PhotoshopDirectory>
 	{
-		public PhotoshopDescriptor(PhotoshopDirectory directory)
+		public PhotoshopDescriptor([NotNull] PhotoshopDirectory directory)
 			: base(directory)
 		{
 		}
@@ -113,6 +113,10 @@ namespace Com.Drew.Metadata.Photoshop
 			try
 			{
 				sbyte[] b = _directory.GetByteArray(PhotoshopDirectory.TagJpegQuality);
+				if (b == null)
+				{
+					return _directory.GetString(PhotoshopDirectory.TagJpegQuality);
+				}
 				RandomAccessReader reader = new ByteArrayReader(b);
 				int q = reader.GetUInt16(0);
 				// & 0xFFFF;
@@ -350,7 +354,7 @@ namespace Com.Drew.Metadata.Photoshop
 			}
 			catch (IOException)
 			{
-				/*for (int i=0;i<sliceCount;i++){
+            /*for (int i=0;i<sliceCount;i++){
                 pos+=16;
                 int slNameLen=getInt32(b,pos);
                 pos+=4;

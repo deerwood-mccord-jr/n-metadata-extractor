@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,17 +15,16 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using System.IO;
-using Com.Drew.Imaging.Jpeg;
 using Com.Drew.Metadata.Exif;
 using Sharpen;
 
 namespace Com.Drew.Imaging.Jpeg
 {
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class JpegMetadataReaderTest
 	{
 		/// <exception cref="System.Exception"/>
@@ -44,7 +43,7 @@ namespace Com.Drew.Imaging.Jpeg
 
 		private void Validate(Com.Drew.Metadata.Metadata metadata)
 		{
-			Com.Drew.Metadata.Directory directory = metadata.GetDirectory<ExifSubIFDDirectory>();
+			Com.Drew.Metadata.Directory directory = metadata.GetFirstDirectoryOfType<ExifSubIFDDirectory>();
 			NUnit.Framework.Assert.IsNotNull(directory);
 			Sharpen.Tests.AreEqual("80", directory.GetString(ExifSubIFDDirectory.TagIsoEquivalent));
 		}

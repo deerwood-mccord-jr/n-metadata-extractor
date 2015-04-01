@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,18 +15,17 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using System.Collections.Generic;
-using Com.Drew.Metadata.Exif.Makernotes;
 using JetBrains.Annotations;
 using Sharpen;
 
 namespace Com.Drew.Metadata.Exif.Makernotes
 {
 	/// <summary>Describes tags specific to Sanyo cameras.</summary>
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class SanyoMakernoteDirectory : Com.Drew.Metadata.Directory
 	{
 		public const int TagMakernoteOffset = unchecked((int)(0x00ff));
@@ -84,7 +83,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		public const int TagDataDump = unchecked((int)(0x0f00));
 
 		[NotNull]
-		protected internal static readonly Dictionary<int, string> _tagNameMap = new Dictionary<int, string>();
+		protected internal static readonly Dictionary<int?, string> _tagNameMap = new Dictionary<int?, string>();
 
 		static SanyoMakernoteDirectory()
 		{
@@ -129,7 +128,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		}
 
 		[NotNull]
-		protected internal override Dictionary<int, string> GetTagNameMap()
+		protected internal override Dictionary<int?, string> GetTagNameMap()
 		{
 			return _tagNameMap;
 		}

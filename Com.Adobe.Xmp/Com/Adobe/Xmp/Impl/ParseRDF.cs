@@ -9,7 +9,6 @@
 using System.Collections;
 using System.Xml;
 using Com.Adobe.Xmp;
-using Com.Adobe.Xmp.Impl;
 using Com.Adobe.Xmp.Options;
 using Sharpen;
 
@@ -917,7 +916,7 @@ namespace Com.Adobe.Xmp.Impl
 			// to add the fields or qualifiers.
 			// ! Because of implementation vagaries, 
 			//   the xmpParent is the tree root for top level properties.
-			// ! The schema is found, created if necessary, by AddChildNode.
+			// ! The schema is found, created if necessary, by addChildNode.
 			XMPNode childNode = AddChildNode(xmp, xmpParent, xmlNode, string.Empty, isTopLevel);
 			bool childIsStruct = false;
 			if (hasValueAttr || hasResourceAttr)
@@ -1114,7 +1113,7 @@ namespace Com.Adobe.Xmp.Impl
 			// Make sure an xml:lang qualifier stays at the front.
 			// Check for duplicate names between the value node's qualifiers and the parent's children. 
 			// The parent's children are about to become qualifiers. Check here, between the groups. 
-			// Intra-group duplicates are caught by XMPNode#AddChild(...).
+			// Intra-group duplicates are caught by XMPNode#addChild(...).
 			if (valueNode.GetOptions().GetHasLanguage())
 			{
 				if (xmpParent.GetOptions().GetHasLanguage())

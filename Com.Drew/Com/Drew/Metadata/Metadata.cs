@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,8 +15,8 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using System;
 using System.Collections.Generic;
@@ -28,166 +28,101 @@ namespace Com.Drew.Metadata
 	/// <summary>A top-level object that holds the metadata values extracted from an image.</summary>
 	/// <remarks>
 	/// A top-level object that holds the metadata values extracted from an image.
-	/// <p/>
+	/// <p>
 	/// Metadata objects may contain zero or more
 	/// <see cref="Directory"/>
 	/// objects.  Each directory may contain zero or more tags
 	/// with corresponding values.
 	/// </remarks>
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public sealed class Metadata
 	{
 		[NotNull]
-		private readonly IDictionary<Type, Com.Drew.Metadata.Directory> _directoryByClass = new Dictionary<Type, Com.Drew.Metadata.Directory>();
+		private readonly IDictionary<Type, ICollection<Com.Drew.Metadata.Directory>> _directoryListByClass = new Dictionary<Type, ICollection<Com.Drew.Metadata.Directory>>();
 
-		/// <summary>List of Directory objects set against this object.</summary>
-		/// <remarks>
-		/// List of Directory objects set against this object.  Keeping a list handy makes
-		/// creation of an Iterator and counting tags simple.
-		/// </remarks>
-		[NotNull]
-		private readonly ICollection<Com.Drew.Metadata.Directory> _directoryList = new AList<Com.Drew.Metadata.Directory>();
-
-		/// <summary>Returns an objects for iterating over Directory objects in the order in which they were added.</summary>
-		/// <returns>an iterable collection of directories</returns>
+		/// <summary>
+		/// Returns an iterable set of the
+		/// <see cref="Directory"/>
+		/// instances contained in this metadata collection.
+		/// </summary>
+		/// <returns>an iterable set of directories</returns>
 		[NotNull]
 		public Iterable<Com.Drew.Metadata.Directory> GetDirectories()
 		{
-			return _directoryList.AsIterable();
+			return new Metadata.DirectoryIterable(_directoryListByClass);
 		}
 
-		/// <summary>Returns a count of unique directories in this metadata collection.</summary>
+		[CanBeNull]
+		public ICollection<T> GetDirectoriesOfType<T>()
+			where T : Com.Drew.Metadata.Directory
+		{
+			System.Type type = typeof(T);
+			return (ICollection<T>)_directoryListByClass.Get(type);
+		}
+
+		/// <summary>Returns the count of directories in this metadata collection.</summary>
 		/// <returns>the number of unique directory types set for this metadata collection</returns>
 		public int GetDirectoryCount()
 		{
-			return _directoryList.Count;
+			int count = 0;
+			foreach (KeyValuePair<Type, ICollection<Com.Drew.Metadata.Directory>> pair in _directoryListByClass.EntrySet())
+			{
+				count += pair.Value.Count;
+			}
+			return count;
 		}
 
-        /// <summary>
-        /// Returns a
-        /// <see cref="Directory"/>
-        /// of specified type.  If this
-        /// <see cref="Metadata"/>
-        /// object already contains
-        /// such a directory, it is returned.  Otherwise a new instance of this directory will be created and stored within
-        /// this
-        /// <see cref="Metadata"/>
-        /// object.
-        /// </summary>
-        /// <param name="type">the type of the Directory implementation required.</param>
-        /// <returns>a directory of the specified type.</returns>
-        /// HACK: this method is absent in core library. It was converted to GetOrCreateDirectory<T>()
-        [NotNull]
-        public Directory GetOrCreateDirectory(Type type)
-        {
-            // We suppress the warning here as the code asserts a map signature of Class<T>,T.
-            // So after get(Class<T>) it is for sure the result is from type T.
-            // check if we've already issued this type of directory
-            if (_directoryByClass.ContainsKey(type))
-            {
-                return _directoryByClass.Get(type);
-            }
-            Directory directory;
-            try
-            {
-                directory = (Directory)System.Activator.CreateInstance(type);
-            }
-            catch (Exception)
-            {
-                throw new RuntimeException("Cannot instantiate provided Directory type: " + type.ToString());
-            }
-            // store the directory
-            _directoryByClass.Put(type, directory);
-            _directoryList.Add(directory);
-            return directory;
-        }
-
-		/// <summary>
-		/// Returns a
+		/// <summary>Adds a directory to this metadata collection.</summary>
+		/// <param name="directory">
+		/// the
 		/// <see cref="Directory"/>
-		/// of specified type.  If this
-		/// <see cref="Metadata"/>
-		/// object already contains
-		/// such a directory, it is returned.  Otherwise a new instance of this directory will be created and stored within
-		/// this
-		/// <see cref="Metadata"/>
-		/// object.
-		/// </summary>
-        /// <typeparam name="T">the type of the Directory implementation required.</typeparam>
-		/// <returns>a directory of the specified type.</returns>
-		[NotNull]
-		public T GetOrCreateDirectory<T>()
+		/// to add into this metadata collection.
+		/// </param>
+		public void AddDirectory<T>([NotNull] T directory)
 			where T : Com.Drew.Metadata.Directory
 		{
-			System.Type type = typeof(T);
-			// We suppress the warning here as the code asserts a map signature of Class<T>,T.
-			// So after get(Class<T>) it is for sure the result is from type T.
-			// check if we've already issued this type of directory
-			if (_directoryByClass.ContainsKey(type))
-			{
-				return (T)_directoryByClass.Get(type);
-			}
-			T directory;
-			try
-			{
-				directory = (T) System.Activator.CreateInstance(type);
-			}
-			catch (Exception)
-			{
-				throw new RuntimeException("Cannot instantiate provided Directory type: " + type.ToString());
-			}
-			// store the directory
-			_directoryByClass.Put(type, directory);
-			_directoryList.Add(directory);
-			return directory;
+			GetOrCreateDirectoryList(directory.GetType()).Add(directory);
 		}
 
 		/// <summary>
-		/// If this
-		/// <see cref="Metadata"/>
-		/// object contains a
+		/// Gets the first
 		/// <see cref="Directory"/>
-		/// of the specified type, it is returned.
-		/// Otherwise <code>null</code> is returned.
+		/// of the specified type contained within this metadata collection.
+		/// If no instances of this type are present, <code>null</code> is returned.
 		/// </summary>
-        /// <typeparam name="T">the Directory type</typeparam>
-		/// <returns>
-		/// a Directory of type T if it exists in this
-		/// <see cref="Metadata"/>
-		/// object, otherwise <code>null</code>.
-		/// </returns>
+		/// <param name="type">the Directory type</param>
+		/// <?/>
+		/// <returns>the first Directory of type T in this metadata collection, or <code>null</code> if none exist</returns>
 		[CanBeNull]
-		public T GetDirectory<T>()
+		public T GetFirstDirectoryOfType<T>()
 			where T : Com.Drew.Metadata.Directory
 		{
 			System.Type type = typeof(T);
 			// We suppress the warning here as the code asserts a map signature of Class<T>,T.
 			// So after get(Class<T>) it is for sure the result is from type T.
-			return (T)_directoryByClass.Get(type);
+			ICollection<Com.Drew.Metadata.Directory> list = GetDirectoryList(type);
+			if (list == null || list.IsEmpty())
+			{
+				return null;
+			}
+			return (T)list.Iterator().Next();
 		}
 
-		/// <summary>
-		/// Indicates whether a given directory type has been created in this metadata
-		/// repository.
-		/// </summary>
-		/// <remarks>
-		/// Indicates whether a given directory type has been created in this metadata
-		/// repository.  Directories are created by calling <code>getOrCreateDirectory(Class)</code>.
-		/// </remarks>
-		/// <typeparam name="T">
+		/// <summary>Indicates whether an instance of the given directory type exists in this Metadata instance.</summary>
+		/// <param name="type">
 		/// the
 		/// <see cref="Directory"/>
 		/// type
-        /// </typeparam>
+		/// </param>
 		/// <returns>
-		/// true if the
+		/// <code>true</code> if a
 		/// <see cref="Directory"/>
-		/// has been created
+		/// of the specified type exists, otherwise <code>false</code>
 		/// </returns>
-		public bool ContainsDirectory<T>()
-			where T : Com.Drew.Metadata.Directory
+		public bool ContainsDirectoryOfType(Type type)
 		{
-			return _directoryByClass.ContainsKey(typeof(T));
+			ICollection<Com.Drew.Metadata.Directory> list = GetDirectoryList(type);
+			return list != null && !list.IsEmpty();
 		}
 
 		/// <summary>Indicates whether any errors were reported during the reading of metadata values.</summary>
@@ -200,7 +135,7 @@ namespace Com.Drew.Metadata
 		/// <returns>whether one of the contained directories has an error</returns>
 		public bool HasErrors()
 		{
-			foreach (Com.Drew.Metadata.Directory directory in _directoryList)
+			foreach (Com.Drew.Metadata.Directory directory in GetDirectories())
 			{
 				if (directory.HasErrors())
 				{
@@ -208,6 +143,91 @@ namespace Com.Drew.Metadata
 				}
 			}
 			return false;
+		}
+
+		public override string ToString()
+		{
+			int count = GetDirectoryCount();
+			return Sharpen.Extensions.StringFormat("Metadata (%d %s)", count, count == 1 ? "directory" : "directories");
+		}
+
+		[CanBeNull]
+		private ICollection<Com.Drew.Metadata.Directory> GetDirectoryList<T>()
+			where T : Com.Drew.Metadata.Directory
+		{
+			System.Type type = typeof(T);
+			return _directoryListByClass.Get(type);
+		}
+
+		[NotNull]
+		private ICollection<Com.Drew.Metadata.Directory> GetOrCreateDirectoryList<T>()
+			where T : Com.Drew.Metadata.Directory
+		{
+			System.Type type = typeof(T);
+			ICollection<Com.Drew.Metadata.Directory> collection = GetDirectoryList(type);
+			if (collection != null)
+			{
+				return collection;
+			}
+			collection = new AList<Com.Drew.Metadata.Directory>();
+			_directoryListByClass.Put(type, collection);
+			return collection;
+		}
+
+		private class DirectoryIterable : Iterable<Com.Drew.Metadata.Directory>
+		{
+			private readonly IDictionary<Type, ICollection<Com.Drew.Metadata.Directory>> _map;
+
+			public DirectoryIterable(IDictionary<Type, ICollection<Com.Drew.Metadata.Directory>> map)
+			{
+				_map = map;
+			}
+
+			public virtual Sharpen.Iterator<Com.Drew.Metadata.Directory> Iterator()
+			{
+				return new Metadata.DirectoryIterable.DirectoryIterator(_map);
+			}
+
+			private class DirectoryIterator : Iterator<Com.Drew.Metadata.Directory>
+			{
+				[NotNull]
+				private readonly Iterator<KeyValuePair<Type, ICollection<Com.Drew.Metadata.Directory>>> _mapIterator;
+
+				[CanBeNull]
+				private Iterator<Com.Drew.Metadata.Directory> _listIterator;
+
+				public DirectoryIterator(IDictionary<Type, ICollection<Com.Drew.Metadata.Directory>> map)
+				{
+					_mapIterator = map.EntrySet().Iterator();
+					if (_mapIterator.HasNext())
+					{
+						_listIterator = _mapIterator.Next().Value.Iterator();
+					}
+				}
+
+				public virtual bool HasNext()
+				{
+					return _listIterator != null && (_listIterator.HasNext() || _mapIterator.HasNext());
+				}
+
+				public virtual Com.Drew.Metadata.Directory Next()
+				{
+					if (_listIterator == null || (!_listIterator.HasNext() && !_mapIterator.HasNext()))
+					{
+						throw new NoSuchElementException();
+					}
+					while (!_listIterator.HasNext())
+					{
+						_listIterator = _mapIterator.Next().Value.Iterator();
+					}
+					return _listIterator.Next();
+				}
+
+				public virtual void Remove()
+				{
+					throw new NotSupportedException();
+				}
+			}
 		}
 	}
 }

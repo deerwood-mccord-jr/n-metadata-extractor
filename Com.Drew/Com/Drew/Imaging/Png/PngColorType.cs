@@ -1,10 +1,9 @@
-using Com.Drew.Imaging.Png;
 using JetBrains.Annotations;
 using Sharpen;
 
 namespace Com.Drew.Imaging.Png
 {
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	[System.Serializable]
 	public sealed class PngColorType
 	{
@@ -27,7 +26,7 @@ namespace Com.Drew.Imaging.Png
 		[CanBeNull]
 		public static Com.Drew.Imaging.Png.PngColorType FromNumericValue(int numericValue)
 		{
-            Com.Drew.Imaging.Png.PngColorType[] colorTypes = typeof(Com.Drew.Imaging.Png.PngColorType).GetEnumConstants<PngColorType>();
+			Com.Drew.Imaging.Png.PngColorType[] colorTypes = typeof(Com.Drew.Imaging.Png.PngColorType).GetEnumConstants();
 			foreach (Com.Drew.Imaging.Png.PngColorType colorType in colorTypes)
 			{
 				if (colorType.GetNumericValue() == numericValue)
@@ -46,7 +45,7 @@ namespace Com.Drew.Imaging.Png
 		[NotNull]
 		private readonly int[] _allowedBitDepths;
 
-		private PngColorType(int numericValue, string description, params int[] allowedBitDepths)
+		private PngColorType(int numericValue, [NotNull] string description, [NotNull] params int[] allowedBitDepths)
 		{
 			_numericValue = numericValue;
 			_description = description;

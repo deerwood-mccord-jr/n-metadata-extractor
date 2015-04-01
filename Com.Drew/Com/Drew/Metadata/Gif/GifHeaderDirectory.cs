@@ -1,11 +1,10 @@
 using System.Collections.Generic;
-using Com.Drew.Metadata.Gif;
 using JetBrains.Annotations;
 using Sharpen;
 
 namespace Com.Drew.Metadata.Gif
 {
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class GifHeaderDirectory : Com.Drew.Metadata.Directory
 	{
 		public const int TagGifFormatVersion = 1;
@@ -27,7 +26,7 @@ namespace Com.Drew.Metadata.Gif
 		public const int TagPixelAspectRatio = 9;
 
 		[NotNull]
-		protected internal static readonly Dictionary<int, string> _tagNameMap = new Dictionary<int, string>();
+		protected internal static readonly Dictionary<int?, string> _tagNameMap = new Dictionary<int?, string>();
 
 		static GifHeaderDirectory()
 		{
@@ -54,7 +53,7 @@ namespace Com.Drew.Metadata.Gif
 		}
 
 		[NotNull]
-		protected internal override Dictionary<int, string> GetTagNameMap()
+		protected internal override Dictionary<int?, string> GetTagNameMap()
 		{
 			return _tagNameMap;
 		}

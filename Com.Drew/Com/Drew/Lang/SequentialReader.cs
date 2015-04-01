@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,17 +15,16 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using System.IO;
-using Com.Drew.Lang;
 using JetBrains.Annotations;
 using Sharpen;
 
 namespace Com.Drew.Lang
 {
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public abstract class SequentialReader
 	{
 		private bool _isMotorolaByteOrder = true;
@@ -46,11 +45,11 @@ namespace Com.Drew.Lang
 		/// <summary>Skips forward in the sequence.</summary>
 		/// <remarks>
 		/// Skips forward in the sequence. If the sequence ends, an
-		/// <see cref="EOFException"/>
+		/// <see cref="System.IO.EOFException"/>
 		/// is thrown.
 		/// </remarks>
 		/// <param name="n">the number of byte to skip. Must be zero or greater.</param>
-		/// <exception cref="EOFException">the end of the sequence is reached.</exception>
+		/// <exception cref="System.IO.EOFException">the end of the sequence is reached.</exception>
 		/// <exception cref="System.IO.IOException">an error occurred reading from the underlying source.</exception>
 		public abstract void Skip(long n);
 
@@ -122,43 +121,41 @@ namespace Com.Drew.Lang
 
 		/// <summary>Returns a signed 16-bit int calculated from two bytes of data (MSB, LSB).</summary>
 		/// <returns>the 16 bit int value, between 0x0000 and 0xFFFF</returns>
-		/// <exception cref="System.IO.IOException">the buffer does not contain enough bytes to service the request, or index is negative</exception>
+		/// <exception cref="System.IO.IOException">the buffer does not contain enough bytes to service the request</exception>
 		public virtual short GetInt16()
 		{
 			if (_isMotorolaByteOrder)
 			{
 				// Motorola - MSB first
-				return (short)(((short)GetByte() << 8 & 0xFF00 | ((short)GetByte() & (short)unchecked((int)(0xFF)))));
+				return (short)(((short)GetByte() << 8 & unchecked((short)(0xFF00))) | ((short)GetByte() & (short)0xFF));
 			}
 			else
 			{
 				// Intel ordering - LSB first
-				return (short)(((short)GetByte() & (short)unchecked((int)(0xFF))) | ((short)GetByte() << 8 & 0xFF00));
+				return (short)(((short)GetByte() & (short)0xFF) | ((short)GetByte() << 8 & unchecked((short)(0xFF00))));
 			}
 		}
 
 		/// <summary>Get a 32-bit unsigned integer from the buffer, returning it as a long.</summary>
 		/// <returns>the unsigned 32-bit int value as a long, between 0x00000000 and 0xFFFFFFFF</returns>
-		/// <exception cref="System.IO.IOException">the buffer does not contain enough bytes to service the request, or index is negative</exception>
+		/// <exception cref="System.IO.IOException">the buffer does not contain enough bytes to service the request</exception>
 		public virtual long GetUInt32()
 		{
 			if (_isMotorolaByteOrder)
 			{
 				// Motorola - MSB first (big endian)
-				return (((long)GetByte()) << 24 & unchecked((long)(0xFF000000L))) | (((long)GetByte()) << 16 & unchecked((long)(0xFF0000L))) | (((long)GetByte()) << 8 & unchecked((long)(0xFF00L))) | (((long)GetByte())
-					 & unchecked((long)(0xFFL)));
+				return (((long)GetByte()) << 24 & unchecked((long)(0xFF000000L))) | (((long)GetByte()) << 16 & unchecked((long)(0xFF0000L))) | (((long)GetByte()) << 8 & unchecked((long)(0xFF00L))) | (((long)GetByte()) & unchecked((long)(0xFFL)));
 			}
 			else
 			{
 				// Intel ordering - LSB first (little endian)
-				return (((long)GetByte()) & unchecked((long)(0xFFL))) | (((long)GetByte()) << 8 & unchecked((long)(0xFF00L))) | (((long)GetByte()) << 16 & unchecked((long)(0xFF0000L))) | (((long)GetByte()) << 24 & unchecked(
-					(long)(0xFF000000L)));
+				return (((long)GetByte()) & unchecked((long)(0xFFL))) | (((long)GetByte()) << 8 & unchecked((long)(0xFF00L))) | (((long)GetByte()) << 16 & unchecked((long)(0xFF0000L))) | (((long)GetByte()) << 24 & unchecked((long)(0xFF000000L)));
 			}
 		}
 
 		/// <summary>Returns a signed 32-bit integer from four bytes of data.</summary>
 		/// <returns>the signed 32 bit int value, between 0x00000000 and 0xFFFFFFFF</returns>
-		/// <exception cref="System.IO.IOException">the buffer does not contain enough bytes to service the request, or index is negative</exception>
+		/// <exception cref="System.IO.IOException">the buffer does not contain enough bytes to service the request</exception>
 		public virtual int GetInt32()
 		{
 			if (_isMotorolaByteOrder)
@@ -175,26 +172,31 @@ namespace Com.Drew.Lang
 
 		/// <summary>Get a signed 64-bit integer from the buffer.</summary>
 		/// <returns>the 64 bit int value, between 0x0000000000000000 and 0xFFFFFFFFFFFFFFFF</returns>
-		/// <exception cref="System.IO.IOException">the buffer does not contain enough bytes to service the request, or index is negative</exception>
+		/// <exception cref="System.IO.IOException">the buffer does not contain enough bytes to service the request</exception>
 		public virtual long GetInt64()
 		{
 			if (_isMotorolaByteOrder)
 			{
 				// Motorola - MSB first
-				return ((long)GetByte() << 56 & unchecked((long)(0xFF00000000000000L))) | ((long)GetByte() << 48 & unchecked((long)(0xFF000000000000L))) | ((long)GetByte() << 40 & unchecked((long)(0xFF0000000000L))) |
-					 ((long)GetByte() << 32 & unchecked((long)(0xFF00000000L))) | ((long)GetByte() << 24 & unchecked((long)(0xFF000000L))) | ((long)GetByte() << 16 & unchecked((long)(0xFF0000L))) | ((long)GetByte() << 8 
-					& unchecked((long)(0xFF00L))) | ((long)GetByte() & unchecked((long)(0xFFL)));
+				return ((long)GetByte() << 56 & unchecked((long)(0xFF00000000000000L))) | ((long)GetByte() << 48 & unchecked((long)(0xFF000000000000L))) | ((long)GetByte() << 40 & unchecked((long)(0xFF0000000000L))) | ((long)GetByte() << 32 & unchecked((long
+					)(0xFF00000000L))) | ((long)GetByte() << 24 & unchecked((long)(0xFF000000L))) | ((long)GetByte() << 16 & unchecked((long)(0xFF0000L))) | ((long)GetByte() << 8 & unchecked((long)(0xFF00L))) | ((long)GetByte() & unchecked((long)(0xFFL)));
 			}
 			else
 			{
 				// Intel ordering - LSB first
-				return ((long)GetByte() & unchecked((long)(0xFFL))) | ((long)GetByte() << 8 & unchecked((long)(0xFF00L))) | ((long)GetByte() << 16 & unchecked((long)(0xFF0000L))) | ((long)GetByte() << 24 & unchecked((
-					long)(0xFF000000L))) | ((long)GetByte() << 32 & unchecked((long)(0xFF00000000L))) | ((long)GetByte() << 40 & unchecked((long)(0xFF0000000000L))) | ((long)GetByte() << 48 & unchecked((long)(0xFF000000000000L
-					))) | ((long)GetByte() << 56 & unchecked((long)(0xFF00000000000000L)));
+				return ((long)GetByte() & unchecked((long)(0xFFL))) | ((long)GetByte() << 8 & unchecked((long)(0xFF00L))) | ((long)GetByte() << 16 & unchecked((long)(0xFF0000L))) | ((long)GetByte() << 24 & unchecked((long)(0xFF000000L))) | ((long)GetByte() 
+					<< 32 & unchecked((long)(0xFF00000000L))) | ((long)GetByte() << 40 & unchecked((long)(0xFF0000000000L))) | ((long)GetByte() << 48 & unchecked((long)(0xFF000000000000L))) | ((long)GetByte() << 56 & unchecked((long)(0xFF00000000000000L)));
 			}
 		}
 
-		/// <exception cref="System.IO.IOException"/>
+		/// <summary>Gets a s15.16 fixed point float from the buffer.</summary>
+		/// <remarks>
+		/// Gets a s15.16 fixed point float from the buffer.
+		/// <p>
+		/// This particular fixed point encoding has one sign bit, 15 numerator bits and 16 denominator bits.
+		/// </remarks>
+		/// <returns>the floating point value</returns>
+		/// <exception cref="System.IO.IOException">the buffer does not contain enough bytes to service the request</exception>
 		public virtual float GetS15Fixed16()
 		{
 			if (_isMotorolaByteOrder)

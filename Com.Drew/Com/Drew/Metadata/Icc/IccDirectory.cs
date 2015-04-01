@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,17 +15,17 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using System.Collections.Generic;
-using Com.Drew.Metadata.Icc;
 using JetBrains.Annotations;
 using Sharpen;
 
 namespace Com.Drew.Metadata.Icc
 {
-	/// <author>Yuri Binev, Drew Noakes http://drewnoakes.com</author>
+	/// <author>Yuri Binev</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class IccDirectory : Com.Drew.Metadata.Directory
 	{
 		public const int TagProfileByteCount = 0;
@@ -159,7 +159,7 @@ namespace Com.Drew.Metadata.Icc
 		public const int TagAppleMultiLanguageProfileName = unchecked((int)(0x6473636d));
 
 		[NotNull]
-		protected internal static readonly Dictionary<int, string> _tagNameMap = new Dictionary<int, string>();
+		protected internal static readonly Dictionary<int?, string> _tagNameMap = new Dictionary<int?, string>();
 
 		static IccDirectory()
 		{
@@ -244,7 +244,7 @@ namespace Com.Drew.Metadata.Icc
 		}
 
 		[NotNull]
-		protected internal override Dictionary<int, string> GetTagNameMap()
+		protected internal override Dictionary<int?, string> GetTagNameMap()
 		{
 			return _tagNameMap;
 		}

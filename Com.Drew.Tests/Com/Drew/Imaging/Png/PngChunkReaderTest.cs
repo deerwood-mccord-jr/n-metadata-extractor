@@ -1,12 +1,11 @@
 using System.Collections.Generic;
 using System.IO;
-using Com.Drew.Imaging.Png;
 using Com.Drew.Lang;
 using Sharpen;
 
 namespace Com.Drew.Imaging.Png
 {
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class PngChunkReaderTest
 	{
 		/// <exception cref="Com.Drew.Imaging.Png.PngProcessingException"/>

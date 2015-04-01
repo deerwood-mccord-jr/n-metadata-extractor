@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,13 +15,12 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using System.Collections.Generic;
 using System.IO;
 using Com.Drew.Metadata;
-using Com.Drew.Metadata.Exif;
 using JetBrains.Annotations;
 using Sharpen;
 
@@ -29,22 +28,14 @@ namespace Com.Drew.Metadata.Exif
 {
 	/// <summary>One of several Exif directories.</summary>
 	/// <remarks>One of several Exif directories.  Otherwise known as IFD1, this directory holds information about an embedded thumbnail image.</remarks>
-	/// <author>Drew Noakes http://drewnoakes.com</author>
-	public class ExifThumbnailDirectory : Com.Drew.Metadata.Directory
+	/// <author>Drew Noakes https://drewnoakes.com</author>
+	public class ExifThumbnailDirectory : ExifDirectoryBase
 	{
-		public const int TagThumbnailImageWidth = unchecked((int)(0x0100));
+		/// <summary>The offset to thumbnail image bytes.</summary>
+		public const int TagThumbnailOffset = unchecked((int)(0x0201));
 
-		public const int TagThumbnailImageHeight = unchecked((int)(0x0101));
-
-		/// <summary>
-		/// When image format is no compression, this value shows the number of bits
-		/// per component for each pixel.
-		/// </summary>
-		/// <remarks>
-		/// When image format is no compression, this value shows the number of bits
-		/// per component for each pixel. Usually this value is '8,8,8'.
-		/// </remarks>
-		public const int TagBitsPerSample = unchecked((int)(0x0102));
+		/// <summary>The size of the thumbnail image data in bytes.</summary>
+		public const int TagThumbnailLength = unchecked((int)(0x0202));
 
 		/// <summary>Shows compression method for Thumbnail.</summary>
 		/// <remarks>
@@ -57,7 +48,7 @@ namespace Com.Drew.Metadata.Exif
 		/// 6 = JPEG (old-style)
 		/// 7 = JPEG
 		/// 8 = Adobe Deflate
-		/// 9 = JBIG B&W
+		/// 9 = JBIG B&amp;W
 		/// 10 = JBIG Color
 		/// 32766 = Next
 		/// 32771 = CCIRLEW
@@ -79,97 +70,15 @@ namespace Com.Drew.Metadata.Exif
 		/// </remarks>
 		public const int TagThumbnailCompression = unchecked((int)(0x0103));
 
-		/// <summary>Shows the color space of the image data components.</summary>
-		/// <remarks>
-		/// Shows the color space of the image data components.
-		/// 0 = WhiteIsZero
-		/// 1 = BlackIsZero
-		/// 2 = RGB
-		/// 3 = RGB Palette
-		/// 4 = Transparency Mask
-		/// 5 = CMYK
-		/// 6 = YCbCr
-		/// 8 = CIELab
-		/// 9 = ICCLab
-		/// 10 = ITULab
-		/// 32803 = Color Filter Array
-		/// 32844 = Pixar LogL
-		/// 32845 = Pixar LogLuv
-		/// 34892 = Linear Raw
-		/// </remarks>
-		public const int TagPhotometricInterpretation = unchecked((int)(0x0106));
-
-		/// <summary>The position in the file of raster data.</summary>
-		public const int TagStripOffsets = unchecked((int)(0x0111));
-
-		public const int TagOrientation = unchecked((int)(0x0112));
-
-		/// <summary>Each pixel is composed of this many samples.</summary>
-		public const int TagSamplesPerPixel = unchecked((int)(0x0115));
-
-		/// <summary>The raster is codified by a single block of data holding this many rows.</summary>
-		public const int TagRowsPerStrip = unchecked((int)(0x116));
-
-		/// <summary>The size of the raster data in bytes.</summary>
-		public const int TagStripByteCounts = unchecked((int)(0x0117));
-
-		/// <summary>
-		/// When image format is no compression YCbCr, this value shows byte aligns of
-		/// YCbCr data.
-		/// </summary>
-		/// <remarks>
-		/// When image format is no compression YCbCr, this value shows byte aligns of
-		/// YCbCr data. If value is '1', Y/Cb/Cr value is chunky format, contiguous for
-		/// each subsampling pixel. If value is '2', Y/Cb/Cr value is separated and
-		/// stored to Y plane/Cb plane/Cr plane format.
-		/// </remarks>
-		public const int TagXResolution = unchecked((int)(0x011A));
-
-		public const int TagYResolution = unchecked((int)(0x011B));
-
-		public const int TagPlanarConfiguration = unchecked((int)(0x011C));
-
-		public const int TagResolutionUnit = unchecked((int)(0x0128));
-
-		/// <summary>The offset to thumbnail image bytes.</summary>
-		public const int TagThumbnailOffset = unchecked((int)(0x0201));
-
-		/// <summary>The size of the thumbnail image data in bytes.</summary>
-		public const int TagThumbnailLength = unchecked((int)(0x0202));
-
-		public const int TagYcbcrCoefficients = unchecked((int)(0x0211));
-
-		public const int TagYcbcrSubsampling = unchecked((int)(0x0212));
-
-		public const int TagYcbcrPositioning = unchecked((int)(0x0213));
-
-		public const int TagReferenceBlackWhite = unchecked((int)(0x0214));
-
 		[NotNull]
-		protected internal static readonly Dictionary<int, string> _tagNameMap = new Dictionary<int, string>();
+		protected internal static readonly Dictionary<int?, string> _tagNameMap = new Dictionary<int?, string>();
 
 		static ExifThumbnailDirectory()
 		{
-			_tagNameMap.Put(TagThumbnailImageWidth, "Thumbnail Image Width");
-			_tagNameMap.Put(TagThumbnailImageHeight, "Thumbnail Image Height");
-			_tagNameMap.Put(TagBitsPerSample, "Bits Per Sample");
+			AddExifTagNames(_tagNameMap);
 			_tagNameMap.Put(TagThumbnailCompression, "Thumbnail Compression");
-			_tagNameMap.Put(TagPhotometricInterpretation, "Photometric Interpretation");
-			_tagNameMap.Put(TagStripOffsets, "Strip Offsets");
-			_tagNameMap.Put(TagOrientation, "Orientation");
-			_tagNameMap.Put(TagSamplesPerPixel, "Samples Per Pixel");
-			_tagNameMap.Put(TagRowsPerStrip, "Rows Per Strip");
-			_tagNameMap.Put(TagStripByteCounts, "Strip Byte Counts");
-			_tagNameMap.Put(TagXResolution, "X Resolution");
-			_tagNameMap.Put(TagYResolution, "Y Resolution");
-			_tagNameMap.Put(TagPlanarConfiguration, "Planar Configuration");
-			_tagNameMap.Put(TagResolutionUnit, "Resolution Unit");
 			_tagNameMap.Put(TagThumbnailOffset, "Thumbnail Offset");
 			_tagNameMap.Put(TagThumbnailLength, "Thumbnail Length");
-			_tagNameMap.Put(TagYcbcrCoefficients, "YCbCr Coefficients");
-			_tagNameMap.Put(TagYcbcrSubsampling, "YCbCr Sub-Sampling");
-			_tagNameMap.Put(TagYcbcrPositioning, "YCbCr Positioning");
-			_tagNameMap.Put(TagReferenceBlackWhite, "Reference Black/White");
 		}
 
 		[CanBeNull]
@@ -187,7 +96,7 @@ namespace Com.Drew.Metadata.Exif
 		}
 
 		[NotNull]
-		protected internal override Dictionary<int, string> GetTagNameMap()
+		protected internal override Dictionary<int?, string> GetTagNameMap()
 		{
 			return _tagNameMap;
 		}
@@ -203,14 +112,14 @@ namespace Com.Drew.Metadata.Exif
 			return _thumbnailData;
 		}
 
-		public virtual void SetThumbnailData(sbyte[] data)
+		public virtual void SetThumbnailData([CanBeNull] sbyte[] data)
 		{
 			_thumbnailData = data;
 		}
 
 		/// <exception cref="Com.Drew.Metadata.MetadataException"/>
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void WriteThumbnail(string filename)
+		public virtual void WriteThumbnail([NotNull] string filename)
 		{
 			sbyte[] data = _thumbnailData;
 			if (data == null)
@@ -231,7 +140,7 @@ namespace Com.Drew.Metadata.Exif
 				}
 			}
 		}
-		/*
+/*
     // This thumbnail extraction code is not complete, and is included to assist anyone who feels like looking into
     // it.  Please share any progress with the original author, and hence the community.  Thanks.
 

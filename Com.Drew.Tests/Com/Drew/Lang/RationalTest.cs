@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,16 +15,14 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
- using Com.Drew.Lang;
- using NUnit.Framework;
- using Sharpen;
+using Sharpen;
 
 namespace Com.Drew.Lang
 {
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class RationalTest
 	{
 		/// <exception cref="System.Exception"/>
@@ -46,7 +44,7 @@ namespace Com.Drew.Lang
 		}
 
 		/// <exception cref="System.Exception"/>
-        [NUnit.Framework.Test, SetCulture("en-US")]
+		[NUnit.Framework.Test]
 		public virtual void TestToSimpleString()
 		{
 			Rational third1 = new Rational(1, 3);
@@ -63,8 +61,8 @@ namespace Com.Drew.Lang
 			Rational twoFifths = new Rational(4, 10);
 			Sharpen.Tests.AreEqual("0.4", twoFifths.ToSimpleString(true));
 			Sharpen.Tests.AreEqual("2/5", twoFifths.ToSimpleString(false));
-			Rational threeEigths = new Rational(3, 8);
-			Sharpen.Tests.AreEqual("3/8", threeEigths.ToSimpleString(true));
+			Rational threeEighths = new Rational(3, 8);
+			Sharpen.Tests.AreEqual("3/8", threeEighths.ToSimpleString(true));
 			Rational zero = new Rational(0, 8);
 			Sharpen.Tests.IsTrue(zero.IsInteger());
 			Sharpen.Tests.AreEqual("0", zero.ToSimpleString(true));
@@ -86,6 +84,19 @@ namespace Com.Drew.Lang
 			Rational reciprocal = rational.GetReciprocal();
 			Sharpen.Tests.AreEqual("new rational should be reciprocal", new Rational(3, 1), reciprocal);
 			Sharpen.Tests.AreEqual("original reciprocal should remain unchanged", new Rational(1, 3), rational);
+		}
+
+		/// <exception cref="System.Exception"/>
+		[NUnit.Framework.Test]
+		public virtual void TestZeroOverZero()
+		{
+			Sharpen.Tests.AreEqual(new Rational(0, 0), new Rational(0, 0).GetReciprocal());
+			Sharpen.Tests.AreEqual(0.0d, new Rational(0, 0).DoubleValue(), 0.000000001);
+			Sharpen.Tests.AreEqual(0, new Rational(0, 0).ByteValue());
+			Sharpen.Tests.AreEqual(0.0f, new Rational(0, 0).FloatValue(), 0.000000001f);
+			Sharpen.Tests.AreEqual(0, new Rational(0, 0).IntValue());
+			Sharpen.Tests.AreEqual(0L, new Rational(0, 0).LongValue());
+			Sharpen.Tests.IsTrue(new Rational(0, 0).IsInteger());
 		}
 	}
 }

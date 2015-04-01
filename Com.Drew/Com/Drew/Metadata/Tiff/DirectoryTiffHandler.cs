@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,13 +15,14 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using System;
 using System.Collections.Generic;
 using Com.Drew.Imaging.Tiff;
 using Com.Drew.Lang;
+using JetBrains.Annotations;
 using Sharpen;
 
 namespace Com.Drew.Metadata.Tiff
@@ -35,19 +36,31 @@ namespace Com.Drew.Metadata.Tiff
 	/// <see cref="Com.Drew.Metadata.Directory"/>
 	/// object model.
 	/// </summary>
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public abstract class DirectoryTiffHandler : TiffHandler
 	{
 		private readonly Stack<Com.Drew.Metadata.Directory> _directoryStack = new Stack<Com.Drew.Metadata.Directory>();
 
 		protected internal Com.Drew.Metadata.Directory _currentDirectory;
 
-		protected internal Com.Drew.Metadata.Metadata _metadata;
+		protected internal readonly Com.Drew.Metadata.Metadata _metadata;
 
-		protected internal DirectoryTiffHandler(Com.Drew.Metadata.Metadata metadata, Type initialDirectory)
+		protected internal DirectoryTiffHandler(Com.Drew.Metadata.Metadata metadata, Type initialDirectoryClass)
 		{
 			_metadata = metadata;
-			_currentDirectory = _metadata.GetOrCreateDirectory(initialDirectory);
+			try
+			{
+				_currentDirectory = System.Activator.CreateInstance(initialDirectoryClass);
+			}
+			catch (InstantiationException e)
+			{
+				throw new RuntimeException(e);
+			}
+			catch (MemberAccessException e)
+			{
+				throw new RuntimeException(e);
+			}
+			_metadata.AddDirectory(_currentDirectory);
 		}
 
 		public virtual void EndingIFD()
@@ -55,39 +68,50 @@ namespace Com.Drew.Metadata.Tiff
 			_currentDirectory = _directoryStack.IsEmpty() ? null : _directoryStack.Pop();
 		}
 
-		protected internal virtual void PushDirectory<T>() where T : Com.Drew.Metadata.Directory
+		protected internal virtual void PushDirectory([NotNull] Type directoryClass)
 		{
-			System.Diagnostics.Debug.Assert((typeof(T) != _currentDirectory.GetType()));
 			_directoryStack.Push(_currentDirectory);
-			_currentDirectory = _metadata.GetOrCreateDirectory<T>();
+			try
+			{
+				_currentDirectory = System.Activator.CreateInstance(directoryClass);
+			}
+			catch (InstantiationException e)
+			{
+				throw new RuntimeException(e);
+			}
+			catch (MemberAccessException e)
+			{
+				throw new RuntimeException(e);
+			}
+			_metadata.AddDirectory(_currentDirectory);
 		}
 
-		public virtual void Warn(string message)
+		public virtual void Warn([NotNull] string message)
 		{
 			_currentDirectory.AddError(message);
 		}
 
-		public virtual void Error(string message)
+		public virtual void Error([NotNull] string message)
 		{
 			_currentDirectory.AddError(message);
 		}
 
-		public virtual void SetByteArray(int tagId, sbyte[] bytes)
+		public virtual void SetByteArray(int tagId, [NotNull] sbyte[] bytes)
 		{
 			_currentDirectory.SetByteArray(tagId, bytes);
 		}
 
-		public virtual void SetString(int tagId, string @string)
+		public virtual void SetString(int tagId, [NotNull] string @string)
 		{
 			_currentDirectory.SetString(tagId, @string);
 		}
 
-		public virtual void SetRational(int tagId, Rational rational)
+		public virtual void SetRational(int tagId, [NotNull] Rational rational)
 		{
 			_currentDirectory.SetRational(tagId, rational);
 		}
 
-		public virtual void SetRationalArray(int tagId, Rational[] array)
+		public virtual void SetRationalArray(int tagId, [NotNull] Rational[] array)
 		{
 			_currentDirectory.SetRationalArray(tagId, array);
 		}
@@ -97,7 +121,7 @@ namespace Com.Drew.Metadata.Tiff
 			_currentDirectory.SetFloat(tagId, float32);
 		}
 
-		public virtual void SetFloatArray(int tagId, float[] array)
+		public virtual void SetFloatArray(int tagId, [NotNull] float[] array)
 		{
 			_currentDirectory.SetFloatArray(tagId, array);
 		}
@@ -107,7 +131,7 @@ namespace Com.Drew.Metadata.Tiff
 			_currentDirectory.SetDouble(tagId, double64);
 		}
 
-		public virtual void SetDoubleArray(int tagId, double[] array)
+		public virtual void SetDoubleArray(int tagId, [NotNull] double[] array)
 		{
 			_currentDirectory.SetDoubleArray(tagId, array);
 		}
@@ -118,7 +142,7 @@ namespace Com.Drew.Metadata.Tiff
 			_currentDirectory.SetInt(tagId, int8s);
 		}
 
-		public virtual void SetInt8sArray(int tagId, sbyte[] array)
+		public virtual void SetInt8sArray(int tagId, [NotNull] sbyte[] array)
 		{
 			// NOTE Directory stores all integral types as int32s, except for int32u and long
 			_currentDirectory.SetByteArray(tagId, array);
@@ -130,7 +154,7 @@ namespace Com.Drew.Metadata.Tiff
 			_currentDirectory.SetInt(tagId, int8u);
 		}
 
-		public virtual void SetInt8uArray(int tagId, short[] array)
+		public virtual void SetInt8uArray(int tagId, [NotNull] short[] array)
 		{
 			// TODO create and use a proper setter for short[]
 			_currentDirectory.SetObjectArray(tagId, array);
@@ -142,7 +166,7 @@ namespace Com.Drew.Metadata.Tiff
 			_currentDirectory.SetInt(tagId, int16s);
 		}
 
-		public virtual void SetInt16sArray(int tagId, short[] array)
+		public virtual void SetInt16sArray(int tagId, [NotNull] short[] array)
 		{
 			// TODO create and use a proper setter for short[]
 			_currentDirectory.SetObjectArray(tagId, array);
@@ -154,7 +178,7 @@ namespace Com.Drew.Metadata.Tiff
 			_currentDirectory.SetInt(tagId, int16u);
 		}
 
-		public virtual void SetInt16uArray(int tagId, int[] array)
+		public virtual void SetInt16uArray(int tagId, [NotNull] int[] array)
 		{
 			// TODO create and use a proper setter for short[]
 			_currentDirectory.SetObjectArray(tagId, array);
@@ -165,7 +189,7 @@ namespace Com.Drew.Metadata.Tiff
 			_currentDirectory.SetInt(tagId, int32s);
 		}
 
-		public virtual void SetInt32sArray(int tagId, int[] array)
+		public virtual void SetInt32sArray(int tagId, [NotNull] int[] array)
 		{
 			_currentDirectory.SetIntArray(tagId, array);
 		}
@@ -175,7 +199,7 @@ namespace Com.Drew.Metadata.Tiff
 			_currentDirectory.SetLong(tagId, int32u);
 		}
 
-		public virtual void SetInt32uArray(int tagId, long[] array)
+		public virtual void SetInt32uArray(int tagId, [NotNull] long[] array)
 		{
 			// TODO create and use a proper setter for short[]
 			_currentDirectory.SetObjectArray(tagId, array);
@@ -183,7 +207,7 @@ namespace Com.Drew.Metadata.Tiff
 
 		public abstract void Completed(RandomAccessReader arg1, int arg2);
 
-		public abstract bool CustomProcessTag(int arg1, ICollection<int> arg2, int arg3, RandomAccessReader arg4, int arg5, int arg6);
+		public abstract bool CustomProcessTag(int arg1, ICollection<int?> arg2, int arg3, RandomAccessReader arg4, int arg5, int arg6);
 
 		public abstract bool HasFollowerIfd();
 

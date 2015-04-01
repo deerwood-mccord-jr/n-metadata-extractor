@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,18 +15,17 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using Com.Drew.Imaging.Jpeg;
-using Com.Drew.Metadata.Jpeg;
 using Com.Drew.Tools;
 using JetBrains.Annotations;
 using Sharpen;
 
 namespace Com.Drew.Metadata.Jpeg
 {
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class JpegReaderTest
 	{
 		/// <exception cref="System.IO.IOException"/>
@@ -35,7 +34,7 @@ namespace Com.Drew.Metadata.Jpeg
 		{
 			Com.Drew.Metadata.Metadata metadata = new Com.Drew.Metadata.Metadata();
 			new JpegReader().Extract(FileUtil.ReadBytes(filePath), metadata, JpegSegmentType.Sof0);
-			JpegDirectory directory = metadata.GetDirectory<JpegDirectory>();
+			JpegDirectory directory = metadata.GetFirstDirectoryOfType<JpegDirectory>();
 			NUnit.Framework.Assert.IsNotNull(directory);
 			return directory;
 		}
@@ -118,7 +117,7 @@ namespace Com.Drew.Metadata.Jpeg
 			Sharpen.Tests.AreEqual(1, component.GetVerticalSamplingFactor());
 			Sharpen.Tests.AreEqual("Cr component: Quantization table 1, Sampling factors 1 horiz/1 vert", _directory.GetDescription(JpegDirectory.TagComponentData3));
 		}
-		/*
+/*
     // this test is part of an incomplete investigation into extracting audio from JPG files
     public void testJpegWithAudio() throws Exception
     {

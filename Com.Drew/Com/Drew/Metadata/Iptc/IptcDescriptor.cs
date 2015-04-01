@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,27 +15,27 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using Com.Drew.Lang;
 using Com.Drew.Metadata;
-using Com.Drew.Metadata.Iptc;
 using JetBrains.Annotations;
 using Sharpen;
 
 namespace Com.Drew.Metadata.Iptc
 {
-	/// <summary>Provides human-readable string representations of tag values stored in a <code>IptcDirectory</code>.</summary>
-	/// <remarks>
-	/// Provides human-readable string representations of tag values stored in a <code>IptcDirectory</code>.
-	/// <p/>
+	/// <summary>
+	/// Provides human-readable string representations of tag values stored in a
+	/// <see cref="IptcDirectory"/>
+	/// .
+	/// <p>
 	/// As the IPTC directory already stores values as strings, this class simply returns the tag's value.
-	/// </remarks>
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// </summary>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class IptcDescriptor : TagDescriptor<IptcDirectory>
 	{
-		public IptcDescriptor(IptcDirectory directory)
+		public IptcDescriptor([NotNull] IptcDirectory directory)
 			: base(directory)
 		{
 		}
@@ -53,6 +53,16 @@ namespace Com.Drew.Metadata.Iptc
 				case IptcDirectory.TagKeywords:
 				{
 					return GetKeywordsDescription();
+				}
+
+				case IptcDirectory.TagTimeCreated:
+				{
+					return GetTimeCreatedDescription();
+				}
+
+				case IptcDirectory.TagDigitalTimeCreated:
+				{
+					return GetDigitalTimeCreatedDescription();
 				}
 
 				default:
@@ -293,7 +303,7 @@ namespace Com.Drew.Metadata.Iptc
 			{
 				return null;
 			}
-            return string.Join(";", keywords);
+			return StringUtil.Join(keywords, ";");
 		}
 
 		[CanBeNull]
@@ -359,7 +369,31 @@ namespace Com.Drew.Metadata.Iptc
 		[CanBeNull]
 		public virtual string GetTimeCreatedDescription()
 		{
-			return _directory.GetString(IptcDirectory.TagTimeCreated);
+			string s = _directory.GetString(IptcDirectory.TagTimeCreated);
+			if (s == null)
+			{
+				return null;
+			}
+			if (s.Length == 6 || s.Length == 11)
+			{
+				return Sharpen.Runtime.Substring(s, 0, 2) + ':' + Sharpen.Runtime.Substring(s, 2, 4) + ':' + Sharpen.Runtime.Substring(s, 4);
+			}
+			return s;
+		}
+
+		[CanBeNull]
+		public virtual string GetDigitalTimeCreatedDescription()
+		{
+			string s = _directory.GetString(IptcDirectory.TagDigitalTimeCreated);
+			if (s == null)
+			{
+				return null;
+			}
+			if (s.Length == 6 || s.Length == 11)
+			{
+				return Sharpen.Runtime.Substring(s, 0, 2) + ':' + Sharpen.Runtime.Substring(s, 2, 4) + ':' + Sharpen.Runtime.Substring(s, 4);
+			}
+			return s;
 		}
 
 		[CanBeNull]

@@ -1,4 +1,3 @@
-using Com.Drew.Imaging.Jpeg;
 using JetBrains.Annotations;
 using Sharpen;
 
@@ -11,20 +10,11 @@ namespace Com.Drew.Imaging.Jpeg
 		[NotNull]
 		Iterable<JpegSegmentType> GetSegmentTypes();
 
-		/// <summary>Gets a value indicating whether the supplied byte data can be processed by this reader.</summary>
-		/// <remarks>
-		/// Gets a value indicating whether the supplied byte data can be processed by this reader. This is not a guarantee
-		/// that no errors will occur, but rather a best-effort indication of whether the parse is likely to succeed.
-		/// Implementations are expected to check things such as the opening bytes, data length, etc.
-		/// </remarks>
-		bool CanProcess(sbyte[] segmentBytes, JpegSegmentType segmentType);
-
-		/// <summary>
-		/// Extracts metadata from a JPEG segment's byte array and merges it into the specified
-		/// <see cref="Com.Drew.Metadata.Metadata"/>
-		/// object.
-		/// </summary>
-		/// <param name="segmentBytes">The byte array from which the metadata should be extracted.</param>
+		/// <summary>Extracts metadata from all instances of a particular JPEG segment type.</summary>
+		/// <param name="segments">
+		/// A sequence of byte arrays from which the metadata should be extracted. These are in the order
+		/// encountered in the original file.
+		/// </param>
 		/// <param name="metadata">
 		/// The
 		/// <see cref="Com.Drew.Metadata.Metadata"/>
@@ -35,6 +25,6 @@ namespace Com.Drew.Imaging.Jpeg
 		/// <see cref="JpegSegmentType"/>
 		/// being read.
 		/// </param>
-		void Extract(sbyte[] segmentBytes, Com.Drew.Metadata.Metadata metadata, JpegSegmentType segmentType);
+		void ReadJpegSegments([NotNull] Iterable<sbyte[]> segments, [NotNull] Com.Drew.Metadata.Metadata metadata, [NotNull] JpegSegmentType segmentType);
 	}
 }

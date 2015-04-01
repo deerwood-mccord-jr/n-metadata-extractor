@@ -7,7 +7,6 @@
 // of the Adobe license agreement accompanying it.
 // =================================================================================================
 using System.IO;
-using Com.Adobe.Xmp.Impl;
 using Sharpen;
 
 namespace Com.Adobe.Xmp.Impl
@@ -47,10 +46,10 @@ namespace Com.Adobe.Xmp.Impl
 		/// The official Latin-1 characters in the range 0xA0..0xFF are converted into
 		/// the Unicode Latin Supplement range U+00A0 - U+00FF.
 		/// <p>
-		/// <em>Example:</em> If an Euro-symbol (в‚¬) appears in the byte buffer (0xE2, 0x82, 0xAC),
+		/// <em>Example:</em> If an Euro-symbol (€) appears in the byte buffer (0xE2, 0x82, 0xAC),
 		/// it will be left as is. But if only the first two bytes are appearing,
 		/// followed by an ASCII char a (0xE2 - 0x82 - 0x41), it will be converted to
-		/// 0xC3, 0xA2 (Гў) - 0xE2, 0x80, 0x9A (вЂљ) - 0x41 (a).
+		/// 0xC3, 0xA2 (â) - 0xE2, 0x80, 0x9A (‚) - 0x41 (a).
 		/// </remarks>
 		/// <param name="buffer">a byte buffer contain</param>
 		/// <returns>Returns a new buffer containing valid UTF-8</returns>

@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,11 +15,10 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using System;
-using Com.Drew.Lang;
 using JetBrains.Annotations;
 using Sharpen;
 
@@ -28,9 +27,9 @@ namespace Com.Drew.Lang
 	/// <summary>Represents a latitude and longitude pair, giving a position on earth in spherical coordinates.</summary>
 	/// <remarks>
 	/// Represents a latitude and longitude pair, giving a position on earth in spherical coordinates.
-	/// <p/>
+	/// <p>
 	/// Values of latitude and longitude are given in degrees.
-	/// <p/>
+	/// <p>
 	/// This type is immutable.
 	/// </remarks>
 	public sealed class GeoLocation
@@ -73,14 +72,14 @@ namespace Com.Drew.Lang
 		/// <summary>
 		/// Converts a decimal degree angle into its corresponding DMS (degrees-minutes-seconds) representation as a string,
 		/// of format:
-		/// <c>-1В° 23' 4.56"</c>
+		/// <c>-1° 23' 4.56"</c>
 		/// </summary>
 		[NotNull]
 		public static string DecimalToDegreesMinutesSecondsString(double @decimal)
 		{
 			double[] dms = DecimalToDegreesMinutesSeconds(@decimal);
 			DecimalFormat format = new DecimalFormat("0.##");
-			return Sharpen.Extensions.StringFormat("%sВ° %s' %s\"", format.Format(dms[0]), format.Format(dms[1]), format.Format(dms[2]));
+			return Sharpen.Extensions.StringFormat("%s° %s' %s\"", format.Format(dms[0]), format.Format(dms[1]), format.Format(dms[2]));
 		}
 
 		/// <summary>
@@ -103,7 +102,7 @@ namespace Com.Drew.Lang
 		/// into a single value in degrees, as a double.
 		/// </summary>
 		[CanBeNull]
-		public static double? DegreesMinutesSecondsToDecimal(Rational degs, Rational mins, Rational secs, bool isNegative)
+		public static double? DegreesMinutesSecondsToDecimal([NotNull] Rational degs, [NotNull] Rational mins, [NotNull] Rational secs, bool isNegative)
 		{
 			double @decimal = Math.Abs(degs.DoubleValue()) + mins.DoubleValue() / 60.0d + secs.DoubleValue() / 3600.0d;
 			if (double.IsNaN(@decimal))
@@ -162,7 +161,7 @@ namespace Com.Drew.Lang
 
 		/// <returns>
 		/// a string representation of this location, of format:
-		/// <c>-1В° 23' 4.56", 54В° 32' 1.92"</c>
+		/// <c>-1° 23' 4.56", 54° 32' 1.92"</c>
 		/// </returns>
 		[NotNull]
 		public string ToDMSString()

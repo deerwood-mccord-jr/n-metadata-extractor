@@ -19,7 +19,6 @@
  *    http://code.google.com/p/metadata-extractor/
  */
 using System.IO;
-using Com.Drew.Tools;
 using JetBrains.Annotations;
 using Sharpen;
 
@@ -39,7 +38,7 @@ namespace Com.Drew.Tools
 		/// .
 		/// </summary>
 		/// <exception cref="System.IO.IOException"/>
-		public static void SaveBytes(FilePath file, sbyte[] bytes)
+		public static void SaveBytes([NotNull] FilePath file, [NotNull] sbyte[] bytes)
 		{
 			FileOutputStream stream = null;
 			try
@@ -65,7 +64,7 @@ namespace Com.Drew.Tools
 		/// </summary>
 		/// <exception cref="System.IO.IOException"/>
 		[NotNull]
-		public static sbyte[] ReadBytes(FilePath file)
+		public static sbyte[] ReadBytes([NotNull] FilePath file)
 		{
 			int length = (int)file.Length();
 			// should only be zero if loading from a network or similar
@@ -105,7 +104,7 @@ namespace Com.Drew.Tools
 		/// </summary>
 		/// <exception cref="System.IO.IOException"/>
 		[NotNull]
-		public static sbyte[] ReadBytes(string filePath)
+		public static sbyte[] ReadBytes([NotNull] string filePath)
 		{
 			return ReadBytes(new FilePath(filePath));
 		}

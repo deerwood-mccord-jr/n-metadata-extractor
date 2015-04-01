@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,15 +15,14 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using System;
 using Com.Adobe.Xmp;
 using Com.Adobe.Xmp.Properties;
 using Com.Drew.Imaging.Jpeg;
 using Com.Drew.Lang;
-using Com.Drew.Metadata.Xmp;
 using JetBrains.Annotations;
 using Sharpen;
 
@@ -32,12 +31,12 @@ namespace Com.Drew.Metadata.Xmp
 	/// <summary>Extracts XMP data from a JPEG header segment.</summary>
 	/// <remarks>
 	/// Extracts XMP data from a JPEG header segment.
-	/// <p/>
+	/// <p>
 	/// The extraction is done with Adobe's XmpCore-Library (XMP-Toolkit)
 	/// Copyright (c) 1999 - 2007, Adobe Systems Incorporated All rights reserved.
 	/// </remarks>
 	/// <author>Torsten Skadell</author>
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class XmpReader : JpegSegmentMetadataReader
 	{
 		private const int FmtString = 1;
@@ -47,6 +46,8 @@ namespace Com.Drew.Metadata.Xmp
 		private const int FmtInt = 3;
 
 		private const int FmtDouble = 4;
+
+		private const int FmtStringArray = 5;
 
 		/// <summary>XMP tag namespace.</summary>
 		/// <remarks>
@@ -65,6 +66,9 @@ namespace Com.Drew.Metadata.Xmp
 		[NotNull]
 		private const string SchemaExifTiffProperties = "http://ns.adobe.com/tiff/1.0/";
 
+		[NotNull]
+		public const string XmpJpegPreamble = "http://ns.adobe.com/xap/1.0/\x0";
+
 		//    @NotNull
 		//    private static final String SCHEMA_DUBLIN_CORE_SPECIFIC_PROPERTIES = "http://purl.org/dc/elements/1.1/";
 		[NotNull]
@@ -73,17 +77,12 @@ namespace Com.Drew.Metadata.Xmp
 			return Arrays.AsList(JpegSegmentType.App1).AsIterable();
 		}
 
-		public virtual bool CanProcess(sbyte[] segmentBytes, JpegSegmentType segmentType)
-		{
-			return segmentBytes.Length > 27 && Sharpen.Runtime.EqualsIgnoreCase("http://ns.adobe.com/xap/1.0/", Sharpen.Runtime.GetStringForBytes(segmentBytes, 0, 28));
-		}
-
 		/// <summary>Version specifically for dealing with XMP found in JPEG segments.</summary>
 		/// <remarks>
 		/// Version specifically for dealing with XMP found in JPEG segments. This form of XMP has a peculiar preamble, which
 		/// must be removed before parsing the XML.
 		/// </remarks>
-		/// <param name="segmentBytes">The byte array from which the metadata should be extracted.</param>
+		/// <param name="segments">The byte array from which the metadata should be extracted.</param>
 		/// <param name="metadata">
 		/// The
 		/// <see cref="Com.Drew.Metadata.Metadata"/>
@@ -94,39 +93,32 @@ namespace Com.Drew.Metadata.Xmp
 		/// <see cref="Com.Drew.Imaging.Jpeg.JpegSegmentType"/>
 		/// being read.
 		/// </param>
-		public virtual void Extract(sbyte[] segmentBytes, Com.Drew.Metadata.Metadata metadata, JpegSegmentType segmentType)
+		public virtual void ReadJpegSegments([NotNull] Iterable<sbyte[]> segments, [NotNull] Com.Drew.Metadata.Metadata metadata, [NotNull] JpegSegmentType segmentType)
 		{
-			XmpDirectory directory = metadata.GetOrCreateDirectory<XmpDirectory>();
-			// XMP in a JPEG file has a 29 byte preamble which is not valid XML.
-			int preambleLength = 29;
-			// check for the header length
-			if (segmentBytes.Length <= preambleLength + 1)
+			foreach (sbyte[] segmentBytes in segments)
 			{
-				directory.AddError(Sharpen.Extensions.StringFormat("Xmp data segment must contain at least %d bytes", preambleLength + 1));
-				return;
+				// XMP in a JPEG file has an identifying preamble which is not valid XML
+				int preambleLength = XmpJpegPreamble.Length;
+				if (segmentBytes.Length < preambleLength || !Sharpen.Runtime.EqualsIgnoreCase(XmpJpegPreamble, Sharpen.Runtime.GetStringForBytes(segmentBytes, 0, preambleLength)))
+				{
+					continue;
+				}
+				sbyte[] xmlBytes = new sbyte[segmentBytes.Length - preambleLength];
+				System.Array.Copy(segmentBytes, preambleLength, xmlBytes, 0, xmlBytes.Length);
+				Extract(xmlBytes, metadata);
 			}
-			ByteArrayReader reader = new ByteArrayReader(segmentBytes);
-			string preamble = Sharpen.Runtime.GetStringForBytes(segmentBytes, 0, preambleLength);
-			if (!"http://ns.adobe.com/xap/1.0/\x0".Equals(preamble))
-			{
-				directory.AddError("XMP data segment doesn't begin with 'http://ns.adobe.com/xap/1.0/'");
-				return;
-			}
-			sbyte[] xmlBytes = new sbyte[segmentBytes.Length - preambleLength];
-			System.Array.Copy(segmentBytes, 29, xmlBytes, 0, xmlBytes.Length);
-			Extract(xmlBytes, metadata);
 		}
 
 		/// <summary>
 		/// Performs the XMP data extraction, adding found values to the specified instance of
 		/// <see cref="Com.Drew.Metadata.Metadata"/>
 		/// .
-		/// <p/>
+		/// <p>
 		/// The extraction is done with Adobe's XMPCore library.
 		/// </summary>
-		public virtual void Extract(sbyte[] xmpBytes, Com.Drew.Metadata.Metadata metadata)
+		public virtual void Extract([NotNull] sbyte[] xmpBytes, [NotNull] Com.Drew.Metadata.Metadata metadata)
 		{
-			XmpDirectory directory = metadata.GetOrCreateDirectory<XmpDirectory>();
+			XmpDirectory directory = new XmpDirectory();
 			try
 			{
 				XMPMeta xmpMeta = XMPMetaFactory.ParseFromBuffer(xmpBytes);
@@ -136,18 +128,22 @@ namespace Com.Drew.Metadata.Xmp
 			{
 				directory.AddError("Error processing XMP data: " + e.Message);
 			}
+			if (!directory.IsEmpty())
+			{
+				metadata.AddDirectory(directory);
+			}
 		}
 
 		/// <summary>
 		/// Performs the XMP data extraction, adding found values to the specified instance of
 		/// <see cref="Com.Drew.Metadata.Metadata"/>
 		/// .
-		/// <p/>
+		/// <p>
 		/// The extraction is done with Adobe's XMPCore library.
 		/// </summary>
-		public virtual void Extract(string xmpString, Com.Drew.Metadata.Metadata metadata)
+		public virtual void Extract([NotNull] string xmpString, [NotNull] Com.Drew.Metadata.Metadata metadata)
 		{
-			XmpDirectory directory = metadata.GetOrCreateDirectory<XmpDirectory>();
+			XmpDirectory directory = new XmpDirectory();
 			try
 			{
 				XMPMeta xmpMeta = XMPMetaFactory.ParseFromString(xmpString);
@@ -157,54 +153,59 @@ namespace Com.Drew.Metadata.Xmp
 			{
 				directory.AddError("Error processing XMP data: " + e.Message);
 			}
+			if (!directory.IsEmpty())
+			{
+				metadata.AddDirectory(directory);
+			}
 		}
 
 		/// <exception cref="Com.Adobe.Xmp.XMPException"/>
-		private void ProcessXmpTags(XmpDirectory directory, XMPMeta xmpMeta)
+		private static void ProcessXmpTags(XmpDirectory directory, XMPMeta xmpMeta)
 		{
 			// store the XMPMeta object on the directory in case others wish to use it
 			directory.SetXMPMeta(xmpMeta);
 			// read all the tags and send them to the directory
 			// I've added some popular tags, feel free to add more tags
-			ProcessXmpTag(xmpMeta, directory, SchemaExifAdditionalProperties, "aux:LensInfo", XmpDirectory.TagLensInfo, FmtString);
-			ProcessXmpTag(xmpMeta, directory, SchemaExifAdditionalProperties, "aux:Lens", XmpDirectory.TagLens, FmtString);
-			ProcessXmpTag(xmpMeta, directory, SchemaExifAdditionalProperties, "aux:SerialNumber", XmpDirectory.TagCameraSerialNumber, FmtString);
-			ProcessXmpTag(xmpMeta, directory, SchemaExifAdditionalProperties, "aux:Firmware", XmpDirectory.TagFirmware, FmtString);
-			ProcessXmpTag(xmpMeta, directory, SchemaExifTiffProperties, "tiff:Make", XmpDirectory.TagMake, FmtString);
-			ProcessXmpTag(xmpMeta, directory, SchemaExifTiffProperties, "tiff:Model", XmpDirectory.TagModel, FmtString);
-			ProcessXmpTag(xmpMeta, directory, SchemaExifSpecificProperties, "exif:ExposureTime", XmpDirectory.TagExposureTime, FmtString);
-			ProcessXmpTag(xmpMeta, directory, SchemaExifSpecificProperties, "exif:ExposureProgram", XmpDirectory.TagExposureProgram, FmtInt);
-			ProcessXmpTag(xmpMeta, directory, SchemaExifSpecificProperties, "exif:ApertureValue", XmpDirectory.TagApertureValue, FmtRational);
-			ProcessXmpTag(xmpMeta, directory, SchemaExifSpecificProperties, "exif:FNumber", XmpDirectory.TagFNumber, FmtRational);
-			ProcessXmpTag(xmpMeta, directory, SchemaExifSpecificProperties, "exif:FocalLength", XmpDirectory.TagFocalLength, FmtRational);
-			ProcessXmpTag(xmpMeta, directory, SchemaExifSpecificProperties, "exif:ShutterSpeedValue", XmpDirectory.TagShutterSpeed, FmtRational);
-			ProcessXmpDateTag(xmpMeta, directory, SchemaExifSpecificProperties, "exif:DateTimeOriginal", XmpDirectory.TagDatetimeOriginal);
-			ProcessXmpDateTag(xmpMeta, directory, SchemaExifSpecificProperties, "exif:DateTimeDigitized", XmpDirectory.TagDatetimeDigitized);
-			ProcessXmpTag(xmpMeta, directory, SchemaXmpProperties, "xmp:Rating", XmpDirectory.TagRating, FmtDouble);
-			/*
-            // this requires further research
-            processXmpTag(xmpMeta, directory, SCHEMA_DUBLIN_CORE_SPECIFIC_PROPERTIES, "dc:title", XmpDirectory.TAG_TITLE, FMT_STRING);
-            processXmpTag(xmpMeta, directory, SCHEMA_DUBLIN_CORE_SPECIFIC_PROPERTIES, "dc:subject", XmpDirectory.TAG_SUBJECT, FMT_STRING);
-            processXmpDateTag(xmpMeta, directory, SCHEMA_DUBLIN_CORE_SPECIFIC_PROPERTIES, "dc:date", XmpDirectory.TAG_DATE);
-            processXmpTag(xmpMeta, directory, SCHEMA_DUBLIN_CORE_SPECIFIC_PROPERTIES, "dc:type", XmpDirectory.TAG_TYPE, FMT_STRING);
-            processXmpTag(xmpMeta, directory, SCHEMA_DUBLIN_CORE_SPECIFIC_PROPERTIES, "dc:description", XmpDirectory.TAG_DESCRIPTION, FMT_STRING);
-            processXmpTag(xmpMeta, directory, SCHEMA_DUBLIN_CORE_SPECIFIC_PROPERTIES, "dc:relation", XmpDirectory.TAG_RELATION, FMT_STRING);
-            processXmpTag(xmpMeta, directory, SCHEMA_DUBLIN_CORE_SPECIFIC_PROPERTIES, "dc:coverage", XmpDirectory.TAG_COVERAGE, FMT_STRING);
-            processXmpTag(xmpMeta, directory, SCHEMA_DUBLIN_CORE_SPECIFIC_PROPERTIES, "dc:creator", XmpDirectory.TAG_CREATOR, FMT_STRING);
-            processXmpTag(xmpMeta, directory, SCHEMA_DUBLIN_CORE_SPECIFIC_PROPERTIES, "dc:publisher", XmpDirectory.TAG_PUBLISHER, FMT_STRING);
-            processXmpTag(xmpMeta, directory, SCHEMA_DUBLIN_CORE_SPECIFIC_PROPERTIES, "dc:contributor", XmpDirectory.TAG_CONTRIBUTOR, FMT_STRING);
-            processXmpTag(xmpMeta, directory, SCHEMA_DUBLIN_CORE_SPECIFIC_PROPERTIES, "dc:rights", XmpDirectory.TAG_RIGHTS, FMT_STRING);
-            processXmpTag(xmpMeta, directory, SCHEMA_DUBLIN_CORE_SPECIFIC_PROPERTIES, "dc:format", XmpDirectory.TAG_FORMAT, FMT_STRING);
-            processXmpTag(xmpMeta, directory, SCHEMA_DUBLIN_CORE_SPECIFIC_PROPERTIES, "dc:identifier", XmpDirectory.TAG_IDENTIFIER, FMT_STRING);
-            processXmpTag(xmpMeta, directory, SCHEMA_DUBLIN_CORE_SPECIFIC_PROPERTIES, "dc:language", XmpDirectory.TAG_LANGUAGE, FMT_STRING);
-            processXmpTag(xmpMeta, directory, SCHEMA_DUBLIN_CORE_SPECIFIC_PROPERTIES, "dc:audience", XmpDirectory.TAG_AUDIENCE, FMT_STRING);
-            processXmpTag(xmpMeta, directory, SCHEMA_DUBLIN_CORE_SPECIFIC_PROPERTIES, "dc:provenance", XmpDirectory.TAG_PROVENANCE, FMT_STRING);
-            processXmpTag(xmpMeta, directory, SCHEMA_DUBLIN_CORE_SPECIFIC_PROPERTIES, "dc:rightsHolder", XmpDirectory.TAG_RIGHTS_HOLDER, FMT_STRING);
-            processXmpTag(xmpMeta, directory, SCHEMA_DUBLIN_CORE_SPECIFIC_PROPERTIES, "dc:instructionalMethod", XmpDirectory.TAG_INSTRUCTIONAL_METHOD, FMT_STRING);
-            processXmpTag(xmpMeta, directory, SCHEMA_DUBLIN_CORE_SPECIFIC_PROPERTIES, "dc:accrualMethod", XmpDirectory.TAG_ACCRUAL_METHOD, FMT_STRING);
-            processXmpTag(xmpMeta, directory, SCHEMA_DUBLIN_CORE_SPECIFIC_PROPERTIES, "dc:accrualPeriodicity", XmpDirectory.TAG_ACCRUAL_PERIODICITY, FMT_STRING);
-            processXmpTag(xmpMeta, directory, SCHEMA_DUBLIN_CORE_SPECIFIC_PROPERTIES, "dc:accrualPolicy", XmpDirectory.TAG_ACCRUAL_POLICY, FMT_STRING);
-*/
+			ProcessXmpTag(xmpMeta, directory, XmpDirectory.TagLensInfo, FmtString);
+			ProcessXmpTag(xmpMeta, directory, XmpDirectory.TagLens, FmtString);
+			ProcessXmpTag(xmpMeta, directory, XmpDirectory.TagCameraSerialNumber, FmtString);
+			ProcessXmpTag(xmpMeta, directory, XmpDirectory.TagFirmware, FmtString);
+			ProcessXmpTag(xmpMeta, directory, XmpDirectory.TagMake, FmtString);
+			ProcessXmpTag(xmpMeta, directory, XmpDirectory.TagModel, FmtString);
+			ProcessXmpTag(xmpMeta, directory, XmpDirectory.TagExposureTime, FmtString);
+			ProcessXmpTag(xmpMeta, directory, XmpDirectory.TagExposureProgram, FmtInt);
+			ProcessXmpTag(xmpMeta, directory, XmpDirectory.TagApertureValue, FmtRational);
+			ProcessXmpTag(xmpMeta, directory, XmpDirectory.TagFNumber, FmtRational);
+			ProcessXmpTag(xmpMeta, directory, XmpDirectory.TagFocalLength, FmtRational);
+			ProcessXmpTag(xmpMeta, directory, XmpDirectory.TagShutterSpeed, FmtRational);
+			ProcessXmpDateTag(xmpMeta, directory, XmpDirectory.TagDatetimeOriginal);
+			ProcessXmpDateTag(xmpMeta, directory, XmpDirectory.TagDatetimeDigitized);
+			ProcessXmpTag(xmpMeta, directory, XmpDirectory.TagRating, FmtDouble);
+			ProcessXmpTag(xmpMeta, directory, XmpDirectory.TagLabel, FmtString);
+			// this requires further research
+			// processXmpTag(xmpMeta, directory, Schema.DUBLIN_CORE_SPECIFIC_PROPERTIES, "dc:title", XmpDirectory.TAG_TITLE, FMT_STRING);
+			ProcessXmpTag(xmpMeta, directory, XmpDirectory.TagSubject, FmtStringArray);
+			// processXmpDateTag(xmpMeta, directory, Schema.DUBLIN_CORE_SPECIFIC_PROPERTIES, "dc:date", XmpDirectory.TAG_DATE);
+			// processXmpTag(xmpMeta, directory, Schema.DUBLIN_CORE_SPECIFIC_PROPERTIES, "dc:type", XmpDirectory.TAG_TYPE, FMT_STRING);
+			// processXmpTag(xmpMeta, directory, Schema.DUBLIN_CORE_SPECIFIC_PROPERTIES, "dc:description", XmpDirectory.TAG_DESCRIPTION, FMT_STRING);
+			// processXmpTag(xmpMeta, directory, Schema.DUBLIN_CORE_SPECIFIC_PROPERTIES, "dc:relation", XmpDirectory.TAG_RELATION, FMT_STRING);
+			// processXmpTag(xmpMeta, directory, Schema.DUBLIN_CORE_SPECIFIC_PROPERTIES, "dc:coverage", XmpDirectory.TAG_COVERAGE, FMT_STRING);
+			// processXmpTag(xmpMeta, directory, Schema.DUBLIN_CORE_SPECIFIC_PROPERTIES, "dc:creator", XmpDirectory.TAG_CREATOR, FMT_STRING);
+			// processXmpTag(xmpMeta, directory, Schema.DUBLIN_CORE_SPECIFIC_PROPERTIES, "dc:publisher", XmpDirectory.TAG_PUBLISHER, FMT_STRING);
+			// processXmpTag(xmpMeta, directory, Schema.DUBLIN_CORE_SPECIFIC_PROPERTIES, "dc:contributor", XmpDirectory.TAG_CONTRIBUTOR, FMT_STRING);
+			// processXmpTag(xmpMeta, directory, Schema.DUBLIN_CORE_SPECIFIC_PROPERTIES, "dc:rights", XmpDirectory.TAG_RIGHTS, FMT_STRING);
+			// processXmpTag(xmpMeta, directory, Schema.DUBLIN_CORE_SPECIFIC_PROPERTIES, "dc:format", XmpDirectory.TAG_FORMAT, FMT_STRING);
+			// processXmpTag(xmpMeta, directory, Schema.DUBLIN_CORE_SPECIFIC_PROPERTIES, "dc:identifier", XmpDirectory.TAG_IDENTIFIER, FMT_STRING);
+			// processXmpTag(xmpMeta, directory, Schema.DUBLIN_CORE_SPECIFIC_PROPERTIES, "dc:language", XmpDirectory.TAG_LANGUAGE, FMT_STRING);
+			// processXmpTag(xmpMeta, directory, Schema.DUBLIN_CORE_SPECIFIC_PROPERTIES, "dc:audience", XmpDirectory.TAG_AUDIENCE, FMT_STRING);
+			// processXmpTag(xmpMeta, directory, Schema.DUBLIN_CORE_SPECIFIC_PROPERTIES, "dc:provenance", XmpDirectory.TAG_PROVENANCE, FMT_STRING);
+			// processXmpTag(xmpMeta, directory, Schema.DUBLIN_CORE_SPECIFIC_PROPERTIES, "dc:rightsHolder", XmpDirectory.TAG_RIGHTS_HOLDER, FMT_STRING);
+			// processXmpTag(xmpMeta, directory, Schema.DUBLIN_CORE_SPECIFIC_PROPERTIES, "dc:instructionalMethod", XmpDirectory.TAG_INSTRUCTIONAL_METHOD,
+			// FMT_STRING);
+			// processXmpTag(xmpMeta, directory, Schema.DUBLIN_CORE_SPECIFIC_PROPERTIES, "dc:accrualMethod", XmpDirectory.TAG_ACCRUAL_METHOD, FMT_STRING);
+			// processXmpTag(xmpMeta, directory, Schema.DUBLIN_CORE_SPECIFIC_PROPERTIES, "dc:accrualPeriodicity", XmpDirectory.TAG_ACCRUAL_PERIODICITY,
+			// FMT_STRING);
+			// processXmpTag(xmpMeta, directory, Schema.DUBLIN_CORE_SPECIFIC_PROPERTIES, "dc:accrualPolicy", XmpDirectory.TAG_ACCRUAL_POLICY, FMT_STRING);
 			for (XMPIterator iterator = xmpMeta.Iterator(); iterator.HasNext(); )
 			{
 				XMPPropertyInfo propInfo = (XMPPropertyInfo)iterator.Next();
@@ -220,8 +221,10 @@ namespace Com.Drew.Metadata.Xmp
 		/// <summary>Reads an property value with given namespace URI and property name.</summary>
 		/// <remarks>Reads an property value with given namespace URI and property name. Add property value to directory if exists</remarks>
 		/// <exception cref="Com.Adobe.Xmp.XMPException"/>
-		private void ProcessXmpTag(XMPMeta meta, XmpDirectory directory, string schemaNS, string propName, int tagType, int formatCode)
+		private static void ProcessXmpTag([NotNull] XMPMeta meta, [NotNull] XmpDirectory directory, int tagType, int formatCode)
 		{
+			string schemaNS = XmpDirectory._tagSchemaMap.Get(tagType);
+			string propName = XmpDirectory._tagPropNameMap.Get(tagType);
 			string property = meta.GetPropertyString(schemaNS, propName);
 			if (property == null)
 			{
@@ -255,7 +258,7 @@ namespace Com.Drew.Metadata.Xmp
 				{
 					try
 					{
-						directory.SetInt(tagType, Sharpen.Extensions.ValueOf(property));
+						directory.SetInt(tagType, (int)Sharpen.Extensions.ValueOf(property));
 					}
 					catch (FormatException)
 					{
@@ -268,7 +271,7 @@ namespace Com.Drew.Metadata.Xmp
 				{
 					try
 					{
-						directory.SetDouble(tagType, double.Parse(property));
+						directory.SetDouble(tagType, (double)double.Parse(property));
 					}
 					catch (FormatException)
 					{
@@ -283,6 +286,19 @@ namespace Com.Drew.Metadata.Xmp
 					break;
 				}
 
+				case FmtStringArray:
+				{
+					//XMP iterators are 1-based
+					int count = meta.CountArrayItems(schemaNS, propName);
+					string[] array = new string[count];
+					for (int i = 1; i <= count; ++i)
+					{
+						array[i - 1] = meta.GetArrayItem(schemaNS, propName, i).GetValue();
+					}
+					directory.SetStringArray(tagType, array);
+					break;
+				}
+
 				default:
 				{
 					directory.AddError(Sharpen.Extensions.StringFormat("Unknown format code %d for tag %d", formatCode, tagType));
@@ -292,8 +308,10 @@ namespace Com.Drew.Metadata.Xmp
 		}
 
 		/// <exception cref="Com.Adobe.Xmp.XMPException"/>
-		private void ProcessXmpDateTag(XMPMeta meta, XmpDirectory directory, string schemaNS, string propName, int tagType)
+		private static void ProcessXmpDateTag([NotNull] XMPMeta meta, [NotNull] XmpDirectory directory, int tagType)
 		{
+			string schemaNS = XmpDirectory._tagSchemaMap.Get(tagType);
+			string propName = XmpDirectory._tagPropNameMap.Get(tagType);
 			Sharpen.Calendar cal = meta.GetPropertyCalendar(schemaNS, propName);
 			if (cal != null)
 			{

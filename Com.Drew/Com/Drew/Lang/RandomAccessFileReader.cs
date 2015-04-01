@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,12 +15,11 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using System;
 using System.IO;
-using Com.Drew.Lang;
 using JetBrains.Annotations;
 using Sharpen;
 
@@ -28,11 +27,11 @@ namespace Com.Drew.Lang
 {
 	/// <summary>
 	/// Provides methods to read specific values from a
-	/// <see cref="RandomAccessFile"/>
+	/// <see cref="System.IO.RandomAccessFile"/>
 	/// , with a consistent, checked exception structure for
 	/// issues.
 	/// </summary>
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class RandomAccessFileReader : RandomAccessReader
 	{
 		[NotNull]
@@ -43,7 +42,7 @@ namespace Com.Drew.Lang
 		private int _currentIndex;
 
 		/// <exception cref="System.IO.IOException"/>
-		public RandomAccessFileReader(RandomAccessFile file)
+		public RandomAccessFileReader([NotNull] RandomAccessFile file)
 		{
 			if (file == null)
 			{

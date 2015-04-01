@@ -1,15 +1,14 @@
 using System;
 using Com.Drew.Metadata;
-using Com.Drew.Metadata.Bmp;
 using JetBrains.Annotations;
 using Sharpen;
 
 namespace Com.Drew.Metadata.Bmp
 {
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class BmpHeaderDescriptor : TagDescriptor<BmpHeaderDirectory>
 	{
-		public BmpHeaderDescriptor(BmpHeaderDirectory directory)
+		public BmpHeaderDescriptor([NotNull] BmpHeaderDirectory directory)
 			: base(directory)
 		{
 		}
@@ -42,12 +41,12 @@ namespace Com.Drew.Metadata.Bmp
 			// 6 = Bit field
 			try
 			{
-				int? value = _directory.GetInt(BmpHeaderDirectory.TagCompression);
+				int? value = _directory.GetInteger(BmpHeaderDirectory.TagCompression);
 				if (value == null)
 				{
 					return null;
 				}
-				int? headerSize = _directory.GetInt(BmpHeaderDirectory.TagHeaderSize);
+				int? headerSize = _directory.GetInteger(BmpHeaderDirectory.TagHeaderSize);
 				if (headerSize == null)
 				{
 					return null;

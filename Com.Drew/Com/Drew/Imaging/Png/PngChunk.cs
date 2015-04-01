@@ -1,10 +1,9 @@
-using Com.Drew.Imaging.Png;
 using JetBrains.Annotations;
 using Sharpen;
 
 namespace Com.Drew.Imaging.Png
 {
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class PngChunk
 	{
 		[NotNull]
@@ -13,7 +12,7 @@ namespace Com.Drew.Imaging.Png
 		[NotNull]
 		private readonly sbyte[] _bytes;
 
-		public PngChunk(PngChunkType chunkType, sbyte[] bytes)
+		public PngChunk([NotNull] PngChunkType chunkType, [NotNull] sbyte[] bytes)
 		{
 			_chunkType = chunkType;
 			_bytes = bytes;

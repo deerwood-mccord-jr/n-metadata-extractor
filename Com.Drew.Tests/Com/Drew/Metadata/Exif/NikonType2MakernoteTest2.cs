@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,17 +15,16 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using Com.Drew.Lang;
-using Com.Drew.Metadata.Exif;
 using Com.Drew.Metadata.Exif.Makernotes;
 using Sharpen;
 
 namespace Com.Drew.Metadata.Exif
 {
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class NikonType2MakernoteTest2
 	{
 		private NikonType2MakernoteDirectory _nikonDirectory;
@@ -41,15 +40,15 @@ namespace Com.Drew.Metadata.Exif
 		public virtual void SetUp()
 		{
 			Com.Drew.Metadata.Metadata metadata = ExifReaderTest.ProcessBytes("Tests/Data/nikonMakernoteType2b.jpg.app1");
-			_nikonDirectory = metadata.GetDirectory<NikonType2MakernoteDirectory>();
-			_exifIFD0Directory = metadata.GetDirectory<ExifIFD0Directory>();
-			_exifSubIFDDirectory = metadata.GetDirectory<ExifSubIFDDirectory>();
-			_thumbDirectory = metadata.GetDirectory<ExifThumbnailDirectory>();
+			_nikonDirectory = metadata.GetFirstDirectoryOfType<NikonType2MakernoteDirectory>();
+			_exifIFD0Directory = metadata.GetFirstDirectoryOfType<ExifIFD0Directory>();
+			_exifSubIFDDirectory = metadata.GetFirstDirectoryOfType<ExifSubIFDDirectory>();
+			_thumbDirectory = metadata.GetFirstDirectoryOfType<ExifThumbnailDirectory>();
 			NUnit.Framework.Assert.IsNotNull(_nikonDirectory);
 			NUnit.Framework.Assert.IsNotNull(_exifSubIFDDirectory);
 		}
 
-		/*
+    /*
         [Nikon Makernote] Makernote Unknown 1 =
         [Nikon Makernote] ISO Setting = Unknown (0 0)
         [Nikon Makernote] Color Mode = COLOR
@@ -100,7 +99,7 @@ namespace Com.Drew.Metadata.Exif
 			Sharpen.Tests.AreEqual(1394, _nikonDirectory.GetInt(unchecked((int)(0x0e10))));
 		}
 
-		/*
+    /*
         [Exif] Image Description =
         [Exif] Make = NIKON
         [Exif] Model = E995
@@ -169,7 +168,7 @@ namespace Com.Drew.Metadata.Exif
 			Sharpen.Tests.AreEqual(1, _exifSubIFDDirectory.GetInt(ExifSubIFDDirectory.TagSceneType));
 		}
 
-		/*
+    /*
         [Exif Thumbnail] Thumbnail Compression = JPEG (old-style)
         [Exif Thumbnail] X Resolution = 72 dots per inch
         [Exif Thumbnail] Y Resolution = 72 dots per inch

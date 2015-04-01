@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,8 +15,8 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using JetBrains.Annotations;
 using Sharpen;
@@ -29,7 +29,7 @@ namespace Com.Drew.Metadata
 	/// and provides methods for obtaining its value.
 	/// Immutable.
 	/// </summary>
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class Tag
 	{
 		private readonly int _tagType;
@@ -37,7 +37,7 @@ namespace Com.Drew.Metadata
 		[NotNull]
 		private readonly Com.Drew.Metadata.Directory _directory;
 
-		public Tag(int tagType, Com.Drew.Metadata.Directory directory)
+		public Tag(int tagType, [NotNull] Com.Drew.Metadata.Directory directory)
 		{
 			_tagType = tagType;
 			_directory = directory;
@@ -79,6 +79,23 @@ namespace Com.Drew.Metadata
 		public virtual string GetDescription()
 		{
 			return _directory.GetDescription(_tagType);
+		}
+
+		/// <summary>Get whether this tag has a name.</summary>
+		/// <remarks>
+		/// Get whether this tag has a name.
+		/// If <code>true</code>, it may be accessed via
+		/// <see cref="GetTagName()"/>
+		/// .
+		/// If <code>false</code>,
+		/// <see cref="GetTagName()"/>
+		/// will return a string resembling <code>"Unknown tag (0x1234)"</code>.
+		/// </remarks>
+		/// <returns>whether this tag has a name</returns>
+		[NotNull]
+		public virtual bool HasTagName()
+		{
+			return _directory.HasTagName(_tagType);
 		}
 
 		/// <summary>

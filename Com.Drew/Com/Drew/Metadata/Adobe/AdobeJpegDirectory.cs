@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,11 +15,10 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using System.Collections.Generic;
-using Com.Drew.Metadata.Adobe;
 using JetBrains.Annotations;
 using Sharpen;
 
@@ -34,7 +33,7 @@ namespace Com.Drew.Metadata.Adobe
 		/// <remarks>
 		/// The convention for TAG_APP14_FLAGS0 and TAG_APP14_FLAGS1 is that 0 bits are benign.
 		/// 1 bits in TAG_APP14_FLAGS0 pass information that is possibly useful but not essential for decoding.
-		/// <p/>
+		/// <p>
 		/// 0x8000 bit: Encoder used Blend=1 downsampling
 		/// </remarks>
 		public const int TagApp14Flags0 = 1;
@@ -49,7 +48,7 @@ namespace Com.Drew.Metadata.Adobe
 
 		public const int TagColorTransform = 3;
 
-		private static readonly Dictionary<int, string> _tagNameMap = new Dictionary<int, string>();
+		private static readonly Dictionary<int?, string> _tagNameMap = new Dictionary<int?, string>();
 
 		static AdobeJpegDirectory()
 		{
@@ -71,7 +70,7 @@ namespace Com.Drew.Metadata.Adobe
 		}
 
 		[NotNull]
-		protected internal override Dictionary<int, string> GetTagNameMap()
+		protected internal override Dictionary<int?, string> GetTagNameMap()
 		{
 			return _tagNameMap;
 		}

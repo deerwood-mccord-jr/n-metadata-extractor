@@ -1,19 +1,19 @@
 using System.Collections.Generic;
-using Com.Drew.Imaging.Png;
 using Com.Drew.Lang;
+using JetBrains.Annotations;
 using Sharpen;
 
 namespace Com.Drew.Imaging.Png
 {
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class PngChunkReader
 	{
-		private static readonly sbyte[] PngSignatureBytes = new sbyte[] { unchecked((sbyte)unchecked((int)(0x89))), unchecked((int)(0x50)), unchecked((int)(0x4E)), unchecked((int)(0x47)), unchecked((int)(0x0D)
-			), unchecked((int)(0x0A)), unchecked((int)(0x1A)), unchecked((int)(0x0A)) };
+		private static readonly sbyte[] PngSignatureBytes = new sbyte[] { unchecked((sbyte)0x89), unchecked((int)(0x50)), unchecked((int)(0x4E)), unchecked((int)(0x47)), unchecked((int)(0x0D)), unchecked((int)(0x0A)), unchecked((int)(0x1A)), unchecked(
+			(int)(0x0A)) };
 
 		/// <exception cref="Com.Drew.Imaging.Png.PngProcessingException"/>
 		/// <exception cref="System.IO.IOException"/>
-		public virtual Iterable<PngChunk> Extract(SequentialReader reader, ICollection<PngChunkType> desiredChunkTypes)
+		public virtual Iterable<PngChunk> Extract([NotNull] SequentialReader reader, [CanBeNull] ICollection<PngChunkType> desiredChunkTypes)
 		{
 			//
 			// PNG DATA STREAM
@@ -63,11 +63,12 @@ namespace Com.Drew.Imaging.Png
 				// Process the next chunk.
 				int chunkDataLength = reader.GetInt32();
 				PngChunkType chunkType = new PngChunkType(reader.GetBytes(4));
+				bool willStoreChunk = desiredChunkTypes == null || desiredChunkTypes.Contains(chunkType);
 				sbyte[] chunkData = reader.GetBytes(chunkDataLength);
 				// Skip the CRC bytes at the end of the chunk
 				// TODO consider verifying the CRC value to determine if we're processing bad data
 				reader.Skip(4);
-				if (seenChunkTypes.Contains(chunkType) && !chunkType.AreMultipleAllowed())
+				if (willStoreChunk && seenChunkTypes.Contains(chunkType) && !chunkType.AreMultipleAllowed())
 				{
 					throw new PngProcessingException(Sharpen.Extensions.StringFormat("Observed multiple instances of PNG chunk '%s', for which multiples are not allowed", chunkType));
 				}
@@ -86,7 +87,7 @@ namespace Com.Drew.Imaging.Png
 				{
 					seenImageTrailer = true;
 				}
-				if (desiredChunkTypes == null || desiredChunkTypes.Contains(chunkType))
+				if (willStoreChunk)
 				{
 					chunks.Add(new PngChunk(chunkType, chunkData));
 				}
