@@ -33,11 +33,11 @@ namespace Com.Drew.Lang
 	{
 		/// <summary>A node in the trie.</summary>
 		/// <remarks>A node in the trie. Has children and may have an associated value.</remarks>
-		internal class ByteTrieNode<T>
+        internal class ByteTrieNode<T>
 		{
-			private readonly IDictionary<sbyte, ByteTrie.ByteTrieNode<T>> _children = new Dictionary<sbyte, ByteTrie.ByteTrieNode<T>>();
+            internal readonly IDictionary<sbyte, ByteTrieNode<T>> _children = new Dictionary<sbyte, ByteTrieNode<T>>();
 
-			private T _value = null;
+			internal T _value = default(T);
 
 			public virtual void SetValue(T value)
 			{
@@ -49,7 +49,7 @@ namespace Com.Drew.Lang
 			}
 		}
 
-		private readonly ByteTrie.ByteTrieNode<T> _root = new ByteTrie.ByteTrieNode<T>();
+		private readonly ByteTrieNode<T> _root = new ByteTrieNode<T>();
 
 		private int _maxDepth;
 
@@ -64,11 +64,11 @@ namespace Com.Drew.Lang
 		[CanBeNull]
 		public virtual T Find(sbyte[] bytes)
 		{
-			ByteTrie.ByteTrieNode<T> node = _root;
+			ByteTrieNode<T> node = _root;
 			T value = node._value;
 			foreach (sbyte b in bytes)
 			{
-				ByteTrie.ByteTrieNode<T> child = node._children.Get(b);
+				ByteTrieNode<T> child = node._children.Get(b);
 				if (child == null)
 				{
 					break;
@@ -86,15 +86,15 @@ namespace Com.Drew.Lang
 		public virtual void AddPath(T value, params sbyte[][] parts)
 		{
 			int depth = 0;
-			ByteTrie.ByteTrieNode<T> node = _root;
+			ByteTrieNode<T> node = _root;
 			foreach (sbyte[] part in parts)
 			{
 				foreach (sbyte b in part)
 				{
-					ByteTrie.ByteTrieNode<T> child = node._children.Get(b);
+					ByteTrieNode<T> child = node._children.Get(b);
 					if (child == null)
 					{
-						child = new ByteTrie.ByteTrieNode<T>();
+						child = new ByteTrieNode<T>();
 						node._children.Put(b, child);
 					}
 					node = child;
