@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,8 +15,8 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using System.Collections.Generic;
 using JetBrains.Annotations;
@@ -30,7 +30,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 	/// Thanks to Bill Richards for his contribution to this makernote directory.
 	/// Many tag definitions explained here: http://www.ozhiker.com/electronics/pjmt/jpeg_info/canon_mn.html
 	/// </remarks>
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class CanonMakernoteDirectory : Com.Drew.Metadata.Directory
 	{
 		private const int TagCameraSettingsArray = unchecked((int)(0x0001));
@@ -235,7 +235,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 			/// 3 = Fast Shutter
 			/// 4 = Slow Shutter
 			/// 5 = Night
-			/// 6 = Black & White
+			/// 6 = Black &amp; White
 			/// 7 = Sepia
 			/// 8 = Portrait
 			/// 9 = Sports

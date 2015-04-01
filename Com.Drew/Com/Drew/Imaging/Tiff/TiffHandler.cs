@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,8 +15,8 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using System.Collections.Generic;
 using Com.Drew.Lang;
@@ -25,13 +25,19 @@ using Sharpen;
 
 namespace Com.Drew.Imaging.Tiff
 {
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <summary>
+	/// Interface of an class capable of handling events raised during the reading of a TIFF file
+	/// via
+	/// <see cref="TiffReader"/>
+	/// .
+	/// </summary>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public interface TiffHandler
 	{
 		/// <summary>Receives the 2-byte marker found in the TIFF header.</summary>
 		/// <remarks>
 		/// Receives the 2-byte marker found in the TIFF header.
-		/// <p/>
+		/// <p>
 		/// Implementations are not obligated to use this information for any purpose, though it may be useful for
 		/// validation or perhaps differentiating the type of mapping to use for observed tags and IFDs.
 		/// </remarks>
@@ -48,7 +54,7 @@ namespace Com.Drew.Imaging.Tiff
 		void Completed([NotNull] RandomAccessReader reader, int tiffHeaderOffset);
 
 		/// <exception cref="System.IO.IOException"/>
-		bool CustomProcessTag(int makernoteOffset, [NotNull] ICollection<int?> processedIfdOffsets, int tiffHeaderOffset, [NotNull] RandomAccessReader reader, int tagId, int byteCount);
+		bool CustomProcessTag(int tagOffset, [NotNull] ICollection<int?> processedIfdOffsets, int tiffHeaderOffset, [NotNull] RandomAccessReader reader, int tagId, int byteCount);
 
 		void Warn([NotNull] string message);
 

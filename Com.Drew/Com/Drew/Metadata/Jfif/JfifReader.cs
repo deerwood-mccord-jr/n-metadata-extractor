@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,12 +15,13 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using System.IO;
 using Com.Drew.Imaging.Jpeg;
 using Com.Drew.Lang;
+using Com.Drew.Metadata;
 using JetBrains.Annotations;
 using Sharpen;
 
@@ -29,26 +30,30 @@ namespace Com.Drew.Metadata.Jfif
 	/// <summary>Reader for JFIF data, found in the APP0 JPEG segment.</summary>
 	/// <remarks>
 	/// Reader for JFIF data, found in the APP0 JPEG segment.
-	/// <p/>
+	/// <p>
 	/// More info at: http://en.wikipedia.org/wiki/JPEG_File_Interchange_Format
 	/// </remarks>
 	/// <author>Yuri Binev, Drew Noakes, Markus Meyer</author>
-	public class JfifReader : JpegSegmentMetadataReader
+	public class JfifReader : JpegSegmentMetadataReader, MetadataReader
 	{
+		public const string Preamble = "JFIF";
+
 		[NotNull]
 		public virtual Iterable<JpegSegmentType> GetSegmentTypes()
 		{
 			return Arrays.AsList(JpegSegmentType.App0).AsIterable();
 		}
 
-		public virtual bool CanProcess([NotNull] sbyte[] segmentBytes, [NotNull] JpegSegmentType segmentType)
+		public virtual void ReadJpegSegments([NotNull] Iterable<sbyte[]> segments, [NotNull] Com.Drew.Metadata.Metadata metadata, [NotNull] JpegSegmentType segmentType)
 		{
-			return segmentBytes.Length > 3 && "JFIF".Equals(Sharpen.Runtime.GetStringForBytes(segmentBytes, 0, 4));
-		}
-
-		public virtual void Extract([NotNull] sbyte[] segmentBytes, [NotNull] Com.Drew.Metadata.Metadata metadata, [NotNull] JpegSegmentType segmentType)
-		{
-			Extract(new ByteArrayReader(segmentBytes), metadata);
+			foreach (sbyte[] segmentBytes in segments)
+			{
+				// Skip segments not starting with the required header
+				if (segmentBytes.Length >= 4 && Preamble.Equals(Sharpen.Runtime.GetStringForBytes(segmentBytes, 0, Preamble.Length)))
+				{
+					Extract(new ByteArrayReader(segmentBytes), metadata);
+				}
+			}
 		}
 
 		/// <summary>
@@ -59,7 +64,8 @@ namespace Com.Drew.Metadata.Jfif
 		/// </summary>
 		public virtual void Extract([NotNull] RandomAccessReader reader, [NotNull] Com.Drew.Metadata.Metadata metadata)
 		{
-			JfifDirectory directory = metadata.GetOrCreateDirectory<JfifDirectory>();
+			JfifDirectory directory = new JfifDirectory();
+			metadata.AddDirectory(directory);
 			try
 			{
 				// For JFIF, the tag number is also the offset into the segment

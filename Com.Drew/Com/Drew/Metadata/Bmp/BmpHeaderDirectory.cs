@@ -4,7 +4,7 @@ using Sharpen;
 
 namespace Com.Drew.Metadata.Bmp
 {
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class BmpHeaderDirectory : Com.Drew.Metadata.Directory
 	{
 		public const int TagHeaderSize = -1;

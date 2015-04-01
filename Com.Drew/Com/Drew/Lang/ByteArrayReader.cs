@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,8 +15,8 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using System;
 using JetBrains.Annotations;
@@ -31,11 +31,11 @@ namespace Com.Drew.Lang
 	/// <remarks>
 	/// Provides methods to read specific values from a byte array, with a consistent, checked exception structure for
 	/// issues.
-	/// <p/>
+	/// <p>
 	/// By default, the reader operates with Motorola byte order (big endianness).  This can be changed by calling
 	/// <code>setMotorolaByteOrder(boolean)</code>.
 	/// </remarks>
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class ByteArrayReader : RandomAccessReader
 	{
 		[NotNull]

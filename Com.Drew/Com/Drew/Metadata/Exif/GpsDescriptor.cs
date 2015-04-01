@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,8 +15,8 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using Com.Drew.Lang;
 using Com.Drew.Metadata;
@@ -30,7 +30,7 @@ namespace Com.Drew.Metadata.Exif
 	/// <see cref="GpsDirectory"/>
 	/// .
 	/// </summary>
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class GpsDescriptor : TagDescriptor<GpsDirectory>
 	{
 		public GpsDescriptor([NotNull] GpsDirectory directory)
@@ -145,8 +145,9 @@ namespace Com.Drew.Metadata.Exif
 		public virtual string GetGpsTimeStampDescription()
 		{
 			// time in hour, min, sec
-			int[] timeComponents = _directory.GetIntArray(GpsDirectory.TagTimeStamp);
-			return timeComponents == null ? null : Sharpen.Extensions.StringFormat("%d:%d:%d UTC", timeComponents[0], timeComponents[1], timeComponents[2]);
+			Rational[] timeComponents = _directory.GetRationalArray(GpsDirectory.TagTimeStamp);
+			DecimalFormat df = new DecimalFormat("00.00");
+			return timeComponents == null ? null : Sharpen.Extensions.StringFormat("%02d:%02d:%s UTC", timeComponents[0].IntValue(), timeComponents[1].IntValue(), df.Format(timeComponents[2].DoubleValue()));
 		}
 
 		[CanBeNull]

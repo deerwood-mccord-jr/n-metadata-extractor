@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,14 +15,15 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using System;
 using System.Collections.Generic;
 using System.IO;
 using Com.Drew.Metadata.Adobe;
 using Com.Drew.Metadata.Exif;
+using Com.Drew.Metadata.File;
 using Com.Drew.Metadata.Icc;
 using Com.Drew.Metadata.Iptc;
 using Com.Drew.Metadata.Jfif;
@@ -35,7 +36,7 @@ using Sharpen;
 namespace Com.Drew.Imaging.Jpeg
 {
 	/// <summary>Obtains all available metadata from JPEG formatted files.</summary>
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class JpegMetadataReader
 	{
 		public static readonly Iterable<JpegSegmentMetadataReader> AllReaders = Arrays.AsList(new JpegReader(), new JpegCommentReader(), new JfifReader(), new ExifReader(), new XmpReader(), new IccReader(), new PhotoshopReader(), new IptcReader(), new 
@@ -64,19 +65,18 @@ namespace Com.Drew.Imaging.Jpeg
 		[NotNull]
 		public static Com.Drew.Metadata.Metadata ReadMetadata([NotNull] FilePath file, [CanBeNull] Iterable<JpegSegmentMetadataReader> readers)
 		{
-			InputStream inputStream = null;
+			InputStream inputStream = new FileInputStream(file);
+			Com.Drew.Metadata.Metadata metadata;
 			try
 			{
-				inputStream = new FileInputStream(file);
-				return ReadMetadata(inputStream, readers);
+				metadata = ReadMetadata(inputStream, readers);
 			}
 			finally
 			{
-				if (inputStream != null)
-				{
-					inputStream.Close();
-				}
+				inputStream.Close();
 			}
+			new FileMetadataReader().Read(file, metadata);
+			return metadata;
 		}
 
 		/// <exception cref="Com.Drew.Imaging.Jpeg.JpegProcessingException"/>
@@ -121,13 +121,7 @@ namespace Com.Drew.Imaging.Jpeg
 			{
 				foreach (JpegSegmentType segmentType in reader.GetSegmentTypes())
 				{
-					foreach (sbyte[] segmentBytes in segmentData.GetSegments(segmentType))
-					{
-						if (reader.CanProcess(segmentBytes, segmentType))
-						{
-							reader.Extract(segmentBytes, metadata, segmentType);
-						}
-					}
+					reader.ReadJpegSegments(segmentData.GetSegments(segmentType), metadata, segmentType);
 				}
 			}
 		}

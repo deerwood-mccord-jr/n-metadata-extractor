@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,8 +15,8 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using Com.Drew.Lang;
 using Com.Drew.Metadata;
@@ -31,7 +31,7 @@ namespace Com.Drew.Metadata.Iptc
 	/// <see cref="IptcReader"/>
 	/// .
 	/// </summary>
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class IptcReaderTest
 	{
 		/// <exception cref="System.IO.IOException"/>
@@ -41,7 +41,7 @@ namespace Com.Drew.Metadata.Iptc
 			Com.Drew.Metadata.Metadata metadata = new Com.Drew.Metadata.Metadata();
 			sbyte[] bytes = FileUtil.ReadBytes(filePath);
 			new IptcReader().Extract(new SequentialByteArrayReader(bytes), metadata, bytes.Length);
-			IptcDirectory directory = metadata.GetDirectory<IptcDirectory>();
+			IptcDirectory directory = metadata.GetFirstDirectoryOfType<IptcDirectory>();
 			NUnit.Framework.Assert.IsNotNull(directory);
 			return directory;
 		}
@@ -130,6 +130,70 @@ namespace Com.Drew.Metadata.Iptc
 			NUnit.Framework.CollectionAssert.AreEqual(new string[] { "Supl. Category1", "Supl. Category2" }, directory.GetStringArray(tags[15].GetTagType()));
 			Sharpen.Tests.AreEqual(IptcDirectory.TagCopyrightNotice, tags[16].GetTagType());
 			Sharpen.Tests.AreEqual("Copyright", directory.GetObject(tags[16].GetTagType()));
+		}
+
+		/// <exception cref="System.Exception"/>
+		[NUnit.Framework.Test]
+		public virtual void TestIptcEncodingUtf8()
+		{
+			IptcDirectory directory = ProcessBytes("Tests/Data/iptc-encoding-defined-utf8.bytes");
+			Sharpen.Tests.IsFalse(directory.GetErrors().ToString(), directory.HasErrors());
+			Tag[] tags = Sharpen.Collections.ToArray(directory.GetTags(), new Tag[directory.GetTagCount()]);
+			Sharpen.Tests.AreEqual(4, tags.Length);
+			Sharpen.Tests.AreEqual(IptcDirectory.TagEnvelopeRecordVersion, tags[0].GetTagType());
+			Sharpen.Tests.AreEqual(2, directory.GetObject(tags[0].GetTagType()));
+			Sharpen.Tests.AreEqual(IptcDirectory.TagCodedCharacterSet, tags[1].GetTagType());
+			Sharpen.Tests.AreEqual("UTF-8", directory.GetObject(tags[1].GetTagType()));
+			Sharpen.Tests.AreEqual(IptcDirectory.TagApplicationRecordVersion, tags[2].GetTagType());
+			Sharpen.Tests.AreEqual(2, directory.GetObject(tags[2].GetTagType()));
+			Sharpen.Tests.AreEqual(IptcDirectory.TagCaption, tags[3].GetTagType());
+			Sharpen.Tests.AreEqual("In diesem Text sind Umlaute enthalten, nämlich öfter als üblich: ÄÖÜäöüß\r", directory.GetObject(tags[3].GetTagType()));
+		}
+
+		/// <exception cref="System.Exception"/>
+		[NUnit.Framework.Test]
+		public virtual void TestIptcEncodingUndefinedIso()
+		{
+			IptcDirectory directory = ProcessBytes("Tests/Data/iptc-encoding-undefined-iso.bytes");
+			Sharpen.Tests.IsFalse(directory.GetErrors().ToString(), directory.HasErrors());
+			Tag[] tags = Sharpen.Collections.ToArray(directory.GetTags(), new Tag[directory.GetTagCount()]);
+			Sharpen.Tests.AreEqual(3, tags.Length);
+			Sharpen.Tests.AreEqual(IptcDirectory.TagEnvelopeRecordVersion, tags[0].GetTagType());
+			Sharpen.Tests.AreEqual(2, directory.GetObject(tags[0].GetTagType()));
+			Sharpen.Tests.AreEqual(IptcDirectory.TagApplicationRecordVersion, tags[1].GetTagType());
+			Sharpen.Tests.AreEqual(2, directory.GetObject(tags[1].GetTagType()));
+			Sharpen.Tests.AreEqual(IptcDirectory.TagCaption, tags[2].GetTagType());
+			Sharpen.Tests.AreEqual("In diesem Text sind Umlaute enthalten, nämlich öfter als üblich: ÄÖÜäöüß\r", directory.GetObject(tags[2].GetTagType()));
+		}
+
+		/// <exception cref="System.Exception"/>
+		[NUnit.Framework.Test]
+		public virtual void TestIptcEncodingUnknown()
+		{
+			IptcDirectory directory = ProcessBytes("Tests/Data/iptc-encoding-unknown.bytes");
+			Sharpen.Tests.IsFalse(directory.GetErrors().ToString(), directory.HasErrors());
+			Tag[] tags = Sharpen.Collections.ToArray(directory.GetTags(), new Tag[directory.GetTagCount()]);
+			Sharpen.Tests.AreEqual(3, tags.Length);
+			Sharpen.Tests.AreEqual(IptcDirectory.TagApplicationRecordVersion, tags[0].GetTagType());
+			Sharpen.Tests.AreEqual(2, directory.GetObject(tags[0].GetTagType()));
+			Sharpen.Tests.AreEqual(IptcDirectory.TagCaption, tags[1].GetTagType());
+			Sharpen.Tests.AreEqual("Das Encoding dieser Metadaten ist nicht deklariert und lässt sich nur schwer erkennen.", directory.GetObject(tags[1].GetTagType()));
+			Sharpen.Tests.AreEqual(IptcDirectory.TagKeywords, tags[2].GetTagType());
+			NUnit.Framework.CollectionAssert.AreEqual(new string[] { "häufig", "üblich", "Lösung", "Spaß" }, directory.GetStringArray(tags[2].GetTagType()));
+		}
+
+		/// <exception cref="System.Exception"/>
+		[NUnit.Framework.Test]
+		public virtual void TestIptcEncodingUnknown2()
+		{
+			// This metadata has an encoding of three characters [ \ESC '%' '5' ]
+			// It's not clear what to do with this, so it should be ignored.
+			// Version 2.7.0 tripped up on this and threw an exception.
+			IptcDirectory directory = ProcessBytes("Tests/Data/iptc-encoding-unknown-2.bytes");
+			Sharpen.Tests.IsFalse(directory.GetErrors().ToString(), directory.HasErrors());
+			Tag[] tags = Sharpen.Collections.ToArray(directory.GetTags(), new Tag[directory.GetTagCount()]);
+			Sharpen.Tests.AreEqual(37, tags.Length);
+			Sharpen.Tests.AreEqual("MEDWAS,MEDLON,MEDTOR,RONL,ASIA,AONL,APC,USA,CAN,SAM,BIZ", directory.GetString(IptcDirectory.TagDestination));
 		}
 	}
 }

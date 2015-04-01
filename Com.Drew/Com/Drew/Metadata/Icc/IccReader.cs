@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,13 +15,14 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using System;
 using System.IO;
 using Com.Drew.Imaging.Jpeg;
 using Com.Drew.Lang;
+using Com.Drew.Metadata;
 using JetBrains.Annotations;
 using Sharpen;
 
@@ -36,35 +37,60 @@ namespace Com.Drew.Metadata.Icc
 	/// </ul>
 	/// </remarks>
 	/// <author>Yuri Binev</author>
-	/// <author>Drew Noakes</author>
-	public class IccReader : JpegSegmentMetadataReader
+	/// <author>Drew Noakes https://drewnoakes.com</author>
+	public class IccReader : JpegSegmentMetadataReader, MetadataReader
 	{
+		public const string JpegSegmentPreamble = "ICC_PROFILE";
+
 		[NotNull]
 		public virtual Iterable<JpegSegmentType> GetSegmentTypes()
 		{
 			return Arrays.AsList(JpegSegmentType.App2).AsIterable();
 		}
 
-		public virtual bool CanProcess([NotNull] sbyte[] segmentBytes, [NotNull] JpegSegmentType segmentType)
+		public virtual void ReadJpegSegments([NotNull] Iterable<sbyte[]> segments, [NotNull] Com.Drew.Metadata.Metadata metadata, [NotNull] JpegSegmentType segmentType)
 		{
-			return segmentBytes.Length > 10 && Sharpen.Runtime.EqualsIgnoreCase("ICC_PROFILE", Sharpen.Runtime.GetStringForBytes(segmentBytes, 0, 11));
-		}
-
-		public virtual void Extract([NotNull] sbyte[] segmentBytes, [NotNull] Com.Drew.Metadata.Metadata metadata, [NotNull] JpegSegmentType segmentType)
-		{
-			// skip the first 14 bytes
-			sbyte[] iccProfileBytes = new sbyte[segmentBytes.Length - 14];
-			System.Array.Copy(segmentBytes, 14, iccProfileBytes, 0, segmentBytes.Length - 14);
-			Extract(new ByteArrayReader(iccProfileBytes), metadata);
+			int preambleLength = JpegSegmentPreamble.Length;
+			// ICC data can be spread across multiple JPEG segments.
+			// We concat them together in this buffer for later processing.
+			sbyte[] buffer = null;
+			foreach (sbyte[] segmentBytes in segments)
+			{
+				// Skip any segments that do not contain the required preamble
+				if (segmentBytes.Length < preambleLength || !Sharpen.Runtime.EqualsIgnoreCase(JpegSegmentPreamble, Sharpen.Runtime.GetStringForBytes(segmentBytes, 0, preambleLength)))
+				{
+					continue;
+				}
+				// NOTE we ignore three bytes here -- are they useful for anything?
+				// Grow the buffer
+				if (buffer == null)
+				{
+					buffer = new sbyte[segmentBytes.Length - 14];
+					// skip the first 14 bytes
+					System.Array.Copy(segmentBytes, 14, buffer, 0, segmentBytes.Length - 14);
+				}
+				else
+				{
+					sbyte[] newBuffer = new sbyte[buffer.Length + segmentBytes.Length - 14];
+					System.Array.Copy(buffer, 0, newBuffer, 0, buffer.Length);
+					System.Array.Copy(segmentBytes, 14, newBuffer, buffer.Length, segmentBytes.Length - 14);
+					buffer = newBuffer;
+				}
+			}
+			if (buffer != null)
+			{
+				Extract(new ByteArrayReader(buffer), metadata);
+			}
 		}
 
 		public virtual void Extract([NotNull] RandomAccessReader reader, [NotNull] Com.Drew.Metadata.Metadata metadata)
 		{
-			// TODO review whether the 'tagPtr' values below really do require ICC processing to work with a RandomAccessReader
-			IccDirectory directory = metadata.GetOrCreateDirectory<IccDirectory>();
+			// TODO review whether the 'tagPtr' values below really do require RandomAccessReader or whether SequentialReader may be used instead
+			IccDirectory directory = new IccDirectory();
 			try
 			{
-				directory.SetInt(IccDirectory.TagProfileByteCount, reader.GetInt32(IccDirectory.TagProfileByteCount));
+				int profileByteCount = reader.GetInt32(IccDirectory.TagProfileByteCount);
+				directory.SetInt(IccDirectory.TagProfileByteCount, profileByteCount);
 				// For these tags, the int value of the tag is in fact it's offset within the buffer.
 				Set4ByteString(directory, IccDirectory.TagCmmType, reader);
 				SetInt32(directory, IccDirectory.TagProfileVersion, reader);
@@ -109,6 +135,7 @@ namespace Com.Drew.Metadata.Icc
 			{
 				directory.AddError("Exception reading ICC profile: " + ex.Message);
 			}
+			metadata.AddDirectory(directory);
 		}
 
 		/// <exception cref="System.IO.IOException"/>

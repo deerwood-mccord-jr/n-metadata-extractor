@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,8 +15,8 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using System;
 using System.Collections.Generic;
@@ -30,7 +30,7 @@ namespace Com.Drew.Imaging.Jpeg
 	/// <summary>Performs read functions of JPEG files, returning specific file segments.</summary>
 	/// <remarks>
 	/// Performs read functions of JPEG files, returning specific file segments.
-	/// <p/>
+	/// <p>
 	/// JPEG files are composed of a sequence of consecutive JPEG 'segments'. Each is identified by one of a set of byte
 	/// values, modelled in the
 	/// <see cref="JpegSegmentType"/>
@@ -39,7 +39,7 @@ namespace Com.Drew.Imaging.Jpeg
 	/// <see cref="JpegSegmentData"/>
 	/// object, from which the raw JPEG segment byte arrays may be accessed.
 	/// </remarks>
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class JpegSegmentReader
 	{
 		/// <summary>Private, because this segment crashes my algorithm, and searching for it doesn't work (yet).</summary>
@@ -52,7 +52,7 @@ namespace Com.Drew.Imaging.Jpeg
 		/// Processes the provided JPEG data, and extracts the specified JPEG segments into a
 		/// <see cref="JpegSegmentData"/>
 		/// object.
-		/// <p/>
+		/// <p>
 		/// Will not return SOS (start of scan) or EOI (end of image) segments.
 		/// </summary>
 		/// <param name="file">
@@ -88,7 +88,7 @@ namespace Com.Drew.Imaging.Jpeg
 		/// Processes the provided JPEG data, and extracts the specified JPEG segments into a
 		/// <see cref="JpegSegmentData"/>
 		/// object.
-		/// <p/>
+		/// <p>
 		/// Will not return SOS (start of scan) or EOI (end of image) segments.
 		/// </summary>
 		/// <param name="reader">
@@ -126,14 +126,24 @@ namespace Com.Drew.Imaging.Jpeg
 			JpegSegmentData segmentData = new JpegSegmentData();
 			do
 			{
-				// next byte is the segment identifier: 0xFF
+				// Find the segment marker. Markers are zero or more 0xFF bytes, followed
+				// by a 0xFF and then a byte not equal to 0x00 or 0xFF.
 				short segmentIdentifier = reader.GetUInt8();
+				// We must have at least one 0xFF byte
 				if (segmentIdentifier != unchecked((int)(0xFF)))
 				{
-					throw new JpegProcessingException("Expected JPEG segment start identifier 0xFF, not 0x" + Sharpen.Extensions.ToHexString(segmentIdentifier));
+					throw new JpegProcessingException("Expected JPEG segment start identifier 0xFF, not 0x" + Sharpen.Extensions.ToHexString(segmentIdentifier).ToUpper());
 				}
-				// next byte is the segment type
+				// Read until we have a non-0xFF byte. This identifies the segment type.
 				sbyte segmentType = reader.GetInt8();
+				while (segmentType == unchecked((sbyte)0xFF))
+				{
+					segmentType = reader.GetInt8();
+				}
+				if (segmentType == 0)
+				{
+					throw new JpegProcessingException("Expected non-zero byte as part of JPEG marker identifier");
+				}
 				if (segmentType == SegmentSos)
 				{
 					// The 'Start-Of-Scan' segment's length doesn't include the image data, instead would

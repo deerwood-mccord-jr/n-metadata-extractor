@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,8 +15,8 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using System;
 using JetBrains.Annotations;
@@ -27,9 +27,9 @@ namespace Com.Drew.Lang
 	/// <summary>Represents a latitude and longitude pair, giving a position on earth in spherical coordinates.</summary>
 	/// <remarks>
 	/// Represents a latitude and longitude pair, giving a position on earth in spherical coordinates.
-	/// <p/>
+	/// <p>
 	/// Values of latitude and longitude are given in degrees.
-	/// <p/>
+	/// <p>
 	/// This type is immutable.
 	/// </remarks>
 	public sealed class GeoLocation

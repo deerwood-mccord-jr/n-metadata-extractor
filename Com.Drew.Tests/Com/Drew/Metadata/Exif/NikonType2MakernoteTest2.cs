@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,8 +15,8 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using Com.Drew.Lang;
 using Com.Drew.Metadata.Exif.Makernotes;
@@ -24,7 +24,7 @@ using Sharpen;
 
 namespace Com.Drew.Metadata.Exif
 {
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class NikonType2MakernoteTest2
 	{
 		private NikonType2MakernoteDirectory _nikonDirectory;
@@ -40,10 +40,10 @@ namespace Com.Drew.Metadata.Exif
 		public virtual void SetUp()
 		{
 			Com.Drew.Metadata.Metadata metadata = ExifReaderTest.ProcessBytes("Tests/Data/nikonMakernoteType2b.jpg.app1");
-			_nikonDirectory = metadata.GetDirectory<NikonType2MakernoteDirectory>();
-			_exifIFD0Directory = metadata.GetDirectory<ExifIFD0Directory>();
-			_exifSubIFDDirectory = metadata.GetDirectory<ExifSubIFDDirectory>();
-			_thumbDirectory = metadata.GetDirectory<ExifThumbnailDirectory>();
+			_nikonDirectory = metadata.GetFirstDirectoryOfType<NikonType2MakernoteDirectory>();
+			_exifIFD0Directory = metadata.GetFirstDirectoryOfType<ExifIFD0Directory>();
+			_exifSubIFDDirectory = metadata.GetFirstDirectoryOfType<ExifSubIFDDirectory>();
+			_thumbDirectory = metadata.GetFirstDirectoryOfType<ExifThumbnailDirectory>();
 			NUnit.Framework.Assert.IsNotNull(_nikonDirectory);
 			NUnit.Framework.Assert.IsNotNull(_exifSubIFDDirectory);
 		}

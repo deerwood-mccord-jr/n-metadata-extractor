@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,8 +15,8 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using System.Collections.Generic;
 using JetBrains.Annotations;
@@ -26,7 +26,7 @@ namespace Com.Drew.Metadata.Jpeg
 {
 	/// <summary>Directory of tags and values for the SOF0 JPEG segment.</summary>
 	/// <remarks>Directory of tags and values for the SOF0 JPEG segment.  This segment holds basic metadata about the image.</remarks>
-	/// <author>Darrell Silver http://www.darrellsilver.com and Drew Noakes http://drewnoakes.com</author>
+	/// <author>Darrell Silver http://www.darrellsilver.com and Drew Noakes https://drewnoakes.com</author>
 	public class JpegDirectory : Com.Drew.Metadata.Directory
 	{
 		public const int TagCompressionType = -3;
@@ -55,7 +55,7 @@ namespace Com.Drew.Metadata.Jpeg
 		/// component Id(1byte)(1 = Y, 2 = Cb, 3 = Cr, 4 = I, 5 = Q),
 		/// sampling factors (1byte) (bit 0-3 vertical., 4-7 horizontal.),
 		/// quantization table number (1 byte).
-		/// <p/>
+		/// <p>
 		/// This info is from http://www.funducode.com/freec/Fileformats/format3/format3b.htm
 		/// </remarks>
 		public const int TagNumberOfComponents = 5;

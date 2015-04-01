@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,8 +15,8 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using System;
 using System.Collections.Generic;
@@ -33,7 +33,7 @@ namespace Com.Drew.Metadata
 	/// Abstract base class for all directory implementations, having methods for getting and setting tag values of various
 	/// data types.
 	/// </summary>
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public abstract class Directory
 	{
 		/// <summary>Map of values hashed by type identifiers.</summary>
@@ -72,6 +72,12 @@ namespace Com.Drew.Metadata
 		}
 
 		// VARIOUS METHODS
+		/// <summary>Gets a value indicating whether the directory is empty, meaning it contains no errors and no tag values.</summary>
+		public virtual bool IsEmpty()
+		{
+			return _errorList.IsEmpty() && _definedTagList.IsEmpty();
+		}
+
 		/// <summary>Indicates whether the specified tag type has been set.</summary>
 		/// <param name="tagType">the tag type to check for</param>
 		/// <returns>true if a value exists for the specified tag type, false if not</returns>
@@ -85,7 +91,7 @@ namespace Com.Drew.Metadata
 		[NotNull]
 		public virtual ICollection<Tag> GetTags()
 		{
-			return _definedTagList;
+			return Sharpen.Collections.UnmodifiableCollection(_definedTagList);
 		}
 
 		/// <summary>Returns the number of tags set in this Directory.</summary>
@@ -125,7 +131,7 @@ namespace Com.Drew.Metadata
 		[NotNull]
 		public virtual Iterable<string> GetErrors()
 		{
-			return _errorList.AsIterable();
+			return Sharpen.Collections.UnmodifiableCollection(_errorList).AsIterable();
 		}
 
 		/// <summary>Returns the count of error messages in this directory.</summary>
@@ -796,7 +802,7 @@ namespace Com.Drew.Metadata
 		/// <summary>Returns the specified tag's value as a java.util.Date.</summary>
 		/// <remarks>
 		/// Returns the specified tag's value as a java.util.Date.  If the value is unset or cannot be converted, <code>null</code> is returned.
-		/// <p/>
+		/// <p>
 		/// If the underlying value is a
 		/// <see cref="string"/>
 		/// , then attempts will be made to parse the string as though it is in
@@ -815,7 +821,7 @@ namespace Com.Drew.Metadata
 		/// <summary>Returns the specified tag's value as a java.util.Date.</summary>
 		/// <remarks>
 		/// Returns the specified tag's value as a java.util.Date.  If the value is unset or cannot be converted, <code>null</code> is returned.
-		/// <p/>
+		/// <p>
 		/// If the underlying value is a
 		/// <see cref="string"/>
 		/// , then attempts will be made to parse the string as though it is in
@@ -1054,6 +1060,14 @@ namespace Com.Drew.Metadata
 			return nameMap.Get(tagType);
 		}
 
+		/// <summary>Gets whether the specified tag is known by the directory and has a name.</summary>
+		/// <param name="tagType">the tag type identifier</param>
+		/// <returns>whether this directory has a name for the specified tag</returns>
+		public virtual bool HasTagName(int tagType)
+		{
+			return GetTagNameMap().ContainsKey(tagType);
+		}
+
 		/// <summary>
 		/// Provides a description of a tag's value using the descriptor set by
 		/// <code>setDescriptor(Descriptor)</code>.
@@ -1065,6 +1079,11 @@ namespace Com.Drew.Metadata
 		{
 			System.Diagnostics.Debug.Assert((_descriptor != null));
 			return _descriptor.GetDescription(tagType);
+		}
+
+		public override string ToString()
+		{
+			return Sharpen.Extensions.StringFormat("%s Directory (%d %s)", GetName(), _tagMap.Count, _tagMap.Count == 1 ? "tag" : "tags");
 		}
 	}
 }

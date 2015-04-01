@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,8 +15,8 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using Com.Drew.Imaging.Jpeg;
 using JetBrains.Annotations;
@@ -31,7 +31,7 @@ namespace Com.Drew.Metadata.Jpeg
 	/// <see cref="JpegCommentDirectory"/>
 	/// .
 	/// </summary>
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class JpegCommentReader : JpegSegmentMetadataReader
 	{
 		[NotNull]
@@ -46,11 +46,15 @@ namespace Com.Drew.Metadata.Jpeg
 			return true;
 		}
 
-		public virtual void Extract([NotNull] sbyte[] segmentBytes, [NotNull] Com.Drew.Metadata.Metadata metadata, [NotNull] JpegSegmentType segmentType)
+		public virtual void ReadJpegSegments([NotNull] Iterable<sbyte[]> segments, [NotNull] Com.Drew.Metadata.Metadata metadata, [NotNull] JpegSegmentType segmentType)
 		{
-			JpegCommentDirectory directory = metadata.GetOrCreateDirectory<JpegCommentDirectory>();
-			// The entire contents of the directory are the comment
-			directory.SetString(JpegCommentDirectory.TagComment, Sharpen.Runtime.GetStringForBytes(segmentBytes));
+			foreach (sbyte[] segmentBytes in segments)
+			{
+				JpegCommentDirectory directory = new JpegCommentDirectory();
+				metadata.AddDirectory(directory);
+				// The entire contents of the directory are the comment
+				directory.SetString(JpegCommentDirectory.TagComment, Sharpen.Runtime.GetStringForBytes(segmentBytes));
+			}
 		}
 	}
 }

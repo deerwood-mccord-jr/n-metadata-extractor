@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,8 +15,8 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using System.Collections.Generic;
 using System.IO;
@@ -28,7 +28,8 @@ using Sharpen;
 namespace Com.Drew.Metadata.Exif.Makernotes
 {
 	/// <summary>Describes tags specific to Panasonic and Leica cameras.</summary>
-	/// <author>Drew Noakes http://drewnoakes.com, Philipp Sandhaus</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
+	/// <author>Philipp Sandhaus</author>
 	public class PanasonicMakernoteDirectory : Com.Drew.Metadata.Directory
 	{
 		/// <summary>
@@ -51,7 +52,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		/// 4 = Incandescent    <br />
 		/// 5 = Manual          <br />
 		/// 8 = Flash           <br />
-		/// 10 = Black & White  <br />
+		/// 10 = Black &amp; White  <br />
 		/// 11 = Manual         <br />
 		/// 12 = Shade          <br />
 		/// </summary>
@@ -181,7 +182,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		/// 1 = Off           <br />
 		/// 2 = Warm          <br />
 		/// 3 = Cool          <br />
-		/// 4 = Black & White <br />
+		/// 4 = Black &amp; White <br />
 		/// 5 = Sepia         <br />
 		/// </summary>
 		public const int TagColorEffect = unchecked((int)(0x0028));
@@ -221,8 +222,8 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		/// 4 = +2                                                  <br />
 		/// 7 = Nature (Color Film)                                 <br />
 		/// 12 = Smooth (Color Film) or Pure (My Color)             <br />
-		/// 17 = Dynamic (B&W Film)                                 <br />
-		/// 22 = Smooth (B&W Film)                                  <br />
+		/// 17 = Dynamic (B&amp;W Film)                                 <br />
+		/// 22 = Smooth (B&amp;W Film)                                  <br />
 		/// 27 = Dynamic (Color Film)                               <br />
 		/// 32 = Vibrant (Color Film) or Expressive (My Color)      <br />
 		/// 33 = Elegant (My Color)                                 <br />
@@ -311,7 +312,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		/// <br />
 		/// 1 = Normal                               <br />
 		/// 2 = Outdoor/Illuminations/Flower/HDR Art <br />
-		/// 3 = Indoor/Architecture/Objects/HDR B&W  <br />
+		/// 3 = Indoor/Architecture/Objects/HDR B&amp;W  <br />
 		/// 4 = Creative                             <br />
 		/// 5 = Auto                                 <br />
 		/// 7 = Expressive                           <br />

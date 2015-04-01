@@ -4,7 +4,7 @@ using Sharpen;
 
 namespace Com.Drew.Metadata.Gif
 {
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class GifHeaderDescriptor : TagDescriptor<GifHeaderDirectory>
 	{
 		public GifHeaderDescriptor([NotNull] GifHeaderDirectory directory)

@@ -3,7 +3,7 @@ using Sharpen;
 
 namespace Com.Drew.Lang
 {
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class Iterables
 	{
 		public static IList<E> ToList<E>(Iterable<E> iterable)

@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,8 +15,8 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using Com.Drew.Lang;
 using Com.Drew.Metadata;
@@ -29,7 +29,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 	/// Provides human-readable string representations of tag values stored in a
 	/// <see cref="FujifilmMakernoteDirectory"/>
 	/// .
-	/// <p/>
+	/// <p>
 	/// Fujifilm added their Makernote tag from the Year 2000's models (e.g.Finepix1400,
 	/// Finepix4700). It uses IFD format and start from ASCII character 'FUJIFILM', and next 4
 	/// bytes (value 0x000c) points the offset to first IFD entry.
@@ -46,7 +46,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 	/// </li>
 	/// </ul>
 	/// </summary>
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class FujifilmMakernoteDescriptor : TagDescriptor<FujifilmMakernoteDirectory>
 	{
 		public FujifilmMakernoteDescriptor([NotNull] FujifilmMakernoteDirectory directory)

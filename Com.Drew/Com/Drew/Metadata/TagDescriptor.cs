@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,8 +15,8 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using System.Collections.Generic;
 using System.IO;
@@ -34,7 +34,7 @@ namespace Com.Drew.Metadata
 	/// providing the human-readable string representation of tag values stored in a directory.
 	/// The directory is provided to the tag descriptor via its constructor.
 	/// </remarks>
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class TagDescriptor<T>
 		where T : Com.Drew.Metadata.Directory
 	{
@@ -87,7 +87,7 @@ namespace Com.Drew.Metadata
 		/// <remarks>
 		/// Takes a series of 4 bytes from the specified offset, and converts these to a
 		/// well-known version number, where possible.
-		/// <p/>
+		/// <p>
 		/// Two different formats are processed:
 		/// <ul>
 		/// <li>[30 32 31 30] -&gt; 2.10</li>

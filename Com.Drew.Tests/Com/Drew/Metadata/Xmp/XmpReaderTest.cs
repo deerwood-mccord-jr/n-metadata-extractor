@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,8 +15,8 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using System;
 using System.Collections.Generic;
@@ -27,26 +27,24 @@ using Sharpen;
 
 namespace Com.Drew.Metadata.Xmp
 {
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class XmpReaderTest
 	{
-		/// <exception cref="System.IO.IOException"/>
-		public static XmpDirectory ProcessApp1Bytes(string filePath)
-		{
-			Com.Drew.Metadata.Metadata metadata = new Com.Drew.Metadata.Metadata();
-			new XmpReader().Extract(FileUtil.ReadBytes(filePath), metadata, JpegSegmentType.App1);
-			XmpDirectory directory = metadata.GetDirectory<XmpDirectory>();
-			NUnit.Framework.Assert.IsNotNull(directory);
-			return directory;
-		}
-
 		private XmpDirectory _directory;
 
 		/// <exception cref="System.Exception"/>
 		[NUnit.Framework.SetUp]
 		public virtual void SetUp()
 		{
-			_directory = ProcessApp1Bytes("Tests/Data/withXmpAndIptc.jpg.app1.1");
+			Com.Drew.Metadata.Metadata metadata = new Com.Drew.Metadata.Metadata();
+			IList<sbyte[]> jpegSegments = new AList<sbyte[]>();
+			jpegSegments.Add(FileUtil.ReadBytes("Tests/Data/withXmpAndIptc.jpg.app1.1"));
+			new XmpReader().ReadJpegSegments(jpegSegments.AsIterable(), metadata, JpegSegmentType.App1);
+			ICollection<XmpDirectory> xmpDirectories = metadata.GetDirectoriesOfType<XmpDirectory>();
+			NUnit.Framework.Assert.IsNotNull(xmpDirectories);
+			Sharpen.Tests.AreEqual(1, xmpDirectories.Count);
+			_directory = xmpDirectories.Iterator().Next();
+			Sharpen.Tests.IsFalse(_directory.HasErrors());
 		}
 
     /*

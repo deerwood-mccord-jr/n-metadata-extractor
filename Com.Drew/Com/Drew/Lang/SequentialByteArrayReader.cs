@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,8 +15,8 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using System;
 using System.IO;
@@ -25,7 +25,7 @@ using Sharpen;
 
 namespace Com.Drew.Lang
 {
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class SequentialByteArrayReader : SequentialReader
 	{
 		[NotNull]
@@ -34,13 +34,18 @@ namespace Com.Drew.Lang
 		private int _index;
 
 		public SequentialByteArrayReader([NotNull] sbyte[] bytes)
+			: this(bytes, 0)
+		{
+		}
+
+		public SequentialByteArrayReader([NotNull] sbyte[] bytes, int baseIndex)
 		{
 			if (bytes == null)
 			{
 				throw new ArgumentNullException();
 			}
 			_bytes = bytes;
-			_index = 0;
+			_index = baseIndex;
 		}
 
 		/// <exception cref="System.IO.IOException"/>

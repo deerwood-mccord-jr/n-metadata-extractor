@@ -5,7 +5,7 @@ using Sharpen;
 
 namespace Com.Drew.Metadata.Gif
 {
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class GifReader
 	{
 		private const string Gif87aVersionIdentifier = "87a";
@@ -14,7 +14,8 @@ namespace Com.Drew.Metadata.Gif
 
 		public virtual void Extract([NotNull] SequentialReader reader, [NotNull] Com.Drew.Metadata.Metadata metadata)
 		{
-			GifHeaderDirectory directory = metadata.GetOrCreateDirectory<GifHeaderDirectory>();
+			GifHeaderDirectory directory = new GifHeaderDirectory();
+			metadata.AddDirectory(directory);
 			// FILE HEADER
 			//
 			// 3 - signature: "GIF"

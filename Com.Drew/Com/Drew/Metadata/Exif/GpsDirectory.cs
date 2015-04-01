@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,8 +15,8 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using System.Collections.Generic;
 using Com.Drew.Lang;
@@ -26,8 +26,8 @@ using Sharpen;
 namespace Com.Drew.Metadata.Exif
 {
 	/// <summary>Describes Exif tags that contain Global Positioning System (GPS) data.</summary>
-	/// <author>Drew Noakes http://drewnoakes.com</author>
-	public class GpsDirectory : Com.Drew.Metadata.Directory
+	/// <author>Drew Noakes https://drewnoakes.com</author>
+	public class GpsDirectory : ExifDirectoryBase
 	{
 		/// <summary>GPS tag version GPSVersionID 0 0 BYTE 4</summary>
 		public const int TagVersionId = unchecked((int)(0x0000));
@@ -124,6 +124,7 @@ namespace Com.Drew.Metadata.Exif
 
 		static GpsDirectory()
 		{
+			AddExifTagNames(_tagNameMap);
 			_tagNameMap.Put(TagVersionId, "GPS Version ID");
 			_tagNameMap.Put(TagLatitudeRef, "GPS Latitude Ref");
 			_tagNameMap.Put(TagLatitude, "GPS Latitude");

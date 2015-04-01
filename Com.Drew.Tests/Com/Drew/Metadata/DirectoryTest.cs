@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,8 +15,8 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using System.Text;
 using Com.Drew.Lang;
@@ -26,7 +26,7 @@ using Sharpen;
 
 namespace Com.Drew.Metadata
 {
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class DirectoryTest
 	{
 		private Com.Drew.Metadata.Directory _directory;
@@ -91,7 +91,7 @@ namespace Com.Drew.Metadata
 				int outputValue = outputValues[i];
 				Sharpen.Tests.AreEqual(inputValue, outputValue);
 			}
-			Sharpen.Tests.AreEqual(inputValues, _directory.GetIntArray(tagType));
+			NUnit.Framework.CollectionAssert.AreEqual(inputValues, _directory.GetIntArray(tagType));
 			StringBuilder outputString = new StringBuilder();
 			for (int i_1 = 0; i_1 < inputValues.Length; i_1++)
 			{
@@ -170,6 +170,17 @@ namespace Com.Drew.Metadata
 			NUnit.Framework.Assert.IsNull(_directory.GetRational(ExifSubIFDDirectory.TagAperture));
 			NUnit.Framework.Assert.IsNull(_directory.GetRationalArray(ExifSubIFDDirectory.TagAperture));
 			NUnit.Framework.Assert.IsNull(_directory.GetStringArray(ExifSubIFDDirectory.TagAperture));
+		}
+
+		[NUnit.Framework.Test]
+		public virtual void TestToString()
+		{
+			Com.Drew.Metadata.Directory directory = new ExifIFD0Directory();
+			Sharpen.Tests.AreEqual("Exif IFD0 Directory (0 tags)", directory.ToString());
+			directory.SetString(1, "Tag 1");
+			Sharpen.Tests.AreEqual("Exif IFD0 Directory (1 tag)", directory.ToString());
+			directory.SetString(2, "Tag 2");
+			Sharpen.Tests.AreEqual("Exif IFD0 Directory (2 tags)", directory.ToString());
 		}
 	}
 }

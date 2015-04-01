@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,8 +15,8 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using System;
 using System.Collections.Generic;
@@ -36,19 +36,31 @@ namespace Com.Drew.Metadata.Tiff
 	/// <see cref="Com.Drew.Metadata.Directory"/>
 	/// object model.
 	/// </summary>
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public abstract class DirectoryTiffHandler : TiffHandler
 	{
 		private readonly Stack<Com.Drew.Metadata.Directory> _directoryStack = new Stack<Com.Drew.Metadata.Directory>();
 
 		protected internal Com.Drew.Metadata.Directory _currentDirectory;
 
-		protected internal Com.Drew.Metadata.Metadata _metadata;
+		protected internal readonly Com.Drew.Metadata.Metadata _metadata;
 
-		protected internal DirectoryTiffHandler(Com.Drew.Metadata.Metadata metadata, Type initialDirectory)
+		protected internal DirectoryTiffHandler(Com.Drew.Metadata.Metadata metadata, Type initialDirectoryClass)
 		{
 			_metadata = metadata;
-			_currentDirectory = _metadata.GetOrCreateDirectory(initialDirectory);
+			try
+			{
+				_currentDirectory = System.Activator.CreateInstance(initialDirectoryClass);
+			}
+			catch (InstantiationException e)
+			{
+				throw new RuntimeException(e);
+			}
+			catch (MemberAccessException e)
+			{
+				throw new RuntimeException(e);
+			}
+			_metadata.AddDirectory(_currentDirectory);
 		}
 
 		public virtual void EndingIFD()
@@ -58,9 +70,20 @@ namespace Com.Drew.Metadata.Tiff
 
 		protected internal virtual void PushDirectory([NotNull] Type directoryClass)
 		{
-			System.Diagnostics.Debug.Assert((directoryClass != _currentDirectory.GetType()));
 			_directoryStack.Push(_currentDirectory);
-			_currentDirectory = _metadata.GetOrCreateDirectory(directoryClass);
+			try
+			{
+				_currentDirectory = System.Activator.CreateInstance(directoryClass);
+			}
+			catch (InstantiationException e)
+			{
+				throw new RuntimeException(e);
+			}
+			catch (MemberAccessException e)
+			{
+				throw new RuntimeException(e);
+			}
+			_metadata.AddDirectory(_currentDirectory);
 		}
 
 		public virtual void Warn([NotNull] string message)

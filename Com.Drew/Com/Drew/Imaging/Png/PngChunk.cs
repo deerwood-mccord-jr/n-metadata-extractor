@@ -3,7 +3,7 @@ using Sharpen;
 
 namespace Com.Drew.Imaging.Png
 {
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class PngChunk
 	{
 		[NotNull]

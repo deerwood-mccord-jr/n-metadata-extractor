@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,68 +15,45 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using Com.Drew.Metadata.Exif;
-using Com.Drew.Metadata.Iptc;
 using Sharpen;
 
 namespace Com.Drew.Metadata
 {
 	/// <summary>JUnit test case for class Metadata.</summary>
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class MetadataTest
 	{
 		[NUnit.Framework.Test]
 		public virtual void TestGetDirectoryWhenNotExists()
 		{
-			NUnit.Framework.Assert.IsNull(new Com.Drew.Metadata.Metadata().GetDirectory<ExifSubIFDDirectory>());
-		}
-
-		[NUnit.Framework.Test]
-		public virtual void TestGetOrCreateDirectoryWhenNotExists()
-		{
-			NUnit.Framework.Assert.IsNotNull(new Com.Drew.Metadata.Metadata().GetOrCreateDirectory<ExifSubIFDDirectory>());
-		}
-
-		[NUnit.Framework.Test]
-		public virtual void TestGetDirectoryReturnsSameInstance()
-		{
-			Com.Drew.Metadata.Metadata metadata = new Com.Drew.Metadata.Metadata();
-			Com.Drew.Metadata.Directory directory = metadata.GetOrCreateDirectory<ExifSubIFDDirectory>();
-			NUnit.Framework.Assert.AreSame(directory, metadata.GetDirectory<ExifSubIFDDirectory>());
-		}
-
-		[NUnit.Framework.Test]
-		public virtual void TestGetOrCreateDirectoryReturnsSameInstance()
-		{
-			Com.Drew.Metadata.Metadata metadata = new Com.Drew.Metadata.Metadata();
-			Com.Drew.Metadata.Directory directory = metadata.GetOrCreateDirectory<ExifSubIFDDirectory>();
-			NUnit.Framework.Assert.AreSame(directory, metadata.GetOrCreateDirectory<ExifSubIFDDirectory>());
-			NUnit.Framework.Assert.AreNotSame(directory, metadata.GetOrCreateDirectory<IptcDirectory>());
+			NUnit.Framework.Assert.IsNull(new Com.Drew.Metadata.Metadata().GetFirstDirectoryOfType<ExifSubIFDDirectory>());
 		}
 
 		/// <exception cref="System.Exception"/>
 		[NUnit.Framework.Test]
 		public virtual void TestHasErrors()
 		{
+			ExifSubIFDDirectory directory = new ExifSubIFDDirectory();
+			directory.AddError("Test Error 1");
 			Com.Drew.Metadata.Metadata metadata = new Com.Drew.Metadata.Metadata();
 			Sharpen.Tests.IsFalse(metadata.HasErrors());
-			ExifSubIFDDirectory directory = metadata.GetOrCreateDirectory<ExifSubIFDDirectory>();
-			directory.AddError("Test Error 1");
+			metadata.AddDirectory(directory);
 			Sharpen.Tests.IsTrue(metadata.HasErrors());
 		}
 
-		/// <exception cref="System.Exception"/>
 		[NUnit.Framework.Test]
-		public virtual void TestGetErrors()
+		public virtual void TestToString()
 		{
 			Com.Drew.Metadata.Metadata metadata = new Com.Drew.Metadata.Metadata();
-			Sharpen.Tests.IsFalse(metadata.HasErrors());
-			ExifSubIFDDirectory directory = metadata.GetOrCreateDirectory<ExifSubIFDDirectory>();
-			directory.AddError("Test Error 1");
-			Sharpen.Tests.IsTrue(metadata.HasErrors());
+			Sharpen.Tests.AreEqual("Metadata (0 directories)", metadata.ToString());
+			metadata.AddDirectory(new ExifIFD0Directory());
+			Sharpen.Tests.AreEqual("Metadata (1 directory)", metadata.ToString());
+			metadata.AddDirectory(new ExifSubIFDDirectory());
+			Sharpen.Tests.AreEqual("Metadata (2 directories)", metadata.ToString());
 		}
 	}
 }

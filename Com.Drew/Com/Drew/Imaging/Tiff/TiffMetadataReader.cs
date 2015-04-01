@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,12 +15,13 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using System.IO;
 using Com.Drew.Lang;
 using Com.Drew.Metadata.Exif;
+using Com.Drew.Metadata.File;
 using JetBrains.Annotations;
 using Sharpen;
 
@@ -31,10 +32,12 @@ namespace Com.Drew.Imaging.Tiff
 	/// Obtains all available metadata from TIFF formatted files.  Note that TIFF files include many digital camera RAW
 	/// formats, including Canon (CRW, CR2), Nikon (NEF), Olympus (ORF) and Panasonic (RW2).
 	/// </remarks>
-	/// <author>Darren Salomons, Drew Noakes http://drewnoakes.com</author>
+	/// <author>Darren Salomons</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class TiffMetadataReader
 	{
 		/// <exception cref="System.IO.IOException"/>
+		/// <exception cref="Com.Drew.Imaging.Tiff.TiffProcessingException"/>
 		[NotNull]
 		public static Com.Drew.Metadata.Metadata ReadMetadata([NotNull] FilePath file)
 		{
@@ -42,23 +45,28 @@ namespace Com.Drew.Imaging.Tiff
 			RandomAccessFile randomAccessFile = new RandomAccessFile(file, "r");
 			try
 			{
-				new ExifReader().ExtractTiff(new RandomAccessFileReader(randomAccessFile), metadata);
+				ExifTiffHandler handler = new ExifTiffHandler(metadata, false);
+				new TiffReader().ProcessTiff(new RandomAccessFileReader(randomAccessFile), handler, 0);
 			}
 			finally
 			{
 				randomAccessFile.Close();
 			}
+			new FileMetadataReader().Read(file, metadata);
 			return metadata;
 		}
 
+		/// <exception cref="System.IO.IOException"/>
+		/// <exception cref="Com.Drew.Imaging.Tiff.TiffProcessingException"/>
 		[NotNull]
 		public static Com.Drew.Metadata.Metadata ReadMetadata([NotNull] InputStream inputStream)
 		{
 			// TIFF processing requires random access, as directories can be scattered throughout the byte sequence.
-			// InputStream does not support seeking backwards, and so is not a viable option for TIFF processing.
-			// We use RandomAccessStreamReader, which buffers data from the stream as we seek forward.
+			// InputStream does not support seeking backwards, so we wrap it with RandomAccessStreamReader, which
+			// buffers data from the stream as we seek forward.
 			Com.Drew.Metadata.Metadata metadata = new Com.Drew.Metadata.Metadata();
-			new ExifReader().ExtractTiff(new RandomAccessStreamReader(inputStream), metadata);
+			ExifTiffHandler handler = new ExifTiffHandler(metadata, false);
+			new TiffReader().ProcessTiff(new RandomAccessStreamReader(inputStream), handler, 0);
 			return metadata;
 		}
 	}

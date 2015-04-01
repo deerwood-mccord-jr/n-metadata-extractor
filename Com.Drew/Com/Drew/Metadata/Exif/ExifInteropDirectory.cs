@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,8 +15,8 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using System.Collections.Generic;
 using JetBrains.Annotations;
@@ -25,29 +25,15 @@ using Sharpen;
 namespace Com.Drew.Metadata.Exif
 {
 	/// <summary>Describes Exif interoperability tags.</summary>
-	/// <author>Drew Noakes http://drewnoakes.com</author>
-	public class ExifInteropDirectory : Com.Drew.Metadata.Directory
+	/// <author>Drew Noakes https://drewnoakes.com</author>
+	public class ExifInteropDirectory : ExifDirectoryBase
 	{
-		public const int TagInteropIndex = unchecked((int)(0x0001));
-
-		public const int TagInteropVersion = unchecked((int)(0x0002));
-
-		public const int TagRelatedImageFileFormat = unchecked((int)(0x1000));
-
-		public const int TagRelatedImageWidth = unchecked((int)(0x1001));
-
-		public const int TagRelatedImageLength = unchecked((int)(0x1002));
-
 		[NotNull]
 		protected internal static readonly Dictionary<int?, string> _tagNameMap = new Dictionary<int?, string>();
 
 		static ExifInteropDirectory()
 		{
-			_tagNameMap.Put(TagInteropIndex, "Interoperability Index");
-			_tagNameMap.Put(TagInteropVersion, "Interoperability Version");
-			_tagNameMap.Put(TagRelatedImageFileFormat, "Related Image File Format");
-			_tagNameMap.Put(TagRelatedImageWidth, "Related Image Width");
-			_tagNameMap.Put(TagRelatedImageLength, "Related Image Length");
+			AddExifTagNames(_tagNameMap);
 		}
 
 		public ExifInteropDirectory()

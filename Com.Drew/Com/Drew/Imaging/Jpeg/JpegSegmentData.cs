@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,8 +15,8 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using System;
 using System.Collections.Generic;
@@ -30,17 +30,17 @@ namespace Com.Drew.Imaging.Jpeg
 	/// Holds a collection of JPEG data segments.  This need not necessarily be all segments
 	/// within the JPEG. For example, it may be convenient to store only the non-image
 	/// segments when analysing metadata.
-	/// <p/>
+	/// <p>
 	/// Segments are keyed via their
 	/// <see cref="JpegSegmentType"/>
 	/// . Where multiple segments use the
 	/// same segment type, they will all be stored and available.
-	/// <p/>
+	/// <p>
 	/// Each segment type may contain multiple entries. Conceptually the model is:
 	/// <code>Map&lt;JpegSegmentType, Collection&lt;byte[]&gt;&gt;</code>. This class provides
 	/// convenience methods around that structure.
 	/// </remarks>
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class JpegSegmentData
 	{
 		[NotNull]
@@ -96,7 +96,7 @@ namespace Com.Drew.Imaging.Jpeg
 		/// </remarks>
 		/// <param name="segmentType">identifies the required segment</param>
 		/// <param name="occurrence">the zero-based index of the occurrence</param>
-		/// <returns>the segment data as a byte[], or null if no segment exists for the type & occurrence</returns>
+		/// <returns>the segment data as a byte[], or null if no segment exists for the type &amp; occurrence</returns>
 		[CanBeNull]
 		public virtual sbyte[] GetSegment([NotNull] JpegSegmentType segmentType, int occurrence)
 		{
@@ -110,7 +110,7 @@ namespace Com.Drew.Imaging.Jpeg
 		/// </remarks>
 		/// <param name="segmentType">identifies the required segment</param>
 		/// <param name="occurrence">the zero-based index of the occurrence</param>
-		/// <returns>the segment data as a byte[], or null if no segment exists for the type & occurrence</returns>
+		/// <returns>the segment data as a byte[], or null if no segment exists for the type &amp; occurrence</returns>
 		[CanBeNull]
 		public virtual sbyte[] GetSegment(sbyte segmentType, int occurrence)
 		{

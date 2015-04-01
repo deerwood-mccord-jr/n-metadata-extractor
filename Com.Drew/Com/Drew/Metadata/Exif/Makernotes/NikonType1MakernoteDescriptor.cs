@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,8 +15,8 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using Com.Drew.Lang;
 using Com.Drew.Metadata;
@@ -29,10 +29,10 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 	/// Provides human-readable string representations of tag values stored in a
 	/// <see cref="NikonType1MakernoteDirectory"/>
 	/// .
-	/// <p/>
+	/// <p>
 	/// Type-1 is for E-Series cameras prior to (not including) E990.  For example: E700, E800, E900,
 	/// E900S, E910, E950.
-	/// <p/>
+	/// <p>
 	/// Makernote starts from ASCII string "Nikon". Data format is the same as IFD, but it starts from
 	/// offset 0x08. This is the same as Olympus except start string. Example of actual data
 	/// structure is shown below.
@@ -41,7 +41,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 	/// :0010: 00 00 EC 02 00 00 03 00-03 00 01 00 00 00 06 00 ................
 	/// </code></pre>
 	/// </summary>
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class NikonType1MakernoteDescriptor : TagDescriptor<NikonType1MakernoteDirectory>
 	{
 		public NikonType1MakernoteDescriptor([NotNull] NikonType1MakernoteDirectory directory)

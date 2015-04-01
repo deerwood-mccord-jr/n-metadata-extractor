@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,8 +15,8 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using System.IO;
 using System.Text;
@@ -31,14 +31,14 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 	/// Provides human-readable string representations of tag values stored in a
 	/// <see cref="PanasonicMakernoteDirectory"/>
 	/// .
-	/// <p/>
+	/// <p>
 	/// Some information about this makernote taken from here:
 	/// <ul>
 	/// <li><a href="http://www.ozhiker.com/electronics/pjmt/jpeg_info/panasonic_mn.html">http://www.ozhiker.com/electronics/pjmt/jpeg_info/panasonic_mn.html</a></li>
 	/// <li><a href="http://www.sno.phy.queensu.ca/~phil/exiftool/TagNames/Panasonic.html">http://www.sno.phy.queensu.ca/~phil/exiftool/TagNames/Panasonic.html</a></li>
 	/// </ul>
 	/// </summary>
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	/// <author>Philipp Sandhaus</author>
 	public class PanasonicMakernoteDescriptor : TagDescriptor<PanasonicMakernoteDirectory>
 	{

@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,15 +15,16 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
+using System.Globalization;
 using Com.Drew.Metadata.Exif.Makernotes;
 using Sharpen;
 
 namespace Com.Drew.Metadata.Exif
 {
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class NikonType2MakernoteTest1
 	{
 		private NikonType2MakernoteDirectory _nikonDirectory;
@@ -34,6 +35,7 @@ namespace Com.Drew.Metadata.Exif
 		[NUnit.Framework.SetUp]
 		public virtual void SetUp()
 		{
+			System.Threading.Thread.CurrentThread.CurrentCulture = new CultureInfo("en", "GB");
 			_nikonDirectory = ExifReaderTest.ProcessBytes<NikonType2MakernoteDirectory>("Tests/Data/nikonMakernoteType2a.jpg.app1");
 			NUnit.Framework.Assert.IsNotNull(_nikonDirectory);
 			_descriptor = new NikonType2MakernoteDescriptor(_nikonDirectory);

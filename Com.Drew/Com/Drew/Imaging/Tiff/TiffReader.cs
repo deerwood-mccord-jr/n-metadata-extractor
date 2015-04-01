@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,8 +15,8 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using System.Collections.Generic;
 using Com.Drew.Lang;
@@ -30,7 +30,7 @@ namespace Com.Drew.Imaging.Tiff
 	/// <see cref="TiffHandler"/>
 	/// interface.
 	/// </summary>
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class TiffReader
 	{
 		/// <summary>Processes a TIFF data sequence.</summary>
@@ -92,7 +92,6 @@ namespace Com.Drew.Imaging.Tiff
 		/// <summary>Processes a TIFF IFD.</summary>
 		/// <remarks>
 		/// Processes a TIFF IFD.
-		/// <p/>
 		/// IFD Header:
 		/// <ul>
 		/// <li><b>2 bytes</b> number of tags</li>
@@ -146,6 +145,7 @@ namespace Com.Drew.Imaging.Tiff
 				//
 				// Handle each tag in this directory
 				//
+				int invalidTiffFormatCodeCount = 0;
 				for (int tagNumber = 0; tagNumber < dirTagCount; tagNumber++)
 				{
 					int tagOffset = CalculateTagOffset(ifdOffset, tagNumber);
@@ -159,7 +159,13 @@ namespace Com.Drew.Imaging.Tiff
 						// This error suggests that we are processing at an incorrect index and will generate
 						// rubbish until we go out of bounds (which may be a while).  Exit now.
 						handler.Error("Invalid TIFF tag format code: " + formatCode);
-						return;
+						// TODO specify threshold as a parameter, or provide some other external control over this behaviour
+						if (++invalidTiffFormatCodeCount > 5)
+						{
+							handler.Error("Stopping processing as too many errors seen in TIFF IFD");
+							return;
+						}
+						continue;
 					}
 					// 4 bytes dictate the number of components in this tag's data
 					int componentCount = reader.GetInt32(tagOffset + 4);
