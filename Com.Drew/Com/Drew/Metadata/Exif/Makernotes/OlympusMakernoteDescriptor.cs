@@ -414,7 +414,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 			{
 				return null;
 			}
-			double iso = Math.Pow((value / 8d) - 1, 2) * 3.125;
+			double iso = Math.Pow(((double)value / 8d) - 1, 2) * 3.125;
 			return iso.ToString();
 		}
 
@@ -445,7 +445,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 			{
 				return null;
 			}
-			double fStop = Math.Pow((value / 16d) - 0.5, 2);
+			double fStop = Math.Pow(((double)value / 16d) - 0.5, 2);
 			return "F" + fStop.ToString();
 		}
 
@@ -465,7 +465,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		public virtual string GetExposureCompensationDescription()
 		{
 			long? value = _directory.GetLongObject(OlympusMakernoteDirectory.CameraSettings.TagExposureCompensation);
-			return value == null ? null : ((value / 3d) - 2) + " EV";
+			return value == null ? null : (((double)value / 3d) - 2) + " EV";
 		}
 
 		[CanBeNull]
@@ -500,7 +500,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		public virtual string GetFocalLengthDescription()
 		{
 			long? value = _directory.GetLongObject(OlympusMakernoteDirectory.CameraSettings.TagFocalLength);
-			return value == null ? null : (value / 256d).ToString() + " mm";
+			return value == null ? null : ((double)value / 256d).ToString() + " mm";
 		}
 
 		[CanBeNull]
@@ -559,7 +559,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 			{
 				return null;
 			}
-			double fStop = Math.Pow((value / 16d) - 0.5, 2);
+			double fStop = Math.Pow(((double)value / 16d) - 0.5, 2);
 			return "F" + fStop;
 		}
 
@@ -580,21 +580,21 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		public virtual string GetWhiteBalanceRedDescription()
 		{
 			long? value = _directory.GetLongObject(OlympusMakernoteDirectory.CameraSettings.TagWhiteBalanceRed);
-			return value == null ? null : (value / 256d).ToString();
+			return value == null ? null : ((double)value / 256d).ToString();
 		}
 
 		[CanBeNull]
 		public virtual string GetWhiteBalanceGreenDescription()
 		{
 			long? value = _directory.GetLongObject(OlympusMakernoteDirectory.CameraSettings.TagWhiteBalanceGreen);
-			return value == null ? null : (value / 256d).ToString();
+			return value == null ? null : ((double)value / 256d).ToString();
 		}
 
 		[CanBeNull]
 		public virtual string GetWhiteBalanceBlueDescription()
 		{
 			long? value = _directory.GetLongObject(OlympusMakernoteDirectory.CameraSettings.TagWhiteBalanceBlue);
-			return value == null ? null : (value / 256d).ToString();
+			return value == null ? null : ((double)value / 256d).ToString();
 		}
 
 		[CanBeNull]
@@ -683,7 +683,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		public virtual string GetApexBrightnessDescription()
 		{
 			long? value = _directory.GetLongObject(OlympusMakernoteDirectory.CameraSettings.TagApexBrightnessValue);
-			return value == null ? null : ((value / 8d) - 6).ToString();
+			return value == null ? null : (((double)value / 8d) - 6).ToString();
 		}
 
 		[CanBeNull]
