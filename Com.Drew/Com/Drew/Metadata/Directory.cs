@@ -53,7 +53,7 @@ namespace Com.Drew.Metadata
 		private readonly ICollection<string> _errorList = new AList<string>(4);
 
 		/// <summary>The descriptor used to interpret tag values.</summary>
-		protected internal TagDescriptor _descriptor;
+		protected internal ITagDescriptor _descriptor;
 
 		// ABSTRACT METHODS
 		/// <summary>Provides the name of the directory, for display purposes.</summary>
@@ -103,7 +103,7 @@ namespace Com.Drew.Metadata
 
 		/// <summary>Sets the descriptor used to interpret tag values.</summary>
 		/// <param name="descriptor">the descriptor used to interpret tag values</param>
-		public virtual void SetDescriptor([NotNull] TagDescriptor descriptor)
+		public virtual void SetDescriptor([NotNull] ITagDescriptor descriptor)
 		{
 			if (descriptor == null)
 			{
