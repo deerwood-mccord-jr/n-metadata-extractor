@@ -36,7 +36,7 @@ namespace Com.Drew.Metadata
 	/// The directory is provided to the tag descriptor via its constructor.
 	/// </remarks>
 	/// <author>Drew Noakes https://drewnoakes.com</author>
-	public class TagDescriptor<T>
+    public class TagDescriptor<T> : ITagDescriptor
 		where T : Com.Drew.Metadata.Directory
 	{
 		[NotNull]
