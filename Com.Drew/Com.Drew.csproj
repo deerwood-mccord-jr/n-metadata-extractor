@@ -162,6 +162,7 @@
     <Compile Include="Com\drew\metadata\iptc\IptcDirectory.cs" />
     <Compile Include="Com\drew\metadata\iptc\IptcReader.cs" />
     <Compile Include="Com\drew\metadata\iptc\Iso2022Converter.cs" />
+    <Compile Include="Com\drew\metadata\ITagDescriptor.cs" />
     <Compile Include="Com\drew\metadata\jfif\JfifDescriptor.cs" />
     <Compile Include="Com\drew\metadata\jfif\JfifDirectory.cs" />
     <Compile Include="Com\drew\metadata\jfif\JfifReader.cs" />
