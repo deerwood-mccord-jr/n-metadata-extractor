@@ -246,7 +246,7 @@ namespace Com.Drew.Metadata
 			{
 				return null;
 			}
-			IList<string> parts = new AList<string>();
+            IList<CharSequence> parts = new AList<CharSequence>();
 			int bitIndex = 0;
 			while (labels.Length > bitIndex)
 			{
