@@ -813,7 +813,7 @@ namespace Com.Drew.Metadata
 		/// is known, call the overload that accepts one as an argument.
 		/// </remarks>
 		[CanBeNull]
-		public virtual DateTime GetDate(int tagType)
+		public virtual DateTime? GetDate(int tagType)
 		{
 			return GetDate(tagType, null);
 		}
@@ -833,7 +833,7 @@ namespace Com.Drew.Metadata
 		/// is only considered if the underlying value is a string and parsing occurs, otherwise it has no effect.
 		/// </remarks>
 		[CanBeNull]
-		public virtual DateTime GetDate(int tagType, [CanBeNull] TimeZoneInfo timeZone)
+		public virtual DateTime? GetDate(int tagType, [CanBeNull] TimeZoneInfo timeZone)
 		{
 			object o = GetObject(tagType);
 			if (o == null)
