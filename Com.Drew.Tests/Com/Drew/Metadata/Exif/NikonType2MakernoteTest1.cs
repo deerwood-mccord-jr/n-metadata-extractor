@@ -35,7 +35,7 @@ namespace Com.Drew.Metadata.Exif
 		[NUnit.Framework.SetUp]
 		public virtual void SetUp()
 		{
-			System.Threading.Thread.CurrentThread.CurrentCulture = new CultureInfo("en", "GB");
+			System.Threading.Thread.CurrentThread.CurrentCulture = Sharpen.Extensions.CreateLocale("en", "GB");
 			_nikonDirectory = ExifReaderTest.ProcessBytes<NikonType2MakernoteDirectory>("Tests/Data/nikonMakernoteType2a.jpg.app1");
 			NUnit.Framework.Assert.IsNotNull(_nikonDirectory);
 			_descriptor = new NikonType2MakernoteDescriptor(_nikonDirectory);
