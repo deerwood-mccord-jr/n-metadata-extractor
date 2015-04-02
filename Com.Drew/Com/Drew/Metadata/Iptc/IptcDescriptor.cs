@@ -18,6 +18,8 @@
  *    https://drewnoakes.com/code/exif/
  *    https://github.com/drewnoakes/metadata-extractor
  */
+
+using System.Linq;
 using Com.Drew.Lang;
 using Com.Drew.Metadata;
 using JetBrains.Annotations;
@@ -303,7 +305,7 @@ namespace Com.Drew.Metadata.Iptc
 			{
 				return null;
 			}
-			return StringUtil.Join(keywords, ";");
+			return StringUtil.Join(keywords.ToCharSequence(), ";");
 		}
 
 		[CanBeNull]
