@@ -61,7 +61,7 @@ namespace Com.Drew.Metadata.Exif
 				new ExifReader().ReadJpegSegments(null, new Com.Drew.Metadata.Metadata(), JpegSegmentType.App1);
 				NUnit.Framework.Assert.Fail("Exception expected");
 			}
-			catch (ArgumentNullException)
+            catch (NullReferenceException)
 			{
 			}
 		}
