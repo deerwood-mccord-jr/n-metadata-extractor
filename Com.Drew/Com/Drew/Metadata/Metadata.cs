@@ -183,7 +183,7 @@ namespace Com.Drew.Metadata
 				_map = map;
 			}
 
-			public virtual Sharpen.Iterator<Com.Drew.Metadata.Directory> Iterator()
+			public override Sharpen.Iterator<Com.Drew.Metadata.Directory> Iterator()
 			{
 				return new Metadata.DirectoryIterable.DirectoryIterator(_map);
 			}
@@ -205,12 +205,12 @@ namespace Com.Drew.Metadata
 					}
 				}
 
-				public virtual bool HasNext()
+				public override bool HasNext()
 				{
 					return _listIterator != null && (_listIterator.HasNext() || _mapIterator.HasNext());
 				}
 
-				public virtual Com.Drew.Metadata.Directory Next()
+				public override Com.Drew.Metadata.Directory Next()
 				{
 					if (_listIterator == null || (!_listIterator.HasNext() && !_mapIterator.HasNext()))
 					{
@@ -223,7 +223,7 @@ namespace Com.Drew.Metadata
 					return _listIterator.Next();
 				}
 
-				public virtual void Remove()
+				public override void Remove()
 				{
 					throw new NotSupportedException();
 				}
