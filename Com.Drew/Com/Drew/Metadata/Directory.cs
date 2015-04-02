@@ -343,9 +343,9 @@ namespace Com.Drew.Metadata
 			{
 				return null;
 			}
-			if (o is Number)
+			if (o.IsNumber())
 			{
-				return ((Number)o).IntValue();
+				return Number.GetInstance(o).IntValue();
 			}
 			else
 			{
@@ -653,10 +653,10 @@ namespace Com.Drew.Metadata
 					return null;
 				}
 			}
-			if (o is Number)
-			{
-				return ((Number)o).DoubleValue();
-			}
+            if (o.IsNumber())
+            {
+                return Number.GetInstance(o).DoubleValue();
+            }
 			return null;
 		}
 
@@ -698,10 +698,10 @@ namespace Com.Drew.Metadata
 					return null;
 				}
 			}
-			if (o is Number)
-			{
-				return ((Number)o).FloatValue();
-			}
+            if (o.IsNumber())
+            {
+                return Number.GetInstance(o).FloatValue();
+            }
 			return null;
 		}
 
@@ -743,10 +743,10 @@ namespace Com.Drew.Metadata
 					return null;
 				}
 			}
-			if (o is Number)
-			{
-				return ((Number)o).LongValue();
-			}
+            if (o.IsNumber())
+            {
+                return Number.GetInstance(o).LongValue();
+            }
 			return null;
 		}
 
@@ -792,10 +792,10 @@ namespace Com.Drew.Metadata
 					return null;
 				}
 			}
-			if (o is Number)
-			{
-				return (((Number)o).DoubleValue() != 0);
-			}
+            if (o.IsNumber())
+            {
+                return Number.GetInstance(o).DoubleValue() != 0;
+            }
 			return null;
 		}
 
