@@ -343,7 +343,7 @@ namespace Com.Drew.Tools
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			private static void CloseWriter([CanBeNull] Writer writer)
+            private static void CloseWriter([CanBeNull] TextWriter writer)
 			{
 				if (writer != null)
 				{
@@ -371,20 +371,15 @@ namespace Com.Drew.Tools
 				[NotNull]
 				internal readonly string relativePath;
 
-				[CanBeNull]
-				private string manufacturer;
+				[CanBeNull] internal string manufacturer;
 
-				[CanBeNull]
-				private string model;
+				[CanBeNull] internal string model;
 
-				[CanBeNull]
-				private string exifVersion;
+				[CanBeNull] internal string exifVersion;
 
-				[CanBeNull]
-				private string thumbnail;
+				[CanBeNull] internal string thumbnail;
 
-				[CanBeNull]
-				private string makernote;
+				[CanBeNull] internal string makernote;
 
 				internal Row(MarkdownTableOutputHandler _enclosing, [NotNull] FilePath file, [NotNull] Com.Drew.Metadata.Metadata metadata, [NotNull] string relativePath)
 				{
@@ -495,7 +490,7 @@ namespace Com.Drew.Tools
 			/// <exception cref="System.IO.IOException"/>
 			private void WriteOutput([NotNull] PrintStream stream)
 			{
-				Writer writer = new OutputStreamWriter(stream);
+				TextWriter writer = new OutputStreamWriter(stream);
 				writer.Write("# Image Database Summary\n\n");
 				foreach (string extension in _rowListByExtension.Keys)
 				{
