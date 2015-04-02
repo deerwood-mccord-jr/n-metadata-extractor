@@ -111,7 +111,7 @@ namespace Com.Drew.Tools
 			System.Console.Out.Println("USAGE:\n");
 			System.Console.Out.Println("\tjava com.drew.tools.ExtractJpegSegmentTool <filename> [<segment> ...]\n");
 			System.Console.Out.Print("Where <segment> is zero or more of:");
-			foreach (JpegSegmentType segmentType in typeof(JpegSegmentType).GetEnumConstants())
+            foreach (JpegSegmentType segmentType in typeof(JpegSegmentType).GetEnumConstants<JpegSegmentType>())
 			{
 				if (segmentType.canContainMetadata)
 				{
