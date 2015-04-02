@@ -20,6 +20,7 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using JetBrains.Annotations;
 using Sharpen;
 
@@ -57,7 +58,7 @@ namespace Com.Drew.Metadata
 			where T : Com.Drew.Metadata.Directory
 		{
 			System.Type type = typeof(T);
-			return (ICollection<T>)_directoryListByClass.Get(type);
+		    return (from item in _directoryListByClass.Get(type) select (T) item).ToList();
 		}
 
 		/// <summary>Returns the count of directories in this metadata collection.</summary>
