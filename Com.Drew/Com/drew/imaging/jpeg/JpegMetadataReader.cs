@@ -40,8 +40,8 @@ namespace Com.Drew.Imaging.Jpeg
 	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class JpegMetadataReader
 	{
-		public static readonly Iterable<JpegSegmentMetadataReader> AllReaders = Arrays.AsList(new JpegReader(), new JpegCommentReader(), new JfifReader(), new ExifReader(), new XmpReader(), new IccReader(), new PhotoshopReader(), new IptcReader(), new 
-			AdobeJpegReader());
+        public static readonly Iterable<JpegSegmentMetadataReader> AllReaders = Arrays.AsList<JpegSegmentMetadataReader>(new JpegReader(), new JpegCommentReader(), new JfifReader(), new ExifReader(), new XmpReader(), new IccReader(), new PhotoshopReader(), new IptcReader(), new 
+			AdobeJpegReader()).AsIterable();
 
 		/// <exception cref="Com.Drew.Imaging.Jpeg.JpegProcessingException"/>
 		/// <exception cref="System.IO.IOException"/>
