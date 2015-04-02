@@ -165,7 +165,8 @@
 -methodMapping java.lang.System.getenv() Sharpen.Runtime.GetEnv
 -methodMapping java.net.InetAddress.getLocalHost Sharpen.Runtime.GetLocalHost
 -methodMapping java.net.InetAddress.getCanonicalHostName ToString
--methodMapping java.util.Locale.Locale(String,String,String) Sharpen.Extensions.CreateLocale
+-methodMapping java.util.Locale.Locale(java.lang.String,java.lang.String) Sharpen.Extensions.CreateLocale
+-methodMapping java.util.Locale.Locale(java.lang.String,java.lang.String,java.lang.String) Sharpen.Extensions.CreateLocale
 -methodMapping java.util.zip.Deflater.end Finish
 -methodMapping java.util.zip.Inflater.end Finish
 -methodMapping java.io.PrintWriter.print Write
