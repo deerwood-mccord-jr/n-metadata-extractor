@@ -174,5 +174,10 @@ namespace Com.Drew.Imaging.Jpeg
 			}
 			return null;
 		}
+
+        public static JpegSegmentType ValueOf(string segmentName)
+        {
+            return Extensions.GetEnumConstantByName<JpegSegmentType>(segmentName);
+        }
 	}
 }
