@@ -82,7 +82,7 @@ namespace Com.Drew.Metadata
 		public void AddDirectory<T>([NotNull] T directory)
 			where T : Com.Drew.Metadata.Directory
 		{
-			GetOrCreateDirectoryList(directory.GetType()).Add(directory);
+			GetOrCreateDirectoryList<T>().Add(directory);
 		}
 
 		/// <summary>
@@ -153,10 +153,8 @@ namespace Com.Drew.Metadata
 		}
 
 		[CanBeNull]
-		private ICollection<Com.Drew.Metadata.Directory> GetDirectoryList<T>()
-			where T : Com.Drew.Metadata.Directory
+		private ICollection<Com.Drew.Metadata.Directory> GetDirectoryList(Type type)
 		{
-			System.Type type = typeof(T);
 			return _directoryListByClass.Get(type);
 		}
 
