@@ -26,7 +26,7 @@ namespace Com.Drew.Imaging.Png
 		[CanBeNull]
 		public static Com.Drew.Imaging.Png.PngColorType FromNumericValue(int numericValue)
 		{
-			Com.Drew.Imaging.Png.PngColorType[] colorTypes = typeof(Com.Drew.Imaging.Png.PngColorType).GetEnumConstants();
+            Com.Drew.Imaging.Png.PngColorType[] colorTypes = typeof(Com.Drew.Imaging.Png.PngColorType).GetEnumConstants<PngColorType>();
 			foreach (Com.Drew.Imaging.Png.PngColorType colorType in colorTypes)
 			{
 				if (colorType.GetNumericValue() == numericValue)
