@@ -50,7 +50,7 @@ namespace Com.Drew.Metadata.Tiff
 			_metadata = metadata;
 			try
 			{
-				_currentDirectory = System.Activator.CreateInstance(initialDirectoryClass);
+				_currentDirectory = (Directory)System.Activator.CreateInstance(initialDirectoryClass);
 			}
 			catch (InstantiationException e)
 			{
@@ -73,7 +73,7 @@ namespace Com.Drew.Metadata.Tiff
 			_directoryStack.Push(_currentDirectory);
 			try
 			{
-				_currentDirectory = System.Activator.CreateInstance(directoryClass);
+				_currentDirectory = (Directory)System.Activator.CreateInstance(directoryClass);
 			}
 			catch (InstantiationException e)
 			{
