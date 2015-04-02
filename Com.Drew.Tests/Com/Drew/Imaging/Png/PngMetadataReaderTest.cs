@@ -38,7 +38,6 @@ namespace Com.Drew.Imaging.Png
 			TimeZoneInfo timeZone = System.TimeZoneInfo.Local;
 			try
 			{
-				TimeZoneInfo.SetDefault(Sharpen.Extensions.GetTimeZone("GMT"));
 				Com.Drew.Metadata.Metadata metadata = ProcessFile("Tests/Data/gimp-8x12-greyscale-alpha-time-background.png");
 				ICollection<PngDirectory> directories = metadata.GetDirectoriesOfType<PngDirectory>();
 				NUnit.Framework.Assert.IsNotNull(directories);
@@ -73,7 +72,6 @@ namespace Com.Drew.Imaging.Png
 			}
 			finally
 			{
-				TimeZoneInfo.SetDefault(timeZone);
 			}
 		}
 	}
