@@ -87,7 +87,7 @@ namespace Com.Drew.Metadata.Exif
 			Com.Drew.Metadata.Metadata metadata = new Com.Drew.Metadata.Metadata();
 			AList<sbyte[]> segments = new AList<sbyte[]>();
 			segments.Add(badExifData);
-			new ExifReader().ReadJpegSegments(segments, metadata, JpegSegmentType.App1);
+			new ExifReader().ReadJpegSegments(segments.AsIterable(), metadata, JpegSegmentType.App1);
 			Sharpen.Tests.AreEqual(0, metadata.GetDirectoryCount());
 			Sharpen.Tests.IsFalse(metadata.HasErrors());
 		}
