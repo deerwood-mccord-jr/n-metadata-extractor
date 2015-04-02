@@ -141,7 +141,7 @@ namespace Com.Drew.Imaging.Jpeg
 			//    /** Start-of-Frame (12) segment identifier. */
 			//    SOF12((byte)0xCC, true),
 			IList<Com.Drew.Imaging.Jpeg.JpegSegmentType> segmentTypes = new AList<Com.Drew.Imaging.Jpeg.JpegSegmentType>();
-			foreach (Com.Drew.Imaging.Jpeg.JpegSegmentType segmentType in typeof(Com.Drew.Imaging.Jpeg.JpegSegmentType).GetEnumConstants())
+            foreach (Com.Drew.Imaging.Jpeg.JpegSegmentType segmentType in typeof(Com.Drew.Imaging.Jpeg.JpegSegmentType).GetEnumConstants<JpegSegmentType>())
 			{
 				if (segmentType.canContainMetadata)
 				{
@@ -164,7 +164,7 @@ namespace Com.Drew.Imaging.Jpeg
 		[CanBeNull]
 		public static Com.Drew.Imaging.Jpeg.JpegSegmentType FromByte(sbyte segmentTypeByte)
 		{
-			foreach (Com.Drew.Imaging.Jpeg.JpegSegmentType segmentType in typeof(Com.Drew.Imaging.Jpeg.JpegSegmentType).GetEnumConstants())
+            foreach (Com.Drew.Imaging.Jpeg.JpegSegmentType segmentType in typeof(Com.Drew.Imaging.Jpeg.JpegSegmentType).GetEnumConstants<JpegSegmentType>())
 			{
 				if (segmentType.byteValue == segmentTypeByte)
 				{
