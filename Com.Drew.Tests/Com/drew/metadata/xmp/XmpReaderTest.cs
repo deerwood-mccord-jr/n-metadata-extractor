@@ -187,26 +187,26 @@ namespace Com.Drew.Metadata.Xmp
 		[NUnit.Framework.Test]
 		public virtual void TestExtract_OriginalDateTime()
 		{
-			DateTime actual = _directory.GetDate(XmpDirectory.TagDatetimeOriginal);
+			DateTime? actual = _directory.GetDate(XmpDirectory.TagDatetimeOriginal);
 			// Underlying string value (in XMP data) is: 2010-12-12T12:41:35.00+01:00
 			Sharpen.Tests.AreEqual(new SimpleDateFormat("hh:mm:ss dd MM yyyy Z").Parse("11:41:35 12 12 2010 +0000"), actual);
 			//        assertEquals(new SimpleDateFormat("HH:mm:ss dd MMM yyyy Z").parse("12:41:35 12 Dec 2010 +0100"), actual);
 			Sharpen.Calendar calendar = new Sharpen.GregorianCalendar(2010, 12 - 1, 12, 11, 41, 35);
 			calendar.SetTimeZone(Sharpen.Extensions.GetTimeZone("GMT"));
-			Sharpen.Tests.AreEqual(calendar.GetTime(), actual);
+			Sharpen.Tests.AreEqual(calendar.GetTime(), actual.Value);
 		}
 
 		/// <exception cref="System.Exception"/>
 		[NUnit.Framework.Test]
 		public virtual void TestExtract_DigitizedDateTime()
 		{
-			DateTime actual = _directory.GetDate(XmpDirectory.TagDatetimeDigitized);
+			DateTime? actual = _directory.GetDate(XmpDirectory.TagDatetimeDigitized);
 			// Underlying string value (in XMP data) is: 2010-12-12T12:41:35.00+01:00
 			Sharpen.Tests.AreEqual(new SimpleDateFormat("hh:mm:ss dd MM yyyy Z").Parse("11:41:35 12 12 2010 +0000"), actual);
 			//        assertEquals(new SimpleDateFormat("HH:mm:ss dd MMM yyyy Z").parse("12:41:35 12 Dec 2010 +0100"), actual);
 			Sharpen.Calendar calendar = new Sharpen.GregorianCalendar(2010, 12 - 1, 12, 11, 41, 35);
 			calendar.SetTimeZone(Sharpen.Extensions.GetTimeZone("GMT"));
-			Sharpen.Tests.AreEqual(calendar.GetTime(), actual);
+			Sharpen.Tests.AreEqual(calendar.GetTime(), actual.Value);
 		}
 
 		/// <exception cref="System.Exception"/>
