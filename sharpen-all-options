@@ -133,6 +133,7 @@
 -namespaceMapping javax.net.ssl Sharpen
 -namespaceMapping org.ietf.jgss Sharpen
 -methodMapping java.lang.Object.memberwiseClone Clone
+-methodMapping java.lang.Object.toString Sharpen.Extensions.ConvertToString
 -methodMapping java.nio.charset.Charset.forName Sharpen.Extensions.GetEncoding
 -methodMapping java.util.List<>.remove RemoveAt
 -methodMapping java.util.IList<>.remove RemoveAt
