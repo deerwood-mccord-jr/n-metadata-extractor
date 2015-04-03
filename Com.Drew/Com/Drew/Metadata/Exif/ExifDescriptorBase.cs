@@ -854,7 +854,7 @@ namespace Com.Drew.Metadata.Exif
 			int? isoEquiv = _directory.GetInteger(ExifDirectoryBase.TagIsoEquivalent);
 			// There used to be a check here that multiplied ISO values < 50 by 200.
 			// Issue 36 shows a smart-phone image from a Samsung Galaxy S2 with ISO-40.
-			return isoEquiv != null ? Sharpen.Extensions.ToString((int)isoEquiv) : null;
+			return isoEquiv != null ? Sharpen.Extensions.ConvertToString((int)isoEquiv) : null;
 		}
 
 		[CanBeNull]

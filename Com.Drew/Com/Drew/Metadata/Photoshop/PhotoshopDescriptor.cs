@@ -228,7 +228,7 @@ namespace Com.Drew.Metadata.Photoshop
 				}
 				RandomAccessReader reader = new ByteArrayReader(bytes);
 				double d = reader.GetDouble64(4);
-				return d.ToString();
+				return Sharpen.Extensions.ConvertToString(d);
 			}
 			catch (Exception)
 			{

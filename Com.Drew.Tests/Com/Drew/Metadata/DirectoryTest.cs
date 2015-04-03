@@ -69,7 +69,7 @@ namespace Com.Drew.Metadata
 			Sharpen.Tests.AreEqual((float)value, _directory.GetFloat(tagType), 0.00001);
 			Sharpen.Tests.AreEqual((double)value, _directory.GetDouble(tagType), 0.00001);
 			Sharpen.Tests.AreEqual((long)value, _directory.GetLong(tagType));
-			Sharpen.Tests.AreEqual(Sharpen.Extensions.ToString(value), _directory.GetString(tagType));
+			Sharpen.Tests.AreEqual(Sharpen.Extensions.ConvertToString(value), _directory.GetString(tagType));
 			Sharpen.Tests.AreEqual(new Rational(value, 1), _directory.GetRational(tagType));
 			NUnit.Framework.CollectionAssert.AreEqual(new int[] { value }, _directory.GetIntArray(tagType));
 			NUnit.Framework.CollectionAssert.AreEqual(new sbyte[] { unchecked((sbyte)value) }, _directory.GetByteArray(tagType));

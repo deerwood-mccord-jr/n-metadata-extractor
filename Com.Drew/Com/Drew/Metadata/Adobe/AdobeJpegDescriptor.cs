@@ -57,7 +57,7 @@ namespace Com.Drew.Metadata.Adobe
 		private string GetDctEncodeVersionDescription()
 		{
 			int? value = _directory.GetInteger(AdobeJpegDirectory.TagColorTransform);
-			return value == null ? null : value == unchecked((int)(0x64)) ? "100" : Sharpen.Extensions.ToString((int)value);
+			return value == null ? null : value == unchecked((int)(0x64)) ? "100" : Sharpen.Extensions.ConvertToString((int)value);
 		}
 
 		[CanBeNull]

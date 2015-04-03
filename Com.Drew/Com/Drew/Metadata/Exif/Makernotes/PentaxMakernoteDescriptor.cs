@@ -181,7 +181,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 			{
 				return "Off";
 			}
-			return value.ToString();
+			return Sharpen.Extensions.ConvertToString((float)value);
 		}
 
 		[CanBeNull]

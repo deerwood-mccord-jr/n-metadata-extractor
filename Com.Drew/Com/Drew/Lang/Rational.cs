@@ -207,7 +207,7 @@ namespace Com.Drew.Lang
 			{
 				if (IsInteger())
 				{
-					return Sharpen.Extensions.ToString(IntValue());
+					return Sharpen.Extensions.ConvertToString(IntValue());
 				}
 				else
 				{
@@ -222,7 +222,7 @@ namespace Com.Drew.Lang
 						Com.Drew.Lang.Rational simplifiedInstance = GetSimplifiedInstance();
 						if (allowDecimal)
 						{
-							string doubleString = simplifiedInstance.DoubleValue().ToString();
+							string doubleString = Sharpen.Extensions.ConvertToString(simplifiedInstance.DoubleValue());
 							if (doubleString.Length < 5)
 							{
 								return doubleString;

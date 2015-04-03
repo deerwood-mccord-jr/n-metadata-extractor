@@ -435,7 +435,7 @@ namespace Com.Drew.Metadata
 				string[] strings = new string[ints.Length];
 				for (int i = 0; i < strings.Length; i++)
 				{
-					strings[i] = Sharpen.Extensions.ToString(ints[i]);
+					strings[i] = Sharpen.Extensions.ConvertToString(ints[i]);
 				}
 				return strings;
 			}
@@ -447,7 +447,7 @@ namespace Com.Drew.Metadata
 					string[] strings = new string[bytes.Length];
 					for (int i = 0; i < strings.Length; i++)
 					{
-						strings[i] = System.Convert.ToString(bytes[i]);
+						strings[i] = Sharpen.Extensions.ConvertToString(bytes[i]);
 					}
 					return strings;
 				}
