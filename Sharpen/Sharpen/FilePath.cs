@@ -66,7 +66,7 @@ namespace Sharpen
 
         public bool CanRead()
         {
-            throw new NotImplementedException();
+            return FileHelper.Instance.CanRead(this);
         }
 
 		public bool CanWrite ()

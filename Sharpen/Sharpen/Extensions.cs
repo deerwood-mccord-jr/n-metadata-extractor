@@ -1058,7 +1058,7 @@ namespace Sharpen
 
         public static int CompareTo(this int? value, int? compareVal)
         {
-            throw new NotImplementedException();
+            return value.Value.CompareTo(compareVal.Value);
         }
 
         public static long DoubleToLongBits(double value)
@@ -1194,12 +1194,13 @@ namespace Sharpen
 
         public static void Printf(this TextWriter writer, string format, params object[] args)
         {
-            writer.WriteLine(ConvertStringFormat(format), args);
+            //  same call in Java
+            Format(writer, format, args);
         }
 
         public static void Format(this TextWriter writer, string format, params object[] args)
         {
-            throw new NotImplementedException();
+            writer.WriteLine(ConvertStringFormat(format), args);
         }
 
         public static string Substring(this StringBuilder sb, int start, int end)
