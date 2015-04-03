@@ -18,6 +18,8 @@
  *    https://drewnoakes.com/code/exif/
  *    https://github.com/drewnoakes/metadata-extractor
  */
+
+using NUnit.Framework;
 using Sharpen;
 
 namespace Com.Drew.Lang
@@ -44,7 +46,7 @@ namespace Com.Drew.Lang
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[NUnit.Framework.Test, SetCulture("en-GB")]
 		public virtual void TestToSimpleString()
 		{
 			Rational third1 = new Rational(1, 3);
