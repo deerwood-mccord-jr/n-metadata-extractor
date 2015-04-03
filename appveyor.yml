@@ -6,6 +6,7 @@ branches:
   # whitelist
   only:
     - master
+    - converted_sharpen
 
 # Operating system (build VM template)
 os: Windows Server 2012
