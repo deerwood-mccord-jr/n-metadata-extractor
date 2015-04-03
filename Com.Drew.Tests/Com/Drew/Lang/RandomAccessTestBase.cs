@@ -268,11 +268,11 @@ namespace Com.Drew.Lang
 			Sharpen.Tests.AreEqual("ABC", reader.GetString(0, 3));
 			Sharpen.Tests.AreEqual("ABCD", reader.GetString(0, 4));
 			Sharpen.Tests.AreEqual("ABCD\x0", reader.GetString(0, 5));
-			Sharpen.Tests.AreEqual("ABCD\x0E", reader.GetString(0, 6));
+			Sharpen.Tests.AreEqual("ABCD\x0000E", reader.GetString(0, 6));
 			Sharpen.Tests.AreEqual("BCD", reader.GetString(1, 3));
 			Sharpen.Tests.AreEqual("BCD\x0", reader.GetString(1, 4));
-			Sharpen.Tests.AreEqual("BCD\x0E", reader.GetString(1, 5));
-			Sharpen.Tests.AreEqual("\x0EF", reader.GetString(4, 3));
+			Sharpen.Tests.AreEqual("BCD\x0000E", reader.GetString(1, 5));
+			Sharpen.Tests.AreEqual("\x0000EF", reader.GetString(4, 3));
 		}
 
 		[NUnit.Framework.Test]
