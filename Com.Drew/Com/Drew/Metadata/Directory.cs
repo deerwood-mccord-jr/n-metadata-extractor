@@ -886,7 +886,7 @@ namespace Com.Drew.Metadata
 			}
 			if (o is int?)
 			{
-				return new Rational((long)o, 1);
+				return new Rational((int)o, 1);
 			}
 			if (o is long?)
 			{
