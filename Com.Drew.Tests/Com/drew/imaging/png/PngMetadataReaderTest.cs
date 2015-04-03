@@ -4,6 +4,7 @@ using System.IO;
 using Com.Drew.Lang;
 using Com.Drew.Metadata.Png;
 using JetBrains.Annotations;
+using NUnit.Framework;
 using Sharpen;
 
 namespace Com.Drew.Imaging.Png
@@ -32,7 +33,7 @@ namespace Com.Drew.Imaging.Png
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+        [NUnit.Framework.Test, SetCulture("en-GB")]
 		public virtual void TestGimpGreyscaleWithManyChunks()
 		{
 			TimeZoneInfo timeZone = System.TimeZoneInfo.Local;
@@ -62,7 +63,9 @@ namespace Com.Drew.Imaging.Png
 				Sharpen.Tests.AreEqual(2835, dirs[3].GetInt(PngDirectory.TagPixelsPerUnitX));
 				Sharpen.Tests.AreEqual(2835, dirs[3].GetInt(PngDirectory.TagPixelsPerUnitY));
 				Sharpen.Tests.AreEqual(PngChunkType.tIME, dirs[4].GetPngChunkType());
-				Sharpen.Tests.AreEqual("Tue Jan 01 04:08:30 GMT 2013", Sharpen.Extensions.ConvertToString(dirs[4].GetDate(PngDirectory.TagLastModificationTime)));
+			    //Sharpen.Tests.AreEqual("Tue Jan 01 04:08:30 GMT 2013", Sharpen.Extensions.ConvertToString(dirs[4].GetDate(PngDirectory.TagLastModificationTime)));
+                var testString = CreateTestString(2013, 00, 01, 04, 08, 30);
+                Sharpen.Tests.AreEqual(testString, Sharpen.Extensions.ConvertToString(dirs[4].GetDate(PngDirectory.TagLastModificationTime)));
 				Sharpen.Tests.AreEqual(PngChunkType.iTXt, dirs[5].GetPngChunkType());
 				IList<KeyValuePair> pairs = (IList<KeyValuePair>)dirs[5].GetObject(PngDirectory.TagTextualData);
 				NUnit.Framework.Assert.IsNotNull(pairs);
@@ -74,5 +77,14 @@ namespace Com.Drew.Imaging.Png
 			{
 			}
 		}
+
+        private string CreateTestString(int year, int month, int day, int hourOfDay, int minute, int second)
+	    {
+            TimeZoneInfo gmt = Sharpen.Extensions.GetTimeZone("GMT");
+            Calendar calendar = Calendar.GetInstance(gmt);
+            calendar.Set(year, month, day, hourOfDay, minute, second);
+
+	        return Sharpen.Extensions.ConvertToString(calendar.GetTime());
+	    }
 	}
 }
