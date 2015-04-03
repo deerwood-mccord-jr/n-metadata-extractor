@@ -49,11 +49,11 @@ namespace Com.Drew.Metadata
 		public virtual void TestToString()
 		{
 			Com.Drew.Metadata.Metadata metadata = new Com.Drew.Metadata.Metadata();
-			Sharpen.Tests.AreEqual("Metadata (0 directories)", metadata.ToString());
+			Sharpen.Tests.AreEqual("Metadata (0 directories)", Sharpen.Extensions.ConvertToString(metadata));
 			metadata.AddDirectory(new ExifIFD0Directory());
-			Sharpen.Tests.AreEqual("Metadata (1 directory)", metadata.ToString());
+			Sharpen.Tests.AreEqual("Metadata (1 directory)", Sharpen.Extensions.ConvertToString(metadata));
 			metadata.AddDirectory(new ExifSubIFDDirectory());
-			Sharpen.Tests.AreEqual("Metadata (2 directories)", metadata.ToString());
+			Sharpen.Tests.AreEqual("Metadata (2 directories)", Sharpen.Extensions.ConvertToString(metadata));
 		}
 	}
 }

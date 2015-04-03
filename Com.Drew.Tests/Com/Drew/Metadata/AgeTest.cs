@@ -36,7 +36,7 @@ namespace Com.Drew.Metadata
 			Sharpen.Tests.AreEqual(0, age.GetHours());
 			Sharpen.Tests.AreEqual(0, age.GetMinutes());
 			Sharpen.Tests.AreEqual(0, age.GetSeconds());
-			Sharpen.Tests.AreEqual("0031:07:15 00:00:00", age.ToString());
+			Sharpen.Tests.AreEqual("0031:07:15 00:00:00", Sharpen.Extensions.ConvertToString(age));
 			Sharpen.Tests.AreEqual("31 years 7 months 15 days", age.ToFriendlyString());
 		}
 

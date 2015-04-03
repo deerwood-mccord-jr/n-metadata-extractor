@@ -102,7 +102,7 @@ namespace Com.Drew.Metadata
 				}
 				outputString.Append(inputValue);
 			}
-			Sharpen.Tests.AreEqual(outputString.ToString(), _directory.GetString(tagType));
+			Sharpen.Tests.AreEqual(Sharpen.Extensions.ConvertToString(outputString), _directory.GetString(tagType));
 		}
 
 		/// <exception cref="System.Exception"/>
@@ -176,11 +176,11 @@ namespace Com.Drew.Metadata
 		public virtual void TestToString()
 		{
 			Com.Drew.Metadata.Directory directory = new ExifIFD0Directory();
-			Sharpen.Tests.AreEqual("Exif IFD0 Directory (0 tags)", directory.ToString());
+			Sharpen.Tests.AreEqual("Exif IFD0 Directory (0 tags)", Sharpen.Extensions.ConvertToString(directory));
 			directory.SetString(1, "Tag 1");
-			Sharpen.Tests.AreEqual("Exif IFD0 Directory (1 tag)", directory.ToString());
+			Sharpen.Tests.AreEqual("Exif IFD0 Directory (1 tag)", Sharpen.Extensions.ConvertToString(directory));
 			directory.SetString(2, "Tag 2");
-			Sharpen.Tests.AreEqual("Exif IFD0 Directory (2 tags)", directory.ToString());
+			Sharpen.Tests.AreEqual("Exif IFD0 Directory (2 tags)", Sharpen.Extensions.ConvertToString(directory));
 		}
 	}
 }

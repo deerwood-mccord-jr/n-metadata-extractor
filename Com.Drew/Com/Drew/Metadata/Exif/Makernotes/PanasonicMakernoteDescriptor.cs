@@ -676,7 +676,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 			StringBuilder result = new StringBuilder();
 			for (int i = 0; i < faces.Length; i++)
 			{
-				result.Append("Face ").Append(i + 1).Append(": ").Append(faces[i].ToString()).Append("\n");
+				result.Append("Face ").Append(i + 1).Append(": ").Append(Sharpen.Extensions.ConvertToString(faces[i])).Append("\n");
 			}
 			return result.Length > 0 ? result.Substring(0, result.Length - 1) : null;
 		}

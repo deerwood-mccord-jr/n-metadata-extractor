@@ -28,7 +28,7 @@ namespace Com.Drew.Lang
 	/// <remarks>
 	/// Immutable class for holding a rational number without loss of precision.  Provides
 	/// a familiar representation via
-	/// <see cref="ToString()"/>
+	/// <see cref="Sharpen.Extensions.ConvertToString()"/>
 	/// in form <code>numerator/denominator</code>.
 	/// Note that any value with a numerator of zero will be treated as zero, even if the
 	/// denominator is also zero.
@@ -201,7 +201,7 @@ namespace Com.Drew.Lang
 		{
 			if (_denominator == 0 && _numerator != 0)
 			{
-				return ToString();
+				return Sharpen.Extensions.ConvertToString(this);
 			}
 			else
 			{
@@ -228,7 +228,7 @@ namespace Com.Drew.Lang
 								return doubleString;
 							}
 						}
-						return simplifiedInstance.ToString();
+						return Sharpen.Extensions.ConvertToString(simplifiedInstance);
 					}
 				}
 			}

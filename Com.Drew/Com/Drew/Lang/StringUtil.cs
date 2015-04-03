@@ -50,7 +50,7 @@ namespace Com.Drew.Lang
 					buffer.Append(iter.Next());
 				}
 			}
-			return buffer.ToString();
+			return Sharpen.Extensions.ConvertToString(buffer);
 		}
 
 		[NotNull]
@@ -77,7 +77,7 @@ namespace Com.Drew.Lang
 				}
 				buffer.Append(value_1);
 			}
-			return buffer.ToString();
+			return Sharpen.Extensions.ConvertToString(buffer);
 		}
 
 		/// <exception cref="System.IO.IOException"/>
@@ -91,7 +91,7 @@ namespace Com.Drew.Lang
 			{
 				sb.Append(line);
 			}
-			return sb.ToString();
+			return Sharpen.Extensions.ConvertToString(sb);
 		}
 
 		public static int Compare([CanBeNull] string s1, [CanBeNull] string s2)

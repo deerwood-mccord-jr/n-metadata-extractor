@@ -1047,7 +1047,7 @@ namespace Com.Drew.Metadata.Exif
 			{
 				sb.Append(", red-eye reduction");
 			}
-			return sb.ToString();
+			return Sharpen.Extensions.ConvertToString(sb);
 		}
 
 		[CanBeNull]
@@ -1531,7 +1531,7 @@ namespace Com.Drew.Metadata.Exif
 					componentConfig.Append(componentStrings[j]);
 				}
 			}
-			return componentConfig.ToString();
+			return Sharpen.Extensions.ConvertToString(componentConfig);
 		}
 
 		[CanBeNull]

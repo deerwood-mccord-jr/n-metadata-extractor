@@ -70,15 +70,15 @@ namespace Com.Drew.Lang
 		public override string ToString()
 		{
 			StringBuilder @string = new StringBuilder();
-			@string.Append(base.ToString());
+			@string.Append(base.Sharpen.Extensions.ConvertToString());
 			if (_innerException != null)
 			{
 				@string.Append("\n");
 				@string.Append("--- inner exception ---");
 				@string.Append("\n");
-				@string.Append(_innerException.ToString());
+				@string.Append(Sharpen.Extensions.ConvertToString(_innerException));
 			}
-			return @string.ToString();
+			return Sharpen.Extensions.ConvertToString(@string);
 		}
 
 		public override void PrintStackTrace([NotNull] PrintStream s)

@@ -91,14 +91,14 @@ namespace Com.Drew.Tools
 				{
 					for (int i = 0; i < segments.Count; i++)
 					{
-						string outputFilePath = Sharpen.Extensions.StringFormat("%s.%s.%d", jpegFilePath, segmentType.ToString().ToLower(), i);
+						string outputFilePath = Sharpen.Extensions.StringFormat("%s.%s.%d", jpegFilePath, Sharpen.Extensions.ConvertToString(segmentType).ToLower(), i);
 						System.Console.Out.Println("Writing: " + outputFilePath);
 						FileUtil.SaveBytes(new FilePath(outputFilePath), segments[i]);
 					}
 				}
 				else
 				{
-					string outputFilePath = Sharpen.Extensions.StringFormat("%s.%s", jpegFilePath, segmentType.ToString().ToLower());
+					string outputFilePath = Sharpen.Extensions.StringFormat("%s.%s", jpegFilePath, Sharpen.Extensions.ConvertToString(segmentType).ToLower());
 					System.Console.Out.Println("Writing: " + outputFilePath);
 					FileUtil.SaveBytes(new FilePath(outputFilePath), segments[0]);
 				}
@@ -114,7 +114,7 @@ namespace Com.Drew.Tools
 			{
 				if (segmentType.canContainMetadata)
 				{
-					System.Console.Out.Print(" " + segmentType.ToString());
+					System.Console.Out.Print(" " + Sharpen.Extensions.ConvertToString(segmentType));
 				}
 			}
 			System.Console.Out.Println();

@@ -164,7 +164,7 @@ namespace Com.Drew.Metadata.Png
 				}
 				sb.Append(Sharpen.Extensions.StringFormat("%s: %s", keyValue.GetKey(), keyValue.GetValue()));
 			}
-			return sb.ToString();
+			return Sharpen.Extensions.ConvertToString(sb);
 		}
 
 		[CanBeNull]

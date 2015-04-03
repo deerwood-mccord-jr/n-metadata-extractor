@@ -1753,7 +1753,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 
 				default:
 				{
-					return value.ToString();
+					return Sharpen.Extensions.ConvertToString(value);
 				}
 			}
 		}

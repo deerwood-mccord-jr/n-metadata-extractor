@@ -54,7 +54,7 @@ namespace Com.Drew.Metadata.Adobe
 		public virtual void TestReadAdobeJpegMetadata1()
 		{
 			AdobeJpegDirectory directory = ProcessBytes("Tests/Data/adobeJpeg1.jpg.appe");
-			Sharpen.Tests.IsFalse(directory.GetErrors().ToString(), directory.HasErrors());
+			Sharpen.Tests.IsFalse(Sharpen.Extensions.ConvertToString(directory.GetErrors()), directory.HasErrors());
 			Sharpen.Tests.AreEqual(4, directory.GetTagCount());
 			Sharpen.Tests.AreEqual(1, directory.GetInt(AdobeJpegDirectory.TagColorTransform));
 			Sharpen.Tests.AreEqual(25600, directory.GetInt(AdobeJpegDirectory.TagDctEncodeVersion));

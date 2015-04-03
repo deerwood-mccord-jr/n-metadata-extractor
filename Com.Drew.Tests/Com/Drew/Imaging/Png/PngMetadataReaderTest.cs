@@ -63,7 +63,7 @@ namespace Com.Drew.Imaging.Png
 				Sharpen.Tests.AreEqual(2835, dirs[3].GetInt(PngDirectory.TagPixelsPerUnitX));
 				Sharpen.Tests.AreEqual(2835, dirs[3].GetInt(PngDirectory.TagPixelsPerUnitY));
 				Sharpen.Tests.AreEqual(PngChunkType.tIME, dirs[4].GetPngChunkType());
-				Sharpen.Tests.AreEqual("Tue Jan 01 04:08:30 GMT 2013", dirs[4].GetDate(PngDirectory.TagLastModificationTime).ToString());
+				Sharpen.Tests.AreEqual("Tue Jan 01 04:08:30 GMT 2013", Sharpen.Extensions.ConvertToString(dirs[4].GetDate(PngDirectory.TagLastModificationTime)));
 				Sharpen.Tests.AreEqual(PngChunkType.iTXt, dirs[5].GetPngChunkType());
 				IList<KeyValuePair> pairs = (IList<KeyValuePair>)dirs[5].GetObject(PngDirectory.TagTextualData);
 				NUnit.Framework.Assert.IsNotNull(pairs);

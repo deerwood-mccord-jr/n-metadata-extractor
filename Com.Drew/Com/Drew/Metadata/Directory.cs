@@ -955,7 +955,7 @@ namespace Com.Drew.Metadata
 					}
 					if (isObjectArray)
 					{
-						@string.Append(Sharpen.Runtime.GetArrayValue(o, i).ToString());
+						@string.Append(Sharpen.Extensions.ConvertToString(Sharpen.Runtime.GetArrayValue(o, i)));
 					}
 					else
 					{
@@ -1004,13 +1004,13 @@ namespace Com.Drew.Metadata
 						}
 					}
 				}
-				return @string.ToString();
+				return Sharpen.Extensions.ConvertToString(@string);
 			}
 			// Note that several cameras leave trailing spaces (Olympus, Nikon) but this library is intended to show
 			// the actual data within the file.  It is not inconceivable that whitespace may be significant here, so we
 			// do not trim.  Also, if support is added for writing data back to files, this may cause issues.
 			// We leave trimming to the presentation layer.
-			return o.ToString();
+			return Sharpen.Extensions.ConvertToString(o);
 		}
 
 		[CanBeNull]

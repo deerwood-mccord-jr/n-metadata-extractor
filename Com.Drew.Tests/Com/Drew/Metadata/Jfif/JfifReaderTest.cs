@@ -38,7 +38,7 @@ namespace Com.Drew.Metadata.Jfif
 			Sharpen.Tests.AreEqual(1, metadata.GetDirectoryCount());
 			JfifDirectory directory = metadata.GetFirstDirectoryOfType<JfifDirectory>();
 			NUnit.Framework.Assert.IsNotNull(directory);
-			Sharpen.Tests.IsFalse(directory.GetErrors().ToString(), directory.HasErrors());
+			Sharpen.Tests.IsFalse(Sharpen.Extensions.ConvertToString(directory.GetErrors()), directory.HasErrors());
 			Tag[] tags = Sharpen.Collections.ToArray(directory.GetTags(), new Tag[directory.GetTagCount()]);
 			Sharpen.Tests.AreEqual(4, tags.Length);
 			Sharpen.Tests.AreEqual(JfifDirectory.TagVersion, tags[0].GetTagType());

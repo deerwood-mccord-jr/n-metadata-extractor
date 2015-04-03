@@ -122,7 +122,7 @@ namespace Com.Drew.Metadata
 				}
 				version.Append(c);
 			}
-			return version.ToString();
+			return Sharpen.Extensions.ConvertToString(version);
 		}
 
 		[CanBeNull]
@@ -233,7 +233,7 @@ namespace Com.Drew.Metadata
 			{
 				return null;
 			}
-			return Sharpen.Extensions.CreateDate((long)value).ToString();
+			return Sharpen.Extensions.ConvertToString(Sharpen.Extensions.CreateDate((long)value));
 		}
 
 		/// <summary>LSB first.</summary>

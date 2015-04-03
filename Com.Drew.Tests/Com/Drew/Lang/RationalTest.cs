@@ -40,7 +40,7 @@ namespace Com.Drew.Lang
 		public virtual void TestToString()
 		{
 			Rational rational = new Rational(1, 3);
-			Sharpen.Tests.AreEqual("1/3", rational.ToString());
+			Sharpen.Tests.AreEqual("1/3", Sharpen.Extensions.ConvertToString(rational));
 		}
 
 		/// <exception cref="System.Exception"/>

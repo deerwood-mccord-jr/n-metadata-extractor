@@ -530,7 +530,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 			long day = (long)value & unchecked((int)(0xFF));
 			long month = ((long)value >> 16) & unchecked((int)(0xFF));
 			long year = ((long)value >> 8) & unchecked((int)(0xFF));
-			return new Sharpen.GregorianCalendar((int)year + 1970, (int)month, (int)day).GetTime().ToString();
+			return Sharpen.Extensions.ConvertToString(new Sharpen.GregorianCalendar((int)year + 1970, (int)month, (int)day).GetTime());
 		}
 
 		[CanBeNull]
@@ -915,7 +915,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 					}
 				}
 			}
-			return desc.ToString();
+			return Sharpen.Extensions.ConvertToString(desc);
 		}
 	}
 }
