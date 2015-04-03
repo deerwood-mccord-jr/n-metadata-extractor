@@ -70,7 +70,7 @@ namespace Com.Drew.Lang
 		public override string ToString()
 		{
 			StringBuilder @string = new StringBuilder();
-			@string.Append(base.Sharpen.Extensions.ConvertToString());
+			@string.Append(base.ToString());
 			if (_innerException != null)
 			{
 				@string.Append("\n");
