@@ -21,6 +21,7 @@
  */
 using Com.Drew.Lang;
 using Com.Drew.Metadata.Exif.Makernotes;
+using NUnit.Framework;
 using Sharpen;
 
 namespace Com.Drew.Metadata.Exif
@@ -72,7 +73,7 @@ namespace Com.Drew.Metadata.Exif
         [Nikon Makernote] Makernote Unknown 3 = 0 0 16777216 0 2685774096 0 34833 6931 16178 4372 4372 3322676767 3373084416 15112 0 0 1151495 252903424 17 0 0 844038208 55184128 218129428 1476410198 370540566 4044363286 16711749 204629079 1729
     */
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[NUnit.Framework.Test, SetCulture("en-GB")]
 		public virtual void TestNikonMakernote_MatchesKnownValues()
 		{
 			Sharpen.Tests.IsTrue(_nikonDirectory.GetTagCount() > 0);
