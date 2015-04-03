@@ -747,6 +747,17 @@ namespace Sharpen
             return val.ToString("0.0###########");
         }
 
+        public static string ConvertToString(DateTime? val)
+        {
+            return ConvertToString(val.Value);
+        }
+
+        public static string ConvertToString(DateTime val)
+        {
+            //  EEE MMM dd HH:mm:ss zzz yyyy
+            return val.ToString("ddd MMM dd HH:mm:ss zzz yyyy");
+        }
+
         public static string ConvertToString(float? val)
         {
             return ConvertToString(val.Value);
