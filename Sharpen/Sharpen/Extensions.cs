@@ -732,7 +732,27 @@ namespace Sharpen
             return Convert.ToString(val, 16);
         }
 
-        public static string ToString(object val)
+        public static string ConvertToString(int val)
+        {
+            return val.ToString();
+        }
+
+        public static string ConvertToString(int? val)
+        {
+            return ConvertToString(val.Value);
+        }
+
+        public static string ConvertToString(float val)
+        {
+            return val.ToString("0.0###########");
+        }
+
+        public static string ConvertToString(float? val)
+        {
+            return ConvertToString(val.Value);
+        }
+
+        public static string ConvertToString(object val)
         {
             return val.ToString();
         }
