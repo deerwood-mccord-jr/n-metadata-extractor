@@ -1,6 +1,5 @@
 /*
- * Modified by Yakov Danilov <yakodani@gmail.com> for Imazen LLC (Ported from Java to C#) 
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,11 +15,10 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using Com.Drew.Metadata;
-using Com.Drew.Metadata.Exif.Makernotes;
 using JetBrains.Annotations;
 using Sharpen;
 
@@ -31,10 +29,10 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 	/// <see cref="KodakMakernoteDirectory"/>
 	/// .
 	/// </summary>
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class KodakMakernoteDescriptor : TagDescriptor<KodakMakernoteDirectory>
 	{
-		public KodakMakernoteDescriptor(KodakMakernoteDirectory directory)
+		public KodakMakernoteDescriptor([NotNull] KodakMakernoteDirectory directory)
 			: base(directory)
 		{
 		}
@@ -44,47 +42,47 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		{
 			switch (tagType)
 			{
-                case KodakMakernoteDirectory.TagQuality:
+				case KodakMakernoteDirectory.TagQuality:
 				{
 					return GetQualityDescription();
 				}
 
-                case KodakMakernoteDirectory.TagBurstMode:
+				case KodakMakernoteDirectory.TagBurstMode:
 				{
 					return GetBurstModeDescription();
 				}
 
-                case KodakMakernoteDirectory.TagShutterMode:
+				case KodakMakernoteDirectory.TagShutterMode:
 				{
 					return GetShutterModeDescription();
 				}
 
-                case KodakMakernoteDirectory.TagFocusMode:
+				case KodakMakernoteDirectory.TagFocusMode:
 				{
 					return GetFocusModeDescription();
 				}
 
-                case KodakMakernoteDirectory.TagWhiteBalance:
+				case KodakMakernoteDirectory.TagWhiteBalance:
 				{
 					return GetWhiteBalanceDescription();
 				}
 
-                case KodakMakernoteDirectory.TagFlashMode:
+				case KodakMakernoteDirectory.TagFlashMode:
 				{
 					return GetFlashModeDescription();
 				}
 
-                case KodakMakernoteDirectory.TagFlashFired:
+				case KodakMakernoteDirectory.TagFlashFired:
 				{
 					return GetFlashFiredDescription();
 				}
 
-                case KodakMakernoteDirectory.TagColorMode:
+				case KodakMakernoteDirectory.TagColorMode:
 				{
 					return GetColorModeDescription();
 				}
 
-                case KodakMakernoteDirectory.TagSharpness:
+				case KodakMakernoteDirectory.TagSharpness:
 				{
 					return GetSharpnessDescription();
 				}
@@ -99,13 +97,13 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		[CanBeNull]
 		public virtual string GetSharpnessDescription()
 		{
-            return GetIndexedDescription(KodakMakernoteDirectory.TagSharpness, "Normal");
+			return GetIndexedDescription(KodakMakernoteDirectory.TagSharpness, "Normal");
 		}
 
 		[CanBeNull]
 		public virtual string GetColorModeDescription()
 		{
-            int? value = _directory.GetInteger(KodakMakernoteDirectory.TagColorMode);
+			int? value = _directory.GetInteger(KodakMakernoteDirectory.TagColorMode);
 			if (value == null)
 			{
 				return null;
@@ -160,13 +158,13 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		[CanBeNull]
 		public virtual string GetFlashFiredDescription()
 		{
-            return GetIndexedDescription(KodakMakernoteDirectory.TagFlashFired, "No", "Yes");
+			return GetIndexedDescription(KodakMakernoteDirectory.TagFlashFired, "No", "Yes");
 		}
 
 		[CanBeNull]
 		public virtual string GetFlashModeDescription()
 		{
-            int? value = _directory.GetInteger(KodakMakernoteDirectory.TagFlashMode);
+			int? value = _directory.GetInteger(KodakMakernoteDirectory.TagFlashMode);
 			if (value == null)
 			{
 				return null;
@@ -206,13 +204,13 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		[CanBeNull]
 		public virtual string GetWhiteBalanceDescription()
 		{
-            return GetIndexedDescription(KodakMakernoteDirectory.TagWhiteBalance, "Auto", "Flash", "Tungsten", "Daylight");
+			return GetIndexedDescription(KodakMakernoteDirectory.TagWhiteBalance, "Auto", "Flash", "Tungsten", "Daylight");
 		}
 
 		[CanBeNull]
 		public virtual string GetFocusModeDescription()
 		{
-            return GetIndexedDescription(KodakMakernoteDirectory.TagFocusMode, "Normal", null, "Macro");
+			return GetIndexedDescription(KodakMakernoteDirectory.TagFocusMode, "Normal", null, "Macro");
 		}
 
 		[CanBeNull]
@@ -250,13 +248,13 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		[CanBeNull]
 		public virtual string GetBurstModeDescription()
 		{
-            return GetIndexedDescription(KodakMakernoteDirectory.TagBurstMode, "Off", "On");
+			return GetIndexedDescription(KodakMakernoteDirectory.TagBurstMode, "Off", "On");
 		}
 
 		[CanBeNull]
 		public virtual string GetQualityDescription()
 		{
-            return GetIndexedDescription(KodakMakernoteDirectory.TagQuality, 1, "Fine", "Normal");
+			return GetIndexedDescription(KodakMakernoteDirectory.TagQuality, 1, "Fine", "Normal");
 		}
 	}
 }

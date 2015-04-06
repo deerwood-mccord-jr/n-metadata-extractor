@@ -1,6 +1,5 @@
 /*
- * Modified by Yakov Danilov <yakodani@gmail.com> for Imazen LLC (Ported from Java to C#) 
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,8 +15,8 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using System;
 using System.IO;
@@ -36,7 +35,7 @@ namespace Com.Drew.Lang
 	/// unavailable in previous versions.  This class allows support
 	/// of these previous JDK versions.
 	/// </remarks>
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	[System.Serializable]
 	public class CompoundException : Exception
 	{
@@ -45,17 +44,17 @@ namespace Com.Drew.Lang
 		[CanBeNull]
 		private readonly Exception _innerException;
 
-		public CompoundException(string msg)
+		public CompoundException([CanBeNull] string msg)
 			: this(msg, null)
 		{
 		}
 
-		public CompoundException(Exception exception)
+		public CompoundException([CanBeNull] Exception exception)
 			: this(null, exception)
 		{
 		}
 
-		public CompoundException(string msg, Exception innerException)
+		public CompoundException([CanBeNull] string msg, [CanBeNull] Exception innerException)
 			: base(msg)
 		{
 			_innerException = innerException;
@@ -71,45 +70,45 @@ namespace Com.Drew.Lang
 		public override string ToString()
 		{
 			StringBuilder @string = new StringBuilder();
-			@string.Append(base.ToString());
+			@string.Append(base.Sharpen.Extensions.ConvertToString());
 			if (_innerException != null)
 			{
 				@string.Append("\n");
 				@string.Append("--- inner exception ---");
 				@string.Append("\n");
-				@string.Append(_innerException.ToString());
+				@string.Append(Sharpen.Extensions.ConvertToString(_innerException));
 			}
-			return @string.ToString();
+			return Sharpen.Extensions.ConvertToString(@string);
 		}
 
-//		public override void PrintStackTrace(PrintStream s)
-//		{
-//			base.Sharpen.Runtime.PrintStackTrace(s);
-//			if (_innerException != null)
-//			{
-//				s.Println("--- inner exception ---");
-//				Sharpen.Runtime.PrintStackTrace(_innerException, s);
-//			}
-//		}
-//
-//		public override void PrintStackTrace(PrintWriter s)
-//		{
-//			base.Sharpen.Runtime.PrintStackTrace(s);
-//			if (_innerException != null)
-//			{
-//				s.WriteLine("--- inner exception ---");
-//				Sharpen.Runtime.PrintStackTrace(_innerException, s);
-//			}
-//		}
-//
-//		public override void PrintStackTrace()
-//		{
-//			base.Sharpen.Runtime.PrintStackTrace();
-//			if (_innerException != null)
-//			{
-//				System.Console.Error.Println("--- inner exception ---");
-//				Sharpen.Runtime.PrintStackTrace(_innerException);
-//			}
-//		}
+		public override void PrintStackTrace([NotNull] PrintStream s)
+		{
+			base.Sharpen.Runtime.PrintStackTrace(s);
+			if (_innerException != null)
+			{
+				s.Println("--- inner exception ---");
+				Sharpen.Runtime.PrintStackTrace(_innerException, s);
+			}
+		}
+
+		public override void PrintStackTrace([NotNull] PrintWriter s)
+		{
+			base.Sharpen.Runtime.PrintStackTrace(s);
+			if (_innerException != null)
+			{
+				s.WriteLine("--- inner exception ---");
+				Sharpen.Runtime.PrintStackTrace(_innerException, s);
+			}
+		}
+
+		public override void PrintStackTrace()
+		{
+			base.Sharpen.Runtime.PrintStackTrace();
+			if (_innerException != null)
+			{
+				System.Console.Error.Println("--- inner exception ---");
+				Sharpen.Runtime.PrintStackTrace(_innerException);
+			}
+		}
 	}
 }

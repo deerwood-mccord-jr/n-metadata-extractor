@@ -1,6 +1,5 @@
 /*
- * Modified by Yakov Danilov <yakodani@gmail.com> for Imazen LLC (Ported from Java to C#) 
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,11 +15,10 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using System.Collections.Generic;
-using Com.Drew.Metadata.Exif.Makernotes;
 using JetBrains.Annotations;
 using Sharpen;
 
@@ -30,21 +28,21 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 	/// <remarks>
 	/// Describes tags specific to Nikon (type 2) cameras.  Type-2 applies to the E990 and D-series cameras such as the E990, D1,
 	/// D70 and D100.
-	/// <p/>
+	/// <p>
 	/// Thanks to Fabrizio Giudici for publishing his reverse-engineering of the D100 makernote data.
 	/// http://www.timelesswanderings.net/equipment/D100/NEF.html
-	/// <p/>
+	/// <p>
 	/// Note that the camera implements image protection (locking images) via the file's 'readonly' attribute.  Similarly
 	/// image hiding uses the 'hidden' attribute (observed on the D70).  Consequently, these values are not available here.
-	/// <p/>
+	/// <p>
 	/// Additional sample images have been observed, and their tag values recorded in javadoc comments for each tag's field.
 	/// New tags have subsequently been added since Fabrizio's observations.
-	/// <p/>
+	/// <p>
 	/// In earlier models (such as the E990 and D1), this directory begins at the first byte of the makernote IFD.  In
 	/// later models, the IFD was given the standard prefix to indicate the camera models (most other manufacturers also
 	/// provide this prefix to aid in software decoding).
 	/// </remarks>
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class NikonType2MakernoteDirectory : Com.Drew.Metadata.Directory
 	{
 		/// <summary>
@@ -65,7 +63,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		/// <remarks>
 		/// The camera's color mode, as an uppercase string.  Examples include:
 		/// <ul>
-		/// <li><code>B & W</code></li>
+		/// <li><code>B &amp; W</code></li>
 		/// <li><code>COLOR</code></li>
 		/// <li><code>COOL</code></li>
 		/// <li><code>SEPIA</code></li>
@@ -233,19 +231,19 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		/// <remarks>
 		/// The camera's ISO mode, as an uppercase string.
 		/// <ul>
-		/// <li><code>AUTO</code></code></li>
+		/// <li><code>AUTO</code></li>
 		/// <li><code>MANUAL</code></li>
 		/// </ul>
 		/// </remarks>
 		public const int TagIsoMode = unchecked((int)(0x000F));
 
-		/// <summary>Added during merge of Type2 & Type3.</summary>
-		/// <remarks>Added during merge of Type2 & Type3.  May apply to earlier models, such as E990 and D1.</remarks>
+		/// <summary>Added during merge of Type2 &amp; Type3.</summary>
+		/// <remarks>Added during merge of Type2 &amp; Type3.  May apply to earlier models, such as E990 and D1.</remarks>
 		public const int TagDataDump = unchecked((int)(0x0010));
 
 		/// <summary>
 		/// Preview to another IFD (?)
-		/// <p/>
+		/// <p>
 		/// Details here: http://gvsoft.homedns.org/exif/makernote-nikon-2-tag0x0011.html
 		/// // TODO if this is another IFD, decode it
 		/// </summary>
@@ -426,7 +424,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		/// <li><code>CONTRAST(+)</code></li>
 		/// <li><code>CONTRAST(-)</code></li>
 		/// <li><code>NORMAL</code></li>
-		/// <li><code>B & W</code></li>
+		/// <li><code>B &amp; W</code></li>
 		/// <li><code>BRIGHTNESS(+)</code></li>
 		/// <li><code>BRIGHTNESS(-)</code></li>
 		/// <li><code>SEPIA</code></li>
@@ -491,8 +489,8 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		/// </remarks>
 		public const int TagLens = unchecked((int)(0x0084));
 
-		/// <summary>Added during merge of Type2 & Type3.</summary>
-		/// <remarks>Added during merge of Type2 & Type3.  May apply to earlier models, such as E990 and D1.</remarks>
+		/// <summary>Added during merge of Type2 &amp; Type3.</summary>
+		/// <remarks>Added during merge of Type2 &amp; Type3.  May apply to earlier models, such as E990 and D1.</remarks>
 		public const int TagManualFocusDistance = unchecked((int)(0x0085));
 
 		/// <summary>The amount of digital zoom used.</summary>
@@ -518,7 +516,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		/// <summary>The camera's shooting mode.</summary>
 		/// <remarks>
 		/// The camera's shooting mode.
-		/// <p/>
+		/// <p>
 		/// A bit-array with:
 		/// <ul>
 		/// <li><code>0</code> Single Frame</li>
@@ -557,7 +555,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		/// <li><code>MODE2</code> = Mode 2 (Adobe RGB)</li>
 		/// <li><code>MODE3</code> = Mode 2 (sRGB): Higher Saturation</li>
 		/// <li><code>MODE3a</code> = Mode 2 (sRGB): Higher Saturation</li>
-		/// <li><code>B & W</code> = B & W</li>
+		/// <li><code>B &amp; W</code> = B &amp; W</li>
 		/// </ul>
 		/// </remarks>
 		public const int TagCameraColorMode = unchecked((int)(0x008D));
@@ -642,7 +640,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		/// <li><code>0</code> Normal</li>
 		/// <li><code>-1</code></li>
 		/// <li><code>-2</code></li>
-		/// <li><code>-3</code> (B&W)</li>
+		/// <li><code>-3</code> (B&amp;W)</li>
 		/// </ul>
 		/// </remarks>
 		public const int TagSaturation = unchecked((int)(0x0094));
@@ -848,7 +846,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		public const int TagUnknown55 = unchecked((int)(0x0E23));
 
 		[NotNull]
-		protected internal static readonly Dictionary<int, string> _tagNameMap = new Dictionary<int, string>();
+		protected internal static readonly Dictionary<int?, string> _tagNameMap = new Dictionary<int?, string>();
 
 		static NikonType2MakernoteDirectory()
 		{
@@ -982,7 +980,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		}
 
 		[NotNull]
-		protected internal override Dictionary<int, string> GetTagNameMap()
+		protected internal override Dictionary<int?, string> GetTagNameMap()
 		{
 			return _tagNameMap;
 		}

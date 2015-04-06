@@ -1,6 +1,5 @@
 /*
- * Modified by Yakov Danilov <yakodani@gmail.com> for Imazen LLC (Ported from Java to C#) 
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,28 +15,27 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using Com.Drew.Imaging.Jpeg;
 using Com.Drew.Lang;
-using Com.Drew.Metadata.Adobe;
 using Com.Drew.Tools;
 using JetBrains.Annotations;
 using Sharpen;
 
 namespace Com.Drew.Metadata.Adobe
 {
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class AdobeJpegReaderTest
 	{
 		/// <exception cref="System.IO.IOException"/>
 		[NotNull]
-		public static AdobeJpegDirectory ProcessBytes(string filePath)
+		public static AdobeJpegDirectory ProcessBytes([NotNull] string filePath)
 		{
 			Com.Drew.Metadata.Metadata metadata = new Com.Drew.Metadata.Metadata();
 			new AdobeJpegReader().Extract(new SequentialByteArrayReader(FileUtil.ReadBytes(filePath)), metadata);
-			AdobeJpegDirectory directory = metadata.GetDirectory<AdobeJpegDirectory>();
+			AdobeJpegDirectory directory = metadata.GetFirstDirectoryOfType<AdobeJpegDirectory>();
 			NUnit.Framework.Assert.IsNotNull(directory);
 			return directory;
 		}
@@ -56,7 +54,7 @@ namespace Com.Drew.Metadata.Adobe
 		public virtual void TestReadAdobeJpegMetadata1()
 		{
 			AdobeJpegDirectory directory = ProcessBytes("Tests/Data/adobeJpeg1.jpg.appe");
-			Sharpen.Tests.IsFalse(directory.GetErrors().ToString(), directory.HasErrors());
+			Sharpen.Tests.IsFalse(Sharpen.Extensions.ConvertToString(directory.GetErrors()), directory.HasErrors());
 			Sharpen.Tests.AreEqual(4, directory.GetTagCount());
 			Sharpen.Tests.AreEqual(1, directory.GetInt(AdobeJpegDirectory.TagColorTransform));
 			Sharpen.Tests.AreEqual(25600, directory.GetInt(AdobeJpegDirectory.TagDctEncodeVersion));

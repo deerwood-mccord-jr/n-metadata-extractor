@@ -1,6 +1,5 @@
 /*
- * Modified by Yakov Danilov <yakodani@gmail.com> for Imazen LLC (Ported from Java to C#) 
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,12 +15,12 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using System.Collections.Generic;
-using Com.Drew.Imaging.Tiff;
 using Com.Drew.Lang;
+using JetBrains.Annotations;
 using Sharpen;
 
 namespace Com.Drew.Imaging.Tiff
@@ -31,7 +30,7 @@ namespace Com.Drew.Imaging.Tiff
 	/// <see cref="TiffHandler"/>
 	/// interface.
 	/// </summary>
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class TiffReader
 	{
 		/// <summary>Processes a TIFF data sequence.</summary>
@@ -52,7 +51,7 @@ namespace Com.Drew.Imaging.Tiff
 		/// </exception>
 		/// <exception cref="System.IO.IOException">an error occurred while accessing the required data</exception>
 		/// <exception cref="Com.Drew.Imaging.Tiff.TiffProcessingException"/>
-		public virtual void ProcessTiff(RandomAccessReader reader, TiffHandler handler, int tiffHeaderOffset)
+		public virtual void ProcessTiff([NotNull] RandomAccessReader reader, [NotNull] TiffHandler handler, int tiffHeaderOffset)
 		{
 			// This must be either "MM" or "II".
 			short byteOrderIdentifier = reader.GetInt16(tiffHeaderOffset);
@@ -85,7 +84,7 @@ namespace Com.Drew.Imaging.Tiff
 				// First directory normally starts immediately after the offset bytes, so try that
 				firstIfdOffset = tiffHeaderOffset + 2 + 2 + 4;
 			}
-			ICollection<int> processedIfdOffsets = new HashSet<int>();
+			ICollection<int?> processedIfdOffsets = new HashSet<int?>();
 			ProcessIfd(handler, reader, processedIfdOffsets, firstIfdOffset, tiffHeaderOffset);
 			handler.Completed(reader, tiffHeaderOffset);
 		}
@@ -93,7 +92,6 @@ namespace Com.Drew.Imaging.Tiff
 		/// <summary>Processes a TIFF IFD.</summary>
 		/// <remarks>
 		/// Processes a TIFF IFD.
-		/// <p/>
 		/// IFD Header:
 		/// <ul>
 		/// <li><b>2 bytes</b> number of tags</li>
@@ -120,7 +118,7 @@ namespace Com.Drew.Imaging.Tiff
 		/// <param name="ifdOffset">the offset within <code>reader</code> at which the IFD data starts</param>
 		/// <param name="tiffHeaderOffset">the offset within <code>reader</code> at which the TIFF header starts</param>
 		/// <exception cref="System.IO.IOException">an error occurred while accessing the required data</exception>
-		public static void ProcessIfd(TiffHandler handler, RandomAccessReader reader, ICollection<int> processedIfdOffsets, int ifdOffset, int tiffHeaderOffset)
+		public static void ProcessIfd([NotNull] TiffHandler handler, [NotNull] RandomAccessReader reader, [NotNull] ICollection<int?> processedIfdOffsets, int ifdOffset, int tiffHeaderOffset)
 		{
 			try
 			{
@@ -147,6 +145,7 @@ namespace Com.Drew.Imaging.Tiff
 				//
 				// Handle each tag in this directory
 				//
+				int invalidTiffFormatCodeCount = 0;
 				for (int tagNumber = 0; tagNumber < dirTagCount; tagNumber++)
 				{
 					int tagOffset = CalculateTagOffset(ifdOffset, tagNumber);
@@ -160,7 +159,13 @@ namespace Com.Drew.Imaging.Tiff
 						// This error suggests that we are processing at an incorrect index and will generate
 						// rubbish until we go out of bounds (which may be a while).  Exit now.
 						handler.Error("Invalid TIFF tag format code: " + formatCode);
-						return;
+						// TODO specify threshold as a parameter, or provide some other external control over this behaviour
+						if (++invalidTiffFormatCodeCount > 5)
+						{
+							handler.Error("Stopping processing as too many errors seen in TIFF IFD");
+							return;
+						}
+						continue;
 					}
 					// 4 bytes dictate the number of components in this tag's data
 					int componentCount = reader.GetInt32(tagOffset + 4);
@@ -250,7 +255,7 @@ namespace Com.Drew.Imaging.Tiff
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		private static void ProcessTag(TiffHandler handler, int tagId, int tagValueOffset, int componentCount, int formatCode, RandomAccessReader reader)
+		private static void ProcessTag([NotNull] TiffHandler handler, int tagId, int tagValueOffset, int componentCount, int formatCode, [NotNull] RandomAccessReader reader)
 		{
 			switch (formatCode)
 			{

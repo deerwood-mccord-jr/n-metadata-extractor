@@ -1,6 +1,5 @@
 /*
- * Modified by Yakov Danilov <yakodani@gmail.com> for Imazen LLC (Ported from Java to C#) 
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,11 +15,10 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using Com.Drew.Metadata;
-using Com.Drew.Metadata.Exif.Makernotes;
 using JetBrains.Annotations;
 using Sharpen;
 
@@ -31,10 +29,10 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 	/// <see cref="SigmaMakernoteDirectory"/>
 	/// .
 	/// </summary>
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class SigmaMakernoteDescriptor : TagDescriptor<SigmaMakernoteDirectory>
 	{
-		public SigmaMakernoteDescriptor(SigmaMakernoteDirectory directory)
+		public SigmaMakernoteDescriptor([NotNull] SigmaMakernoteDirectory directory)
 			: base(directory)
 		{
 		}
@@ -43,12 +41,12 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		{
 			switch (tagType)
 			{
-                case SigmaMakernoteDirectory.TagExposureMode:
+				case SigmaMakernoteDirectory.TagExposureMode:
 				{
 					return GetExposureModeDescription();
 				}
 
-                case SigmaMakernoteDirectory.TagMeteringMode:
+				case SigmaMakernoteDirectory.TagMeteringMode:
 				{
 					return GetMeteringModeDescription();
 				}
@@ -59,7 +57,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		[CanBeNull]
 		private string GetMeteringModeDescription()
 		{
-            string value = _directory.GetString(SigmaMakernoteDirectory.TagMeteringMode);
+			string value = _directory.GetString(SigmaMakernoteDirectory.TagMeteringMode);
 			if (value == null || value.Length == 0)
 			{
 				return null;
@@ -91,7 +89,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		[CanBeNull]
 		private string GetExposureModeDescription()
 		{
-            string value = _directory.GetString(SigmaMakernoteDirectory.TagExposureMode);
+			string value = _directory.GetString(SigmaMakernoteDirectory.TagExposureMode);
 			if (value == null || value.Length == 0)
 			{
 				return null;

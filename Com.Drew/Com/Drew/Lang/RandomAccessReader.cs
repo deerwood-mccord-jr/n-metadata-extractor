@@ -1,6 +1,5 @@
 /*
- * Modified by Yakov Danilov <yakodani@gmail.com> for Imazen LLC (Ported from Java to C#) 
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,11 +15,10 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using System.IO;
-using Com.Drew.Lang;
 using JetBrains.Annotations;
 using Sharpen;
 
@@ -29,10 +27,11 @@ namespace Com.Drew.Lang
 	/// <summary>Base class for random access data reading operations of common data types.</summary>
 	/// <remarks>
 	/// Base class for random access data reading operations of common data types.
-	/// <p/>
+	/// <p>
 	/// By default, the reader operates with Motorola byte order (big endianness).  This can be changed by calling
-	/// <code>setMotorolaByteOrder(boolean)</code>.
-	/// <p/>
+	/// <see cref="SetMotorolaByteOrder(bool)"/>
+	/// .
+	/// <p>
 	/// Concrete implementations include:
 	/// <ul>
 	/// <li>
@@ -43,7 +42,7 @@ namespace Com.Drew.Lang
 	/// </li>
 	/// </ul>
 	/// </remarks>
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public abstract class RandomAccessReader
 	{
 		private bool _isMotorolaByteOrder = true;
@@ -51,7 +50,7 @@ namespace Com.Drew.Lang
 		/// <summary>Gets the byte value at the specified byte <code>index</code>.</summary>
 		/// <remarks>
 		/// Gets the byte value at the specified byte <code>index</code>.
-		/// <p/>
+		/// <p>
 		/// Implementations should not perform any bounds checking in this method. That should be performed
 		/// in <code>validateIndex</code> and <code>isValidIndex</code>.
 		/// </remarks>
@@ -76,7 +75,7 @@ namespace Com.Drew.Lang
 		/// <remarks>
 		/// Ensures that the buffered bytes extend to cover the specified index. If not, an attempt is made
 		/// to read to that point.
-		/// <p/>
+		/// <p>
 		/// If the stream ends before the point is reached, a
 		/// <see cref="BufferBoundsException"/>
 		/// is raised.
@@ -92,13 +91,13 @@ namespace Com.Drew.Lang
 		/// <summary>Returns the length of the data source in bytes.</summary>
 		/// <remarks>
 		/// Returns the length of the data source in bytes.
-		/// <p/>
+		/// <p>
 		/// This is a simple operation for implementations (such as
 		/// <see cref="RandomAccessFileReader"/>
 		/// and
 		/// <see cref="ByteArrayReader"/>
 		/// ) that have the entire data source available.
-		/// <p/>
+		/// <p>
 		/// Users of this method must be aware that sequentially accessed implementations such as
 		/// <see cref="RandomAccessStreamReader"/>
 		/// will have to read and buffer the entire data source in
@@ -133,6 +132,19 @@ namespace Com.Drew.Lang
 		public virtual bool IsMotorolaByteOrder()
 		{
 			return _isMotorolaByteOrder;
+		}
+
+		/// <summary>Gets whether a bit at a specific index is set or not.</summary>
+		/// <param name="index">the number of bits at which to test</param>
+		/// <returns>true if the bit is set, otherwise false</returns>
+		/// <exception cref="System.IO.IOException">the buffer does not contain enough bytes to service the request, or index is negative</exception>
+		public virtual bool GetBit(int index)
+		{
+			int byteIndex = index / 8;
+			int bitIndex = index % 8;
+			ValidateIndex(byteIndex, 1);
+			sbyte b = GetByte(byteIndex);
+			return ((b >> bitIndex) & 1) == 1;
 		}
 
 		/// <summary>Returns an unsigned 8-bit int calculated from one byte of data at the specified index.</summary>
@@ -184,12 +196,31 @@ namespace Com.Drew.Lang
 			if (_isMotorolaByteOrder)
 			{
 				// Motorola - MSB first
-				return (short)(((short)GetByte(index) << 8 & unchecked((int)(0xFF00))) | ((short)GetByte(index + 1) & (short)unchecked((int)(0xFF))));
+				return (short)(((short)GetByte(index) << 8 & unchecked((short)(0xFF00))) | ((short)GetByte(index + 1) & (short)0xFF));
 			}
 			else
 			{
 				// Intel ordering - LSB first
-				return (short)(((short)GetByte(index + 1) << 8 & unchecked((int)(0xFF00))) | ((short)GetByte(index) & (short)unchecked((int)(0xFF))));
+				return (short)(((short)GetByte(index + 1) << 8 & unchecked((short)(0xFF00))) | ((short)GetByte(index) & (short)0xFF));
+			}
+		}
+
+		/// <summary>Get a 24-bit unsigned integer from the buffer, returning it as an int.</summary>
+		/// <param name="index">position within the data buffer to read first byte</param>
+		/// <returns>the unsigned 24-bit int value as a long, between 0x00000000 and 0x00FFFFFF</returns>
+		/// <exception cref="System.IO.IOException">the buffer does not contain enough bytes to service the request, or index is negative</exception>
+		public virtual int GetInt24(int index)
+		{
+			ValidateIndex(index, 3);
+			if (_isMotorolaByteOrder)
+			{
+				// Motorola - MSB first (big endian)
+				return (((int)GetByte(index)) << 16 & unchecked((int)(0xFF0000))) | (((int)GetByte(index + 1)) << 8 & unchecked((int)(0xFF00))) | (((int)GetByte(index + 2)) & unchecked((int)(0xFF)));
+			}
+			else
+			{
+				// Intel ordering - LSB first (little endian)
+				return (((int)GetByte(index + 2)) << 16 & unchecked((int)(0xFF0000))) | (((int)GetByte(index + 1)) << 8 & unchecked((int)(0xFF00))) | (((int)GetByte(index)) & unchecked((int)(0xFF)));
 			}
 		}
 
@@ -256,7 +287,14 @@ namespace Com.Drew.Lang
 			}
 		}
 
-		/// <exception cref="System.IO.IOException"/>
+		/// <summary>Gets a s15.16 fixed point float from the buffer.</summary>
+		/// <remarks>
+		/// Gets a s15.16 fixed point float from the buffer.
+		/// <p>
+		/// This particular fixed point encoding has one sign bit, 15 numerator bits and 16 denominator bits.
+		/// </remarks>
+		/// <returns>the floating point value</returns>
+		/// <exception cref="System.IO.IOException">the buffer does not contain enough bytes to service the request, or index is negative</exception>
 		public virtual float GetS15Fixed16(int index)
 		{
 			ValidateIndex(index, 4);

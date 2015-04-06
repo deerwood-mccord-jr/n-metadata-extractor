@@ -1,6 +1,5 @@
 /*
- * Modified by Yakov Danilov <yakodani@gmail.com> for Imazen LLC (Ported from Java to C#) 
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,14 +15,13 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using System;
 using System.IO;
 using Com.Drew.Imaging.Jpeg;
 using Com.Drew.Lang;
-using Com.Drew.Metadata.Iptc;
 using JetBrains.Annotations;
 using Sharpen;
 
@@ -35,14 +33,14 @@ namespace Com.Drew.Metadata.Iptc
 	/// object with tag values in an
 	/// <see cref="IptcDirectory"/>
 	/// .
-	/// <p/>
+	/// <p>
 	/// http://www.iptc.org/std/IIM/4.1/specification/IIMV4.1.pdf
 	/// </summary>
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class IptcReader : JpegSegmentMetadataReader
 	{
 		// TODO consider breaking the IPTC section up into multiple directories and providing segregation of each IPTC directory
-		/*
+/*
     public static final int DIRECTORY_IPTC = 2;
 
     public static final int ENVELOPE_RECORD = 1;
@@ -61,15 +59,16 @@ namespace Com.Drew.Metadata.Iptc
 			return Arrays.AsList(JpegSegmentType.Appd).AsIterable();
 		}
 
-		public virtual bool CanProcess(sbyte[] segmentBytes, JpegSegmentType segmentType)
+		public virtual void ReadJpegSegments([NotNull] Iterable<sbyte[]> segments, [NotNull] Com.Drew.Metadata.Metadata metadata, [NotNull] JpegSegmentType segmentType)
 		{
-			// Check whether the first byte resembles
-			return segmentBytes.Length != 0 && segmentBytes[0] == unchecked((int)(0x1c));
-		}
-
-		public virtual void Extract(sbyte[] segmentBytes, Com.Drew.Metadata.Metadata metadata, JpegSegmentType segmentType)
-		{
-			Extract(new SequentialByteArrayReader(segmentBytes), metadata, segmentBytes.Length);
+			foreach (sbyte[] segmentBytes in segments)
+			{
+				// Ensure data starts with the IPTC marker byte
+				if (segmentBytes.Length != 0 && segmentBytes[0] == unchecked((int)(0x1c)))
+				{
+					Extract(new SequentialByteArrayReader(segmentBytes), metadata, segmentBytes.Length);
+				}
+			}
 		}
 
 		/// <summary>
@@ -77,9 +76,10 @@ namespace Com.Drew.Metadata.Iptc
 		/// <see cref="Com.Drew.Metadata.Metadata"/>
 		/// .
 		/// </summary>
-		public virtual void Extract(SequentialReader reader, Com.Drew.Metadata.Metadata metadata, long length)
+		public virtual void Extract([NotNull] SequentialReader reader, [NotNull] Com.Drew.Metadata.Metadata metadata, long length)
 		{
-			IptcDirectory directory = metadata.GetOrCreateDirectory<IptcDirectory>();
+			IptcDirectory directory = new IptcDirectory();
+			metadata.AddDirectory(directory);
 			int offset = 0;
 			// for each tag
 			while (offset < length)
@@ -98,7 +98,12 @@ namespace Com.Drew.Metadata.Iptc
 				}
 				if (startByte != unchecked((int)(0x1c)))
 				{
-					directory.AddError("Invalid start to IPTC tag");
+					// NOTE have seen images where there was one extra byte at the end, giving
+					// offset==length at this point, which is not worth logging as an error.
+					if (offset != length)
+					{
+						directory.AddError("Invalid IPTC tag marker at offset " + (offset - 1) + ". Expected '0x1c' but got '0x" + Sharpen.Extensions.ToHexString(startByte) + "'.");
+					}
 					return;
 				}
 				// we need at least five bytes left to read a tag
@@ -114,6 +119,7 @@ namespace Com.Drew.Metadata.Iptc
 				{
 					directoryType = reader.GetUInt8();
 					tagType = reader.GetUInt8();
+					// TODO support Extended DataSet Tag (see 1.5(c), p14, IPTC-IIMV4.2.pdf)
 					tagByteCount = reader.GetUInt16();
 					offset += 4;
 				}
@@ -141,19 +147,50 @@ namespace Com.Drew.Metadata.Iptc
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		private void ProcessTag(SequentialReader reader, Com.Drew.Metadata.Directory directory, int directoryType, int tagType, int tagByteCount)
+		private void ProcessTag([NotNull] SequentialReader reader, [NotNull] Com.Drew.Metadata.Directory directory, int directoryType, int tagType, int tagByteCount)
 		{
 			int tagIdentifier = tagType | (directoryType << 8);
+			// Some images have been seen that specify a zero byte tag, which cannot be of much use.
+			// We elect here to completely ignore the tag. The IPTC specification doesn't mention
+			// anything about the interpretation of this situation.
+			// https://raw.githubusercontent.com/wiki/drewnoakes/metadata-extractor/docs/IPTC-IIMV4.2.pdf
+			if (tagByteCount == 0)
+			{
+				directory.SetString(tagIdentifier, string.Empty);
+				return;
+			}
 			string @string = null;
 			switch (tagIdentifier)
 			{
+				case IptcDirectory.TagCodedCharacterSet:
+				{
+					sbyte[] bytes = reader.GetBytes(tagByteCount);
+					string charset = Iso2022Converter.ConvertISO2022CharsetToJavaCharset(bytes);
+					if (charset == null)
+					{
+						// Unable to determine the charset, so fall through and treat tag as a regular string
+						@string = Sharpen.Runtime.GetStringForBytes(bytes);
+						break;
+					}
+					directory.SetString(tagIdentifier, charset);
+					return;
+				}
+
+				case IptcDirectory.TagEnvelopeRecordVersion:
 				case IptcDirectory.TagApplicationRecordVersion:
+				case IptcDirectory.TagFileVersion:
+				case IptcDirectory.TagArmVersion:
+				case IptcDirectory.TagProgramVersion:
 				{
 					// short
-					int shortValue = reader.GetUInt16();
-					reader.Skip(tagByteCount - 2);
-					directory.SetInt(tagIdentifier, shortValue);
-					return;
+					if (tagByteCount >= 2)
+					{
+						int shortValue = reader.GetUInt16();
+						reader.Skip(tagByteCount - 2);
+						directory.SetInt(tagIdentifier, shortValue);
+						return;
+					}
+					break;
 				}
 
 				case IptcDirectory.TagUrgency:
@@ -205,9 +242,18 @@ namespace Com.Drew.Metadata.Iptc
 			// NOTE that there's a chance we've already loaded the value as a string above, but failed to parse the value
 			if (@string == null)
 			{
-				@string = reader.GetString(tagByteCount, Runtime.GetProperty("file.encoding"));
+				string encoding = directory.GetString(IptcDirectory.TagCodedCharacterSet);
+				if (encoding != null)
+				{
+					@string = reader.GetString(tagByteCount, encoding);
+				}
+				else
+				{
+					sbyte[] bytes_1 = reader.GetBytes(tagByteCount);
+					encoding = Iso2022Converter.GuessEncoding(bytes_1);
+					@string = encoding != null ? Sharpen.Runtime.GetStringForBytes(bytes_1, encoding) : Sharpen.Runtime.GetStringForBytes(bytes_1);
+				}
 			}
-			// "ISO-8859-1"
 			if (directory.ContainsTag(tagIdentifier))
 			{
 				// this fancy string[] business avoids using an ArrayList for performance reasons

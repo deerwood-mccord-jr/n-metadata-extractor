@@ -1,6 +1,5 @@
 /*
- * Modified by Yakov Danilov <yakodani@gmail.com> for Imazen LLC (Ported from Java to C#) 
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,15 +15,14 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
-using Com.Drew.Metadata;
 using Sharpen;
 
 namespace Com.Drew.Metadata
 {
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class AgeTest
 	{
 		[NUnit.Framework.Test]
@@ -38,7 +36,7 @@ namespace Com.Drew.Metadata
 			Sharpen.Tests.AreEqual(0, age.GetHours());
 			Sharpen.Tests.AreEqual(0, age.GetMinutes());
 			Sharpen.Tests.AreEqual(0, age.GetSeconds());
-			Sharpen.Tests.AreEqual("0031:07:15 00:00:00", age.ToString());
+			Sharpen.Tests.AreEqual("0031:07:15 00:00:00", Sharpen.Extensions.ConvertToString(age));
 			Sharpen.Tests.AreEqual("31 years 7 months 15 days", age.ToFriendlyString());
 		}
 

@@ -1,6 +1,5 @@
 /*
- * Modified by Yakov Danilov <yakodani@gmail.com> for Imazen LLC (Ported from Java to C#) 
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,28 +15,27 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using System.IO;
-using Com.Drew.Metadata.Bmp;
 using JetBrains.Annotations;
 using Sharpen;
 
 namespace Com.Drew.Metadata.Bmp
 {
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class BmpReaderTest
 	{
 		/// <exception cref="System.Exception"/>
 		[NotNull]
-		public static BmpHeaderDirectory ProcessBytes(string file)
+		public static BmpHeaderDirectory ProcessBytes([NotNull] string file)
 		{
 			Com.Drew.Metadata.Metadata metadata = new Com.Drew.Metadata.Metadata();
 			InputStream stream = new FileInputStream(file);
 			new BmpReader().Extract(new Com.Drew.Lang.StreamReader(stream), metadata);
 			stream.Close();
-			BmpHeaderDirectory directory = metadata.GetDirectory<BmpHeaderDirectory>();
+			BmpHeaderDirectory directory = metadata.GetFirstDirectoryOfType<BmpHeaderDirectory>();
 			NUnit.Framework.Assert.IsNotNull(directory);
 			return directory;
 		}

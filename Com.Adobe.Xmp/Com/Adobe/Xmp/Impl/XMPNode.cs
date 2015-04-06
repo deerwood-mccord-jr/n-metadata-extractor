@@ -29,7 +29,7 @@ namespace Com.Adobe.Xmp.Impl
 	/// 4. hasLanguage, hasType should be automatically maintained by XMPNode
 	/// </remarks>
 	/// <since>21.02.2006</since>
-	public class XMPNode : IComparable, ICloneable
+	internal class XMPNode : IComparable
 	{
 		/// <summary>name of the node, contains different information depending of the node kind</summary>
 		private string name;
@@ -294,7 +294,7 @@ namespace Com.Adobe.Xmp.Impl
 
 		/// <returns>
 		/// Returns an iterator for the children.
-		/// <em>Note:</em> take care to use it.Remove(), as the flag are not adjusted in that case.
+		/// <em>Note:</em> take care to use it.remove(), as the flag are not adjusted in that case.
 		/// </returns>
 		public virtual Iterator IterateChildren()
 		{
@@ -316,13 +316,14 @@ namespace Com.Adobe.Xmp.Impl
 
 		/// <returns>
 		/// Returns an iterator for the qualifier.
-		/// <em>Note:</em> take care to use it.Remove(), as the flag are not adjusted in that case.
+		/// <em>Note:</em> take care to use it.remove(), as the flag are not adjusted in that case.
 		/// </returns>
 		public virtual Iterator IterateQualifier()
 		{
 			if (qualifier != null)
 			{
-				return GetQualifier().Iterator();
+				Iterator it = GetQualifier().Iterator();
+				return new _Iterator_391(it);
 			}
 			else
 			{
@@ -330,8 +331,33 @@ namespace Com.Adobe.Xmp.Impl
 			}
 		}
 
+		private sealed class _Iterator_391 : Iterator
+		{
+			public _Iterator_391(Iterator it)
+			{
+				this.it = it;
+			}
+
+			public bool HasNext()
+			{
+				return it.HasNext();
+			}
+
+			public object Next()
+			{
+				return it.Next();
+			}
+
+			public void Remove()
+			{
+				throw new NotSupportedException("remove() is not allowed due to the internal contraints");
+			}
+
+			private readonly Iterator it;
+		}
+
 		/// <summary>Performs a <b>deep clone</b> of the node and the complete subtree.</summary>
-		/// <seealso cref="ICloneable.Clone()"/>
+		/// <seealso cref="object.Clone()"/>
 		public virtual object Clone()
 		{
 			PropertyOptions newOptions;
@@ -386,7 +412,7 @@ namespace Com.Adobe.Xmp.Impl
 			return result.ToString();
 		}
 
-		/// <seealso cref="System.IComparable{T}.CompareTo(T)"></seealso>
+		/// <seealso cref="System.IComparable{T}.CompareTo(object)"></seealso>
 		public virtual int CompareTo(object xmpNode)
 		{
 			if (GetOptions().IsSchemaNode())
@@ -683,8 +709,8 @@ namespace Com.Adobe.Xmp.Impl
 		}
 
 		/// <summary>
-		/// Sets the parent node, this is solely done by <code>AddChild(...)</code>
-		/// and <code>AddQualifier()</code>.
+		/// Sets the parent node, this is solely done by <code>addChild(...)</code>
+		/// and <code>addQualifier()</code>.
 		/// </summary>
 		/// <param name="parent">Sets the parent node.</param>
 		protected internal virtual void SetParent(Com.Adobe.Xmp.Impl.XMPNode parent)

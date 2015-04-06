@@ -7,7 +7,6 @@
 // of the Adobe license agreement accompanying it.
 // =================================================================================================
 using System.IO;
-using Com.Adobe.Xmp.Impl;
 using Com.Adobe.Xmp.Options;
 using Sharpen;
 

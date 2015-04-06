@@ -1,6 +1,5 @@
 /*
- * Modified by Yakov Danilov <yakodani@gmail.com> for Imazen LLC (Ported from Java to C#) 
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,14 +15,13 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using System;
 using Com.Drew.Imaging;
 using Com.Drew.Lang;
 using Com.Drew.Metadata;
-using Com.Drew.Metadata.Xmp;
 using JetBrains.Annotations;
 using Sharpen;
 
@@ -34,13 +32,13 @@ namespace Com.Drew.Metadata.Xmp
 	/// Contains all logic for the presentation of xmp data, as stored in Xmp-Segment.  Use
 	/// this class to provide human-readable descriptions of tag values.
 	/// </remarks>
-	/// <author>Torsten Skadell, Drew Noakes http://drewnoakes.com</author>
+	/// <author>Torsten Skadell, Drew Noakes https://drewnoakes.com</author>
 	public class XmpDescriptor : TagDescriptor<XmpDirectory>
 	{
 		[NotNull]
 		private static readonly DecimalFormat SimpleDecimalFormatter = new DecimalFormat("0.#");
 
-		public XmpDescriptor(XmpDirectory directory)
+		public XmpDescriptor([NotNull] XmpDirectory directory)
 			: base(directory)
 		{
 		}
@@ -189,14 +187,14 @@ namespace Com.Drew.Metadata.Xmp
 			// thanks also to Gli Blr for spotting this bug
 			if (value <= 1)
 			{
-				float apexPower = (float)(1 / (Math.Exp(value.Value * Math.Log(2))));
-				double apexPower10 = Math.Round((double)apexPower * 10.0);
+				float apexPower = (float)(1 / (Math.Exp((double)value * Math.Log(2))));
+				long apexPower10 = (long)System.Math.Round((double)apexPower * 10.0);
 				float fApexPower = (float)apexPower10 / 10.0f;
 				return fApexPower + " sec";
 			}
 			else
 			{
-				int apexPower = (int)((Math.Exp(value.Value * Math.Log(2))));
+				int apexPower = (int)((Math.Exp((double)value * Math.Log(2))));
 				return "1/" + apexPower + " sec";
 			}
 		}
@@ -235,7 +233,7 @@ namespace Com.Drew.Metadata.Xmp
 			{
 				return null;
 			}
-			double fStop = PhotographicConversions.ApertureToFStop(value.Value);
+			double fStop = PhotographicConversions.ApertureToFStop((double)value);
 			return "F" + SimpleDecimalFormatter.Format(fStop);
 		}
 	}

@@ -1,6 +1,5 @@
 /*
- * Modified by Yakov Danilov <yakodani@gmail.com> for Imazen LLC (Ported from Java to C#) 
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,11 +15,11 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using Com.Drew.Metadata;
-using Com.Drew.Metadata.Adobe;
+using JetBrains.Annotations;
 using Sharpen;
 
 namespace Com.Drew.Metadata.Adobe
@@ -54,12 +53,14 @@ namespace Com.Drew.Metadata.Adobe
 			}
 		}
 
+		[CanBeNull]
 		private string GetDctEncodeVersionDescription()
 		{
 			int? value = _directory.GetInteger(AdobeJpegDirectory.TagColorTransform);
-			return value == null ? null : value == unchecked((int)(0x64)) ? "100" : Sharpen.Extensions.ToString(value);
+			return value == null ? null : value == unchecked((int)(0x64)) ? "100" : Sharpen.Extensions.ConvertToString((int)value);
 		}
 
+		[CanBeNull]
 		private string GetColorTransformDescription()
 		{
 			int? value = _directory.GetInteger(AdobeJpegDirectory.TagColorTransform);

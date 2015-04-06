@@ -1,6 +1,5 @@
 /*
- * Modified by Yakov Danilov <yakodani@gmail.com> for Imazen LLC (Ported from Java to C#) 
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,39 +15,39 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using System;
 using Com.Drew.Imaging.Jpeg;
 using Com.Drew.Lang;
-using Com.Drew.Metadata.Exif;
 using Com.Drew.Tools;
 using JetBrains.Annotations;
-using NUnit.Framework;
 using Sharpen;
 
 namespace Com.Drew.Metadata.Exif
 {
 	/// <summary>JUnit test case for class ExifReader.</summary>
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class ExifReaderTest
 	{
 		/// <exception cref="System.IO.IOException"/>
 		[NotNull]
-		public static Com.Drew.Metadata.Metadata ProcessBytes(string filePath)
+		public static Com.Drew.Metadata.Metadata ProcessBytes([NotNull] string filePath)
 		{
 			Com.Drew.Metadata.Metadata metadata = new Com.Drew.Metadata.Metadata();
-			new ExifReader().Extract(FileUtil.ReadBytes(filePath), metadata, JpegSegmentType.App1);
+			sbyte[] bytes = FileUtil.ReadBytes(filePath);
+			new ExifReader().Extract(new ByteArrayReader(bytes), metadata, ExifReader.JpegSegmentPreamble.Length);
 			return metadata;
 		}
 
 		/// <exception cref="System.IO.IOException"/>
 		[NotNull]
-		public static T ProcessBytes<T>(string filePath)
+		public static T ProcessBytes<T>([NotNull] string filePath)
 			where T : Com.Drew.Metadata.Directory
 		{
-			T directory = ProcessBytes(filePath).GetDirectory<T>();
+			System.Type directoryClass = typeof(T);
+			T directory = ProcessBytes(filePath).GetFirstDirectoryOfType(directoryClass);
 			NUnit.Framework.Assert.IsNotNull(directory);
 			return directory;
 		}
@@ -59,22 +58,7 @@ namespace Com.Drew.Metadata.Exif
 		{
 			try
 			{
-				new ExifReader().Extract(null, new Com.Drew.Metadata.Metadata(), JpegSegmentType.App1);
-				NUnit.Framework.Assert.Fail("Exception expected");
-			}
-			catch (ArgumentNullException)
-			{
-			}
-		}
-
-		// passed
-		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
-		public virtual void TestExtractWithNullMetadataThrows()
-		{
-			try
-			{
-				new ExifReader().Extract(new sbyte[10], null, JpegSegmentType.App1);
+				new ExifReader().ReadJpegSegments(null, new Com.Drew.Metadata.Metadata(), JpegSegmentType.App1);
 				NUnit.Framework.Assert.Fail("Exception expected");
 			}
 			catch (ArgumentNullException)
@@ -97,12 +81,15 @@ namespace Com.Drew.Metadata.Exif
 		//      assertEquals("F9", directory.getDescription(ExifSubIFDDirectory.TAG_APERTURE));
 		/// <exception cref="System.Exception"/>
 		[NUnit.Framework.Test]
-		public virtual void TestLoadJpegWithNoExifData()
+		public virtual void TestReadJpegSegmentWithNoExifData()
 		{
 			sbyte[] badExifData = new sbyte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 			Com.Drew.Metadata.Metadata metadata = new Com.Drew.Metadata.Metadata();
-			new ExifReader().Extract(badExifData, metadata, JpegSegmentType.App1);
+			AList<sbyte[]> segments = new AList<sbyte[]>();
+			segments.Add(badExifData);
+			new ExifReader().ReadJpegSegments(segments, metadata, JpegSegmentType.App1);
 			Sharpen.Tests.AreEqual(0, metadata.GetDirectoryCount());
+			Sharpen.Tests.IsFalse(metadata.HasErrors());
 		}
 
 		/// <exception cref="System.Exception"/>
@@ -201,14 +188,14 @@ namespace Com.Drew.Metadata.Exif
 			// These values used to be merged into a single directory, causing errors.
 			// This unit test demonstrates correct behaviour.
 			Com.Drew.Metadata.Metadata metadata = ProcessBytes("Tests/Data/repeatedOrientationTagWithDifferentValues.jpg.app1");
-			ExifIFD0Directory ifd0Directory = metadata.GetDirectory<ExifIFD0Directory>();
-			ExifThumbnailDirectory thumbnailDirectory = metadata.GetDirectory<ExifThumbnailDirectory>();
+			ExifIFD0Directory ifd0Directory = metadata.GetFirstDirectoryOfType<ExifIFD0Directory>();
+			ExifThumbnailDirectory thumbnailDirectory = metadata.GetFirstDirectoryOfType<ExifThumbnailDirectory>();
 			NUnit.Framework.Assert.IsNotNull(ifd0Directory);
 			NUnit.Framework.Assert.IsNotNull(thumbnailDirectory);
 			Sharpen.Tests.AreEqual(1, ifd0Directory.GetInt(ExifIFD0Directory.TagOrientation));
 			Sharpen.Tests.AreEqual(8, thumbnailDirectory.GetInt(ExifThumbnailDirectory.TagOrientation));
 		}
-		/*
+/*
     public void testUncompressedYCbCrThumbnail() throws Exception
     {
         String fileName = "withUncompressedYCbCrThumbnail.jpg";

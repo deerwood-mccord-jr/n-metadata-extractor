@@ -1,6 +1,5 @@
 /*
- * Modified by Yakov Danilov <yakodani@gmail.com> for Imazen LLC (Ported from Java to C#) 
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,11 +15,10 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using Com.Drew.Metadata;
-using Com.Drew.Metadata.Exif.Makernotes;
 using JetBrains.Annotations;
 using Sharpen;
 
@@ -31,10 +29,10 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 	/// <see cref="SonyType6MakernoteDirectory"/>
 	/// .
 	/// </summary>
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class SonyType6MakernoteDescriptor : TagDescriptor<SonyType6MakernoteDirectory>
 	{
-		public SonyType6MakernoteDescriptor(SonyType6MakernoteDirectory directory)
+		public SonyType6MakernoteDescriptor([NotNull] SonyType6MakernoteDirectory directory)
 			: base(directory)
 		{
 		}
@@ -44,7 +42,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		{
 			switch (tagType)
 			{
-                case SonyType6MakernoteDirectory.TagMakernoteThumbVersion:
+				case SonyType6MakernoteDirectory.TagMakernoteThumbVersion:
 				{
 					return GetMakernoteThumbVersionDescription();
 				}
@@ -59,7 +57,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		[CanBeNull]
 		public virtual string GetMakernoteThumbVersionDescription()
 		{
-            return GetVersionBytesDescription(SonyType6MakernoteDirectory.TagMakernoteThumbVersion, 2);
+			return GetVersionBytesDescription(SonyType6MakernoteDirectory.TagMakernoteThumbVersion, 2);
 		}
 	}
 }

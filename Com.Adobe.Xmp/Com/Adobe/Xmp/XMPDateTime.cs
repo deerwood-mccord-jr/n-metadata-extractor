@@ -7,7 +7,6 @@
 // of the Adobe license agreement accompanying it.
 // =================================================================================================
 using System;
-using Com.Adobe.Xmp;
 using Sharpen;
 
 namespace Com.Adobe.Xmp

@@ -1,11 +1,10 @@
 using System.Collections.Generic;
-using Com.Drew.Metadata.Bmp;
 using JetBrains.Annotations;
 using Sharpen;
 
 namespace Com.Drew.Metadata.Bmp
 {
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class BmpHeaderDirectory : Com.Drew.Metadata.Directory
 	{
 		public const int TagHeaderSize = -1;
@@ -29,7 +28,7 @@ namespace Com.Drew.Metadata.Bmp
 		public const int TagImportantColourCount = 9;
 
 		[NotNull]
-		protected internal static readonly Dictionary<int, string> _tagNameMap = new Dictionary<int, string>();
+		protected internal static readonly Dictionary<int?, string> _tagNameMap = new Dictionary<int?, string>();
 
 		static BmpHeaderDirectory()
 		{
@@ -57,7 +56,7 @@ namespace Com.Drew.Metadata.Bmp
 		}
 
 		[NotNull]
-		protected internal override Dictionary<int, string> GetTagNameMap()
+		protected internal override Dictionary<int?, string> GetTagNameMap()
 		{
 			return _tagNameMap;
 		}

@@ -1,6 +1,5 @@
 /*
- * Modified by Yakov Danilov <yakodani@gmail.com> for Imazen LLC (Ported from Java to C#) 
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,18 +15,16 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
- using Com.Drew.Lang;
-using Com.Drew.Metadata.Exif;
+using Com.Drew.Lang;
 using Com.Drew.Metadata.Exif.Makernotes;
- using NUnit.Framework;
- using Sharpen;
+using Sharpen;
 
 namespace Com.Drew.Metadata.Exif
 {
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class NikonType1MakernoteTest
 	{
 		private NikonType1MakernoteDirectory _nikonDirectory;
@@ -38,7 +35,7 @@ namespace Com.Drew.Metadata.Exif
 
 		private ExifThumbnailDirectory _thumbDirectory;
 
-		/*
+    /*
         [Interoperability] Interoperability Index = Recommended Exif Interoperability Rules (ExifR98)
         [Interoperability] Interoperability Version = 1.00
         [Jpeg] Data Precision = 8 bits
@@ -54,13 +51,13 @@ namespace Com.Drew.Metadata.Exif
 		public virtual void SetUp()
 		{
 			Com.Drew.Metadata.Metadata metadata = ExifReaderTest.ProcessBytes("Tests/Data/nikonMakernoteType1.jpg.app1");
-			_nikonDirectory = metadata.GetDirectory<NikonType1MakernoteDirectory>();
-			_exifSubIFDDirectory = metadata.GetDirectory<ExifSubIFDDirectory>();
-			_exifIFD0Directory = metadata.GetDirectory<ExifIFD0Directory>();
-			_thumbDirectory = metadata.GetDirectory<ExifThumbnailDirectory>();
+			_nikonDirectory = metadata.GetFirstDirectoryOfType<NikonType1MakernoteDirectory>();
+			_exifSubIFDDirectory = metadata.GetFirstDirectoryOfType<ExifSubIFDDirectory>();
+			_exifIFD0Directory = metadata.GetFirstDirectoryOfType<ExifIFD0Directory>();
+			_thumbDirectory = metadata.GetFirstDirectoryOfType<ExifThumbnailDirectory>();
 		}
 
-		/*
+    /*
         [Nikon Makernote] Makernote Unknown 1 = 08.00
         [Nikon Makernote] Quality = Unknown (12)
         [Nikon Makernote] Color Mode = Color
@@ -74,7 +71,7 @@ namespace Com.Drew.Metadata.Exif
         [Nikon Makernote] Makernote Unknown 3 = 0 0 16777216 0 2685774096 0 34833 6931 16178 4372 4372 3322676767 3373084416 15112 0 0 1151495 252903424 17 0 0 844038208 55184128 218129428 1476410198 370540566 4044363286 16711749 204629079 1729
     */
 		/// <exception cref="System.Exception"/>
-        [NUnit.Framework.Test, SetCulture("en-US")]
+		[NUnit.Framework.Test]
 		public virtual void TestNikonMakernote_MatchesKnownValues()
 		{
 			Sharpen.Tests.IsTrue(_nikonDirectory.GetTagCount() > 0);
@@ -89,8 +86,8 @@ namespace Com.Drew.Metadata.Exif
 			Sharpen.Tests.AreEqual(0, _nikonDirectory.GetDouble(NikonType1MakernoteDirectory.TagDigitalZoom), 0.0001);
 			Sharpen.Tests.AreEqual(0, _nikonDirectory.GetInt(NikonType1MakernoteDirectory.TagConverter));
 			long[] unknown3 = (long[])_nikonDirectory.GetObject(NikonType1MakernoteDirectory.TagUnknown3);
-			long[] expected = new long[] { 0, 0, 16777216, 0, 2685774096L, 0, 34833, 6931, 16178, 4372, 4372, 3322676767L, 3373084416L, 15112, 0, 0, 1151495, 252903424, 17, 0, 0, 844038208, 55184128, 218129428, 1476410198
-				, 370540566, 4044363286L, 16711749, 204629079, 1729 };
+			long[] expected = new long[] { 0, 0, 16777216, 0, 2685774096L, 0, 34833, 6931, 16178, 4372, 4372, 3322676767L, 3373084416L, 15112, 0, 0, 1151495, 252903424, 17, 0, 0, 844038208, 55184128, 218129428, 1476410198, 370540566, 4044363286L, 16711749
+				, 204629079, 1729 };
 			NUnit.Framework.Assert.IsNotNull(unknown3);
 			Sharpen.Tests.AreEqual(expected.Length, unknown3.Length);
 			for (int i = 0; i < expected.Length; i++)
@@ -99,7 +96,7 @@ namespace Com.Drew.Metadata.Exif
 			}
 		}
 
-		/*
+    /*
         [Exif] Image Description =
         [Exif] Make = NIKON
         [Exif] Model = E950

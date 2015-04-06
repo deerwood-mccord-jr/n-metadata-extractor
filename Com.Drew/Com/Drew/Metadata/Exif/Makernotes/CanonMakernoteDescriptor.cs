@@ -1,6 +1,5 @@
 /*
- * Modified by Yakov Danilov <yakodani@gmail.com> for Imazen LLC (Ported from Java to C#) 
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,11 +15,10 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using Com.Drew.Metadata;
-using Com.Drew.Metadata.Exif.Makernotes;
 using JetBrains.Annotations;
 using Sharpen;
 
@@ -31,10 +29,10 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 	/// <see cref="CanonMakernoteDirectory"/>
 	/// .
 	/// </summary>
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class CanonMakernoteDescriptor : TagDescriptor<CanonMakernoteDirectory>
 	{
-		public CanonMakernoteDescriptor(CanonMakernoteDirectory directory)
+		public CanonMakernoteDescriptor([NotNull] CanonMakernoteDirectory directory)
 			: base(directory)
 		{
 		}
@@ -44,7 +42,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		{
 			switch (tagType)
 			{
-                case CanonMakernoteDirectory.TagCanonSerialNumber:
+				case CanonMakernoteDirectory.TagCanonSerialNumber:
 				{
 					return GetSerialNumberDescription();
 				}
@@ -217,15 +215,15 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		[CanBeNull]
 		public virtual string GetSerialNumberDescription()
 		{
-            int? value = _directory.GetInteger(CanonMakernoteDirectory.TagCanonSerialNumber);
+			int? value = _directory.GetInteger(CanonMakernoteDirectory.TagCanonSerialNumber);
 			if (value == null)
 			{
 				return null;
 			}
-			return Sharpen.Extensions.StringFormat("%04X%05d", (value >> 8) & unchecked((int)(0xFF)), value & unchecked((int)(0xFF)));
+			return Sharpen.Extensions.StringFormat("%04X%05d", ((int)value >> 8) & unchecked((int)(0xFF)), (int)value & unchecked((int)(0xFF)));
 		}
 
-		/*
+/*
     @Nullable
     public String getLongExposureNoiseReductionDescription()
     {
@@ -415,14 +413,14 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 			if (value > unchecked((int)(0xF000)))
 			{
 				isNegative = true;
-				value = unchecked((int)(0xFFFF)) - value;
+				value = unchecked((int)(0xFFFF)) - (int)value;
 				value++;
 			}
 			// this tag is interesting in that the values returned are:
 			//  0, 0.375, 0.5, 0.626, 1
 			// not
 			//  0, 0.33,  0.5, 0.66,  1
-            return ((isNegative) ? "-" : string.Empty) + (value / 32f).Value.ToString("###########0.0###########") + " EV";
+			return ((isNegative) ? "-" : string.Empty) + Sharpen.Extensions.ConvertToString(value / 32f) + " EV";
 		}
 
 		[CanBeNull]
@@ -433,19 +431,19 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 			{
 				return null;
 			}
-			if ((value & unchecked((int)(0x7))) == 0)
+			if (((int)value & unchecked((int)(0x7))) == 0)
 			{
 				return "Right";
 			}
 			else
 			{
-				if ((value & unchecked((int)(0x7))) == 1)
+				if (((int)value & unchecked((int)(0x7))) == 1)
 				{
 					return "Centre";
 				}
 				else
 				{
-					if ((value & unchecked((int)(0x7))) == 2)
+					if (((int)value & unchecked((int)(0x7))) == 2)
 					{
 						return "Left";
 					}
@@ -477,19 +475,19 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 			{
 				return null;
 			}
-			if (((value >> 14) & 1) > 0)
+			if ((((int)value >> 14) & 1) > 0)
 			{
 				return "External E-TTL";
 			}
-			if (((value >> 13) & 1) > 0)
+			if ((((int)value >> 13) & 1) > 0)
 			{
 				return "Internal flash";
 			}
-			if (((value >> 11) & 1) > 0)
+			if ((((int)value >> 11) & 1) > 0)
 			{
 				return "FP sync used";
 			}
-			if (((value >> 4) & 1) > 0)
+			if ((((int)value >> 4) & 1) > 0)
 			{
 				return "FP sync enabled";
 			}
@@ -506,7 +504,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 			}
 			if (value != 0)
 			{
-				return Sharpen.Extensions.ToString(value);
+				return Sharpen.Extensions.ConvertToString((int)value);
 			}
 			else
 			{
@@ -523,7 +521,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 				return null;
 			}
 			string units = GetFocalUnitsPerMillimetreDescription();
-			return Sharpen.Extensions.ToString(value) + " " + units;
+			return Sharpen.Extensions.ConvertToString((int)value) + " " + units;
 		}
 
 		[CanBeNull]
@@ -535,7 +533,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 				return null;
 			}
 			string units = GetFocalUnitsPerMillimetreDescription();
-			return Sharpen.Extensions.ToString(value) + " " + units;
+			return Sharpen.Extensions.ConvertToString((int)value) + " " + units;
 		}
 
 		[CanBeNull]
@@ -566,9 +564,9 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 			}
 			// Canon PowerShot S3 is special
 			int canonMask = unchecked((int)(0x4000));
-			if ((value & canonMask) > 0)
+			if (((int)value & canonMask) > 0)
 			{
-				return string.Empty + (value & ~canonMask);
+				return string.Empty + ((int)value & ~canonMask);
 			}
 			switch (value)
 			{
@@ -708,8 +706,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		[CanBeNull]
 		public virtual string GetEasyShootingModeDescription()
 		{
-			return GetIndexedDescription(CanonMakernoteDirectory.CameraSettings.TagEasyShootingMode, "Full auto", "Manual", "Landscape", "Fast shutter", "Slow shutter", "Night", "B&W", "Sepia", "Portrait", "Sports"
-				, "Macro / Closeup", "Pan focus");
+			return GetIndexedDescription(CanonMakernoteDirectory.CameraSettings.TagEasyShootingMode, "Full auto", "Manual", "Landscape", "Fast shutter", "Slow shutter", "Night", "B&W", "Sepia", "Portrait", "Sports", "Macro / Closeup", "Pan focus");
 		}
 
 		[CanBeNull]
@@ -826,7 +823,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 			else
 			{
 				// TODO find an image that tests this calculation
-				return ((double)value * 0.1d).ToString() + " sec";
+				return Sharpen.Extensions.ConvertToString((double)value * 0.1d) + " sec";
 			}
 		}
 

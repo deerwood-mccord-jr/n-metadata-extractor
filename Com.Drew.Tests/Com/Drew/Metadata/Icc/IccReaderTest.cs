@@ -1,6 +1,5 @@
 /*
- * Modified by Yakov Danilov <yakodani@gmail.com> for Imazen LLC (Ported from Java to C#) 
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,11 +15,10 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using Com.Drew.Lang;
-using Com.Drew.Metadata.Icc;
 using Com.Drew.Testing;
 using Com.Drew.Tools;
 using Sharpen;
@@ -38,7 +36,7 @@ namespace Com.Drew.Metadata.Icc
 			sbyte[] icc = TestHelper.SkipBytes(app2Bytes, 14);
 			Com.Drew.Metadata.Metadata metadata = new Com.Drew.Metadata.Metadata();
 			new IccReader().Extract(new ByteArrayReader(icc), metadata);
-			IccDirectory directory = metadata.GetDirectory<IccDirectory>();
+			IccDirectory directory = metadata.GetFirstDirectoryOfType<IccDirectory>();
 			NUnit.Framework.Assert.IsNotNull(directory);
 		}
 		// TODO validate expected values

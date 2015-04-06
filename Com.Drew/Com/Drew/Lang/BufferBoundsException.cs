@@ -1,6 +1,5 @@
 /*
- * Modified by Yakov Danilov <yakodani@gmail.com> for Imazen LLC (Ported from Java to C#) 
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,8 +15,8 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using System.IO;
 using Sharpen;
@@ -31,7 +30,7 @@ namespace Com.Drew.Lang
 	/// <see cref="RandomAccessReader"/>
 	/// .
 	/// </summary>
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	[System.Serializable]
 	public sealed class BufferBoundsException : IOException
 	{
@@ -55,13 +54,13 @@ namespace Com.Drew.Lang
 			}
 			if (bytesRequested < 0)
 			{
-                return Sharpen.Extensions.StringFormat("Number of requested bytes cannot be negative (%d)", bytesRequested);
+				return Sharpen.Extensions.StringFormat("Number of requested bytes cannot be negative (%d)", bytesRequested);
 			}
 			if ((long)index + (long)bytesRequested - 1L > (long)int.MaxValue)
 			{
-                return Sharpen.Extensions.StringFormat("Number of requested bytes summed with starting index exceed maximum range of signed 32 bit integers (requested index: %d, requested count: %d)", index, bytesRequested);
+				return Sharpen.Extensions.StringFormat("Number of requested bytes summed with starting index exceed maximum range of signed 32 bit integers (requested index: %d, requested count: %d)", index, bytesRequested);
 			}
-            return Sharpen.Extensions.StringFormat("Attempt to read from beyond end of underlying data source (requested index: %d, requested count: %d, max index: %d)", index, bytesRequested, bufferLength - 1);
+			return Sharpen.Extensions.StringFormat("Attempt to read from beyond end of underlying data source (requested index: %d, requested count: %d, max index: %d)", index, bytesRequested, bufferLength - 1);
 		}
 	}
 }

@@ -1,6 +1,5 @@
 /*
- * Modified by Yakov Danilov <yakodani@gmail.com> for Imazen LLC (Ported from Java to C#) 
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,33 +15,37 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using System;
 using System.IO;
-using Com.Drew.Lang;
 using JetBrains.Annotations;
 using Sharpen;
 
 namespace Com.Drew.Lang
 {
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class SequentialByteArrayReader : SequentialReader
 	{
 		[NotNull]
 		private readonly sbyte[] _bytes;
 
-		private long _index;
+		private int _index;
 
-		public SequentialByteArrayReader(sbyte[] bytes)
+		public SequentialByteArrayReader([NotNull] sbyte[] bytes)
+			: this(bytes, 0)
+		{
+		}
+
+		public SequentialByteArrayReader([NotNull] sbyte[] bytes, int baseIndex)
 		{
 			if (bytes == null)
 			{
 				throw new ArgumentNullException();
 			}
 			_bytes = bytes;
-			_index = 0;
+			_index = baseIndex;
 		}
 
 		/// <exception cref="System.IO.IOException"/>
@@ -80,7 +83,7 @@ namespace Com.Drew.Lang
 			{
 				throw new EOFException("End of data reached.");
 			}
-			_index += n;
+			_index += unchecked((int)(n));
 		}
 
 		/// <exception cref="System.IO.IOException"/>
@@ -90,7 +93,7 @@ namespace Com.Drew.Lang
 			{
 				throw new ArgumentException("n must be zero or greater.");
 			}
-			_index += n;
+			_index += unchecked((int)(n));
 			if (_index > _bytes.Length)
 			{
 				_index = _bytes.Length;

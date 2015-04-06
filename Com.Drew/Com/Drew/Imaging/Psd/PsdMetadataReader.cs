@@ -1,6 +1,5 @@
 /*
- * Modified by Yakov Danilov <yakodani@gmail.com> for Imazen LLC (Ported from Java to C#) 
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,12 +15,11 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using System.IO;
-using Com.Drew.Imaging.Psd;
-using Com.Drew.Lang;
+using Com.Drew.Metadata.File;
 using Com.Drew.Metadata.Photoshop;
 using JetBrains.Annotations;
 using Sharpen;
@@ -29,31 +27,32 @@ using Sharpen;
 namespace Com.Drew.Imaging.Psd
 {
 	/// <summary>Obtains metadata from Photoshop's PSD files.</summary>
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class PsdMetadataReader
 	{
 		/// <exception cref="System.IO.IOException"/>
 		[NotNull]
-		public static Com.Drew.Metadata.Metadata ReadMetadata(FilePath file)
+		public static Com.Drew.Metadata.Metadata ReadMetadata([NotNull] FilePath file)
 		{
 			Com.Drew.Metadata.Metadata metadata = new Com.Drew.Metadata.Metadata();
-			RandomAccessFile randomAccessFile = new RandomAccessFile(file, "r");
+			InputStream stream = new FileInputStream(file);
 			try
 			{
-				new PsdReader().Extract(new RandomAccessFileReader(randomAccessFile), metadata);
+				new PsdReader().Extract(new Com.Drew.Lang.StreamReader(stream), metadata);
 			}
 			finally
 			{
-				randomAccessFile.Close();
+				stream.Close();
 			}
+			new FileMetadataReader().Read(file, metadata);
 			return metadata;
 		}
 
 		[NotNull]
-		public static Com.Drew.Metadata.Metadata ReadMetadata(InputStream inputStream)
+		public static Com.Drew.Metadata.Metadata ReadMetadata([NotNull] InputStream inputStream)
 		{
 			Com.Drew.Metadata.Metadata metadata = new Com.Drew.Metadata.Metadata();
-			new PsdReader().Extract(new RandomAccessStreamReader(inputStream), metadata);
+			new PsdReader().Extract(new Com.Drew.Lang.StreamReader(inputStream), metadata);
 			return metadata;
 		}
 	}

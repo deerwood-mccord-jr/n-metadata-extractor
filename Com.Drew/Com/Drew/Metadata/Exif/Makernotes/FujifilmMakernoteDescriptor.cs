@@ -1,6 +1,5 @@
 /*
- * Modified by Yakov Danilov <yakodani@gmail.com> for Imazen LLC (Ported from Java to C#) 
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,12 +15,11 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using Com.Drew.Lang;
 using Com.Drew.Metadata;
-using Com.Drew.Metadata.Exif.Makernotes;
 using JetBrains.Annotations;
 using Sharpen;
 
@@ -31,7 +29,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 	/// Provides human-readable string representations of tag values stored in a
 	/// <see cref="FujifilmMakernoteDirectory"/>
 	/// .
-	/// <p/>
+	/// <p>
 	/// Fujifilm added their Makernote tag from the Year 2000's models (e.g.Finepix1400,
 	/// Finepix4700). It uses IFD format and start from ASCII character 'FUJIFILM', and next 4
 	/// bytes (value 0x000c) points the offset to first IFD entry.
@@ -48,10 +46,10 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 	/// </li>
 	/// </ul>
 	/// </summary>
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class FujifilmMakernoteDescriptor : TagDescriptor<FujifilmMakernoteDirectory>
 	{
-		public FujifilmMakernoteDescriptor(FujifilmMakernoteDirectory directory)
+		public FujifilmMakernoteDescriptor([NotNull] FujifilmMakernoteDirectory directory)
 			: base(directory)
 		{
 		}
@@ -61,122 +59,122 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		{
 			switch (tagType)
 			{
-                case FujifilmMakernoteDirectory.TagMakernoteVersion:
+				case FujifilmMakernoteDirectory.TagMakernoteVersion:
 				{
 					return GetMakernoteVersionDescription();
 				}
 
-                case FujifilmMakernoteDirectory.TagSharpness:
+				case FujifilmMakernoteDirectory.TagSharpness:
 				{
 					return GetSharpnessDescription();
 				}
 
-                case FujifilmMakernoteDirectory.TagWhiteBalance:
+				case FujifilmMakernoteDirectory.TagWhiteBalance:
 				{
 					return GetWhiteBalanceDescription();
 				}
 
-                case FujifilmMakernoteDirectory.TagColorSaturation:
+				case FujifilmMakernoteDirectory.TagColorSaturation:
 				{
 					return GetColorSaturationDescription();
 				}
 
-                case FujifilmMakernoteDirectory.TagTone:
+				case FujifilmMakernoteDirectory.TagTone:
 				{
 					return GetToneDescription();
 				}
 
-                case FujifilmMakernoteDirectory.TagContrast:
+				case FujifilmMakernoteDirectory.TagContrast:
 				{
 					return GetContrastDescription();
 				}
 
-                case FujifilmMakernoteDirectory.TagNoiseReduction:
+				case FujifilmMakernoteDirectory.TagNoiseReduction:
 				{
 					return GetNoiseReductionDescription();
 				}
 
-                case FujifilmMakernoteDirectory.TagHighIsoNoiseReduction:
+				case FujifilmMakernoteDirectory.TagHighIsoNoiseReduction:
 				{
 					return GetHighIsoNoiseReductionDescription();
 				}
 
-                case FujifilmMakernoteDirectory.TagFlashMode:
+				case FujifilmMakernoteDirectory.TagFlashMode:
 				{
 					return GetFlashModeDescription();
 				}
 
-                case FujifilmMakernoteDirectory.TagFlashEv:
+				case FujifilmMakernoteDirectory.TagFlashEv:
 				{
 					return GetFlashExposureValueDescription();
 				}
 
-                case FujifilmMakernoteDirectory.TagMacro:
+				case FujifilmMakernoteDirectory.TagMacro:
 				{
 					return GetMacroDescription();
 				}
 
-                case FujifilmMakernoteDirectory.TagFocusMode:
+				case FujifilmMakernoteDirectory.TagFocusMode:
 				{
 					return GetFocusModeDescription();
 				}
 
-                case FujifilmMakernoteDirectory.TagSlowSync:
+				case FujifilmMakernoteDirectory.TagSlowSync:
 				{
 					return GetSlowSyncDescription();
 				}
 
-                case FujifilmMakernoteDirectory.TagPictureMode:
+				case FujifilmMakernoteDirectory.TagPictureMode:
 				{
 					return GetPictureModeDescription();
 				}
 
-                case FujifilmMakernoteDirectory.TagExrAuto:
+				case FujifilmMakernoteDirectory.TagExrAuto:
 				{
 					return GetExrAutoDescription();
 				}
 
-                case FujifilmMakernoteDirectory.TagExrMode:
+				case FujifilmMakernoteDirectory.TagExrMode:
 				{
 					return GetExrModeDescription();
 				}
 
-                case FujifilmMakernoteDirectory.TagAutoBracketing:
+				case FujifilmMakernoteDirectory.TagAutoBracketing:
 				{
 					return GetAutoBracketingDescription();
 				}
 
-                case FujifilmMakernoteDirectory.TagFinePixColor:
+				case FujifilmMakernoteDirectory.TagFinePixColor:
 				{
 					return GetFinePixColorDescription();
 				}
 
-                case FujifilmMakernoteDirectory.TagBlurWarning:
+				case FujifilmMakernoteDirectory.TagBlurWarning:
 				{
 					return GetBlurWarningDescription();
 				}
 
-                case FujifilmMakernoteDirectory.TagFocusWarning:
+				case FujifilmMakernoteDirectory.TagFocusWarning:
 				{
 					return GetFocusWarningDescription();
 				}
 
-                case FujifilmMakernoteDirectory.TagAutoExposureWarning:
+				case FujifilmMakernoteDirectory.TagAutoExposureWarning:
 				{
 					return GetAutoExposureWarningDescription();
 				}
 
-                case FujifilmMakernoteDirectory.TagDynamicRange:
+				case FujifilmMakernoteDirectory.TagDynamicRange:
 				{
 					return GetDynamicRangeDescription();
 				}
 
-                case FujifilmMakernoteDirectory.TagFilmMode:
+				case FujifilmMakernoteDirectory.TagFilmMode:
 				{
 					return GetFilmModeDescription();
 				}
 
-                case FujifilmMakernoteDirectory.TagDynamicRangeSetting:
+				case FujifilmMakernoteDirectory.TagDynamicRangeSetting:
 				{
 					return GetDynamicRangeSettingDescription();
 				}
@@ -191,13 +189,13 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		[CanBeNull]
 		private string GetMakernoteVersionDescription()
 		{
-            return GetVersionBytesDescription(FujifilmMakernoteDirectory.TagMakernoteVersion, 2);
+			return GetVersionBytesDescription(FujifilmMakernoteDirectory.TagMakernoteVersion, 2);
 		}
 
 		[CanBeNull]
 		public virtual string GetSharpnessDescription()
 		{
-            int? value = _directory.GetInteger(FujifilmMakernoteDirectory.TagSharpness);
+			int? value = _directory.GetInteger(FujifilmMakernoteDirectory.TagSharpness);
 			if (value == null)
 			{
 				return null;
@@ -259,7 +257,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		[CanBeNull]
 		public virtual string GetWhiteBalanceDescription()
 		{
-            int? value = _directory.GetInteger(FujifilmMakernoteDirectory.TagWhiteBalance);
+			int? value = _directory.GetInteger(FujifilmMakernoteDirectory.TagWhiteBalance);
 			if (value == null)
 			{
 				return null;
@@ -356,7 +354,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		[CanBeNull]
 		public virtual string GetColorSaturationDescription()
 		{
-            int? value = _directory.GetInteger(FujifilmMakernoteDirectory.TagColorSaturation);
+			int? value = _directory.GetInteger(FujifilmMakernoteDirectory.TagColorSaturation);
 			if (value == null)
 			{
 				return null;
@@ -428,7 +426,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		[CanBeNull]
 		public virtual string GetToneDescription()
 		{
-            int? value = _directory.GetInteger(FujifilmMakernoteDirectory.TagTone);
+			int? value = _directory.GetInteger(FujifilmMakernoteDirectory.TagTone);
 			if (value == null)
 			{
 				return null;
@@ -480,7 +478,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		[CanBeNull]
 		public virtual string GetContrastDescription()
 		{
-            int? value = _directory.GetInteger(FujifilmMakernoteDirectory.TagContrast);
+			int? value = _directory.GetInteger(FujifilmMakernoteDirectory.TagContrast);
 			if (value == null)
 			{
 				return null;
@@ -512,7 +510,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		[CanBeNull]
 		public virtual string GetNoiseReductionDescription()
 		{
-            int? value = _directory.GetInteger(FujifilmMakernoteDirectory.TagNoiseReduction);
+			int? value = _directory.GetInteger(FujifilmMakernoteDirectory.TagNoiseReduction);
 			if (value == null)
 			{
 				return null;
@@ -544,7 +542,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		[CanBeNull]
 		public virtual string GetHighIsoNoiseReductionDescription()
 		{
-            int? value = _directory.GetInteger(FujifilmMakernoteDirectory.TagHighIsoNoiseReduction);
+			int? value = _directory.GetInteger(FujifilmMakernoteDirectory.TagHighIsoNoiseReduction);
 			if (value == null)
 			{
 				return null;
@@ -576,38 +574,38 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		[CanBeNull]
 		public virtual string GetFlashModeDescription()
 		{
-            return GetIndexedDescription(FujifilmMakernoteDirectory.TagFlashMode, "Auto", "On", "Off", "Red-eye Reduction", "External");
+			return GetIndexedDescription(FujifilmMakernoteDirectory.TagFlashMode, "Auto", "On", "Off", "Red-eye Reduction", "External");
 		}
 
 		[CanBeNull]
 		public virtual string GetFlashExposureValueDescription()
 		{
-            Rational value = _directory.GetRational(FujifilmMakernoteDirectory.TagFlashEv);
+			Rational value = _directory.GetRational(FujifilmMakernoteDirectory.TagFlashEv);
 			return value == null ? null : value.ToSimpleString(false) + " EV (Apex)";
 		}
 
 		[CanBeNull]
 		public virtual string GetMacroDescription()
 		{
-            return GetIndexedDescription(FujifilmMakernoteDirectory.TagMacro, "Off", "On");
+			return GetIndexedDescription(FujifilmMakernoteDirectory.TagMacro, "Off", "On");
 		}
 
 		[CanBeNull]
 		public virtual string GetFocusModeDescription()
 		{
-            return GetIndexedDescription(FujifilmMakernoteDirectory.TagFocusMode, "Auto Focus", "Manual Focus");
+			return GetIndexedDescription(FujifilmMakernoteDirectory.TagFocusMode, "Auto Focus", "Manual Focus");
 		}
 
 		[CanBeNull]
 		public virtual string GetSlowSyncDescription()
 		{
-            return GetIndexedDescription(FujifilmMakernoteDirectory.TagSlowSync, "Off", "On");
+			return GetIndexedDescription(FujifilmMakernoteDirectory.TagSlowSync, "Off", "On");
 		}
 
 		[CanBeNull]
 		public virtual string GetPictureModeDescription()
 		{
-            int? value = _directory.GetInteger(FujifilmMakernoteDirectory.TagPictureMode);
+			int? value = _directory.GetInteger(FujifilmMakernoteDirectory.TagPictureMode);
 			if (value == null)
 			{
 				return null;
@@ -776,13 +774,13 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		[CanBeNull]
 		public virtual string GetExrAutoDescription()
 		{
-            return GetIndexedDescription(FujifilmMakernoteDirectory.TagExrAuto, "Auto", "Manual");
+			return GetIndexedDescription(FujifilmMakernoteDirectory.TagExrAuto, "Auto", "Manual");
 		}
 
 		[CanBeNull]
 		public virtual string GetExrModeDescription()
 		{
-            int? value = _directory.GetInteger(FujifilmMakernoteDirectory.TagExrMode);
+			int? value = _directory.GetInteger(FujifilmMakernoteDirectory.TagExrMode);
 			if (value == null)
 			{
 				return null;
@@ -814,13 +812,13 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		[CanBeNull]
 		public virtual string GetAutoBracketingDescription()
 		{
-            return GetIndexedDescription(FujifilmMakernoteDirectory.TagAutoBracketing, "Off", "On", "No Flash & Flash");
+			return GetIndexedDescription(FujifilmMakernoteDirectory.TagAutoBracketing, "Off", "On", "No Flash & Flash");
 		}
 
 		[CanBeNull]
 		public virtual string GetFinePixColorDescription()
 		{
-            int? value = _directory.GetInteger(FujifilmMakernoteDirectory.TagFinePixColor);
+			int? value = _directory.GetInteger(FujifilmMakernoteDirectory.TagFinePixColor);
 			if (value == null)
 			{
 				return null;
@@ -852,31 +850,31 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		[CanBeNull]
 		public virtual string GetBlurWarningDescription()
 		{
-            return GetIndexedDescription(FujifilmMakernoteDirectory.TagBlurWarning, "No Blur Warning", "Blur warning");
+			return GetIndexedDescription(FujifilmMakernoteDirectory.TagBlurWarning, "No Blur Warning", "Blur warning");
 		}
 
 		[CanBeNull]
 		public virtual string GetFocusWarningDescription()
 		{
-            return GetIndexedDescription(FujifilmMakernoteDirectory.TagFocusWarning, "Good Focus", "Out Of Focus");
+			return GetIndexedDescription(FujifilmMakernoteDirectory.TagFocusWarning, "Good Focus", "Out Of Focus");
 		}
 
 		[CanBeNull]
 		public virtual string GetAutoExposureWarningDescription()
 		{
-            return GetIndexedDescription(FujifilmMakernoteDirectory.TagAutoExposureWarning, "AE Good", "Over Exposed");
+			return GetIndexedDescription(FujifilmMakernoteDirectory.TagAutoExposureWarning, "AE Good", "Over Exposed");
 		}
 
 		[CanBeNull]
 		public virtual string GetDynamicRangeDescription()
 		{
-            return GetIndexedDescription(FujifilmMakernoteDirectory.TagDynamicRange, 1, "Standard", null, "Wide");
+			return GetIndexedDescription(FujifilmMakernoteDirectory.TagDynamicRange, 1, "Standard", null, "Wide");
 		}
 
 		[CanBeNull]
 		public virtual string GetFilmModeDescription()
 		{
-            int? value = _directory.GetInteger(FujifilmMakernoteDirectory.TagFilmMode);
+			int? value = _directory.GetInteger(FujifilmMakernoteDirectory.TagFilmMode);
 			if (value == null)
 			{
 				return null;
@@ -943,7 +941,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		[CanBeNull]
 		public virtual string GetDynamicRangeSettingDescription()
 		{
-            int? value = _directory.GetInteger(FujifilmMakernoteDirectory.TagDynamicRangeSetting);
+			int? value = _directory.GetInteger(FujifilmMakernoteDirectory.TagDynamicRangeSetting);
 			if (value == null)
 			{
 				return null;

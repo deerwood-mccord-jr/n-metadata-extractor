@@ -1,10 +1,9 @@
 using System.IO;
-using Com.Drew.Lang;
 using Sharpen;
 
 namespace Com.Drew.Lang
 {
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class StreamReaderTest : SequentialAccessTestBase
 	{
 		public virtual void TestConstructWithNullStreamThrows()

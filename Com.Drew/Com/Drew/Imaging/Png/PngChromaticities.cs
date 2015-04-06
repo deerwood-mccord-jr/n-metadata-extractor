@@ -1,11 +1,11 @@
 using System.IO;
-using Com.Drew.Imaging.Png;
 using Com.Drew.Lang;
+using JetBrains.Annotations;
 using Sharpen;
 
 namespace Com.Drew.Imaging.Png
 {
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class PngChromaticities
 	{
 		private readonly int _whitePointX;
@@ -25,7 +25,7 @@ namespace Com.Drew.Imaging.Png
 		private readonly int _blueY;
 
 		/// <exception cref="Com.Drew.Imaging.Png.PngProcessingException"/>
-		public PngChromaticities(sbyte[] bytes)
+		public PngChromaticities([NotNull] sbyte[] bytes)
 		{
 			if (bytes.Length != 8 * 4)
 			{

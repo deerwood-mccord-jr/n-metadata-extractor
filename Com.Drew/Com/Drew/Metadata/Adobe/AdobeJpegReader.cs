@@ -1,6 +1,5 @@
 /*
- * Modified by Yakov Danilov <yakodani@gmail.com> for Imazen LLC (Ported from Java to C#) 
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,45 +15,49 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using System.IO;
 using Com.Drew.Imaging.Jpeg;
 using Com.Drew.Lang;
-using Com.Drew.Metadata.Adobe;
 using JetBrains.Annotations;
 using Sharpen;
 
 namespace Com.Drew.Metadata.Adobe
 {
 	/// <summary>Decodes Adobe formatted data stored in JPEG files, normally in the APPE (App14) segment.</summary>
-	/// <author>Philip, Drew Noakes http://drewnoakes.com</author>
+	/// <author>Philip</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class AdobeJpegReader : JpegSegmentMetadataReader
 	{
+		public const string Preamble = "Adobe";
+
 		[NotNull]
 		public virtual Iterable<JpegSegmentType> GetSegmentTypes()
 		{
 			return Arrays.AsList(JpegSegmentType.Appe).AsIterable();
 		}
 
-		public virtual bool CanProcess(sbyte[] segmentBytes, JpegSegmentType segmentType)
+		public virtual void ReadJpegSegments([NotNull] Iterable<sbyte[]> segments, [NotNull] Com.Drew.Metadata.Metadata metadata, [NotNull] JpegSegmentType segmentType)
 		{
-			return segmentBytes.Length == 12 && Sharpen.Runtime.EqualsIgnoreCase("Adobe", Sharpen.Runtime.GetStringForBytes(segmentBytes, 0, 5));
+			foreach (sbyte[] bytes in segments)
+			{
+				if (bytes.Length == 12 && Sharpen.Runtime.EqualsIgnoreCase(Preamble, Sharpen.Runtime.GetStringForBytes(bytes, 0, Preamble.Length)))
+				{
+					Extract(new SequentialByteArrayReader(bytes), metadata);
+				}
+			}
 		}
 
-		public virtual void Extract(sbyte[] segmentBytes, Com.Drew.Metadata.Metadata metadata, JpegSegmentType segmentType)
+		public virtual void Extract([NotNull] SequentialReader reader, [NotNull] Com.Drew.Metadata.Metadata metadata)
 		{
-			Extract(new SequentialByteArrayReader(segmentBytes), metadata);
-		}
-
-		public virtual void Extract(SequentialReader reader, Com.Drew.Metadata.Metadata metadata)
-		{
-			Com.Drew.Metadata.Directory directory = metadata.GetOrCreateDirectory<AdobeJpegDirectory>();
+			Com.Drew.Metadata.Directory directory = new AdobeJpegDirectory();
+			metadata.AddDirectory(directory);
 			try
 			{
 				reader.SetMotorolaByteOrder(false);
-				if (!reader.GetString(5).Equals("Adobe"))
+				if (!reader.GetString(Preamble.Length).Equals(Preamble))
 				{
 					directory.AddError("Invalid Adobe JPEG data header.");
 					return;

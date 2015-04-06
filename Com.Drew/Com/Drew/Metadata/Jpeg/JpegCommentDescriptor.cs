@@ -1,6 +1,5 @@
 /*
- * Modified by Yakov Danilov <yakodani@gmail.com> for Imazen LLC (Ported from Java to C#) 
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,21 +15,24 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using Com.Drew.Metadata;
-using Com.Drew.Metadata.Jpeg;
 using JetBrains.Annotations;
 using Sharpen;
 
 namespace Com.Drew.Metadata.Jpeg
 {
-	/// <summary>Provides human-readable string representations of tag values stored in a <code>JpegCommentDirectory</code>.</summary>
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <summary>
+	/// Provides human-readable string representations of tag values stored in a
+	/// <see cref="JpegCommentDirectory"/>
+	/// .
+	/// </summary>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class JpegCommentDescriptor : TagDescriptor<JpegCommentDirectory>
 	{
-		public JpegCommentDescriptor(JpegCommentDirectory directory)
+		public JpegCommentDescriptor([NotNull] JpegCommentDirectory directory)
 			: base(directory)
 		{
 		}

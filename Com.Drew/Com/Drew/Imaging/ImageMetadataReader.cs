@@ -1,6 +1,5 @@
 /*
- * Modified by Yakov Danilov <yakodani@gmail.com> for Imazen LLC (Ported from Java to C#) 
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,22 +15,25 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Com.Drew.Imaging;
 using Com.Drew.Imaging.Bmp;
 using Com.Drew.Imaging.Gif;
+using Com.Drew.Imaging.Ico;
 using Com.Drew.Imaging.Jpeg;
+using Com.Drew.Imaging.Pcx;
 using Com.Drew.Imaging.Png;
 using Com.Drew.Imaging.Psd;
 using Com.Drew.Imaging.Tiff;
+using Com.Drew.Imaging.Webp;
 using Com.Drew.Lang;
 using Com.Drew.Metadata;
 using Com.Drew.Metadata.Exif;
+using Com.Drew.Metadata.File;
 using JetBrains.Annotations;
 using Sharpen;
 
@@ -41,7 +43,7 @@ namespace Com.Drew.Imaging
 	/// Obtains
 	/// <see cref="Com.Drew.Metadata.Metadata"/>
 	/// from all supported file formats.
-	/// <p/>
+	/// <p>
 	/// This class a lightweight wrapper around specific file type processors:
 	/// <ul>
 	/// <li>
@@ -65,35 +67,19 @@ namespace Com.Drew.Imaging
 	/// </ul>
 	/// If you know the file type you're working with, you may use one of the above processors directly.
 	/// For most scenarios it is simpler, more convenient and more robust to use this class.
+	/// <p>
+	/// <see cref="FileTypeDetector"/>
+	/// is used to determine the provided image's file type, and therefore
+	/// the appropriate metadata reader to use.
 	/// </summary>
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class ImageMetadataReader
 	{
-		private const int JpegFileMagicNumber = unchecked((int)(0xFFD8));
-
-		private const int MotorolaTiffMagicNumber = unchecked((int)(0x4D4D));
-
-		private const int IntelTiffMagicNumber = unchecked((int)(0x4949));
-
-		private const int PsdMagicNumber = unchecked((int)(0x3842));
-
-		private const int PngMagicNumber = unchecked((int)(0x8950));
-
-		private const int BmpMagicNumber = unchecked((int)(0x424D));
-
-		private const int GifMagicNumber = unchecked((int)(0x4749));
-
-		// "MM"
-		// "II"
-		// "8B" // TODO the full magic number is 8BPS
-		// "?P" // TODO the full magic number is six bytes long
-		// "BM" // TODO technically there are other very rare magic numbers for OS/2 BMP files...
-		// "GI" // TODO the full magic number is GIF or possibly GIF89a/GIF87a
 		/// <summary>
 		/// Reads metadata from an
-		/// <see cref="InputStream"/>
+		/// <see cref="System.IO.InputStream"/>
 		/// .
-		/// <p/>
+		/// <p>
 		/// The file type is determined by inspecting the leading bytes of the stream, and parsing of the file
 		/// is delegated to one of:
 		/// <ul>
@@ -130,44 +116,45 @@ namespace Com.Drew.Imaging
 		/// <exception cref="Com.Drew.Imaging.ImageProcessingException"/>
 		/// <exception cref="System.IO.IOException"/>
 		[NotNull]
-		public static Com.Drew.Metadata.Metadata ReadMetadata(InputStream inputStream)
+		public static Com.Drew.Metadata.Metadata ReadMetadata([NotNull] InputStream inputStream)
 		{
-			InputStream bufferedInputStream = inputStream is BufferedInputStream ? inputStream : new BufferedInputStream(inputStream);
-			int magicNumber = PeekMagicNumber(bufferedInputStream);
-			if (magicNumber == -1)
-			{
-				throw new ImageProcessingException("Could not determine file's magic number.");
-			}
-			// This covers all JPEG files
-			if ((magicNumber & JpegFileMagicNumber) == JpegFileMagicNumber)
+			BufferedInputStream bufferedInputStream = inputStream is BufferedInputStream ? (BufferedInputStream)inputStream : new BufferedInputStream(inputStream);
+			FileType fileType = FileTypeDetector.DetectFileType(bufferedInputStream);
+			if (fileType == FileType.Jpeg)
 			{
 				return JpegMetadataReader.ReadMetadata(bufferedInputStream);
 			}
-			// This covers all TIFF and camera RAW files
-			if (magicNumber == IntelTiffMagicNumber || magicNumber == MotorolaTiffMagicNumber)
+			if (fileType == FileType.Tiff || fileType == FileType.Arw || fileType == FileType.Cr2 || fileType == FileType.Nef || fileType == FileType.Orf || fileType == FileType.Rw2)
 			{
 				return TiffMetadataReader.ReadMetadata(bufferedInputStream);
 			}
-			// This covers PSD files
-			// TODO we should really check all 4 bytes of the PSD magic number
-			if (magicNumber == PsdMagicNumber)
+			if (fileType == FileType.Psd)
 			{
 				return PsdMetadataReader.ReadMetadata(bufferedInputStream);
 			}
-			// This covers BMP files
-			if (magicNumber == PngMagicNumber)
+			if (fileType == FileType.Png)
 			{
 				return PngMetadataReader.ReadMetadata(bufferedInputStream);
 			}
-			// This covers BMP files
-			if (magicNumber == BmpMagicNumber)
+			if (fileType == FileType.Bmp)
 			{
 				return BmpMetadataReader.ReadMetadata(bufferedInputStream);
 			}
-			// This covers GIF files
-			if (magicNumber == GifMagicNumber)
+			if (fileType == FileType.Gif)
 			{
 				return GifMetadataReader.ReadMetadata(bufferedInputStream);
+			}
+			if (fileType == FileType.Ico)
+			{
+				return IcoMetadataReader.ReadMetadata(bufferedInputStream);
+			}
+			if (fileType == FileType.Pcx)
+			{
+				return PcxMetadataReader.ReadMetadata(bufferedInputStream);
+			}
+			if (fileType == FileType.Riff)
+			{
+				return WebpMetadataReader.ReadMetadata(bufferedInputStream);
 			}
 			throw new ImageProcessingException("File format is not supported");
 		}
@@ -178,7 +165,7 @@ namespace Com.Drew.Imaging
 		/// from a
 		/// <see cref="Sharpen.FilePath"/>
 		/// object.
-		/// <p/>
+		/// <p>
 		/// The file type is determined by inspecting the leading bytes of the stream, and parsing of the file
 		/// is delegated to one of:
 		/// <ul>
@@ -212,32 +199,20 @@ namespace Com.Drew.Imaging
 		/// <exception cref="Com.Drew.Imaging.ImageProcessingException"/>
 		/// <exception cref="System.IO.IOException"/>
 		[NotNull]
-		public static Com.Drew.Metadata.Metadata ReadMetadata(FilePath file)
+		public static Com.Drew.Metadata.Metadata ReadMetadata([NotNull] FilePath file)
 		{
 			InputStream inputStream = new FileInputStream(file);
+			Com.Drew.Metadata.Metadata metadata;
 			try
 			{
-				return ReadMetadata(inputStream);
+				metadata = ReadMetadata(inputStream);
 			}
 			finally
 			{
 				inputStream.Close();
 			}
-		}
-
-		/// <summary>Reads the first two bytes from <code>inputStream</code>, then rewinds.</summary>
-		/// <exception cref="System.IO.IOException"/>
-		private static int PeekMagicNumber(InputStream inputStream)
-		{
-			inputStream.Mark(2);
-			int byte1 = inputStream.Read();
-			int byte2 = inputStream.Read();
-			inputStream.Reset();
-			if (byte1 == -1 || byte2 == -1)
-			{
-				return -1;
-			}
-			return byte1 << 8 | byte2;
+			new FileMetadataReader().Read(file, metadata);
+			return metadata;
 		}
 
 		/// <exception cref="System.Exception"/>
@@ -250,36 +225,36 @@ namespace Com.Drew.Imaging
 		/// <remarks>
 		/// An application entry point.  Takes the name of one or more files as arguments and prints the contents of all
 		/// metadata directories to <code>System.out</code>.
-		/// <p/>
+		/// <p>
 		/// If <code>-thumb</code> is passed, then any thumbnail data will be written to a file with name of the
 		/// input file having <code>.thumb.jpg</code> appended.
-		/// <p/>
-		/// If <code>-wiki</code> is passed, then output will be in a format suitable for Google Code's wiki.
-		/// <p/>
+		/// <p>
+		/// If <code>-markdown</code> is passed, then output will be in markdown format.
+		/// <p>
 		/// If <code>-hex</code> is passed, then the ID of each tag will be displayed in hexadecimal.
 		/// </remarks>
 		/// <param name="args">the command line arguments</param>
 		/// <exception cref="Com.Drew.Metadata.MetadataException"/>
 		/// <exception cref="System.IO.IOException"/>
-		public static void Main(string[] args)
+		public static void Main([NotNull] string[] args)
 		{
 			ICollection<string> argList = new AList<string>(Arrays.AsList(args));
 			bool thumbRequested = argList.Remove("-thumb");
-			bool wikiFormat = argList.Remove("-wiki");
+			bool markdownFormat = argList.Remove("-markdown");
 			bool showHex = argList.Remove("-hex");
 			if (argList.Count < 1)
 			{
 				string version = typeof(Com.Drew.Imaging.ImageMetadataReader).Assembly.GetImplementationVersion();
 				System.Console.Out.Println("metadata-extractor version " + version);
 				System.Console.Out.Println();
-				System.Console.Out.Println(Sharpen.Extensions.StringFormat("Usage: java -jar metadata-extractor-%s.jar <filename> [<filename>] [-thumb] [-wiki] [-hex]", version == null ? "a.b.c" : version));
+				System.Console.Out.Println(Sharpen.Extensions.StringFormat("Usage: java -jar metadata-extractor-%s.jar <filename> [<filename>] [-thumb] [-markdown] [-hex]", version == null ? "a.b.c" : version));
 				System.Environment.Exit(1);
 			}
 			foreach (string filePath in argList)
 			{
 				long startTime = Runtime.NanoTime();
 				FilePath file = new FilePath(filePath);
-				if (!wikiFormat && argList.Count > 1)
+				if (!markdownFormat && argList.Count > 1)
 				{
 					System.Console.Out.Printf("\n***** PROCESSING: %s\n%n", filePath);
 				}
@@ -294,28 +269,29 @@ namespace Com.Drew.Imaging
 					System.Environment.Exit(1);
 				}
 				long took = Runtime.NanoTime() - startTime;
-				if (!wikiFormat)
+				if (!markdownFormat)
 				{
 					System.Console.Out.Printf("Processed %.3f MB file in %.2f ms%n%n", file.Length() / (1024d * 1024), took / 1000000d);
 				}
-				if (wikiFormat)
+				if (markdownFormat)
 				{
 					string fileName = file.GetName();
-					string urlName = StringUtil.UrlEncode(fileName);
-					ExifIFD0Directory exifIFD0Directory = metadata.GetDirectory<ExifIFD0Directory>();
-					string make = exifIFD0Directory == null ? string.Empty : StringUtil.EscapeForWiki(exifIFD0Directory.GetString(ExifIFD0Directory.TagMake));
-					string model = exifIFD0Directory == null ? string.Empty : StringUtil.EscapeForWiki(exifIFD0Directory.GetString(ExifIFD0Directory.TagModel));
+					string urlName = StringUtil.UrlEncode(filePath);
+					ExifIFD0Directory exifIFD0Directory = metadata.GetFirstDirectoryOfType<ExifIFD0Directory>();
+					string make = exifIFD0Directory == null ? string.Empty : exifIFD0Directory.GetString(ExifIFD0Directory.TagMake);
+					string model = exifIFD0Directory == null ? string.Empty : exifIFD0Directory.GetString(ExifIFD0Directory.TagModel);
 					System.Console.Out.Println();
-					System.Console.Out.Println("-----");
+					System.Console.Out.Println("---");
 					System.Console.Out.Println();
-					System.Console.Out.Printf("= %s - %s =%n", make, model);
+					System.Console.Out.Printf("# %s - %s%n", make, model);
 					System.Console.Out.Println();
-					System.Console.Out.Printf("<a href=\"http://sample-images.metadata-extractor.googlecode.com/git/%s\">%n", urlName);
-					System.Console.Out.Printf("<img src=\"http://sample-images.metadata-extractor.googlecode.com/git/%s\" width=\"300\"/><br/>%n", urlName);
-					System.Console.Out.Println(StringUtil.EscapeForWiki(fileName));
+					System.Console.Out.Printf("<a href=\"https://raw.githubusercontent.com/drewnoakes/metadata-extractor-images/master/%s\">%n", urlName);
+					System.Console.Out.Printf("<img src=\"https://raw.githubusercontent.com/drewnoakes/metadata-extractor-images/master/%s\" width=\"300\"/><br/>%n", urlName);
+					System.Console.Out.Println(fileName);
 					System.Console.Out.Println("</a>");
 					System.Console.Out.Println();
-					System.Console.Out.Println("|| *Directory* || *Tag Id* || *Tag Name* || *Extracted Value* ||");
+					System.Console.Out.Println("Directory | Tag Id | Tag Name | Extracted Value");
+					System.Console.Out.Println(":--------:|-------:|----------|----------------");
 				}
 				// iterate over the metadata and print to System.out
 				foreach (Com.Drew.Metadata.Directory directory in metadata.GetDirectories())
@@ -330,12 +306,13 @@ namespace Com.Drew.Imaging
 						{
 							description = Sharpen.Runtime.Substring(description, 0, 1024) + "...";
 						}
-						if (wikiFormat)
+						if (markdownFormat)
 						{
-							System.Console.Out.Printf("||%s||0x%s||%s||%s||%n", StringUtil.EscapeForWiki(directoryName), Sharpen.Extensions.ToHexString(tag.GetTagType()), StringUtil.EscapeForWiki(tagName), StringUtil.EscapeForWiki(description));
+							System.Console.Out.Printf("%s|0x%s|%s|%s%n", directoryName, Sharpen.Extensions.ToHexString(tag.GetTagType()), tagName, description);
 						}
 						else
 						{
+							// simple formatting
 							if (showHex)
 							{
 								System.Console.Out.Printf("[%s - %s] %s = %s%n", directoryName, tag.GetTagTypeHex(), tagName, description);
@@ -354,7 +331,7 @@ namespace Com.Drew.Imaging
 				}
 				if (args.Length > 1 && thumbRequested)
 				{
-					ExifThumbnailDirectory directory_1 = metadata.GetDirectory<ExifThumbnailDirectory>();
+					ExifThumbnailDirectory directory_1 = metadata.GetFirstDirectoryOfType<ExifThumbnailDirectory>();
 					if (directory_1 != null && directory_1.HasThumbnailData())
 					{
 						System.Console.Out.Println("Writing thumbnail...");

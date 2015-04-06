@@ -1,6 +1,5 @@
 /*
- * Modified by Yakov Danilov <yakodani@gmail.com> for Imazen LLC (Ported from Java to C#) 
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,11 +15,10 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using System.Text;
-using Com.Drew.Metadata;
 using JetBrains.Annotations;
 using Sharpen;
 
@@ -29,7 +27,7 @@ namespace Com.Drew.Metadata
 	/// <summary>Class to hold information about a detected or recognized face in a photo.</summary>
 	/// <remarks>
 	/// Class to hold information about a detected or recognized face in a photo.
-	/// <p/>
+	/// <p>
 	/// When a face is <em>detected</em>, the camera believes that a face is present at a given location in
 	/// the image, but is not sure whose face it is.  When a face is <em>recognised</em>, then the face is
 	/// both detected and identified as belonging to a known person.
@@ -51,7 +49,7 @@ namespace Com.Drew.Metadata
 		[CanBeNull]
 		private readonly Age _age;
 
-		public Face(int x, int y, int width, int height, string name, Age age)
+		public Face(int x, int y, int width, int height, [CanBeNull] string name, [CanBeNull] Age age)
 		{
 			_x = x;
 			_y = y;
@@ -93,7 +91,7 @@ namespace Com.Drew.Metadata
 			return _age;
 		}
 
-		public override bool Equals(object o)
+		public override bool Equals([CanBeNull] object o)
 		{
 			if (this == o)
 			{
@@ -158,7 +156,7 @@ namespace Com.Drew.Metadata
 			{
 				result.Append(" age: ").Append(_age.ToFriendlyString());
 			}
-			return result.ToString();
+			return Sharpen.Extensions.ConvertToString(result);
 		}
 	}
 }

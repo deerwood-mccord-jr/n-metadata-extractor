@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using JetBrains.Annotations;
 using Sharpen;
 
 namespace Com.Drew.Imaging.Png
 {
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class PngChunkType
 	{
 		private static readonly ICollection<string> _identifiersAllowingMultiples = new HashSet<string>(Arrays.AsList("IDAT", "sPLT", "iTXt", "tEXt", "zTXt"));
@@ -15,7 +16,7 @@ namespace Com.Drew.Imaging.Png
 		/// <see cref="PngChunk"/>
 		/// that contains basic information about the PNG image.
 		/// This must be the first chunk in the data sequence, and may only occur once.
-		/// <p/>
+		/// <p>
 		/// The format is:
 		/// <ul>
 		/// <li><b>pixel width</b> 4 bytes, unsigned and greater than zero</li>
@@ -39,7 +40,7 @@ namespace Com.Drew.Imaging.Png
 		/// <see cref="PngColorType"/>
 		/// of <code>IndexedColor</code>,
 		/// and may only occur once in the PNG data sequence.
-		/// <p/>
+		/// <p>
 		/// The chunk contains between one and 256 entries, each of three bytes:
 		/// <ul>
 		/// <li><b>red</b> 1 byte</li>
@@ -83,7 +84,7 @@ namespace Com.Drew.Imaging.Png
 		/// <see cref="PngChunk"/>
 		/// that contains textual data, having first a keyword and then a value.
 		/// If multiple text data keywords are needed, then multiple chunks are included in the PNG data stream.
-		/// <p/>
+		/// <p>
 		/// The format is:
 		/// <ul>
 		/// <li><b>keyword</b> 1-79 bytes</li>
@@ -101,12 +102,12 @@ namespace Com.Drew.Imaging.Png
 
 		private readonly bool _multipleAllowed;
 
-		public PngChunkType(string identifier)
+		public PngChunkType([NotNull] string identifier)
 			: this(identifier, false)
 		{
 		}
 
-		public PngChunkType(string identifier, bool multipleAllowed)
+		public PngChunkType([NotNull] string identifier, bool multipleAllowed)
 		{
 			//
 			// Standard critical chunks
@@ -127,7 +128,7 @@ namespace Com.Drew.Imaging.Png
 			}
 		}
 
-		public PngChunkType(sbyte[] bytes)
+		public PngChunkType([NotNull] sbyte[] bytes)
 		{
 			ValidateBytes(bytes);
 			_bytes = bytes;

@@ -1,6 +1,5 @@
 /*
- * Modified by Yakov Danilov <yakodani@gmail.com> for Imazen LLC (Ported from Java to C#) 
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,12 +15,10 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
-using System.Text;
 using Com.Drew.Metadata;
-using Com.Drew.Metadata.Jpeg;
 using JetBrains.Annotations;
 using Sharpen;
 
@@ -32,10 +29,10 @@ namespace Com.Drew.Metadata.Jpeg
 	/// Provides human-readable string versions of the tags stored in a JpegDirectory.
 	/// Thanks to Darrell Silver (www.darrellsilver.com) for the initial version of this class.
 	/// </remarks>
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class JpegDescriptor : TagDescriptor<JpegDirectory>
 	{
-		public JpegDescriptor(JpegDirectory directory)
+		public JpegDescriptor([NotNull] JpegDirectory directory)
 			: base(directory)
 		{
 		}
@@ -221,16 +218,7 @@ namespace Com.Drew.Metadata.Jpeg
 			{
 				return null;
 			}
-			StringBuilder sb = new StringBuilder();
-			sb.Append(value.GetComponentName());
-			sb.Append(" component: Quantization table ");
-			sb.Append(value.GetQuantizationTableNumber());
-			sb.Append(", Sampling factors ");
-			sb.Append(value.GetHorizontalSamplingFactor());
-			sb.Append(" horiz/");
-			sb.Append(value.GetVerticalSamplingFactor());
-			sb.Append(" vert");
-			return sb.ToString();
+			return value.GetComponentName() + " component: Quantization table " + value.GetQuantizationTableNumber() + ", Sampling factors " + value.GetHorizontalSamplingFactor() + " horiz/" + value.GetVerticalSamplingFactor() + " vert";
 		}
 	}
 }

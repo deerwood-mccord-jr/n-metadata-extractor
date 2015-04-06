@@ -1,6 +1,5 @@
 /*
- * Modified by Yakov Danilov <yakodani@gmail.com> for Imazen LLC (Ported from Java to C#) 
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,13 +15,12 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using System.Collections.Generic;
 using System.IO;
 using Com.Drew.Lang;
-using Com.Drew.Metadata.Exif.Makernotes;
 using JetBrains.Annotations;
 using Sharpen;
 
@@ -32,7 +30,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 	/// The Olympus makernote is used by many manufacturers (Epson, Konica, Minolta and Agfa...), and as such contains some tags
 	/// that appear specific to those manufacturers.
 	/// </summary>
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class OlympusMakernoteDirectory : Com.Drew.Metadata.Directory
 	{
 		/// <summary>Used by Konica / Minolta cameras.</summary>
@@ -59,10 +57,12 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		/// <remarks>Length of thumbnail in bytes. Used by Konica / Minolta cameras.</remarks>
 		public const int TagMinoltaThumbnailLength = unchecked((int)(0x0089));
 
+		public const int TagThumbnailImage = unchecked((int)(0x0100));
+
 		/// <summary>
 		/// Used by Konica / Minolta cameras
 		/// 0 = Natural Colour
-		/// 1 = Black & White
+		/// 1 = Black &amp; White
 		/// 2 = Vivid colour
 		/// 3 = Solarization
 		/// 4 = AdobeRGB
@@ -83,7 +83,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		/// <summary>Not 100% sure about this tag.</summary>
 		/// <remarks>
 		/// Not 100% sure about this tag.
-		/// <p/>
+		/// <p>
 		/// Used by Konica / Minolta cameras.
 		/// 0 = Raw
 		/// 1 = Super Fine
@@ -92,6 +92,8 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		/// 4 = Extra Fine
 		/// </remarks>
 		public const int TagImageQuality2 = unchecked((int)(0x0103));
+
+		public const int TagBodyFirmwareVersion = unchecked((int)(0x0104));
 
 		/// <summary>
 		/// Three values:
@@ -149,13 +151,31 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		/// <remarks>A string. Used by Epson cameras.</remarks>
 		public const int TagOriginalManufacturerModel = unchecked((int)(0x020D));
 
+		public const int TagPreviewImage = unchecked((int)(0x0280));
+
+		public const int TagPreCaptureFrames = unchecked((int)(0x0300));
+
+		public const int TagWhiteBoard = unchecked((int)(0x0301));
+
+		public const int TagOneTouchWb = unchecked((int)(0x0302));
+
+		public const int TagWhiteBalanceBracket = unchecked((int)(0x0303));
+
+		public const int TagWhiteBalanceBias = unchecked((int)(0x0304));
+
+		public const int TagSceneMode = unchecked((int)(0x0403));
+
+		public const int TagFirmware = unchecked((int)(0x0404));
+
 		/// <summary>
 		/// See the PIM specification here:
 		/// http://www.ozhiker.com/electronics/pjmt/jpeg_info/pim.html
 		/// </summary>
 		public const int TagPrintImageMatchingInfo = unchecked((int)(0x0E00));
 
-		public const int TagDataDump = unchecked((int)(0x0F00));
+		public const int TagDataDump1 = unchecked((int)(0x0F00));
+
+		public const int TagDataDump2 = unchecked((int)(0x0F01));
 
 		public const int TagShutterSpeedValue = unchecked((int)(0x1000));
 
@@ -167,7 +187,15 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 
 		public const int TagFlashMode = unchecked((int)(0x1004));
 
+		public const int TagFlashDevice = unchecked((int)(0x1005));
+
 		public const int TagBracket = unchecked((int)(0x1006));
+
+		public const int TagSensorTemperature = unchecked((int)(0x1007));
+
+		public const int TagLensTemperature = unchecked((int)(0x1008));
+
+		public const int TagLightCondition = unchecked((int)(0x1009));
 
 		public const int TagFocusRange = unchecked((int)(0x100A));
 
@@ -181,6 +209,8 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 
 		public const int TagSharpness = unchecked((int)(0x100F));
 
+		public const int TagFlashChargeLevel = unchecked((int)(0x1010));
+
 		public const int TagColourMatrix = unchecked((int)(0x1011));
 
 		public const int TagBlackLevel = unchecked((int)(0x1012));
@@ -191,9 +221,17 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 
 		public const int TagBlueBias = unchecked((int)(0x1018));
 
+		public const int TagColorMatrixNumber = unchecked((int)(0x1019));
+
 		public const int TagSerialNumber = unchecked((int)(0x101A));
 
 		public const int TagFlashBias = unchecked((int)(0x1023));
+
+		public const int TagExternalFlashBounce = unchecked((int)(0x1026));
+
+		public const int TagExternalFlashZoom = unchecked((int)(0x1027));
+
+		public const int TagExternalFlashMode = unchecked((int)(0x1028));
 
 		public const int TagContrast = unchecked((int)(0x1029));
 
@@ -211,9 +249,37 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 
 		public const int TagCompressionRatio = unchecked((int)(0x1034));
 
+		public const int TagThumbnail = unchecked((int)(0x1035));
+
+		public const int TagThumbnailOffset = unchecked((int)(0x1036));
+
+		public const int TagThumbnailLength = unchecked((int)(0x1037));
+
+		public const int TagCcdScanMode = unchecked((int)(0x1039));
+
+		public const int TagNoiseReduction = unchecked((int)(0x103A));
+
+		public const int TagInfinityLensStep = unchecked((int)(0x103B));
+
+		public const int TagNearLensStep = unchecked((int)(0x103C));
+
+		public const int TagEquipment = unchecked((int)(0x2010));
+
+		public const int TagCameraSettings = unchecked((int)(0x2020));
+
+		public const int TagRawDevelopment = unchecked((int)(0x2030));
+
+		public const int TagRawDevelopment2 = unchecked((int)(0x2031));
+
+		public const int TagImageProcessing = unchecked((int)(0x2040));
+
+		public const int TagFocusInfo = unchecked((int)(0x2050));
+
+		public const int TagRawInfo = unchecked((int)(0x3000));
+
 		public sealed class CameraSettings
 		{
-		    internal const int Offset = unchecked((int)(0xF000));
+			private const int Offset = unchecked((int)(0xF000));
 
 			public const int TagExposureMode = Offset + 2;
 
@@ -308,14 +374,46 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 			public const int TagFocusArea = Offset + 50;
 
 			public const int TagDecSwitchPosition = Offset + 51;
+			//    public static final int TAG_ = 0x1013;
+			//    public static final int TAG_ = 0x1014;
+			//    public static final int TAG_ = 0x1016;
+			//    public static final int TAG_ = 0x101B;
+			//    public static final int TAG_ = 0x101C;
+			//    public static final int TAG_ = 0x101D;
+			//    public static final int TAG_ = 0x101E;
+			//    public static final int TAG_ = 0x101F;
+			//    public static final int TAG_ = 0x1020;
+			//    public static final int TAG_ = 0x1021;
+			//    public static final int TAG_ = 0x1022;
+			//    public static final int TAG_ = 0x1024;
+			//    public static final int TAG_ = 0x1025;
+			//    public static final int TAG_ = 0x1030;
+			//    public static final int TAG_ = 0x1031;
+			//    public static final int TAG_ = 0x1032;
+			//    public static final int TAG_ = 0x1033;
+			//    public static final int TAG_ = 0x1038;
 			// These 'sub'-tag values have been created for consistency -- they don't exist within the Makernote IFD
+			// 16 missing
+			// 25, 26 missing
 		}
 
 		[NotNull]
-		protected internal static readonly Dictionary<int, string> _tagNameMap = new Dictionary<int, string>();
+		protected internal static readonly Dictionary<int?, string> _tagNameMap = new Dictionary<int?, string>();
 
 		static OlympusMakernoteDirectory()
 		{
+			_tagNameMap.Put(TagMakernoteVersion, "Makernote Version");
+			_tagNameMap.Put(TagCameraSettings1, "Camera Settings");
+			_tagNameMap.Put(TagCameraSettings2, "Camera Settings");
+			_tagNameMap.Put(TagCompressedImageSize, "Compressed Image Size");
+			_tagNameMap.Put(TagMinoltaThumbnailOffset1, "Thumbnail Offset");
+			_tagNameMap.Put(TagMinoltaThumbnailOffset2, "Thumbnail Offset");
+			_tagNameMap.Put(TagMinoltaThumbnailLength, "Thumbnail Length");
+			_tagNameMap.Put(TagThumbnailImage, "Thumbnail Image");
+			_tagNameMap.Put(TagColourMode, "Colour Mode");
+			_tagNameMap.Put(TagImageQuality1, "Image Quality");
+			_tagNameMap.Put(TagImageQuality2, "Image Quality");
+			_tagNameMap.Put(TagBodyFirmwareVersion, "Body Firmware Version");
 			_tagNameMap.Put(TagSpecialMode, "Special Mode");
 			_tagNameMap.Put(TagJpegQuality, "JPEG Quality");
 			_tagNameMap.Put(TagMacroMode, "Macro");
@@ -326,40 +424,48 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 			_tagNameMap.Put(TagFirmwareVersion, "Firmware Version");
 			_tagNameMap.Put(TagPictInfo, "Pict Info");
 			_tagNameMap.Put(TagCameraId, "Camera Id");
-			_tagNameMap.Put(TagDataDump, "Data Dump");
-			_tagNameMap.Put(TagMakernoteVersion, "Makernote Version");
-			_tagNameMap.Put(TagCameraSettings1, "Camera Settings");
-			_tagNameMap.Put(TagCameraSettings2, "Camera Settings");
-			_tagNameMap.Put(TagCompressedImageSize, "Compressed Image Size");
-			_tagNameMap.Put(TagMinoltaThumbnailOffset1, "Thumbnail Offset");
-			_tagNameMap.Put(TagMinoltaThumbnailOffset2, "Thumbnail Offset");
-			_tagNameMap.Put(TagMinoltaThumbnailLength, "Thumbnail Length");
-			_tagNameMap.Put(TagColourMode, "Colour Mode");
-			_tagNameMap.Put(TagImageQuality1, "Image Quality");
-			_tagNameMap.Put(TagImageQuality2, "Image Quality");
-			_tagNameMap.Put(TagImageHeight, "Image Height");
 			_tagNameMap.Put(TagImageWidth, "Image Width");
+			_tagNameMap.Put(TagImageHeight, "Image Height");
 			_tagNameMap.Put(TagOriginalManufacturerModel, "Original Manufacturer Model");
+			_tagNameMap.Put(TagPreviewImage, "Preview Image");
+			_tagNameMap.Put(TagPreCaptureFrames, "Pre Capture Frames");
+			_tagNameMap.Put(TagWhiteBoard, "White Board");
+			_tagNameMap.Put(TagOneTouchWb, "One Touch WB");
+			_tagNameMap.Put(TagWhiteBalanceBracket, "White Balance Bracket");
+			_tagNameMap.Put(TagWhiteBalanceBias, "White Balance Bias");
+			_tagNameMap.Put(TagSceneMode, "Scene Mode");
+			_tagNameMap.Put(TagFirmware, "Firmware");
 			_tagNameMap.Put(TagPrintImageMatchingInfo, "Print Image Matching (PIM) Info");
+			_tagNameMap.Put(TagDataDump1, "Data Dump");
+			_tagNameMap.Put(TagDataDump2, "Data Dump 2");
 			_tagNameMap.Put(TagShutterSpeedValue, "Shutter Speed Value");
 			_tagNameMap.Put(TagIsoValue, "ISO Value");
 			_tagNameMap.Put(TagApertureValue, "Aperture Value");
 			_tagNameMap.Put(TagBrightnessValue, "Brightness Value");
 			_tagNameMap.Put(TagFlashMode, "Flash Mode");
+			_tagNameMap.Put(TagFlashDevice, "Flash Device");
 			_tagNameMap.Put(TagBracket, "Bracket");
+			_tagNameMap.Put(TagSensorTemperature, "Sensor Temperature");
+			_tagNameMap.Put(TagLensTemperature, "Lens Temperature");
+			_tagNameMap.Put(TagLightCondition, "Light Condition");
 			_tagNameMap.Put(TagFocusRange, "Focus Range");
 			_tagNameMap.Put(TagFocusMode, "Focus Mode");
 			_tagNameMap.Put(TagFocusDistance, "Focus Distance");
 			_tagNameMap.Put(TagZoom, "Zoom");
 			_tagNameMap.Put(TagMacroFocus, "Macro Focus");
 			_tagNameMap.Put(TagSharpness, "Sharpness");
+			_tagNameMap.Put(TagFlashChargeLevel, "Flash Charge Level");
 			_tagNameMap.Put(TagColourMatrix, "Colour Matrix");
 			_tagNameMap.Put(TagBlackLevel, "Black Level");
 			_tagNameMap.Put(TagWhiteBalance, "White Balance");
 			_tagNameMap.Put(TagRedBias, "Red Bias");
 			_tagNameMap.Put(TagBlueBias, "Blue Bias");
+			_tagNameMap.Put(TagColorMatrixNumber, "Color Matrix Number");
 			_tagNameMap.Put(TagSerialNumber, "Serial Number");
 			_tagNameMap.Put(TagFlashBias, "Flash Bias");
+			_tagNameMap.Put(TagExternalFlashBounce, "External Flash Bounce");
+			_tagNameMap.Put(TagExternalFlashZoom, "External Flash Zoom");
+			_tagNameMap.Put(TagExternalFlashMode, "External Flash Mode");
 			_tagNameMap.Put(TagContrast, "Contrast");
 			_tagNameMap.Put(TagSharpnessFactor, "Sharpness Factor");
 			_tagNameMap.Put(TagColourControl, "Colour Control");
@@ -368,6 +474,20 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 			_tagNameMap.Put(TagFinalWidth, "Final Width");
 			_tagNameMap.Put(TagFinalHeight, "Final Height");
 			_tagNameMap.Put(TagCompressionRatio, "Compression Ratio");
+			_tagNameMap.Put(TagThumbnail, "Thumbnail");
+			_tagNameMap.Put(TagThumbnailOffset, "Thumbnail Offset");
+			_tagNameMap.Put(TagThumbnailLength, "Thumbnail Length");
+			_tagNameMap.Put(TagCcdScanMode, "CCD Scan Mode");
+			_tagNameMap.Put(TagNoiseReduction, "Noise Reduction");
+			_tagNameMap.Put(TagInfinityLensStep, "Infinity Lens Step");
+			_tagNameMap.Put(TagNearLensStep, "Near Lens Step");
+			_tagNameMap.Put(TagEquipment, "Equipment");
+			_tagNameMap.Put(TagCameraSettings, "Camera Settings");
+			_tagNameMap.Put(TagRawDevelopment, "Raw Development");
+			_tagNameMap.Put(TagRawDevelopment2, "Raw Development 2");
+			_tagNameMap.Put(TagImageProcessing, "Image Processing");
+			_tagNameMap.Put(TagFocusInfo, "Focus Info");
+			_tagNameMap.Put(TagRawInfo, "Raw Info");
 			_tagNameMap.Put(OlympusMakernoteDirectory.CameraSettings.TagExposureMode, "Exposure Mode");
 			_tagNameMap.Put(OlympusMakernoteDirectory.CameraSettings.TagFlashMode, "Flash Mode");
 			_tagNameMap.Put(OlympusMakernoteDirectory.CameraSettings.TagWhiteBalance, "White Balance");
@@ -428,7 +548,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 			return "Olympus Makernote";
 		}
 
-		public override void SetByteArray(int tagType, sbyte[] bytes)
+		public override void SetByteArray(int tagType, [NotNull] sbyte[] bytes)
 		{
 			if (tagType == TagCameraSettings1 || tagType == TagCameraSettings2)
 			{
@@ -467,7 +587,7 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		}
 
 		[NotNull]
-		protected internal override Dictionary<int, string> GetTagNameMap()
+		protected internal override Dictionary<int?, string> GetTagNameMap()
 		{
 			return _tagNameMap;
 		}

@@ -1,6 +1,5 @@
 /*
- * Modified by Yakov Danilov <yakodani@gmail.com> for Imazen LLC (Ported from Java to C#) 
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,13 +15,11 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using Com.Drew.Imaging.Jpeg;
 using Com.Drew.Lang;
-using Com.Drew.Metadata.Exif;
-using NUnit.Framework;
 using Sharpen;
 
 namespace Com.Drew.Metadata.Exif
@@ -36,7 +33,7 @@ namespace Com.Drew.Metadata.Exif
 	/// <see cref="ExifThumbnailDirectory"/>
 	/// .
 	/// </summary>
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class ExifDirectoryTest
 	{
 		/// <exception cref="System.Exception"/>
@@ -113,10 +110,10 @@ namespace Com.Drew.Metadata.Exif
 		public virtual void TestResolution()
 		{
 			Com.Drew.Metadata.Metadata metadata = ExifReaderTest.ProcessBytes("Tests/Data/withUncompressedRGBThumbnail.jpg.app1");
-			ExifThumbnailDirectory thumbnailDirectory = metadata.GetDirectory<ExifThumbnailDirectory>();
+			ExifThumbnailDirectory thumbnailDirectory = metadata.GetFirstDirectoryOfType<ExifThumbnailDirectory>();
 			NUnit.Framework.Assert.IsNotNull(thumbnailDirectory);
 			Sharpen.Tests.AreEqual(72, thumbnailDirectory.GetInt(ExifThumbnailDirectory.TagXResolution));
-			ExifIFD0Directory exifIFD0Directory = metadata.GetDirectory<ExifIFD0Directory>();
+			ExifIFD0Directory exifIFD0Directory = metadata.GetFirstDirectoryOfType<ExifIFD0Directory>();
 			NUnit.Framework.Assert.IsNotNull(exifIFD0Directory);
 			Sharpen.Tests.AreEqual(216, exifIFD0Directory.GetInt(ExifIFD0Directory.TagXResolution));
 		}

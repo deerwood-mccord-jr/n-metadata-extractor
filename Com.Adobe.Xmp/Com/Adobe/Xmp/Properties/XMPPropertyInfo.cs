@@ -7,7 +7,6 @@
 // of the Adobe license agreement accompanying it.
 // =================================================================================================
 using Com.Adobe.Xmp.Options;
-using Com.Adobe.Xmp.Properties;
 using Sharpen;
 
 namespace Com.Adobe.Xmp.Properties
@@ -26,10 +25,10 @@ namespace Com.Adobe.Xmp.Properties
 		/// <returns>Returns the path of the property, but only if returned by the iterator.</returns>
 		string GetPath();
 
-//		/// <returns>Returns the value of the property.</returns>
-//		string GetValue();
+		/// <returns>Returns the value of the property.</returns>
+		string GetValue();
 
-//		/// <returns>Returns the options of the property.</returns>
-//		PropertyOptions GetOptions();
+		/// <returns>Returns the options of the property.</returns>
+		PropertyOptions GetOptions();
 	}
 }

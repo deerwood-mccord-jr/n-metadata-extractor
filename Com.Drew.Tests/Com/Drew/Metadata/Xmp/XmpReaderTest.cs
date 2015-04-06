@@ -1,6 +1,5 @@
 /*
- * Modified by Yakov Danilov <yakodani@gmail.com> for Imazen LLC (Ported from Java to C#) 
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,42 +15,39 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using System;
 using System.Collections.Generic;
 using Com.Drew.Imaging.Jpeg;
 using Com.Drew.Lang;
-using Com.Drew.Metadata.Xmp;
 using Com.Drew.Tools;
 using Sharpen;
 
 namespace Com.Drew.Metadata.Xmp
 {
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class XmpReaderTest
 	{
-		/// <exception cref="System.IO.IOException"/>
-		public static XmpDirectory ProcessApp1Bytes(string filePath)
-		{
-			Com.Drew.Metadata.Metadata metadata = new Com.Drew.Metadata.Metadata();
-			new XmpReader().Extract(FileUtil.ReadBytes(filePath), metadata, JpegSegmentType.App1);
-			XmpDirectory directory = metadata.GetDirectory<XmpDirectory>();
-			NUnit.Framework.Assert.IsNotNull(directory);
-			return directory;
-		}
-
 		private XmpDirectory _directory;
 
 		/// <exception cref="System.Exception"/>
 		[NUnit.Framework.SetUp]
 		public virtual void SetUp()
 		{
-			_directory = ProcessApp1Bytes("Tests/Data/withXmpAndIptc.jpg.app1.1");
+			Com.Drew.Metadata.Metadata metadata = new Com.Drew.Metadata.Metadata();
+			IList<sbyte[]> jpegSegments = new AList<sbyte[]>();
+			jpegSegments.Add(FileUtil.ReadBytes("Tests/Data/withXmpAndIptc.jpg.app1.1"));
+			new XmpReader().ReadJpegSegments(jpegSegments.AsIterable(), metadata, JpegSegmentType.App1);
+			ICollection<XmpDirectory> xmpDirectories = metadata.GetDirectoriesOfType<XmpDirectory>();
+			NUnit.Framework.Assert.IsNotNull(xmpDirectories);
+			Sharpen.Tests.AreEqual(1, xmpDirectories.Count);
+			_directory = xmpDirectories.Iterator().Next();
+			Sharpen.Tests.IsFalse(_directory.HasErrors());
 		}
 
-		/*
+    /*
     [Xmp] Lens Information = 24/1 70/1 0/0 0/0
     [Xmp] Lens = EF24-70mm f/2.8L USM
     [Xmp] Serial Number = 380319450
@@ -94,7 +90,7 @@ namespace Com.Drew.Metadata.Xmp
 			Sharpen.Tests.AreEqual("EF24-70mm f/2.8L USM", _directory.GetString(XmpDirectory.TagLens));
 		}
 
-		/*
+/*
     // this requires further research
 
     @Test
@@ -190,7 +186,7 @@ namespace Com.Drew.Metadata.Xmp
 		[NUnit.Framework.Test]
 		public virtual void TestExtract_OriginalDateTime()
 		{
-			DateTime? actual = _directory.GetDate(XmpDirectory.TagDatetimeOriginal);
+			DateTime actual = _directory.GetDate(XmpDirectory.TagDatetimeOriginal);
 			// Underlying string value (in XMP data) is: 2010-12-12T12:41:35.00+01:00
 			Sharpen.Tests.AreEqual(new SimpleDateFormat("hh:mm:ss dd MM yyyy Z").Parse("11:41:35 12 12 2010 +0000"), actual);
 			//        assertEquals(new SimpleDateFormat("HH:mm:ss dd MMM yyyy Z").parse("12:41:35 12 Dec 2010 +0100"), actual);
@@ -203,7 +199,7 @@ namespace Com.Drew.Metadata.Xmp
 		[NUnit.Framework.Test]
 		public virtual void TestExtract_DigitizedDateTime()
 		{
-			DateTime? actual = _directory.GetDate(XmpDirectory.TagDatetimeDigitized);
+			DateTime actual = _directory.GetDate(XmpDirectory.TagDatetimeDigitized);
 			// Underlying string value (in XMP data) is: 2010-12-12T12:41:35.00+01:00
 			Sharpen.Tests.AreEqual(new SimpleDateFormat("hh:mm:ss dd MM yyyy Z").Parse("11:41:35 12 12 2010 +0000"), actual);
 			//        assertEquals(new SimpleDateFormat("HH:mm:ss dd MMM yyyy Z").parse("12:41:35 12 Dec 2010 +0100"), actual);

@@ -1,6 +1,5 @@
 /*
- * Modified by Yakov Danilov <yakodani@gmail.com> for Imazen LLC (Ported from Java to C#) 
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,11 +15,10 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using System.IO;
-using Com.Drew.Tools;
 using JetBrains.Annotations;
 using Sharpen;
 
@@ -31,7 +29,7 @@ namespace Com.Drew.Tools
 	/// A series of utility methods for working with the file system. The methods herein are used in unit testing.
 	/// Use them in production code at your own risk!
 	/// </remarks>
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class FileUtil
 	{
 		/// <summary>
@@ -40,7 +38,7 @@ namespace Com.Drew.Tools
 		/// .
 		/// </summary>
 		/// <exception cref="System.IO.IOException"/>
-		public static void SaveBytes(FilePath file, sbyte[] bytes)
+		public static void SaveBytes([NotNull] FilePath file, [NotNull] sbyte[] bytes)
 		{
 			FileOutputStream stream = null;
 			try
@@ -60,13 +58,14 @@ namespace Com.Drew.Tools
 		/// <summary>
 		/// Reads the contents of a
 		/// <see cref="Sharpen.FilePath"/>
-		/// into a <code>byte[]</code>. This relies upon <code>File.length()</code>
+		/// into a <code>byte[]</code>. This relies upon
+		/// <see cref="Sharpen.FilePath.Length()"/>
 		/// returning the correct value, which may not be the case when using a network file system. However this method is
 		/// intended for unit test support, in which case the files should be on the local volume.
 		/// </summary>
 		/// <exception cref="System.IO.IOException"/>
 		[NotNull]
-		public static sbyte[] ReadBytes(FilePath file)
+		public static sbyte[] ReadBytes([NotNull] FilePath file)
 		{
 			int length = (int)file.Length();
 			// should only be zero if loading from a network or similar
@@ -106,7 +105,7 @@ namespace Com.Drew.Tools
 		/// </summary>
 		/// <exception cref="System.IO.IOException"/>
 		[NotNull]
-		public static sbyte[] ReadBytes(string filePath)
+		public static sbyte[] ReadBytes([NotNull] string filePath)
 		{
 			return ReadBytes(new FilePath(filePath));
 		}

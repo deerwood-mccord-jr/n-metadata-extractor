@@ -1,6 +1,5 @@
 /*
- * Modified by Yakov Danilov <yakodani@gmail.com> for Imazen LLC (Ported from Java to C#) 
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,12 +15,11 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using System;
 using System.Collections.Generic;
-using Com.Drew.Imaging.Jpeg;
 using JetBrains.Annotations;
 using Sharpen;
 
@@ -32,17 +30,17 @@ namespace Com.Drew.Imaging.Jpeg
 	/// Holds a collection of JPEG data segments.  This need not necessarily be all segments
 	/// within the JPEG. For example, it may be convenient to store only the non-image
 	/// segments when analysing metadata.
-	/// <p/>
+	/// <p>
 	/// Segments are keyed via their
 	/// <see cref="JpegSegmentType"/>
 	/// . Where multiple segments use the
 	/// same segment type, they will all be stored and available.
-	/// <p/>
+	/// <p>
 	/// Each segment type may contain multiple entries. Conceptually the model is:
 	/// <code>Map&lt;JpegSegmentType, Collection&lt;byte[]&gt;&gt;</code>. This class provides
 	/// convenience methods around that structure.
 	/// </remarks>
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class JpegSegmentData
 	{
 		[NotNull]
@@ -52,7 +50,7 @@ namespace Com.Drew.Imaging.Jpeg
 		/// <summary>Adds segment bytes to the collection.</summary>
 		/// <param name="segmentType">the type of the segment being added</param>
 		/// <param name="segmentBytes">the byte array holding data for the segment being added</param>
-		public virtual void AddSegment(sbyte segmentType, sbyte[] segmentBytes)
+		public virtual void AddSegment(sbyte segmentType, [NotNull] sbyte[] segmentBytes)
 		{
 			GetOrCreateSegmentList(segmentType).Add(segmentBytes);
 		}
@@ -86,7 +84,7 @@ namespace Com.Drew.Imaging.Jpeg
 		/// <param name="segmentType">the JpegSegmentType for the desired segment</param>
 		/// <returns>a byte[] containing segment data or null if no data exists for that segment</returns>
 		[CanBeNull]
-		public virtual sbyte[] GetSegment(JpegSegmentType segmentType)
+		public virtual sbyte[] GetSegment([NotNull] JpegSegmentType segmentType)
 		{
 			return GetSegment(segmentType.byteValue, 0);
 		}
@@ -98,9 +96,9 @@ namespace Com.Drew.Imaging.Jpeg
 		/// </remarks>
 		/// <param name="segmentType">identifies the required segment</param>
 		/// <param name="occurrence">the zero-based index of the occurrence</param>
-		/// <returns>the segment data as a byte[], or null if no segment exists for the type & occurrence</returns>
+		/// <returns>the segment data as a byte[], or null if no segment exists for the type &amp; occurrence</returns>
 		[CanBeNull]
-		public virtual sbyte[] GetSegment(JpegSegmentType segmentType, int occurrence)
+		public virtual sbyte[] GetSegment([NotNull] JpegSegmentType segmentType, int occurrence)
 		{
 			return GetSegment(segmentType.byteValue, occurrence);
 		}
@@ -112,7 +110,7 @@ namespace Com.Drew.Imaging.Jpeg
 		/// </remarks>
 		/// <param name="segmentType">identifies the required segment</param>
 		/// <param name="occurrence">the zero-based index of the occurrence</param>
-		/// <returns>the segment data as a byte[], or null if no segment exists for the type & occurrence</returns>
+		/// <returns>the segment data as a byte[], or null if no segment exists for the type &amp; occurrence</returns>
 		[CanBeNull]
 		public virtual sbyte[] GetSegment(sbyte segmentType, int occurrence)
 		{
@@ -125,7 +123,7 @@ namespace Com.Drew.Imaging.Jpeg
 		/// <param name="segmentType">a number which identifies the type of JPEG segment being queried</param>
 		/// <returns>zero or more byte arrays, each holding the data of a JPEG segment</returns>
 		[NotNull]
-		public virtual Iterable<sbyte[]> GetSegments(JpegSegmentType segmentType)
+		public virtual Iterable<sbyte[]> GetSegments([NotNull] JpegSegmentType segmentType)
 		{
 			return GetSegments(segmentType.byteValue);
 		}
@@ -138,7 +136,7 @@ namespace Com.Drew.Imaging.Jpeg
 		public virtual Iterable<sbyte[]> GetSegments(sbyte segmentType)
 		{
 			IList<sbyte[]> segmentList = GetSegmentList(segmentType);
-			return (segmentList == null ? new AList<sbyte[]>() : segmentList).AsIterable();
+			return segmentList == null ? new AList<sbyte[]>() : segmentList.AsIterable().AsIterable();
 		}
 
 		[CanBeNull]
@@ -166,7 +164,7 @@ namespace Com.Drew.Imaging.Jpeg
 		/// <summary>Returns the count of segment data byte arrays stored for a given segment type.</summary>
 		/// <param name="segmentType">identifies the required segment</param>
 		/// <returns>the segment count (zero if no segments exist).</returns>
-		public virtual int GetSegmentCount(JpegSegmentType segmentType)
+		public virtual int GetSegmentCount([NotNull] JpegSegmentType segmentType)
 		{
 			return GetSegmentCount(segmentType.byteValue);
 		}
@@ -187,7 +185,7 @@ namespace Com.Drew.Imaging.Jpeg
 		/// </remarks>
 		/// <param name="segmentType">identifies the required segment</param>
 		/// <param name="occurrence">the zero-based index of the segment occurrence to remove.</param>
-		public virtual void RemoveSegmentOccurrence(JpegSegmentType segmentType, int occurrence)
+		public virtual void RemoveSegmentOccurrence([NotNull] JpegSegmentType segmentType, int occurrence)
 		{
 			RemoveSegmentOccurrence(segmentType.byteValue, occurrence);
 		}
@@ -207,7 +205,7 @@ namespace Com.Drew.Imaging.Jpeg
 
 		/// <summary>Removes all segments from the collection having the specified type.</summary>
 		/// <param name="segmentType">identifies the required segment</param>
-		public virtual void RemoveSegment(JpegSegmentType segmentType)
+		public virtual void RemoveSegment([NotNull] JpegSegmentType segmentType)
 		{
 			RemoveSegment(segmentType.byteValue);
 		}
@@ -222,7 +220,7 @@ namespace Com.Drew.Imaging.Jpeg
 		/// <summary>Determines whether data is present for a given segment type.</summary>
 		/// <param name="segmentType">identifies the required segment</param>
 		/// <returns>true if data exists, otherwise false</returns>
-		public virtual bool ContainsSegment(JpegSegmentType segmentType)
+		public virtual bool ContainsSegment([NotNull] JpegSegmentType segmentType)
 		{
 			return ContainsSegment(segmentType.byteValue);
 		}

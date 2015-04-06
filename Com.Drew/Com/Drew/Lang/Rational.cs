@@ -1,6 +1,5 @@
 /*
- * Modified by Yakov Danilov <yakodani@gmail.com> for Imazen LLC (Ported from Java to C#) 
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,8 +15,8 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using System;
 using JetBrains.Annotations;
@@ -28,9 +27,13 @@ namespace Com.Drew.Lang
 	/// <summary>Immutable class for holding a rational number without loss of precision.</summary>
 	/// <remarks>
 	/// Immutable class for holding a rational number without loss of precision.  Provides
-	/// a familiar representation via toString() in form <code>numerator/denominator</code>.
+	/// a familiar representation via
+	/// <see cref="Sharpen.Extensions.ConvertToString()"/>
+	/// in form <code>numerator/denominator</code>.
+	/// Note that any value with a numerator of zero will be treated as zero, even if the
+	/// denominator is also zero.
 	/// </remarks>
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	[System.Serializable]
 	public class Rational : Number
 	{
@@ -50,7 +53,6 @@ namespace Com.Drew.Lang
 		/// </remarks>
 		public Rational(long numerator, long denominator)
 		{
-			// TODO make Rational implement Number?
 			_numerator = numerator;
 			_denominator = denominator;
 		}
@@ -66,7 +68,7 @@ namespace Com.Drew.Lang
 		/// </returns>
 		public override double DoubleValue()
 		{
-			return (double)_numerator / (double)_denominator;
+			return _numerator == 0 ? 0.0 : (double)_numerator / (double)_denominator;
 		}
 
 		/// <summary>Returns the value of the specified number as a <code>float</code>.</summary>
@@ -80,14 +82,16 @@ namespace Com.Drew.Lang
 		/// </returns>
 		public override float FloatValue()
 		{
-			return (float)_numerator / (float)_denominator;
+			return _numerator == 0 ? 0.0f : (float)_numerator / (float)_denominator;
 		}
 
 		/// <summary>Returns the value of the specified number as a <code>byte</code>.</summary>
 		/// <remarks>
 		/// Returns the value of the specified number as a <code>byte</code>.
 		/// This may involve rounding or truncation.  This implementation simply
-		/// casts the result of <code>doubleValue()</code> to <code>byte</code>.
+		/// casts the result of
+		/// <see cref="DoubleValue()"/>
+		/// to <code>byte</code>.
 		/// </remarks>
 		/// <returns>
 		/// the numeric value represented by this object after conversion
@@ -102,7 +106,9 @@ namespace Com.Drew.Lang
 		/// <remarks>
 		/// Returns the value of the specified number as an <code>int</code>.
 		/// This may involve rounding or truncation.  This implementation simply
-		/// casts the result of <code>doubleValue()</code> to <code>int</code>.
+		/// casts the result of
+		/// <see cref="DoubleValue()"/>
+		/// to <code>int</code>.
 		/// </remarks>
 		/// <returns>
 		/// the numeric value represented by this object after conversion
@@ -110,22 +116,16 @@ namespace Com.Drew.Lang
 		/// </returns>
 		public sealed override int IntValue()
 		{
-			//  HACK: repeats Java behaviour
-            double value = DoubleValue();
-
-            if (double.IsNaN(value))
-            {
-                return 0;
-            }
-
-		    return (int) value;
+			return (int)DoubleValue();
 		}
 
 		/// <summary>Returns the value of the specified number as a <code>long</code>.</summary>
 		/// <remarks>
 		/// Returns the value of the specified number as a <code>long</code>.
 		/// This may involve rounding or truncation.  This implementation simply
-		/// casts the result of <code>doubleValue()</code> to <code>long</code>.
+		/// casts the result of
+		/// <see cref="DoubleValue()"/>
+		/// to <code>long</code>.
 		/// </remarks>
 		/// <returns>
 		/// the numeric value represented by this object after conversion
@@ -140,7 +140,9 @@ namespace Com.Drew.Lang
 		/// <remarks>
 		/// Returns the value of the specified number as a <code>short</code>.
 		/// This may involve rounding or truncation.  This implementation simply
-		/// casts the result of <code>doubleValue()</code> to <code>short</code>.
+		/// casts the result of
+		/// <see cref="DoubleValue()"/>
+		/// to <code>short</code>.
 		/// </remarks>
 		/// <returns>
 		/// the numeric value represented by this object after conversion
@@ -199,13 +201,13 @@ namespace Com.Drew.Lang
 		{
 			if (_denominator == 0 && _numerator != 0)
 			{
-				return ToString();
+				return Sharpen.Extensions.ConvertToString(this);
 			}
 			else
 			{
 				if (IsInteger())
 				{
-					return Sharpen.Extensions.ToString(IntValue());
+					return Sharpen.Extensions.ConvertToString(IntValue());
 				}
 				else
 				{
@@ -220,13 +222,13 @@ namespace Com.Drew.Lang
 						Com.Drew.Lang.Rational simplifiedInstance = GetSimplifiedInstance();
 						if (allowDecimal)
 						{
-							string doubleString = simplifiedInstance.DoubleValue().ToString();
+							string doubleString = Sharpen.Extensions.ConvertToString(simplifiedInstance.DoubleValue());
 							if (doubleString.Length < 5)
 							{
 								return doubleString;
 							}
 						}
-						return simplifiedInstance.ToString();
+						return Sharpen.Extensions.ConvertToString(simplifiedInstance);
 					}
 				}
 			}
@@ -261,7 +263,7 @@ namespace Com.Drew.Lang
 		/// <see cref="Rational"/>
 		/// .
 		/// </returns>
-		public override bool Equals(object obj)
+		public override bool Equals([CanBeNull] object obj)
 		{
 			if (obj == null || !(obj is Com.Drew.Lang.Rational))
 			{
@@ -289,21 +291,21 @@ namespace Com.Drew.Lang
 		/// the minimum number of checks required.</p>
 		/// <p>
 		/// However, generating the prime number series seems to be a hefty task.  Perhaps
-		/// it's simpler to check if both d & n are divisible by all numbers from 2 -&gt;
+		/// it's simpler to check if both d &amp; n are divisible by all numbers from 2
+		/// <literal>-&gt;</literal>
 		/// (Math.min(denominator, numerator) / 2).  In doing this, one can check for 2
 		/// and 5 once, then ignore all even numbers, and all numbers ending in 0 or 5.
 		/// This leaves four numbers from every ten to check.</p>
 		/// <p>
 		/// Therefore, the max number of pairs of modulus divisions required will be:</p>
-		/// <code><pre>
+		/// <pre><code>
 		/// 4   Math.min(denominator, numerator) - 1
 		/// -- * ------------------------------------ + 2
 		/// 10                    2
-		/// <p/>
 		/// Math.min(denominator, numerator) - 1
 		/// = ------------------------------------ + 2
 		/// 5
-		/// </pre></code>
+		/// </code></pre>
 		/// </summary>
 		/// <returns>
 		/// a simplified instance, or if the Rational could not be simplified,

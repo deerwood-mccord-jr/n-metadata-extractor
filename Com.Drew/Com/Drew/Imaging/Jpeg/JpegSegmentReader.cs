@@ -1,6 +1,5 @@
 /*
- * Modified by Yakov Danilov <yakodani@gmail.com> for Imazen LLC (Ported from Java to C#) 
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,13 +15,12 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Com.Drew.Imaging.Jpeg;
 using Com.Drew.Lang;
 using JetBrains.Annotations;
 using Sharpen;
@@ -32,7 +30,7 @@ namespace Com.Drew.Imaging.Jpeg
 	/// <summary>Performs read functions of JPEG files, returning specific file segments.</summary>
 	/// <remarks>
 	/// Performs read functions of JPEG files, returning specific file segments.
-	/// <p/>
+	/// <p>
 	/// JPEG files are composed of a sequence of consecutive JPEG 'segments'. Each is identified by one of a set of byte
 	/// values, modelled in the
 	/// <see cref="JpegSegmentType"/>
@@ -41,20 +39,20 @@ namespace Com.Drew.Imaging.Jpeg
 	/// <see cref="JpegSegmentData"/>
 	/// object, from which the raw JPEG segment byte arrays may be accessed.
 	/// </remarks>
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class JpegSegmentReader
 	{
 		/// <summary>Private, because this segment crashes my algorithm, and searching for it doesn't work (yet).</summary>
-		private const sbyte SegmentSos = unchecked((sbyte)unchecked((int)(0xDA)));
+		private const sbyte SegmentSos = unchecked((sbyte)0xDA);
 
 		/// <summary>Private, because one wouldn't search for it.</summary>
-		private const sbyte MarkerEoi = unchecked((sbyte)unchecked((int)(0xD9)));
+		private const sbyte MarkerEoi = unchecked((sbyte)0xD9);
 
 		/// <summary>
 		/// Processes the provided JPEG data, and extracts the specified JPEG segments into a
 		/// <see cref="JpegSegmentData"/>
 		/// object.
-		/// <p/>
+		/// <p>
 		/// Will not return SOS (start of scan) or EOI (end of image) segments.
 		/// </summary>
 		/// <param name="file">
@@ -69,7 +67,7 @@ namespace Com.Drew.Imaging.Jpeg
 		/// <exception cref="Com.Drew.Imaging.Jpeg.JpegProcessingException"/>
 		/// <exception cref="System.IO.IOException"/>
 		[NotNull]
-		public static JpegSegmentData ReadSegments(FilePath file, Iterable<JpegSegmentType> segmentTypes)
+		public static JpegSegmentData ReadSegments([NotNull] FilePath file, [CanBeNull] Iterable<JpegSegmentType> segmentTypes)
 		{
 			FileInputStream stream = null;
 			try
@@ -90,7 +88,7 @@ namespace Com.Drew.Imaging.Jpeg
 		/// Processes the provided JPEG data, and extracts the specified JPEG segments into a
 		/// <see cref="JpegSegmentData"/>
 		/// object.
-		/// <p/>
+		/// <p>
 		/// Will not return SOS (start of scan) or EOI (end of image) segments.
 		/// </summary>
 		/// <param name="reader">
@@ -106,7 +104,7 @@ namespace Com.Drew.Imaging.Jpeg
 		/// <exception cref="Com.Drew.Imaging.Jpeg.JpegProcessingException"/>
 		/// <exception cref="System.IO.IOException"/>
 		[NotNull]
-		public static JpegSegmentData ReadSegments(SequentialReader reader, Iterable<JpegSegmentType> segmentTypes)
+		public static JpegSegmentData ReadSegments([NotNull] SequentialReader reader, [CanBeNull] Iterable<JpegSegmentType> segmentTypes)
 		{
 			// Must be big-endian
 			System.Diagnostics.Debug.Assert((reader.IsMotorolaByteOrder()));
@@ -114,7 +112,7 @@ namespace Com.Drew.Imaging.Jpeg
 			int magicNumber = reader.GetUInt16();
 			if (magicNumber != unchecked((int)(0xFFD8)))
 			{
-				throw new JpegProcessingException("JPEG data is expected to begin with 0xFFD8 (ГїГ�) not 0x" + Sharpen.Extensions.ToHexString(magicNumber));
+				throw new JpegProcessingException("JPEG data is expected to begin with 0xFFD8 (ÿ�?) not 0x" + Sharpen.Extensions.ToHexString(magicNumber));
 			}
 			ICollection<sbyte> segmentTypeBytes = null;
 			if (segmentTypes != null)
@@ -128,14 +126,24 @@ namespace Com.Drew.Imaging.Jpeg
 			JpegSegmentData segmentData = new JpegSegmentData();
 			do
 			{
-				// next byte is the segment identifier: 0xFF
+				// Find the segment marker. Markers are zero or more 0xFF bytes, followed
+				// by a 0xFF and then a byte not equal to 0x00 or 0xFF.
 				short segmentIdentifier = reader.GetUInt8();
+				// We must have at least one 0xFF byte
 				if (segmentIdentifier != unchecked((int)(0xFF)))
 				{
-					throw new JpegProcessingException("Expected JPEG segment start identifier 0xFF, not 0x" + Sharpen.Extensions.ToHexString(segmentIdentifier));
+					throw new JpegProcessingException("Expected JPEG segment start identifier 0xFF, not 0x" + Sharpen.Extensions.ToHexString(segmentIdentifier).ToUpper());
 				}
-				// next byte is the segment type
+				// Read until we have a non-0xFF byte. This identifies the segment type.
 				sbyte segmentType = reader.GetInt8();
+				while (segmentType == unchecked((sbyte)0xFF))
+				{
+					segmentType = reader.GetInt8();
+				}
+				if (segmentType == 0)
+				{
+					throw new JpegProcessingException("Expected non-zero byte as part of JPEG marker identifier");
+				}
 				if (segmentType == SegmentSos)
 				{
 					// The 'Start-Of-Scan' segment's length doesn't include the image data, instead would

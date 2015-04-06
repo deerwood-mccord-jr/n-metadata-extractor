@@ -1,6 +1,5 @@
 /*
- * Modified by Yakov Danilov <yakodani@gmail.com> for Imazen LLC (Ported from Java to C#) 
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,11 +15,10 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using Com.Drew.Metadata;
-using Com.Drew.Metadata.Exif.Makernotes;
 using JetBrains.Annotations;
 using Sharpen;
 
@@ -30,13 +28,13 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 	/// Provides human-readable string representations of tag values stored in a
 	/// <see cref="LeicaMakernoteDirectory"/>
 	/// .
-	/// <p/>
+	/// <p>
 	/// Tag reference from: http://gvsoft.homedns.org/exif/makernote-leica-type1.html
 	/// </summary>
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class LeicaMakernoteDescriptor : TagDescriptor<LeicaMakernoteDirectory>
 	{
-		public LeicaMakernoteDescriptor(LeicaMakernoteDirectory directory)
+		public LeicaMakernoteDescriptor([NotNull] LeicaMakernoteDirectory directory)
 			: base(directory)
 		{
 		}
@@ -46,46 +44,46 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		{
 			switch (tagType)
 			{
-                case LeicaMakernoteDirectory.TagQuality:
+				case LeicaMakernoteDirectory.TagQuality:
 				{
 					return GetQualityDescription();
 				}
 
-                case LeicaMakernoteDirectory.TagUserProfile:
+				case LeicaMakernoteDirectory.TagUserProfile:
 				{
 					return GetUserProfileDescription();
 				}
 
-                case LeicaMakernoteDirectory.TagWhiteBalance:
+				case LeicaMakernoteDirectory.TagWhiteBalance:
 				{
 					//            case TAG_SERIAL:
 					//                return getSerialNumberDescription();
 					return GetWhiteBalanceDescription();
 				}
 
-                case LeicaMakernoteDirectory.TagExternalSensorBrightnessValue:
+				case LeicaMakernoteDirectory.TagExternalSensorBrightnessValue:
 				{
 					return GetExternalSensorBrightnessValueDescription();
 				}
 
-                case LeicaMakernoteDirectory.TagMeasuredLv:
+				case LeicaMakernoteDirectory.TagMeasuredLv:
 				{
 					return GetMeasuredLvDescription();
 				}
 
-                case LeicaMakernoteDirectory.TagApproximateFNumber:
+				case LeicaMakernoteDirectory.TagApproximateFNumber:
 				{
 					return GetApproximateFNumberDescription();
 				}
 
-                case LeicaMakernoteDirectory.TagCameraTemperature:
+				case LeicaMakernoteDirectory.TagCameraTemperature:
 				{
 					return GetCameraTemperatureDescription();
 				}
 
-                case LeicaMakernoteDirectory.TagWbRedLevel:
-                case LeicaMakernoteDirectory.TagWbBlueLevel:
-                case LeicaMakernoteDirectory.TagWbGreenLevel:
+				case LeicaMakernoteDirectory.TagWbRedLevel:
+				case LeicaMakernoteDirectory.TagWbBlueLevel:
+				case LeicaMakernoteDirectory.TagWbGreenLevel:
 				{
 					return GetSimpleRational(tagType);
 				}
@@ -100,43 +98,43 @@ namespace Com.Drew.Metadata.Exif.Makernotes
 		[CanBeNull]
 		private string GetCameraTemperatureDescription()
 		{
-            return GetFormattedInt(LeicaMakernoteDirectory.TagCameraTemperature, "%d C");
+			return GetFormattedInt(LeicaMakernoteDirectory.TagCameraTemperature, "%d C");
 		}
 
 		[CanBeNull]
 		private string GetApproximateFNumberDescription()
 		{
-            return GetSimpleRational(LeicaMakernoteDirectory.TagApproximateFNumber);
+			return GetSimpleRational(LeicaMakernoteDirectory.TagApproximateFNumber);
 		}
 
 		[CanBeNull]
 		private string GetMeasuredLvDescription()
 		{
-            return GetSimpleRational(LeicaMakernoteDirectory.TagMeasuredLv);
+			return GetSimpleRational(LeicaMakernoteDirectory.TagMeasuredLv);
 		}
 
 		[CanBeNull]
 		private string GetExternalSensorBrightnessValueDescription()
 		{
-            return GetSimpleRational(LeicaMakernoteDirectory.TagExternalSensorBrightnessValue);
+			return GetSimpleRational(LeicaMakernoteDirectory.TagExternalSensorBrightnessValue);
 		}
 
 		[CanBeNull]
 		private string GetWhiteBalanceDescription()
 		{
-            return GetIndexedDescription(LeicaMakernoteDirectory.TagWhiteBalance, "Auto or Manual", "Daylight", "Fluorescent", "Tungsten", "Flash", "Cloudy", "Shadow");
+			return GetIndexedDescription(LeicaMakernoteDirectory.TagWhiteBalance, "Auto or Manual", "Daylight", "Fluorescent", "Tungsten", "Flash", "Cloudy", "Shadow");
 		}
 
 		[CanBeNull]
 		private string GetUserProfileDescription()
 		{
-            return GetIndexedDescription(LeicaMakernoteDirectory.TagQuality, 1, "User Profile 1", "User Profile 2", "User Profile 3", "User Profile 0 (Dynamic)");
+			return GetIndexedDescription(LeicaMakernoteDirectory.TagQuality, 1, "User Profile 1", "User Profile 2", "User Profile 3", "User Profile 0 (Dynamic)");
 		}
 
 		[CanBeNull]
 		private string GetQualityDescription()
 		{
-            return GetIndexedDescription(LeicaMakernoteDirectory.TagQuality, 1, "Fine", "Basic");
+			return GetIndexedDescription(LeicaMakernoteDirectory.TagQuality, 1, "Fine", "Basic");
 		}
 	}
 }

@@ -1,6 +1,5 @@
 /*
- * Modified by Yakov Danilov <yakodani@gmail.com> for Imazen LLC (Ported from Java to C#) 
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,11 +15,10 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using Com.Drew.Imaging.Jpeg;
-using Com.Drew.Metadata.Jpeg;
 using JetBrains.Annotations;
 using Sharpen;
 
@@ -33,7 +31,7 @@ namespace Com.Drew.Metadata.Jpeg
 	/// <see cref="JpegCommentDirectory"/>
 	/// .
 	/// </summary>
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class JpegCommentReader : JpegSegmentMetadataReader
 	{
 		[NotNull]
@@ -42,17 +40,21 @@ namespace Com.Drew.Metadata.Jpeg
 			return Arrays.AsList(JpegSegmentType.Com).AsIterable();
 		}
 
-		public virtual bool CanProcess(sbyte[] segmentBytes, JpegSegmentType segmentType)
+		public virtual bool CanProcess([NotNull] sbyte[] segmentBytes, [NotNull] JpegSegmentType segmentType)
 		{
 			// The entire contents of the byte[] is the comment. There's nothing here to discriminate upon.
 			return true;
 		}
 
-		public virtual void Extract(sbyte[] segmentBytes, Com.Drew.Metadata.Metadata metadata, JpegSegmentType segmentType)
+		public virtual void ReadJpegSegments([NotNull] Iterable<sbyte[]> segments, [NotNull] Com.Drew.Metadata.Metadata metadata, [NotNull] JpegSegmentType segmentType)
 		{
-			JpegCommentDirectory directory = metadata.GetOrCreateDirectory<JpegCommentDirectory>();
-			// The entire contents of the directory are the comment
-			directory.SetString(JpegCommentDirectory.TagComment, Sharpen.Runtime.GetStringForBytes(segmentBytes));
+			foreach (sbyte[] segmentBytes in segments)
+			{
+				JpegCommentDirectory directory = new JpegCommentDirectory();
+				metadata.AddDirectory(directory);
+				// The entire contents of the directory are the comment
+				directory.SetString(JpegCommentDirectory.TagComment, Sharpen.Runtime.GetStringForBytes(segmentBytes));
+			}
 		}
 	}
 }

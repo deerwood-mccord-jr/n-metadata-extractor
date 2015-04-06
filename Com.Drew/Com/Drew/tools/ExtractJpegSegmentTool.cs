@@ -1,6 +1,5 @@
 /*
- * Modified by Yakov Danilov <yakodani@gmail.com> for Imazen LLC (Ported from Java to C#) 
- * Copyright 2002-2013 Drew Noakes
+ * Copyright 2002-2015 Drew Noakes
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -16,24 +15,30 @@
  *
  * More information about this project is available at:
  *
- *    http://drewnoakes.com/code/exif/
- *    http://code.google.com/p/metadata-extractor/
+ *    https://drewnoakes.com/code/exif/
+ *    https://github.com/drewnoakes/metadata-extractor
  */
 using System.Collections.Generic;
 using Com.Drew.Imaging.Jpeg;
 using Com.Drew.Lang;
-using Com.Drew.Tools;
+using JetBrains.Annotations;
 using Sharpen;
 
 namespace Com.Drew.Tools
 {
-	/// <summary>Extracts JPEG segments from .jpg files to individual binary files.</summary>
+	/// <summary>Extracts JPEG segments and writes them to individual files.</summary>
 	/// <remarks>
-	/// Extracts JPEG segments from .jpg files to individual binary files.
+	/// Extracts JPEG segments and writes them to individual files.
 	/// <p/>
-	/// These files are lightweight and convenient for use in unit tests.
+	/// Extracting only the required segment(s) for use in unit testing has several benefits:
+	/// <ul>
+	/// <li>Helps reduce the repository size. For example a small JPEG image may still be 20kB+ in size, yet its
+	/// APPD (IPTC) segment may be as small as 200 bytes.</li>
+	/// <li>Makes unit tests run more rapidly.</li>
+	/// <li>Partially anonymises user-contributed data by removing image portions.</li>
+	/// </ul>
 	/// </remarks>
-	/// <author>Drew Noakes http://drewnoakes.com</author>
+	/// <author>Drew Noakes https://drewnoakes.com</author>
 	public class ExtractJpegSegmentTool
 	{
 		/// <exception cref="System.IO.IOException"/>
@@ -55,7 +60,7 @@ namespace Com.Drew.Tools
 			ICollection<JpegSegmentType> segmentTypes = new HashSet<JpegSegmentType>();
 			for (int i = 1; i < args.Length; i++)
 			{
-                JpegSegmentType segmentType = JpegSegmentType.ValueOf(args[i].ToUpper());
+				JpegSegmentType segmentType = JpegSegmentType.ValueOf(args[i].ToUpper());
 				if (!segmentType.canContainMetadata)
 				{
 					System.Console.Error.Printf("WARNING: Segment type %s cannot contain metadata so it may not be necessary to extract it%n", segmentType);
@@ -67,12 +72,13 @@ namespace Com.Drew.Tools
 				// If none specified, use all that could reasonably contain metadata
 				Sharpen.Collections.AddAll(segmentTypes, JpegSegmentType.canContainMetadataTypes);
 			}
+			System.Console.Out.Println("Reading: " + filePath);
 			JpegSegmentData segmentData = JpegSegmentReader.ReadSegments(new FilePath(filePath), segmentTypes.AsIterable());
 			SaveSegmentFiles(filePath, segmentData);
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public static void SaveSegmentFiles(string jpegFilePath, JpegSegmentData segmentData)
+		public static void SaveSegmentFiles([NotNull] string jpegFilePath, [NotNull] JpegSegmentData segmentData)
 		{
 			foreach (JpegSegmentType segmentType in segmentData.GetSegmentTypes())
 			{
@@ -85,13 +91,15 @@ namespace Com.Drew.Tools
 				{
 					for (int i = 0; i < segments.Count; i++)
 					{
-						string outputFilePath = Sharpen.Extensions.StringFormat("%s.%s.%d", jpegFilePath, segmentType.ToString().ToLower(), i);
+						string outputFilePath = Sharpen.Extensions.StringFormat("%s.%s.%d", jpegFilePath, Sharpen.Extensions.ConvertToString(segmentType).ToLower(), i);
+						System.Console.Out.Println("Writing: " + outputFilePath);
 						FileUtil.SaveBytes(new FilePath(outputFilePath), segments[i]);
 					}
 				}
 				else
 				{
-					string outputFilePath = Sharpen.Extensions.StringFormat("%s.%s", jpegFilePath, segmentType.ToString().ToLower());
+					string outputFilePath = Sharpen.Extensions.StringFormat("%s.%s", jpegFilePath, Sharpen.Extensions.ConvertToString(segmentType).ToLower());
+					System.Console.Out.Println("Writing: " + outputFilePath);
 					FileUtil.SaveBytes(new FilePath(outputFilePath), segments[0]);
 				}
 			}
@@ -100,13 +108,13 @@ namespace Com.Drew.Tools
 		private static void PrintUsage()
 		{
 			System.Console.Out.Println("USAGE:\n");
-			System.Console.Out.Println("\tjava com.drew.tools.ExtractJpegSegmentTool <filename> (*|<segment> [<segment> ...])\n");
-			System.Console.Out.Print("Where segment is one or more of:");
+			System.Console.Out.Println("\tjava com.drew.tools.ExtractJpegSegmentTool <filename> [<segment> ...]\n");
+			System.Console.Out.Print("Where <segment> is zero or more of:");
 			foreach (JpegSegmentType segmentType in typeof(JpegSegmentType).GetEnumConstants())
 			{
 				if (segmentType.canContainMetadata)
 				{
-					System.Console.Out.Print(" " + segmentType.ToString());
+					System.Console.Out.Print(" " + Sharpen.Extensions.ConvertToString(segmentType));
 				}
 			}
 			System.Console.Out.Println();
